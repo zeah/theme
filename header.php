@@ -9,7 +9,8 @@ echo '</head><body>';
 // show_admin_bar(true);
 
 // start of top menu html element
-$nav = '<div class="nav">';
+$nav = '<div class="nav-container"><div class="nav">';
+// $nav = '<div class="nav">';
 
 // parameters for page search in database
 $args = [
@@ -25,6 +26,7 @@ class Nav {
 	public $children = array();
 }
 
+$mobile = wp_is_mobile();
 // sorting pages into iterator with correct layout
 $titles = array();
 foreach (get_pages($args) as $key => $value) {
@@ -52,14 +54,14 @@ foreach (get_pages($args) as $key => $value) {
 		$item = $titles[$value->post_parent];
 
 		// if mobile then top child is same as top menu item (as on mobile hover is impossible)
-		if (wp_is_mobile() && !$mobile_added) {
+		if ($mobile && !$mobile_added) {
 			$mobile_added = true;
 			$item->link = null;
-			array_push($item->children, ['Alle '.$item->title, get_page_link($value->post_parent)]);
+			array_push($item->children, ['title' => 'Alle '.$item->title, 'link' => get_page_link($value->post_parent)]);
 		}
 
 		// adding child to layout
-		array_push($item->children, [$value->post_title, get_page_link($value->ID)]);
+		array_push($item->children, ['title' => $value->post_title, 'link' => get_page_link($value->ID)]);
 	}
 }
 
@@ -67,16 +69,21 @@ foreach (get_pages($args) as $key => $value) {
 
 // adding html
 foreach ($titles as $key => $value) {
-	// $link = get_page_link($value->ID);
-	if ($value->link != null)
-		$nav .= '<div class="nav-item"><a href="'.$value->link.'" class="menu-lenke">'.$value->title.'</a>';
-	else
-		$nav .= '<div class="nav-item nav-mobile-item"><span class="menu-lenke">'.$value->title.'</span>';
 
+	$parent_icon = '';
+	if (sizeof($value->children) > 0)
+	$parent_icon = ' menu-lenke-parent';
+
+	if ($value->link != null)
+		$nav .= '<div class="nav-item"><a href="'.$value->link.'" class="menu-lenke'.$parent_icon.'">'.$value->title.'</a>';
+	else
+		$nav .= '<div class="nav-item nav-mobile-item"><span class="menu-lenke'.$parent_icon.'">'.$value->title.'</span>';
+
+	// adding child menu item to html element
 	if (sizeof($value->children) > 0) {
 		$nav .= '<div class="nav-dropdown">';
 		foreach ($value->children as $k => $v)
-			$nav .= '<div class="nav-item"><a href="'.$v[1].'" class="menu-lenke menu-dropdown-lenke">'.$v[0].'</a></div>';
+			$nav .= '<div class="nav-item"><a href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke">'.$v['title'].'</a></div>';
 		$nav .= '</div>';
 	}
 
@@ -84,7 +91,8 @@ foreach ($titles as $key => $value) {
 }
 
 // html end of top menu elemenet
-$nav .= '</div>';
+// $nav .= '</div>';
+$nav .= '</div></div>';
 
 // printing html
 echo $nav;
