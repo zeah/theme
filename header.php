@@ -4,12 +4,26 @@
 echo '<!DOCTYPE html><html lang="no"><head>';
 wp_head();
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+
+global $post;
+$meta = get_post_meta($post->ID, 'emtext');
+if (isset($meta[0]))
+	echo '<meta name="description" content="'.$meta[0].'">';
+
+
+$meta = get_post_meta($post->ID, 'emtitle');
+if (isset($meta[0]))
+	echo '<title>'.$meta[0].'</title>';
+else
+	echo '<title>'.get_the_title($post).'</title>';
+
 echo '</head><body>';
 
 // show_admin_bar(true);
 
 // start of top menu html element
-$nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
+$nav = '<div class="nav-container"><div class="nav">';
+// $nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
 // $nav = '<div class="nav">';
 
 // parameters for page search in database
@@ -75,7 +89,8 @@ foreach ($titles as $key => $value) {
 	$parent_icon = ' menu-lenke-parent';
 
 	if ($value->link != null)
-		$nav .= '<div class="nav-item"><a itemprop="url" href="'.$value->link.'" class="menu-lenke'.$parent_icon.'"><span itemprop="name">'.$value->title.'</span></a>';
+		$nav .= '<div class="nav-item"><a href="'.$value->link.'" class="menu-lenke'.$parent_icon.'">'.$value->title.'</a>';
+		// $nav .= '<div class="nav-item"><a itemprop="url" href="'.$value->link.'" class="menu-lenke'.$parent_icon.'"><span itemprop="name">'.$value->title.'</span></a>';
 	else
 		$nav .= '<div class="nav-item nav-mobile-item"><span class="menu-lenke'.$parent_icon.'">'.$value->title.'</span>';
 
@@ -83,7 +98,8 @@ foreach ($titles as $key => $value) {
 	if (sizeof($value->children) > 0) {
 		$nav .= '<div class="nav-dropdown">';
 		foreach ($value->children as $k => $v)
-			$nav .= '<div class="nav-item"><a itemprop="url" href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke"><span itemprop="name">'.$v['title'].'</span></a></div>';
+			$nav .= '<div class="nav-item"><a href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke">'.$v['title'].'</a></div>';
+			// $nav .= '<div class="nav-item"><a itemprop="url" href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke"><span itemprop="name">'.$v['title'].'</span></a></div>';
 		$nav .= '</div>';
 	}
 
@@ -92,7 +108,8 @@ foreach ($titles as $key => $value) {
 
 // html end of top menu elemenet
 // $nav .= '</div>';
-$nav .= '</nav></div>';
+$nav .= '</div></div>';
+// $nav .= '</nav></div>';
 
 // printing html
 echo $nav;
