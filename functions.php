@@ -76,109 +76,111 @@ function my_custom_pages_columns( $columns ) {
 }
 add_filter( 'manage_pages_columns', 'my_custom_pages_columns' );
 
+
+
 /* NAVIGATIONAL OPTIONS */
+add_action( 'add_meta_boxes', 'register_meta_box_show_in_nav' );
 function register_meta_box_show_in_nav() {
     add_meta_box( 'navigation-opt', 'Navigation', 'show_in_nav_callback', 'page', 'side' );
 }
-add_action( 'add_meta_boxes', 'register_meta_box_show_in_nav' );
-
 
 function show_in_nav_callback() {
+	$inputs = ['Navigation' => 'showinnav', 'Mobile Navigation' => 'showinmob'];
+	
+	$html = '';
+	foreach ($inputs as $key => $value) {
+		$html .= '<input type="checkbox" id="'.$value.'" name="'.$value.'"'.(getmeta($value) ? 'checked' : '').
+		'><label for="'.$value.'">Don\'t show in '.$key.' Menu</label><br>';
+		// $meta = getmeta($value);
+		// $html .= '<input type="checkbox" id="'.$value.'" name="'.$value.'"';
+		// if (getmeta($value) == 'on')
+		// 	$html .= ' checked';
+		// $html .= '><label for="'.$value.'">Don\'t show in '.$key.' Menu</label><br>';
+	}
 
-	global $post;
-
-	$meta = get_post_meta($post->ID, 'showinnav');
-
-	if (isset($meta[0]) && $meta[0] == 1)
-		echo '<input type="checkbox" id="showinnav" name="showinnav" checked><label for="showinnav">Don\'t show in Navigation Menu</label>';
-	else
-		echo '<input type="checkbox" id="showinnav" name="showinnav"><label for="showinnav">Don\'t show in Navigation Menu</label>';
-
-
-	$meta = get_post_meta($post->ID, 'showinmob');
-
-	if (isset($meta[0]) && $meta[0] == 1)
-		echo '<br><input type="checkbox" id="showinmob" name="showinmob" checked><label for="showinmob">Don\'t show in Mobile Navigation Menu</label>';
-	else
-		echo '<br><input type="checkbox" id="showinmob" name="showinmob"><label for="showinmob">Don\'t show in Mobile Navigation Menu</label>';
+	echo $html;
 }
 
+/* SAVING */
 add_action('save_post', 'save_meta_em');
-
 function save_meta_em($post_id) {
-	$save = false;
-	if (isset($_POST['showinnav']))
-		$save = true;
-	update_post_meta($post_id, 'showinnav', $save);	
+	$metas = ['showinnav', 'showinmob', 'emtext', 'emtitle', 'emstrucdata'];
 
-	$save = false;
-	if (isset($_POST['showinmob']))
-		$save = true;
-	update_post_meta($post_id, 'showinmob', $save);
+	foreach ($metas as $value) {
+		helper_save($post_id, $value);
+	}
+}
 
-	if (isset($_POST['emtext']))
-		update_post_meta($post_id, 'emtext', $_POST['emtext']);
-
-	if (isset($_POST['emtitle']))
-		update_post_meta($post_id, 'emtitle', $_POST['emtitle']);
-
-	if (isset($_POST['emstrucdata']))
-		update_post_meta($post_id, 'emstrucdata', $_POST['emstrucdata']);
+function helper_save($id, $meta) {
+	update_post_meta($id, $meta, $_POST[$meta] ? sanitize_text_field($_POST[$meta]) : '');
 }
 
 
-/* adding meta description */
+/* META DESCRIPTION META BOX */
 add_action('add_meta_boxes', 'register_meta_description_box');
-
 function register_meta_description_box() {
-	add_meta_box( 'meta-description-opt', 'Meta Description', 'meta_desc_callback', 'page');
+	add_meta_box( 'meta-description-opt', 'Meta Description', 'meta_desc_callback', 'page', 'advanced', 'high');
 }
 
 function meta_desc_callback() {
+	// $meta = getmeta('emtext');
 
-	global $post;
+	// $html = '<textarea name="emtext" style="width: 100%"; height: 5em">';
+	// if ($meta)
+	// 	$html .= $meta;
+	// $html .= '</textarea>';
 
-	$meta = get_post_meta($post->ID, 'emtext');
-
-	if (isset($meta[0]))
-		echo '<textarea name="emtext" style="width: 100%; height: 5em" class="em-textarea">'.$meta[0].'</textarea>';
-	else
-		echo '<textarea name="emtext" style="width: 100%; height: 5em" class="em-textarea"></textarea>';
+	// echo $html;
+	echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.getmeta('emtext').'</textarea>';
 }
 
-
+/* CUSTOM TITLE META BOX for <title></title> */
 add_action('add_meta_boxes', 'register_title_description');
-
 function register_title_description() {
-	 add_meta_box( 'title-opt', 'Page Title', 'title_opt_callback', 'page');
+	 add_meta_box( 'title-opt', 'Page Title', 'title_opt_callback', 'page', 'advanced', 'high');
 }
 
 function title_opt_callback() {
-	global $post;
+	// $meta = getmeta('emtitle');
 
-	$meta = get_post_meta($post->ID, 'emtitle');
+	// $html = '<input type="text" name="emtitle" style="width: 100%" value="';
+	// if ($meta)
+	// 	$html .= $meta;
+	// $html .= '">';
 
-	if (isset($meta[0]))
-		echo '<input type="text" name="emtitle" style="width: 100%" value="'.$meta[0].'">';
-	else
-		echo '<input type="text" name="emtitle" style="width: 100%">';
+	// echo $html;
+	echo '<input type="text" name="emtitle" style="width: 100%" value="'.getmeta('emtitle').'">';
 }
 
-
+/* STRUCTURED DATA META BOX */
 add_action('add_meta_boxes', 'register_strucdata_meta');
 function register_strucdata_meta() {
-	add_meta_box('strucdata', 'Structured data (JSON-LD format)', 'strucdata_callback', 'page');
+	add_meta_box('strucdata', 'Structured data (JSON-LD format)', 'strucdata_callback', 'page', 'advanced', 'high');
 }
 
 function strucdata_callback() {
+	// $meta = getmeta('emstrucdata');
+
+	// $html = '<textarea style="width: 100%; height: 20em;" name="emstrucdata">';
+	// if ($meta) 
+	// 	$html .= $meta;
+	// $html .= '</textarea>';
+
+	// echo $html;
+	echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.getmeta('emstrucdata').'</textarea>';
+}
+
+
+/* helper function for meta boxes */
+function getmeta($m) {
 	global $post;
+	$meta = get_post_meta($post->ID, $m);
 
-	$meta = get_post_meta($post->ID, 'emstrucdata');
-
-	if (isset($meta[0]))
-		echo '<textarea style="width: 100%; height: 20em" name="emstrucdata">'.$meta[0].'</textarea>';
+	if ( ! isset($meta[0]))
+		return '';
+		// return false;
 	else
-		echo '<textarea style="width: 100%; height: 20em" name="emstrucdata"></textarea>';
+		return $meta[0];
 }
 
 // function my_mce_buttons_2( $buttons ) {	
@@ -192,3 +194,37 @@ function strucdata_callback() {
 // }
 // add_filter( 'mce_buttons_2', 'my_mce_buttons_2' );
 
+// add_action( 'publish_post', 'itsg_create_sitemap' );
+// add_action( 'publish_page', 'itsg_create_sitemap' );
+
+function itsg_create_sitemap() {
+
+    $postsForSitemap = get_posts(array(
+        'numberposts' => -1,
+        'orderby' => 'modified',
+        'post_type'  => array( 'page' ),
+        'order'    => 'DESC'
+    ));
+
+    $sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
+    $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    foreach( $postsForSitemap as $post ) {
+        setup_postdata( $post );
+
+        $postdate = explode( " ", $post->post_modified );
+
+        $sitemap .= '<url>'.
+          '<loc>' . get_permalink( $post->ID ) . '</loc>' .
+          '<lastmod>' . $postdate[0] . '</lastmod>' .
+          '<changefreq>monthly</changefreq>' .
+         '</url>';
+      }
+
+    $sitemap .= '</urlset>';
+
+    $fp = fopen( ABSPATH . 'sitemap.xml', 'w' );
+
+    fwrite( $fp, $sitemap );
+    fclose( $fp );
+}

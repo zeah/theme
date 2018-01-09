@@ -22,8 +22,8 @@ echo '</head><body>';
 // show_admin_bar(true);
 
 // start of top menu html element
-$nav = '<div class="nav-container"><div class="nav">';
-// $nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
+// $nav = '<div class="nav-container"><div class="nav">';
+$nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
 // $nav = '<div class="nav">';
 
 // parameters for page search in database
@@ -89,8 +89,8 @@ foreach ($titles as $key => $value) {
 	$parent_icon = ' menu-lenke-parent';
 
 	if ($value->link != null)
-		$nav .= '<div class="nav-item"><a href="'.$value->link.'" class="menu-lenke'.$parent_icon.'">'.$value->title.'</a>';
-		// $nav .= '<div class="nav-item"><a itemprop="url" href="'.$value->link.'" class="menu-lenke'.$parent_icon.'"><span itemprop="name">'.$value->title.'</span></a>';
+		// $nav .= '<div class="nav-item"><a href="'.$value->link.'" class="menu-lenke'.$parent_icon.'">'.$value->title.'</a>';
+		$nav .= '<div class="nav-item"><a itemprop="url" href="'.$value->link.'" class="menu-lenke'.$parent_icon.'"><meta itemprop="name" content="'.$value->title.'">'.$value->title.'</a>';
 	else
 		$nav .= '<div class="nav-item nav-mobile-item"><span class="menu-lenke'.$parent_icon.'">'.$value->title.'</span>';
 
@@ -99,7 +99,7 @@ foreach ($titles as $key => $value) {
 		$nav .= '<div class="nav-dropdown">';
 		foreach ($value->children as $k => $v)
 			$nav .= '<div class="nav-item"><a href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke">'.$v['title'].'</a></div>';
-			// $nav .= '<div class="nav-item"><a itemprop="url" href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke"><span itemprop="name">'.$v['title'].'</span></a></div>';
+			$nav .= '<div class="nav-item"><a itemprop="url" href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke"><meta itemprop="name" content="'.$v['title'].'">'.$v['title'].'</a></div>';
 		$nav .= '</div>';
 	}
 

@@ -85,7 +85,6 @@ Version: 0.1
 }
 
 .main {
-	/*margin: 100px 5%;*/
 	left: 0;
 	right: 0;
 	margin: auto;
@@ -93,14 +92,9 @@ Version: 0.1
 	margin-top: 80px;
 	max-width: 1200px;
 
-	padding: 0% 5%;
+	padding: 0% 15%;
 
-	height: 2000px;
-	border: solid 1px black;
-}
-
-.main > div {
-	/*border: black solid 1px;*/
+	/*height: 100vh;*/
 }
 
 .content-title {
@@ -108,7 +102,6 @@ Version: 0.1
 	letter-spacing: -0.5;
 	font-family: trebuchet ms;
 	text-transform: uppercase;
-	/*display: block;*/
 	border-bottom: solid 1px hsl(0, 0%, 80%);
 	margin-bottom: 20px;
 }
@@ -118,22 +111,33 @@ Version: 0.1
 }
 
 .content {
-	/*white-space: nowrap;*/
-	/*margin: 20px;*/
 	font-family: arial;
 	font-size: 14px;
 	line-height: 150%;
 }
 
-.right img,
-.left img {
-	max-width: 200px;
-}
-
 .left {
 	margin-right: 10px;
 	order: 1;
-	border: solid green 1px;
+}
+
+.center {
+	margin: 0 10px;
+ 	order: 2;
+}
+
+.right {
+	margin-left: 10px;
+	order: 3;
+
+	position: sticky;
+  	top: 30px;
+  	align-self: flex-start;
+}
+
+.right img,
+.left img {
+	max-width: 200px;
 }
 
 .left ul {
@@ -145,28 +149,17 @@ Version: 0.1
 	margin-bottom: 10px;
 }
 
-.center {
-	/*height: 2000px;*/
-	margin: 0 10px;
- 	order: 2;
-}
-
-.right {
-	top: 0;
-	border: solid green 1px;
-	position: sticky;
-	margin-left: 10px;
-	order: 3;
-}
 
 .right-image {
 	margin-left: 10px;
 	float: right;
 }
+
 .left-image {
 	margin-right: 10px;
 	float: left;
 }
+
 .center-image {
 	display: block;
 	text-align: center;
