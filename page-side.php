@@ -10,6 +10,8 @@ get_header();
 while (have_posts()) {
 	the_post();
 
+	$postid = get_the_ID();
+
 	$html = '<div class="main">';
 
 	$html .= '<div class="content-title"><h1>'.get_the_title().'</h1></div>';
@@ -23,7 +25,7 @@ while (have_posts()) {
 	$html = preg_replace('/\[caption.*aligncenter.*?\]/', '<span class="center-image editor-image">', $html);
 	$html = preg_replace('/\[\/caption\]/', '</span>', $html);
 
-	echo $html;
+	echo apply_filters('the_content', $html);
 	// echo '<div class="content content-3"><span class="content-title">'.get_the_title().'</span>'.get_the_content().'</div>';
 }
 

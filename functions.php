@@ -1,5 +1,5 @@
 <?php 
-
+// add shortcode for [col left/right/center]
 function addingStyleResource() {
 	wp_enqueue_style('style', get_stylesheet_uri(), array(), null, '(min-width: 1000px)');
 	wp_enqueue_style('style-mobile', get_stylesheet_directory_uri() . '/style-mobile.css', array(), null, '(max-width: 1000px)');
@@ -159,14 +159,6 @@ function register_strucdata_meta() {
 }
 
 function strucdata_callback() {
-	// $meta = getmeta('emstrucdata');
-
-	// $html = '<textarea style="width: 100%; height: 20em;" name="emstrucdata">';
-	// if ($meta) 
-	// 	$html .= $meta;
-	// $html .= '</textarea>';
-
-	// echo $html;
 	echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.getmeta('emstrucdata').'</textarea>';
 }
 

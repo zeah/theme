@@ -3,6 +3,7 @@
 // printing head
 echo '<!DOCTYPE html><html lang="no"><head>';
 wp_head();
+echo '<link rel="icon" href="https://kredittkort-listen.no/wp-content/uploads/2016/03/cropped-kredittkort-listen-2-copy-32x32.jpg">';
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 
 global $post;
