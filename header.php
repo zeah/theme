@@ -13,7 +13,7 @@ if (isset($meta[0]))
 
 
 $meta = get_post_meta($post->ID, 'emtitle');
-if (isset($meta[0]))
+if (isset($meta[0]) && $meta[0] != '')
 	echo '<title>'.$meta[0].'</title>';
 else
 	echo '<title>'.get_the_title($post).'</title>';

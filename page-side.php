@@ -1,6 +1,6 @@
 <?php 
 /**
- Template Name: Single Column with Divs
+ Template Name: Forced Single Column
 */
 
 get_header();
@@ -9,23 +9,21 @@ get_header();
 while (have_posts()) {
 	the_post();
 
-	$postid = get_the_ID();
+	$postid = get_the_ID(); // to be used in footer.php
 
 	$html = '<div class="main">';
-
 	$html .= '<div class="content-title"><h1>'.get_the_title().'</h1></div>';
 
-	$html .= '<div class="content content-3">'.wpautop(get_the_content()).'</div>';
+	$content = get_the_content();
+
+	// removing flexbox shortcode
+	$content = preg_replace('/\[\/*col.*?\]/', '', $content);
+
+	$html .= '<div class="content">'.apply_filters('the_content', $content).'</div>';
 
 	$html .= '</div>';
 
-	$html = preg_replace('/\[caption.*alignright.*?\]/', '<span class="right-image editor-image">', $html);
-	$html = preg_replace('/\[caption.*alignleft.*?\]/', '<span class="left-image editor-image">', $html);
-	$html = preg_replace('/\[caption.*aligncenter.*?\]/', '<span class="center-image editor-image">', $html);
-	$html = preg_replace('/\[\/caption\]/', '</span>', $html);
-
-	echo apply_filters('the_content', $html);
-	// echo '<div class="content content-3"><span class="content-title">'.get_the_title().'</span>'.get_the_content().'</div>';
+	echo $html;
 }
 
 get_footer();

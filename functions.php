@@ -257,29 +257,55 @@ function itsg_create_sitemap() {
     fclose( $fp );
 }
 
-
+/* FLEXBOX SHORTCODE */
 add_shortcode('col', 'sccolumns_callback');
 function sccolumns_callback($atts, $content = null) {
-
-	// $content = preg_replace('/\<p\>\<\/p\>/', '', $content);
-	// return '<xmp>'.$content.'</xmp>';
-	// return '<xmp>'.preg_replace('/^<\/.*>/', '',$content).'</xmp>';
-	// return $content;
-	// return print_r($atts, true);
-	// $content = trim($content);
-
-	// $content = preg_replace('/^<\/.*>/', 'test', $content);
-
 	foreach($atts as $key => $value) {
 		if ($value == 'left')
 			return '<div class="left">'.$content.'</div>';
 		if ($value == 'center')
 			return '<div class="center">'.$content.'</div>';
-		if ($value == 'right') {
+		if ($value == 'right') 
 			return '<div class="right">'.$content.'</div>';
-		}
-
 	}
-
+	return '<div>'.$content.'</div>';
 }
 
+/* ARTICLES SHORTCODE */
+add_shortcode('articles', 'emarticles_callback');
+function emarticles_callback($atts, $content = null) {
+
+	$html = '<div><ul>';
+	$args = [
+		'post_type' => 'post'
+	];
+
+	$query = new WP_Query($args);
+
+	if ($query->have_posts())
+		while ($query->have_posts()) {
+			$query->the_post();
+
+			$html .= '<li>'.get_the_post_thumbnail().get_the_excerpt();
+
+			// $html .= get_the_content();
+		}
+
+	wp_reset_postdata();
+
+	$html .= '</ul></div>';
+
+	return $html;
+}
+
+
+/* FILTER FOR FLOATING IMAGES */
+add_filter('the_content', 'helper_float_image');
+function helper_float_image($content) {
+	$content = preg_replace('/\[caption.*alignright.*?\]/', '<span class="right-image editor-image">', $content);
+	$content = preg_replace('/\[caption.*alignleft.*?\]/', '<span class="left-image editor-image">', $content);
+	$content = preg_replace('/\[caption.*aligncenter.*?\]/', '<span class="center-image editor-image">', $content);
+	$content = preg_replace('/\[\/caption\]/', '</span>', $content);
+
+	return $content;
+}
