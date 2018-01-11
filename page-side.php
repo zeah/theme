@@ -1,7 +1,6 @@
 <?php 
 /**
-	Template Name: With left Side Bar
-
+ Template Name: Single Column with Divs
 */
 
 get_header();

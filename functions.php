@@ -11,7 +11,7 @@ function remove_menus(){
   
   // remove_menu_page( 'index.php' );                  //Dashboard
   // remove_menu_page( 'jetpack' );                    //Jetpack* 
-  remove_menu_page( 'edit.php' );                   //Posts
+  // remove_menu_page( 'edit.php' );                   //Posts
   // remove_menu_page( 'upload.php' );                 //Media
   // remove_menu_page( 'edit.php?post_type=page' );    //Pages
   remove_menu_page( 'edit-comments.php' );          //Comments
@@ -25,8 +25,43 @@ function remove_menus(){
 add_action( 'admin_menu', 'remove_menus' );
 
 
-add_filter('manage_pages_columns', 'my_columns');
 
+function change_post_menu_label() {
+    global $menu;
+    global $submenu;
+    $menu[5][0] = 'Article';
+    $submenu['edit.php'][5][0] = 'Articles';
+    $submenu['edit.php'][10][0] = 'New Article';
+    $submenu['edit.php'][15][0] = 'Categories'; // Change name for categories
+    $submenu['edit.php'][16][0] = 'Tags'; // Change name for tags
+    echo '';
+}
+
+function change_post_object_label() {
+        global $wp_post_types;
+        $labels = &$wp_post_types['post']->labels;
+        $labels->name = 'Articles';
+        $labels->singular_name = 'Article';
+        $labels->add_new = 'New Article';
+        $labels->add_new_item = 'New Article';
+        $labels->edit_item = 'Edit Articles';
+        $labels->new_item = 'Article';
+        $labels->view_item = 'View Article';
+        $labels->search_items = 'Search Articles';
+        $labels->not_found = 'No Articles found';
+        $labels->not_found_in_trash = 'No Articles found in Trash';
+}
+add_action( 'init', 'change_post_object_label' );
+add_action( 'admin_menu', 'change_post_menu_label' );
+
+
+
+
+
+
+
+
+add_filter('manage_pages_columns', 'my_columns');
 function my_columns($columns) {
 
 	$link = get_admin_url().'edit.php?post_type=page&orderby=menu_order&order=';
@@ -112,7 +147,8 @@ function save_meta_em($post_id) {
 }
 
 function helper_save($id, $meta) {
-	update_post_meta($id, $meta, $_POST[$meta] ? sanitize_text_field($_POST[$meta]) : '');
+	if (isset($_POST[$meta]))
+		update_post_meta($id, $meta, sanitize_text_field($_POST[$meta]));
 }
 
 
@@ -220,3 +256,30 @@ function itsg_create_sitemap() {
     fwrite( $fp, $sitemap );
     fclose( $fp );
 }
+
+
+add_shortcode('col', 'sccolumns_callback');
+function sccolumns_callback($atts, $content = null) {
+
+	// $content = preg_replace('/\<p\>\<\/p\>/', '', $content);
+	// return '<xmp>'.$content.'</xmp>';
+	// return '<xmp>'.preg_replace('/^<\/.*>/', '',$content).'</xmp>';
+	// return $content;
+	// return print_r($atts, true);
+	// $content = trim($content);
+
+	// $content = preg_replace('/^<\/.*>/', 'test', $content);
+
+	foreach($atts as $key => $value) {
+		if ($value == 'left')
+			return '<div class="left">'.$content.'</div>';
+		if ($value == 'center')
+			return '<div class="center">'.$content.'</div>';
+		if ($value == 'right') {
+			return '<div class="right">'.$content.'</div>';
+		}
+
+	}
+
+}
+

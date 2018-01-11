@@ -3,7 +3,9 @@ Theme Name: EM Theme
 Version: 0.1
 
 */
-
+p:empty {
+	display: none;
+}
 /* HEADER */
 .nav-container {
 	background-image: linear-gradient(0deg, hsl(0, 0%, 15%), hsl(0, 0%, 10%) 50%, hsl(0, 0%, 15%) 90%);
