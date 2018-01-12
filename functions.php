@@ -274,27 +274,62 @@ function sccolumns_callback($atts, $content = null) {
 /* ARTICLES SHORTCODE */
 add_shortcode('articles', 'emarticles_callback');
 function emarticles_callback($atts, $content = null) {
-
-	$html = '<div><ul>';
 	$args = [
-		'post_type' => 'post'
-	];
-
+			'post_type' => 'post'
+		];
 	$query = new WP_Query($args);
+	$html = '';
+	// $html .= '<div><pre>'.print_r($query, true).'</pre></div>';
 
+	// $html .= '<div>'.sizeof($query->posts).'</div>'; 
+	$html .= '<div class="em-articles-container"><ul class="em-articles-list">';
+	
+	$p = [];
 	if ($query->have_posts())
 		while ($query->have_posts()) {
 			$query->the_post();
 
-			$html .= '<li>'.get_the_post_thumbnail().get_the_excerpt();
+			$temp = [
+				'title' => get_the_title(),
+				'content' => get_the_content(),
+				'thumbnail' => get_the_post_thumbnail_url(),
+				'excerpt' => get_the_excerpt(),
+				'url' => get_permalink()
+			];
+			array_push($p, $temp);
+			// $html .= '<li class="em-articles-listitem">'.get_the_post_thumbnail().'<div class="em-articles-excerpt">'.get_the_excerpt().'</div>';
 
 			// $html .= get_the_content();
 		}
 
 	wp_reset_postdata();
 
-	$html .= '</ul></div>';
+	if (sizeof($p) > 0) {
+		$html .= '<li class="em-articles-listitem em-articles-first"><a href="'.$p[0]['url'].'"><div><img src="'.$p[0]['thumbnail'].'" class="em-articles-thumbnail"></div><div class="em-articles-excerpt">'.$p[0]['excerpt'].'</div></a>';
+		// $html .= '<li class="em-articles-listitem em-articles-first"><div><a href="'.$p[0]['url'].'"><img src="'.$p[0]['thumbnail'].'" class="em-articles-thumbnail"></a></div><div class="em-articles-excerpt"><a href="'.$p[0]['url'].'">'.$p[0]['excerpt'].'</a></div>';
+		$html .= '<li class="em-articles-listitem em-articles-widget">widget here';
+	}
 
+	for ($i = 1; $i < sizeof($p); $i++) {
+		$html .= '<li class="em-articles-listitem"><a class="em-articles-link" href="'.$p[$i]['url'].'"><div><img src="'.$p[$i]['thumbnail'].'" class="em-articles-thumbnail"></div><div class="em-articles-excerpt">'.$p[$i]['excerpt'].'</div></a>';
+	}
+
+	$size = sizeof($p) - 1;
+	if ($size % 5 == 0)
+		$html .= '<li class="em-articles-listitem em-articles-empty">'.$size;
+
+	if ($size % 4 == 0)
+		$html .= '<li class="em-articles-listitem em-articles-empty"><li class="em-articles-listitem em-articles-empty">'.$size;
+	// if ($size % 4 == 0) {
+	// 	$html .= '<li class="em-articles-listitem>';
+	// 	$html .= '<li class="em-articles-listitem>';
+	// }
+	// if ($size % 5 == 0) {
+	// 	$html .= '<li class="em-articles-listitem>';
+	// }
+
+	$html .= '</ul></div>';
+	// $html .= '<div><pre>'.print_r($p, true).'</pre></div>';
 	return $html;
 }
 

@@ -3,6 +3,11 @@ Theme Name: EM Theme
 Version: 0.1
 
 */
+
+body {
+	background-color: hsl(10, 10%, 90%);
+}
+
 p:empty {
 	display: none;
 }
@@ -14,7 +19,7 @@ p:empty {
 	width: 100%;
 	left: 0;
 	right: 0;
-	top: 50px;
+	top: 132px;
 	padding: 0 !important;
 
 	border-bottom: 2px solid hsl(25, 100%, 60%);
@@ -44,7 +49,7 @@ p:empty {
 	line-height: 40px;
 	border-right: solid 1px hsl(0, 0%, 40%);
 	display: block;
-	max-width: 200px;
+	max-width: 250px;
 }
 
 .nav-item:hover {
@@ -72,11 +77,13 @@ p:empty {
 
 	text-decoration: none;
 	/*font-family: arial;*/
-	font-family: trebuchet ms;
+	font-family: arial;
+	/*font-family: trebuchet ms;*/
 	/*font-family: "Open Sans Condensed";*/
 	/*font: 700 17px/17px 'Open Sans Condensed', trebuchet ms;*/
-	font-size: 14px;
-	font-weight: bold;
+	font-size: 18px;
+	/*font-weight: bold;*/
+	/*text-transform: uppercase;*/
 	text-transform: capitalize;
 	color: hsl(0, 50%, 99%);
 }
@@ -87,16 +94,33 @@ p:empty {
 	color: hsl(0, 0%, 70%);
 }
 
+.sitename {
+	height: 100px;
+	background-color: white;
+	z-index: 1001;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	padding-top: 32px;
+	font-family: Verdana;
+	font-size: 40px;
+
+	line-height: 100px;
+	padding-left: 10%;
+}
+
 .main {
 	left: 0;
 	right: 0;
 	margin: auto;
-
-	margin-top: 80px;
-	max-width: 1200px;
-
-	padding: 0% 15%;
-
+	margin-top: 150px;
+	/*max-width: 1200px;*/
+	max-width: 70%;
+	padding: 10px 5%;
+	min-height: 100vh;
+	background-color: white;
+	box-shadow: 0px 0px 7px black;
 	/*height: 100vh;*/
 }
 
@@ -179,3 +203,62 @@ p:empty {
 	display: block;
 }
 
+/* ARTICLES SECTION */
+.em-articles-container {
+/*	margin: 0;
+	padding: 0;*/
+}
+
+.em-articles-list {
+	display: flex;
+	flex-wrap: wrap;
+/*	margin: 0;
+	padding: 0;*/
+	/*border: solid black 1px;*/
+}
+
+.em-articles-listitem {
+	/*height: 100px;*/
+	/*width: 33%;*/
+	/*grow: 1;*/
+	margin: 0% 2%;
+	flex-grow: 1;
+	flex-basis: 29%;
+	/*border: solid green 1px;*/
+	list-style: none;
+}
+
+.em-articles-link {
+	padding: 10px;
+}
+
+.em-articles-listitem:nth-child(2n + 3) {
+	background-color: hsl(160, 30%, 95%);
+}
+
+.em-articles-empty {
+	background-color: inherit !important;
+}
+
+.em-articles-thumbnail {
+	width: 94%;
+	margin: 0% 3%;
+	max-height: 200px;
+	/*border: solid black 1px;*/
+}
+
+.em-articles-first {
+	/*width: 66%;*/
+	flex-grow: 2;
+	flex-basis: 62%;
+}
+
+.em-articles-widget {
+	/*border: solid red 1px;*/
+	/*margin: 2px;*/
+}
+
+.em-articles-excerpt {
+	padding: 15px;
+	/*border: solid black 1px;*/
+}
