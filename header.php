@@ -8,7 +8,7 @@ echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 
 global $post;
 $meta = get_post_meta($post->ID, 'emtext');
-if (isset($meta[0]))
+if (isset($meta[0]) && $meta[0] != '')
 	echo '<meta name="description" content="'.$meta[0].'">';
 
 
