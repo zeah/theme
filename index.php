@@ -24,8 +24,8 @@ while (have_posts()) {
 	$html .= '<div class="content';
 	if (!(strpos($content, '[col') === false))
 		$html .= ' content-3';
-	$html .= '">'.apply_filters('the_content', do_shortcode(get_the_content())).'</div>';
-	// $html .= '">'.apply_filters('the_content', do_shortcode(get_the_content())).'</div>';
+	// $html .= '">'.do_shortcode(wpautop(do_shortcode($content))).'</div>';
+	$html .= '">'.apply_filters('the_content', get_the_content()).'</div>';
 
 	$html .= '</div>';
 

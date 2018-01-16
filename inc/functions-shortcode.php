@@ -7,6 +7,10 @@ final class EmThemeShortcode {
 	}
 
 	public static function columns_callback($atts, $content = null) {
+
+		/* shortcode strips shortcode, even unrelated that is in content */
+		$content = do_shortcode($content);
+
 		foreach($atts as $key => $value) {
 			if ($value == 'left')
 				return '<div class="left">'.$content.'</div>';

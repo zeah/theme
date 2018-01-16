@@ -1,6 +1,6 @@
 /*
 Theme Name: EM Theme
-Version: 0.2
+Version: 0.3
 
 */
 
@@ -119,12 +119,15 @@ p:empty {
 }
 
 .main {
+	position: absolute;
 	left: 0;
 	right: 0;
+	top: 0;
 	margin: auto;
-	margin-top: 150px;
+	margin-top: 185px;
 	/*max-width: 1200px;*/
-	max-width: 900px;
+	max-width: 1060px;
+	/*max-width: 900px;*/
 	padding: 10px 30px;
 	min-height: 100vh;
 	background-color: white;
@@ -132,6 +135,7 @@ p:empty {
 	/*height: 100vh;*/
 
 	padding-bottom: 20%;
+	z-index: -1;
 }
 
 .content-title {
@@ -168,7 +172,7 @@ p:empty {
 	order: 3;
 
 	position: sticky;
-  	top: 40px;
+  	top: 60px;
   	align-self: flex-start;
 }
 
@@ -226,6 +230,10 @@ p:empty {
 	/*margin: 0;*/
 	padding: 0;
 	/*border: solid black 1px;*/
+	width: 900px;
+	margin: auto;
+	left: 0;
+	right: 0;
 }
 
 .em-articles-listitem {
@@ -287,7 +295,8 @@ p:empty {
 .em-articles-thumbnail {
 	/*background-repeat: no-repeat;*/
 	/*position: relative;*/
-	width: 95%;
+	/*width: 95%;*/
+	width: 260px;
 	display: block;
 	margin: auto;
 	padding-top: 5px;
