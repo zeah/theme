@@ -20,6 +20,7 @@ else
 
 echo '</head><body>';
 
+echo '<div class="topstuff"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div>';
 // show_admin_bar(true);
 
 // start of top menu html element

@@ -23,7 +23,7 @@ final class EmPage {
 
 	/* <META> DESCRIPTION META BOX */
 	public static function meta_box_description() {
-		add_meta_box( 'meta-description-opt', 'Meta Description', array('EmPage', 'meta_box_desc_html'), 'page', 'advanced', 'high');
+		add_meta_box( 'meta-description-opt', 'Meta Description', array('EmPage', 'meta_box_desc_html'), array('page', 'post'), 'advanced', 'high');
 	}
 	public static function meta_box_desc_html() {
 		echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.getmeta('emtext').'</textarea>';
@@ -31,7 +31,7 @@ final class EmPage {
 
 	/* <TITLE> META BOX */
 	public static function meta_box_title() {
-		 add_meta_box( 'title-opt', 'Page Title', array('EmPage', 'meta_box_title_html'), 'page', 'advanced', 'high');
+		 add_meta_box( 'title-opt', 'Page Title', array('EmPage', 'meta_box_title_html'), array('page', 'post'), 'advanced', 'high');
 	}
 	public static function meta_box_title_html() {
 		echo '<input type="text" name="emtitle" style="width: 100%" value="'.getmeta('emtitle').'">';
@@ -39,7 +39,7 @@ final class EmPage {
 
 	/* <SCRIPT> JSON-LD structured data (used in footer.php) */
 	public static function meta_box_structureddata() {
-		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array('EmPage', 'meta_box_structureddata_html'), 'page', 'advanced', 'high');
+		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array('EmPage', 'meta_box_structureddata_html'), array('page', 'post'), 'advanced', 'high');
 	}
 	public static function meta_box_structureddata_html() {
 		echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.getmeta('emstrucdata').'</textarea>';

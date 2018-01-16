@@ -10,9 +10,13 @@ while (have_posts()) {
 
 	$postid = get_the_ID(); // to be used in footer.php
 
-	$html = '<div class="sitename">'.preg_replace('/.*\/\//', '', get_site_url()).'</div>';
+	// $html = '<div class="topstuff"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div>';
+	// $html .= '<div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div>';
+	// $html = '<div class="sitename">'.preg_replace('/.*\/\//', '', get_site_url()).'</div>';
 
-	$html .= '<div class="main">';
+	$html = '<div class="main">';
+
+	if ( ! is_front_page())
 	$html .= '<div class="content-title"><h1>'.get_the_title().'</h1></div>';
 
 	$content = get_the_content();
