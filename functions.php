@@ -2,10 +2,12 @@
 require_once 'inc/functions-admin.php';
 require_once 'inc/functions-page.php';
 require_once 'inc/functions-shortcode.php';
+require_once 'inc/themeoptions.php';
 
 EmAdmin::init();
 EmPage::init();
 EmThemeShortCode::init();
+EmOptions::init();
 
 add_action('wp_enqueue_scripts', 'addingStyleResource');
 function addingStyleResource() {
