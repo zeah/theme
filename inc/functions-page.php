@@ -6,6 +6,8 @@ final class EmPage {
 		add_action('add_meta_boxes', array('EmPage', 'meta_box_description'));
 		add_action('add_meta_boxes', array('EmPage', 'meta_box_title'));
 		add_action('add_meta_boxes', array('EmPage', 'meta_box_structureddata'));
+
+		add_action('save_post', array('EmPage', 'save_meta_em'));
 	}
 
 	/* TO SHOW OR NOT TO SHOW PAGE IN NAVIGATION MENU ON FRONT-END */
@@ -13,6 +15,8 @@ final class EmPage {
     	add_meta_box( 'navigation-opt', 'Navigation', array('EmPage', 'meta_box_nav_html'), 'page', 'side' );
 	}
 	public static function meta_box_nav_html() {
+		wp_nonce_field( basename(__FILE__), 'em_nonce' );
+
 		$inputs = ['Navigation' => 'showinnav', 'Mobile Navigation' => 'showinmob'];
 		
 		$html = '';
@@ -43,6 +47,36 @@ final class EmPage {
 	}
 	public static function meta_box_structureddata_html() {
 		echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.getmeta('emstrucdata').'</textarea>';
+	}
+
+	/* saving page stuff */
+	public static function save_meta_em($post_id) {
+
+		if ( ! isset($_POST['em_nonce']))
+			return;
+		if ( ! wp_verify_nonce( $_POST['em_nonce'], basename(__FILE__)))
+			return;
+
+		$metabox = ['emtext', 'emtitle', 'emstrucdata'];
+		$metainput = ['showinnav', 'showinmob'];
+
+		foreach ($metabox as $value)
+			EmPage::helper_save($post_id, $value);
+		
+		foreach ($metainput as $value) {
+			if (isset($_POST[$value]))
+				EmPage::helper_save($post_id, $value);
+			else
+				EmPage::helper_save($post_id, $value, '');
+		}
+	}
+
+	public static function helper_save($id, $meta, $data = null) {
+		if ($data !== null) {
+			update_post_meta($id, $meta, sanitize_text_field($data));
+		}
+		else if (isset($_POST[$meta]))
+			update_post_meta($id, $meta, sanitize_text_field($_POST[$meta]));
 	}
 
 }

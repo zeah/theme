@@ -13,7 +13,7 @@ final class EmAdmin {
 		add_filter('manage_pages_columns', array('EmAdmin', 'my_custom_pages_columns'));
 
 
-		add_action('save_post', array('EmAdmin', 'save_meta_em'));
+		// add_action('save_post', array('EmAdmin', 'save_meta_em'));
 	}
 
 	/* changes admin menu apperance from "post" to "article" */
@@ -86,27 +86,27 @@ final class EmAdmin {
 	}
 
 	/* save function */
-	public static function save_meta_em($post_id) {
-		$metabox = ['emtext', 'emtitle', 'emstrucdata'];
-		$metainput = ['showinnav', 'showinmob'];
+	// public static function save_meta_em($post_id) {
+	// 	$metabox = ['emtext', 'emtitle', 'emstrucdata'];
+	// 	$metainput = ['showinnav', 'showinmob'];
 
-		foreach ($metabox as $value)
-			EmAdmin::helper_save($post_id, $value);
+	// 	foreach ($metabox as $value)
+	// 		EmAdmin::helper_save($post_id, $value);
 		
-		foreach ($metainput as $value) {
-			if (isset($_POST[$value]))
-				EmAdmin::helper_save($post_id, $value);
-			else
-				EmAdmin::helper_save($post_id, $value, '');
-		}
-	}
+	// 	foreach ($metainput as $value) {
+	// 		if (isset($_POST[$value]))
+	// 			EmAdmin::helper_save($post_id, $value);
+	// 		else
+	// 			EmAdmin::helper_save($post_id, $value, '');
+	// 	}
+	// }
 
-	public static function helper_save($id, $meta, $data = null) {
-		if ($data !== null) {
-			update_post_meta($id, $meta, sanitize_text_field($data));
-		}
-		else if (isset($_POST[$meta]))
-			update_post_meta($id, $meta, sanitize_text_field($_POST[$meta]));
-	}
+	// public static function helper_save($id, $meta, $data = null) {
+	// 	if ($data !== null) {
+	// 		update_post_meta($id, $meta, sanitize_text_field($data));
+	// 	}
+	// 	else if (isset($_POST[$meta]))
+	// 		update_post_meta($id, $meta, sanitize_text_field($_POST[$meta]));
+	// }
 
 }

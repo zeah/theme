@@ -15,12 +15,15 @@ p:empty {
 /* HEADER */
 .nav-container {
 	background-image: linear-gradient(0deg, hsl(0, 0%, 15%), hsl(0, 0%, 10%) 50%, hsl(0, 0%, 15%) 90%);
-	position: absolute;
+/*	position: absolute;
 	width: 100%;
 	left: 0;
 	right: 0;
-	top: 132px;
+	top: 132px;*/
 	padding: 0 !important;
+	position: relative;
+	bottom: 8px;
+	margin: 0px -8px;
 
 	border-bottom: 2px solid hsl(25, 100%, 60%);
 }
@@ -97,42 +100,48 @@ p:empty {
 }
 
 .topstuff {
-	height: 100px;
+	padding: 20px 0;
+	/*height: 80px;*/
 	background-color: white;
-	position: absolute;
+	position: relative;
+	bottom: 8px;
+	margin: 0px -8px;
+	/*position: absolute;
 	left: 0;
 	right: 0;
-	top: 0;
-	padding-top: 32px;
+	top: 0;*/
+	/*padding-top: 32px;*/
 	padding-left: 10%;
 	font-family: Verdana;
 }
 
 .sitename {
 	font-size: 40px;
-	height: 60px;
-	line-height: 60px;
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	/*border: solid 1px black;*/
 }
 .tagline {
 	font-size: 14px;
 	padding-left: 20px;
+	/*border: solid 1px black;*/
 }
 
 .main {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
+	/*position: absolute;*/
+	/*left: 0;
+	right: 0;*/
+	/*top: 0;*/
 	margin: auto;
-	margin-top: 185px;
+	/*margin-top: 155px;*/
 	/*max-width: 1200px;*/
 	max-width: 1060px;
 	/*max-width: 900px;*/
 	padding: 10px 30px;
-	min-height: 100vh;
+	/*min-height: 50vh;*/
 	background-color: white;
 	box-shadow: 0px 0px 7px black;
-	/*height: 100vh;*/
+	height: 100vh;
 
 	padding-bottom: 20%;
 	z-index: -1;
@@ -333,4 +342,70 @@ p:empty {
 .em-articles-excerpt {
 	padding: 5px 10px;
 	display: block;
+}
+
+.em-footer {
+	position: relative;
+	top: 8px;
+	/*bottom: 0;
+	left: 0;
+	right: 0;*/
+	/*margin-top: 50px;*/
+	margin: 50px -8px 0 -8px;
+	min-height: 150px;
+	background-color: hsl(0, 0%, 0%);
+	color: white;
+
+	box-shadow: 0px 0px 3px black;
+	display: flex;
+	justify-content: space-evenly;
+
+	padding: 20px;
+	margin-bottom: 20px;
+
+	text-transform: capitalize;
+	font-size: 12px;
+	font-family: verdana;
+}
+
+.em-footer-ul {
+	-webkit-padding-start: 0;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+}
+
+.em-footer-listitem {
+	padding: none;
+	margin: none;
+	list-style: none;
+}
+
+.em-footer-epost {
+	text-transform: lowercase;
+}
+.em-socialmedia-container:before,
+.em-aboutus-container:before,
+.em-contact-container:before {
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.em-contact-container:before {
+	content: 'Kontakt';
+}
+
+.em-aboutus-container:before {
+	content: 'Om Oss';
+}
+
+.em-socialmedia-container:before {
+	content: 'Sosiale Medier';
+}
+
+.em-socialmedia-container,
+.em-contact-container,
+.em-aboutus-container {
+	flex-basis: 20%;
+	/*border: solid 1px white;*/
 }
