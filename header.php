@@ -20,7 +20,13 @@ else
 
 echo '</head><body>';
 
-echo '<div class="topstuff"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div>';
+echo '<div class="topstuff">';
+if (is_active_sidebar('emtheme-logo')) {
+	echo '<div class="emtheme-logo">';
+	dynamic_sidebar('emtheme-logo');
+	echo '</div>';
+}
+echo '<div class="topstuff-text"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div></div>';
 // show_admin_bar(true);
 
 // start of top menu html element
@@ -31,6 +37,7 @@ $nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://s
 // parameters for page search in database
 $args = [
 	'sort_order' => 'desc',
+	// 'orderby' => 'menu_order',
 	'sort_column' => 'menu_order',
 	'post_status' => 'publish'
 ];
@@ -52,7 +59,7 @@ foreach (get_pages($args) as $key => $value) {
 
 	// checking if to include page in nav menu
 	$meta = get_post_meta($value->ID, 'showinnav');
-	if (isset($meta[0]) && $meta[0] == 1)
+	if (isset($meta[0]) && $meta[0] == 'on')
 		continue;
 
 	// adding to top menu layer to layout

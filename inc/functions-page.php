@@ -75,8 +75,16 @@ final class EmPage {
 		if ($data !== null) {
 			update_post_meta($id, $meta, sanitize_text_field($data));
 		}
-		else if (isset($_POST[$meta]))
-			update_post_meta($id, $meta, sanitize_text_field($_POST[$meta]));
+		else if (isset($_POST[$meta])) {
+			if ($meta == 'emstrucdata') {
+				$temp = $_POST[$meta];
+				$temp = preg_replace('/=/', '', $temp);
+				$temp = preg_replace('/function/', '', $temp);
+				update_post_meta($id, $meta, sanitize_text_field($temp));
+			}
+			else
+				update_post_meta($id, $meta, sanitize_text_field($_POST[$meta]));
+		}
 	}
 
 }

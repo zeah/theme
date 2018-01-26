@@ -5,52 +5,57 @@ final class EmAdmin {
 	public static function init() {
 		add_theme_support( 'post-thumbnails' );
 
-		add_action('init', array('EmAdmin', 'change_post_object_label'));
-		add_action('admin_menu', array('EmAdmin', 'change_post_menu_label'));
+		// add_action('init', array('EmAdmin', 'change_post_object_label'));
+		// add_action('admin_menu', array('EmAdmin', 'change_post_menu_label'));
 		add_action('admin_menu', array('EmAdmin', 'remove_menus'));
 		add_filter('manage_pages_columns', array('EmAdmin', 'my_columns'));
 		add_action('manage_pages_custom_column',  array('EmAdmin', 'my_show_columns'));
 		add_filter('manage_pages_columns', array('EmAdmin', 'my_custom_pages_columns'));
 
-
+		add_action('widgets_init', array('EmAdmin', 'register_widget'));
 		// add_action('save_post', array('EmAdmin', 'save_meta_em'));
 	}
 
 	/* changes admin menu apperance from "post" to "article" */
-	public static function change_post_menu_label() {
-	    global $menu;
-	    global $submenu;
-	    $menu[5][0] = 'Article';
-	    $submenu['edit.php'][5][0] = 'Articles';
-	    $submenu['edit.php'][10][0] = 'New Article';
-	    $submenu['edit.php'][15][0] = 'Categories'; // Change name for categories
-	    $submenu['edit.php'][16][0] = 'Tags'; // Change name for tags
-	    // echo '';
-	}
+	// public static function change_post_menu_label() {
+	//     global $menu;
+	//     global $submenu;
+	//     $menu[5][0] = 'Article';
+	//     $submenu['edit.php'][5][0] = 'Articles';
+	//     $submenu['edit.php'][10][0] = 'New Article';
+	//     $submenu['edit.php'][15][0] = 'Categories'; // Change name for categories
+	//     $submenu['edit.php'][16][0] = 'Tags'; // Change name for tags
+	//     // echo '';
+	// }
 
-	/* changes apperance in article pages in admin */
-	public static function change_post_object_label() {
-	        global $wp_post_types;
-	        $labels = &$wp_post_types['post']->labels;
-	        $labels->name = 'Articles';
-	        $labels->singular_name = 'Article';
-	        $labels->add_new = 'New Article';
-	        $labels->add_new_item = 'New Article';
-	        $labels->edit_item = 'Edit Articles';
-	        $labels->new_item = 'Article';
-	        $labels->view_item = 'View Article';
-	        $labels->search_items = 'Search Articles';
-	        $labels->not_found = 'No Articles found';
-	        $labels->not_found_in_trash = 'No Articles found in Trash';
-	}
+	// /* changes apperance in article pages in admin */
+	// public static function change_post_object_label() {
+	//         global $wp_post_types;
+	//         $labels = &$wp_post_types['post']->labels;
+	//         $labels->name = 'Articles';
+	//         $labels->singular_name = 'Article';
+	//         $labels->add_new = 'New Article';
+	//         $labels->add_new_item = 'New Article';
+	//         $labels->edit_item = 'Edit Articles';
+	//         $labels->new_item = 'Article';
+	//         $labels->view_item = 'View Article';
+	//         $labels->search_items = 'Search Articles';
+	//         $labels->not_found = 'No Articles found';
+	//         $labels->not_found_in_trash = 'No Articles found in Trash';
+	// }
 	
 	/* removes comments in admin menu */
 	public static function remove_menus(){
-	  remove_menu_page( 'edit-comments.php' );          //Comments
+	  	remove_menu_page( 'edit-comments.php' );          //Comments
+  		remove_menu_page( 'edit.php' );                   //Posts
 	}
 	
 	/* making menu order sortable */
 	public static function my_columns($columns) {
+
+		$screen = get_current_screen();
+		if ($screen->id != 'edit-page')
+			return $columns;
 
 		$link = get_admin_url().'edit.php?post_type=page&orderby=menu_order&order=';
 
@@ -63,6 +68,7 @@ final class EmAdmin {
 		else 
 			$link .= 'desc';		
 
+	    // $columns['menu_order'] = '<a href="'.$link.'">'.$screen->id.'</a>';
 	    $columns['menu_order'] = '<a href="'.$link.'">Order</a>';
 	    return $columns;
 	}
@@ -80,9 +86,16 @@ final class EmAdmin {
 	}
 
 	/* remove comments column */
-	function my_custom_pages_columns( $columns ) {
+	public static function my_custom_pages_columns( $columns ) {
 		unset($columns['comments']);
 		return $columns;
+	}
+
+	public static function register_widget() {
+		register_sidebar(array(
+			'name' => 'logo',
+			'id' => 'emtheme-logo'
+		));
 	}
 
 	/* save function */

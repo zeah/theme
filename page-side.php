@@ -1,6 +1,7 @@
 <?php 
 /**
- Template Name: Forced Single Column
+ Template Name: Ignore flexbox
+ Template Post Type: article, page
 */
 
 get_header();
@@ -11,7 +12,7 @@ while (have_posts()) {
 
 	$postid = get_the_ID(); // to be used in footer.php
 	// $html = '<div class="sitename">'.preg_replace('/.*\/\//', '', get_site_url()).'</div>';
-	$html .= '<div class="main">';
+	$html = '<div class="main">';
 	$html .= '<div class="content-title"><h1>'.get_the_title().'</h1></div>';
 
 	$content = get_the_content();
