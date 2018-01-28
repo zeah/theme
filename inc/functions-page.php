@@ -8,6 +8,25 @@ final class EmPage {
 		add_action('add_meta_boxes', array('EmPage', 'meta_box_structureddata'));
 
 		add_action('save_post', array('EmPage', 'save_meta_em'));
+
+		add_filter('wp_head', array('EmPage', 'add_head'));
+		add_filter('wp_footer', array('EmPage', 'add_footer'));
+	}
+
+	public static function add_head() {
+		global $post;
+		if ($post->post_type == 'page') {
+			echo getmeta('emtext') ? '<meta name="description" content="'.getmeta('emtext').'">' : '';
+			echo getmeta('emtitle') ? '<title>'.getmeta('emtitle').'</title>' : '';
+		}
+	}
+
+	public static function add_footer() {
+		global $post;
+		if ($post->post_type == 'page') {
+			// echo getmeta('emstrucdata') ? '<script type="application/ld+json">'.json_encode(getmeta('emstrucdata')).'</script>' : '';
+			echo getmeta('emstrucdata') ? '<script type="application/ld+json">'.json_encode(json_decode(getmeta('emstrucdata'))).'</script>' : '';
+		}
 	}
 
 	/* TO SHOW OR NOT TO SHOW PAGE IN NAVIGATION MENU ON FRONT-END */
@@ -46,12 +65,17 @@ final class EmPage {
 		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array('EmPage', 'meta_box_structureddata_html'), array('page', 'post'), 'advanced', 'high');
 	}
 	public static function meta_box_structureddata_html() {
-		echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.getmeta('emstrucdata').'</textarea>';
+		if (json_decode(getmeta('emstrucdata')))
+			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.json_encode(json_decode(getmeta('emstrucdata')), JSON_PRETTY_PRINT).'</textarea>';
+		else
+			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.getmeta('emstrucdata').'</textarea>';
 	}
 
 	/* saving page stuff */
 	public static function save_meta_em($post_id) {
 
+		if ( ! current_user_can( 'edit_posts' ))
+			return;
 		if ( ! isset($_POST['em_nonce']))
 			return;
 		if ( ! wp_verify_nonce( $_POST['em_nonce'], basename(__FILE__)))

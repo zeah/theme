@@ -39,9 +39,9 @@ $html .= get_option('em_omoss') ? '<div class="em-aboutus-container">'.preg_repl
 $html .= '</div>';
 echo $html;
 
-global $postid;
-$meta = get_post_meta($postid, 'emstrucdata');
-if (isset($meta[0]) && $meta[0] != '')
-	echo '<script type="application/ld+json">'.json_encode(json_decode($meta[0])).'</script>';
+// global $postid;
+// $meta = get_post_meta($postid, 'emstrucdata');
+// if (isset($meta[0]) && $meta[0] != '')
+// 	echo '<script type="application/ld+json">'.json_encode(json_decode($meta[0])).'</script>';
 wp_footer(); ?>
 </body></html>

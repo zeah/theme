@@ -4,21 +4,21 @@
 echo '<!DOCTYPE html><html lang="no"><head>';
 wp_head();
 // echo '<link rel="icon" href="https://kredittkort-listen.no/wp-content/uploads/2016/03/cropped-kredittkort-listen-2-copy-32x32.jpg">';
-echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
 
-global $post;
-$meta = get_post_meta($post->ID, 'emtext');
-if (isset($meta[0]) && $meta[0] != '')
-	echo '<meta name="description" content="'.$meta[0].'">';
+// global $post;
+// $meta = get_post_meta($post->ID, 'emtext');
+// if (isset($meta[0]) && $meta[0] != '')
+// 	echo '<meta name="description" content="'.$meta[0].'">';
 
 
-$meta = get_post_meta($post->ID, 'emtitle');
-if (isset($meta[0]) && $meta[0] != '')
-	echo '<title>'.$meta[0].'</title>';
-else
-	echo '<title>'.get_the_title($post).'</title>';
+// $meta = get_post_meta($post->ID, 'emtitle');
+// if (isset($meta[0]) && $meta[0] != '')
+// 	echo '<title>'.$meta[0].'</title>';
+// else
+// 	echo '<title>'.get_the_title($post).'</title>';
 
-echo '</head><body>';
+// echo '</head><body>';
 
 echo '<div class="topstuff">';
 if (is_active_sidebar('emtheme-logo')) {
@@ -29,6 +29,10 @@ if (is_active_sidebar('emtheme-logo')) {
 echo '<div class="topstuff-text"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div></div>';
 // show_admin_bar(true);
 
+// $top = '<div class="topstuff">';
+// if (is_active_sidebar('emthemelogo'))
+// 	$top .= '<div class="emtheme-logo">';
+
 // start of top menu html element
 // $nav = '<div class="nav-container"><div class="nav">';
 $nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
@@ -37,7 +41,6 @@ $nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://s
 // parameters for page search in database
 $args = [
 	'sort_order' => 'desc',
-	// 'orderby' => 'menu_order',
 	'sort_column' => 'menu_order',
 	'post_status' => 'publish'
 ];
@@ -50,12 +53,10 @@ class Nav {
 }
 
 $mobile = wp_is_mobile();
+
 // sorting pages into iterator with correct layout
 $titles = array();
 foreach (get_pages($args) as $key => $value) {
-
-	// echo '<p>'.get_page_link($value->ID);
-	// print_r($value);
 
 	// checking if to include page in nav menu
 	$meta = get_post_meta($value->ID, 'showinnav');
@@ -87,8 +88,6 @@ foreach (get_pages($args) as $key => $value) {
 		array_push($item->children, ['title' => $value->post_title, 'link' => get_page_link($value->ID)]);
 	}
 }
-
-// print_r($titles[2256]);
 
 // adding html
 foreach ($titles as $key => $value) {
