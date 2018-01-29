@@ -3,15 +3,17 @@
 final class EmOptions {
 	public static function init() {
 		add_action('admin_menu', array('EmOptions', 'add_options_menu'));
-		add_action( 'admin_init', array('EmOptions', 'initSetting') );
+		add_action( 'admin_init', array('EmOptions', 'initContact') );
+		add_action( 'admin_init', array('EmOptions', 'initForside') );
 	}
 
 	public static function add_options_menu() {
 		add_menu_page('EmTheme Options', 'EM Options', 'manage_options', 'em-options-page', array('EmOptions', 'em_options_callback'), '', 61);
 		add_submenu_page( 'em-options-page', 'Kontakt Informasjon', 'Kontakt', 'manage_options', 'em-contact-page', array('EmOptions', 'em_contact_callback') );
+		add_submenu_page( 'em-options-page', 'Forside Settings', 'Forside', 'manage_options', 'em-forside-page', array('EmOptions', 'em_forside_callback') );
 	}
 
-	public static function initSetting() {
+	public static function initContact() {
 		$args = [
 			'sanitize_callback' => array('EmOptions', 'san_callback')
 		];
@@ -133,4 +135,107 @@ final class EmOptions {
 		// echo '</form>';
 		// echo 'dklfj '.basename(__FILE__);
 	}
+
+
+	public static function initForside() {
+		$args = [
+					'sanitize_callback' => array('EmOptions', 'san_callback')
+				];
+		
+		register_setting('em_options_forside', 'em_monday', $args);
+		register_setting('em_options_forside', 'em_monday_time_start', $args);
+		register_setting('em_options_forside', 'em_monday_time_end', $args);
+
+		register_setting('em_options_forside', 'em_tuesday', $args);
+		register_setting('em_options_forside', 'em_tuesday_time_start', $args);
+		register_setting('em_options_forside', 'em_tuesday_time_end', $args);
+
+		register_setting('em_options_forside', 'em_wednesday', $args);
+		register_setting('em_options_forside', 'em_wednesday_time_start', $args);
+		register_setting('em_options_forside', 'em_wednesday_time_end', $args);
+
+		register_setting('em_options_forside', 'em_thursday', $args);
+		register_setting('em_options_forside', 'em_thursday_time_start', $args);
+		register_setting('em_options_forside', 'em_thursday_time_end', $args);
+
+		register_setting('em_options_forside', 'em_friday', $args);
+		register_setting('em_options_forside', 'em_friday_time_start', $args);
+		register_setting('em_options_forside', 'em_friday_time_end', $args);
+
+		register_setting('em_options_forside', 'em_saturday', $args);
+		register_setting('em_options_forside', 'em_saturday_time_start', $args);
+		register_setting('em_options_forside', 'em_saturday_time_end', $args);
+
+		register_setting('em_options_forside', 'em_sunday', $args);
+		register_setting('em_options_forside', 'em_sunday_time_start', $args);
+		register_setting('em_options_forside', 'em_sunday_time_end', $args);
+
+		add_settings_section( 'em_forside_settings', 'Til hva tider skal forsiden vise', array('EmOptions', 'em_settings_callback'), 'em-forside-page' );
+		add_settings_field( 'em-monday', 'Monday', array('EmOptions', 'monday_callback'), 'em-forside-page', 'em_forside_settings' );
+		add_settings_field( 'em-tuesday', 'Tuesday', array('EmOptions', 'tuesday_callback'), 'em-forside-page', 'em_forside_settings' );
+		add_settings_field( 'em-wednesday', 'Wednesday', array('EmOptions', 'wednesday_callback'), 'em-forside-page', 'em_forside_settings' );
+		add_settings_field( 'em-thursday', 'Thursday', array('EmOptions', 'thursday_callback'), 'em-forside-page', 'em_forside_settings' );
+		add_settings_field( 'em-friday', 'Friday', array('EmOptions', 'friday_callback'), 'em-forside-page', 'em_forside_settings' );
+		add_settings_field( 'em-saturday', 'Saturday', array('EmOptions', 'saturday_callback'), 'em-forside-page', 'em_forside_settings' );
+		add_settings_field( 'em-sunday', 'Sunday', array('EmOptions', 'sunday_callback'), 'em-forside-page', 'em_forside_settings' );
+
+	}
+
+	public static function em_forside_callback() {
+		echo '<form action="options.php" method="POST">';
+		settings_fields('em_options_forside');
+		do_settings_sections('em-forside-page');
+		// do_settings_sections('em_social_options');
+		submit_button('save');
+		echo '</form>';
+	}
+
+	public static function time_helper($id) {
+		$time = ['0000', '0100', '0200', '0300', '0400', '0500', '0600', '0700', '0800', '0900', '1000', '1100', '1200', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300', '0000'];
+
+		$html = '<select name="'.$id.'">';
+
+		$set = get_option($id);
+
+		foreach($time as $t) {
+			$found = false;
+			if ($t == $set)
+				$found = true;
+
+			$html .= '<option value="'.$t.'"'.($found ? 'selected' : '').'>'.$t.'</option>';
+		}
+
+		$html .= '</select>';
+
+		return $html;
+	}
+
+	public static function monday_callback() {
+		echo '<input type="checkbox" name="em_monday" '.(get_option('em_monday') ? 'checked' : '').'>'.EmOptions::time_helper('em_monday_time_start').EmOptions::time_helper('em_monday_time_end');
+	}
+
+	public static function tuesday_callback() {
+		echo '<input type="checkbox" name="em_tuesday" '.(get_option('em_tuesday') ? 'checked' : '').'>'.EmOptions::time_helper('em_tuesday_time_start').EmOptions::time_helper('em_tuesday_time_end');
+	}
+
+	public static function wednesday_callback() {
+		echo '<input type="checkbox" name="em_wednesday" '.(get_option('em_wednesday') ? 'checked' : '').'>'.EmOptions::time_helper('em_wednesday_time_start').EmOptions::time_helper('em_wednesday_time_end');
+	}
+
+	public static function thursday_callback() {
+		echo '<input type="checkbox" name="em_thursday" '.(get_option('em_thursday') ? 'checked' : '').'>'.EmOptions::time_helper('em_thursday_time_start').EmOptions::time_helper('em_thursday_time_end');
+	}
+
+	public static function friday_callback() {
+		echo '<input type="checkbox" name="em_friday" '.(get_option('em_friday') ? 'checked' : '').'>'.EmOptions::time_helper('em_friday_time_start').EmOptions::time_helper('em_friday_time_end');
+	}
+
+	public static function saturday_callback() {
+		echo '<input type="checkbox" name="em_saturday" '.(get_option('em_saturday') ? 'checked' : '').'>'.EmOptions::time_helper('em_saturday_time_start').EmOptions::time_helper('em_saturday_time_end');
+	}
+
+	public static function sunday_callback() {
+		echo '<input type="checkbox" name="em_sunday" '.(get_option('em_sunday') ? 'checked' : '').'>'.EmOptions::time_helper('em_sunday_time_start').EmOptions::time_helper('em_sunday_time_end');
+	}
+		
 }

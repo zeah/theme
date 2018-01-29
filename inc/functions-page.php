@@ -25,7 +25,8 @@ final class EmPage {
 		global $post;
 		if ($post->post_type == 'page') {
 			// echo getmeta('emstrucdata') ? '<script type="application/ld+json">'.json_encode(getmeta('emstrucdata')).'</script>' : '';
-			echo getmeta('emstrucdata') ? '<script type="application/ld+json">'.json_encode(json_decode(getmeta('emstrucdata'))).'</script>' : '';
+			
+			echo json_decode(getmeta('emstrucdata')) ? '<script type="application/ld+json">'.json_encode(json_decode(getmeta('emstrucdata'))).'</script>' : '';
 		}
 	}
 

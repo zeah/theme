@@ -1,6 +1,6 @@
 <?php 
 
-$html = '<div class="em-footer">';
+$html = '<div class="em-footer"><div class="em-inner-footer">';
 
 $html .= '<div class="em-socialmedia-container"><ul class="em-footer-ul">';
 
@@ -36,7 +36,7 @@ $html .= '</ul></div>';
 $html .= get_option('em_omoss') ? '<div class="em-aboutus-container">'.preg_replace('/\[p\]/', '<p>', sanitize_text_field(get_option('em_omoss'))).'</div>' : '';
 
 
-$html .= '</div>';
+$html .= '</div></div>';
 echo $html;
 
 // global $postid;
