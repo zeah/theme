@@ -106,8 +106,8 @@ foreach ($titles as $key => $value) {
 	if (sizeof($value->children) > 0) {
 		$nav .= '<div class="nav-dropdown">';
 		foreach ($value->children as $k => $v)
-			$nav .= '<div class="nav-item"><a href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke">'.$v['title'].'</a></div>';
-			$nav .= '<div class="nav-item"><a itemprop="url" href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke"><meta itemprop="name" content="'.$v['title'].'">'.$v['title'].'</a></div>';
+			$nav .= '<div class="nav-item nav-dropdown-item"><a href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke">'.$v['title'].'</a></div>';
+			// $nav .= '<div class="nav-item"><a itemprop="url" href="'.$v['link'].'" class="menu-lenke menu-dropdown-lenke"><meta itemprop="name" content="'.$v['title'].'">'.$v['title'].'</a></div>';
 		$nav .= '</div>';
 	}
 

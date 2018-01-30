@@ -11,6 +11,12 @@ final class EmPage {
 
 		add_filter('wp_head', array('EmPage', 'add_head'));
 		add_filter('wp_footer', array('EmPage', 'add_footer'));
+
+		add_action('do_meta_boxes', array('EmPage', 'remove_thumbnail'));
+	}
+
+	public static function remove_thumbnail() {
+		remove_meta_box('postimagediv', 'page', 'none');
 	}
 
 	public static function add_head() {

@@ -1,47 +1,51 @@
 <?php 
-
 $html = '<div class="em-footer"><div class="em-inner-footer">';
 
-$html .= '<div class="em-socialmedia-container"><ul class="em-footer-ul">';
+// social media column
+if (get_option('em_social_active')) {
+	$socmeta = ['em_facebook', 'em_twitter', 'em_google', 'em_youtube'];
+	$meta = [];
+	foreach ($socmeta as $value) {
+		if (get_option($value))
+			$meta[$value] = esc_url(get_option($value));
+	}
 
-if (get_option('em_facebook'))
-	$html .= '<li class="em-footer-listitem"><a href="'.esc_url(get_option('em_facebook')).'">Facebook</a></li>';
+	if (sizeof($meta) > 0) {
+		$html .= '<div class="em-socialmedia-container"><ul class="em-footer-ul">';
 
-if (get_option('em_twitter'))
-	$html .= '<li class="em-footer-listitem"><a href="'.esc_url(get_option('em_twitter')).'">Twitter</a></li>';
+		foreach ($meta as $key => $value) 
+			$html .= '<li class="em-footer-listitem"><a class="em-footer-link" href="'.$value.'">'.preg_replace('/.*_/', '', $key).'</a></li>';
 
-if (get_option('em_google'))
-	$html .= '<li class="em-footer-listitem"><a href="'.esc_url(get_option('em_google')).'">Google+</a></li>';
+		$html .= '</ul></div>';
+	}
+}
+// contact column
+if (get_option('em_contact_active')) {
+	$conmeta = ['em_epost', 'em_avdeling', 'em_selskap', 'em_poststed', 'em_postnr', 'em_vei', 'em_land'];
+	$meta = [];
+	foreach ($conmeta as $value)
+		if (get_option($value))
+			$meta[$value] = sanitize_text_field(get_option($value));
 
-if (get_option('em_youtube'))
-	$html .= '<li class="em-footer-listitem"><a href="'.esc_url(get_option('em_youtube')).'">Youtube</a></li>';
+	if (sizeof($meta) > 0) {
+		$html .= '<div class="em-contact-container"><ul class="em-footer-ul">';
 
-$html .= '</ul></div>';
+		foreach($meta as $key => $value)
+			$html .= '<li class="em-footer-listitem'.(($key == 'em_epost') ? ' em-footer-epost' : '').(($key == 'em_poststed' || $key == 'em_postnr') ? ' em-footer-post' : '').'">'.$value.'</li>';
 
-$html .= '<div class="em-contact-container"><ul class="em-footer-ul">';
+		$html .= '</ul></div>';
+	}
+}
 
-$html .= get_option('em_epost') ? '<li class="em-footer-listitem em-footer-epost">'.sanitize_text_field(get_option('em_epost')).'</li><li class="em-footer-listitem">&nbsp;</li>' : '';
-$html .= get_option('em_avdeling') ? '<li class="em-footer-listitem">v/ '.sanitize_text_field(get_option('em_avdeling')).'</li>' : '';
-$html .= get_option('em_selskap') ? '<li class="em-footer-listitem">'.sanitize_text_field(get_option('em_selskap')).'</li>' : '';
-// $html .= get_option('em_poststed') ? '<li class="em-footer-listitem">'.sanitize_text_field(get_option('em_poststed')).'</li>' : '';
-$html .= get_option('em_poststed') ? '<li class="em-footer-listitem">'.sanitize_text_field(get_option('em_poststed')) : '';
-$html .= get_option('em_postnr') ? ' '.sanitize_text_field(get_option('em_postnr')).'</li>' : '';
-// $html .= get_option('em_postnr') ? '<li class="em-footer-listitem">'.sanitize_text_field(get_option('em_postnr')).'</li>' : '';
-$html .= get_option('em_vei') ? '<li class="em-footer-listitem">'.sanitize_text_field(get_option('em_vei')).'</li>' : '';
-$html .= get_option('em_land') ? '<li class="em-footer-listitem">'.sanitize_text_field(get_option('em_land')).'</li>' : '';
-
-$html .= '</ul></div>';
-
-
-$html .= get_option('em_omoss') ? '<div class="em-aboutus-container">'.preg_replace('/\[p\]/', '<p>', sanitize_text_field(get_option('em_omoss'))).'</div>' : '';
+// about us column
+if (get_option('em_omoss_active'))
+	$html .= get_option('em_omoss') ? '<div class="em-aboutus-container">'.preg_replace('/\[p\]/', '<p>', sanitize_text_field(get_option('em_omoss'))).'</div>' : '';
 
 
 $html .= '</div></div>';
-echo $html;
 
-// global $postid;
-// $meta = get_post_meta($postid, 'emstrucdata');
-// if (isset($meta[0]) && $meta[0] != '')
-// 	echo '<script type="application/ld+json">'.json_encode(json_decode($meta[0])).'</script>';
+if (get_option('em_social_active') || get_option('em_contact_active') || get_option('em_omoss_active'))
+	echo $html;
+
 wp_footer(); ?>
 </body></html>

@@ -19,10 +19,10 @@ if (!(strpos($content, '[col') === false))
 	$html .= ' content-3';
 $html .= '">'.apply_filters('the_content', get_the_content()).'</div>';
 
-wp_reset_postdata();
 
 $html .= '</div>';
 
 echo $html;
 
 get_footer();
+wp_reset_postdata();
