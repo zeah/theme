@@ -5,8 +5,8 @@ date_default_timezone_set('Europe/Oslo');
 if (get_option('em_forside_active') && get_post(get_option('em_forside_id'))) {
 	$meta = 'em_'.strtolower(date('l'));
 
-	if (get_option($meta))
-		if (get_option($meta.'_time_start') <= date('H'))
+	if (get_option($meta)) {
+		if (get_option($meta.'_time_start') <= date('H')) {
 			if (get_option($meta.'_time_end') == '00' || get_option($meta.'_time_end') > date('H')) {
 				global $post;
 				$post = get_post(get_option('em_forside_id'));
@@ -16,6 +16,10 @@ if (get_option('em_forside_active') && get_post(get_option('em_forside_id'))) {
 			}
 			else
 				get_template_part('index');
+		}
+		else 
+			get_template_part('index');	
+	}
 }
 else 
 	get_template_part('index');

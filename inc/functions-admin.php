@@ -58,6 +58,11 @@ final class EmAdmin {
 			'name' => 'logo',
 			'id' => 'emtheme-logo'
 		));
+
+		register_sidebar(array(
+			'name' => 'logo mobile',
+			'id' => 'emtheme-logo-mobile'
+		));
 	}
 
 }

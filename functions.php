@@ -14,7 +14,7 @@ function addingStyleResource() {
 	wp_enqueue_style('style', get_stylesheet_uri(), array(), '1.0.1', '(min-width: 1000px)');
 	wp_enqueue_style('style-mobile', get_stylesheet_directory_uri() . '/style-mobile.css', array(), null, '(max-width: 1000px)');
 }
-
+// add_filter( 'disable_captions', create_function('$a', 'return true;') );
 
 /* helper function for meta boxes */
 function getmeta($m) {

@@ -1,29 +1,68 @@
-.nav-container {
-	/*background-image: linear-gradient(0deg, hsl(0, 0%, 15%), hsl(0, 0%, 10%) 50%, hsl(0, 0%, 15%) 90%);*/
+
+/* TOP STUFF */
+.emtop {
 	background-color: hsl(0, 0%, 15%);
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+
+	margin: 0 -8px;
+	height: 32px;
 	position: absolute;
 	width: 100%;
-	left: 0;
-	right: 0;
-	top: 50px;
-	height: 32px;
+}
+
+.topstuff-container {
+	/*display: inline;*/
+	/*float: right;*/
+	padding-right: 10px;
+	/*color: white;*/
+	order: 2;
+}
+
+.topstuff-container div {
+	/*display: inline;*/
+}
+
+.emtheme-logo-mobile {
+	/*padding-right: 20px;*/
+}
+.emtheme-logo-mobile li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.emtheme-logo-mobile img {
+	padding: 0;
+	margin: 0;
+	/*display: none !important;*/
+	/*height: 30px !important;*/
+	/*transform: scale(0.2);*/
+}
+
+/* NAVIGATIONAL MENU */
+.nav-container {
+	background-color: hsl(0, 0%, 15%);
+	display: inline;
+	/*float: left;*/
+	/*position: absolute;*/
+	/*width: 100%;*/
+	/*left: 0;*/
+	/*right: 0;*/
+	/*top: 50px;*/
+	/*height: 20px;*/
 	padding: 0 !important;
 
-	border-bottom: 2px solid hsl(25, 100%, 60%);
+	/*border-bottom: 2px solid hsl(25, 100%, 60%);*/
 }
 
 .nav {
-	position: absolute;
-	/*top: 50px;*/
+	/*position: absolute;*/
 	display: flex;
 	flex-direction: column;
-	/*background-image: linear-gradient(0deg, hsl(0, 0%, 15%), hsl(0, 0%, 10%) 50%, hsl(0, 0%, 15%) 90%);*/
 	background-color: hsl(0, 0%, 15%);
 }
-
-/*.nav:first-letter {
-	color: white;
-}*/
 
 .nav:before {
 	content: 'Meny';
@@ -33,13 +72,11 @@
 	height: 30px;
 	line-height: 30px;
 	width: 22px;
-	/*color: hsl(0, 0%, 15%);*/
 	color: white;
 	padding: 1px;
 	margin-left: 10px;
 	text-align: center;
 	overflow: hidden;
-	/*cursor: pointer;*/
 }
 
 
@@ -110,4 +147,52 @@
 
 .content {
 	margin-top: 50px;
+}
+
+
+.em-inner-footer {
+	color: white;
+	background-color: hsl(0, 0%, 5%);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.8em;
+	font-family: arial;
+}
+
+.em-inner-footer li {
+	list-style: none;
+}
+
+.em-footer-ul {
+	padding: 0;
+}
+
+.em-footer-post {
+	display: inline;
+	padding-right: 5px;
+}
+
+.em-socialmedia-container:before {
+	content: 'Sosiale medier';
+}
+.em-socialmedia-container {
+	flex-basis: 40%;
+}
+
+.em-contact-container:before {
+	content: 'Kontakt';
+}
+.em-contact-container {
+	flex-basis: 40%;
+}
+
+.em-aboutus-container:before {
+	content: 'Om Oss';
+	display: block;
+}
+
+.em-socialmedia-container,
+.em-contact-container,
+.em-aboutus-container {
+	padding: 15px;
 }

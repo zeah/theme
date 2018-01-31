@@ -19,14 +19,26 @@ echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head
 // 	echo '<title>'.get_the_title($post).'</title>';
 
 // echo '</head><body>';
+$mobile = wp_is_mobile();
 
-echo '<div class="topstuff">';
-if (is_active_sidebar('emtheme-logo')) {
+echo '<div class="emtop"><div class="topstuff-container"><div class="topstuff">';
+
+if ($mobile && is_active_sidebar('emtheme-logo-mobile')) {
+	echo '<div class="emtheme-logo-mobile">';
+	dynamic_sidebar('emtheme-logo-mobile');
+	echo '</div>';
+}
+
+elseif (!$mobile && is_active_sidebar('emtheme-logo')) {
 	echo '<div class="emtheme-logo">';
 	dynamic_sidebar('emtheme-logo');
 	echo '</div>';
 }
-echo '<div class="topstuff-text"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div></div>';
+
+if (!$mobile)
+	echo '<div class="topstuff-text"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div>';
+
+echo '</div></div>';
 // show_admin_bar(true);
 
 // $top = '<div class="topstuff">';
@@ -52,7 +64,6 @@ class Nav {
 	public $children = array();
 }
 
-$mobile = wp_is_mobile();
 
 // sorting pages into iterator with correct layout
 $titles = array();
@@ -116,7 +127,7 @@ foreach ($titles as $key => $value) {
 
 // html end of top menu elemenet
 // $nav .= '</div>';
-$nav .= '</div></div>';
+$nav .= '</div></div></div>';
 // $nav .= '</nav></div>';
 
 // printing html
