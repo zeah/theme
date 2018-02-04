@@ -24,7 +24,7 @@ final class EmAdmin {
 	/* removes comments in admin menu */
 	public static function remove_menus(){
 	  	remove_menu_page( 'edit-comments.php' );          //Comments
-  		remove_menu_page( 'edit.php' );                   //Posts
+  		// remove_menu_page( 'edit.php' );                   //Posts
 	}
 	
 	/* adding order column and its name */

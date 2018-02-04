@@ -73,15 +73,17 @@ p:empty {
 	z-index: 100;
 	/*flex-shrink: 1;
 	flex-grow: 1;*/
+	position: relative;
 }
 
 .nav {
 	display: flex;
 	flex-direction: column;
-	background-color: hsl(0, 0%, 15%);
+	/*background-color: hsl(0, 0%, 15%);*/
 	margin-right: 8px;
 	text-align: right;
-	float: right;
+	width: 25px;
+	/*float: right;*/
 }
 
 .nav:before {
@@ -90,7 +92,7 @@ p:empty {
 	font-size: 42px;
 	height: 32px;
 	line-height: 32px;
-	width: 22px;
+	/*width: 22px;*/
 	color: white;
 	overflow: hidden;
 	text-align: right;
@@ -99,8 +101,60 @@ p:empty {
 	text-shadow: 0px 0px 2px white;
 }
 
+.nav:hover .nav-dropdown-mobile {
+	display: block !important;
+}
 
-.nav:hover:before {
+.nav-dropdown-mobile {
+	position: absolute;
+	display: none;
+	right: 6px;
+	top: 32px;
+	background-color: hsl(0, 0%, 15%);
+}
+
+.nav-dropdown {
+	display: none;
+}
+
+.nav-item {
+	white-space: nowrap;
+	margin: 10px 0px;
+}
+
+.nav-mobile-item:hover .nav-dropdown {
+	display: block;
+}
+/*
+.nav-mobile-item:hover ~ .nav-item {
+	display: none;
+}*/
+
+.nav-mobile-item:hover > .menu-lenke-parent {
+	/*display: none;*/
+	opacity: 0;
+	pointer-events: none;
+}
+
+.nav-mobile-item:hover ~ .nav-item {
+	display: none;
+}
+
+.nav-dropdown-mobile > .nav-item:first-child {
+	margin-top: 30px;
+}
+
+.mobile-overlay  {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 32px;
+	width: 40px;
+	background-color: red;
+	z-index: 9999;
+	display: none;
+}
+/*.nav:hover:before {
 	overflow: visible;
 }
 
@@ -129,7 +183,7 @@ p:empty {
 .nav-mobile-item:hover span {
 	display: none !important;
 }
-
+*/
 .menu-lenke {
 	display: block;
 	padding: 0 10px;
@@ -139,7 +193,8 @@ p:empty {
 	font-family: trebuchet ms;
 	font-size: 14px;
 	font-weight: bold;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
+	text-transform: capitalize;
 	color: hsl(0, 50%, 99%);
 }
 
@@ -158,12 +213,12 @@ p:empty {
 }
 
 .nav-dropdown .nav-item:first-child {
-	margin-top: 40px;	
+	/*margin-top: 20px;	*/
 }
 
 
 .nav-dropdown .nav-item:last-child {
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 /* MAIN */

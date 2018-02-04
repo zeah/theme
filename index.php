@@ -2,10 +2,10 @@
 /**
 	Wraps content in a flexbox if content has [col ***]
 */
-get_header(); 
-
 global $post;
 setup_postdata($post);
+
+get_header(); 
 
 $html = '<div class="main">';
 

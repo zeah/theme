@@ -50,6 +50,9 @@ echo '</div></div>';
 $nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
 // $nav = '<div class="nav">';
 
+if ($mobile)
+	$nav .= '<div class="mobile-overlay"></div><div class="nav-dropdown-mobile">';
+
 // parameters for page search in database
 $args = [
 	'sort_order' => 'desc',
@@ -124,6 +127,9 @@ foreach ($titles as $key => $value) {
 
 	$nav .= '</div>';
 }
+
+if ($mobile)
+	$nav .= '</div>';
 
 // html end of top menu elemenet
 // $nav .= '</div>';
