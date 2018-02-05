@@ -29,13 +29,14 @@ function getmeta($m) {
 }
 
 // add_action( 'publish_post', 'itsg_create_sitemap' );
-// add_action( 'publish_page', 'itsg_create_sitemap' );
+add_action( 'publish_page', 'itsg_create_sitemap' );
+add_action( 'publish_article', 'itsg_create_sitemap' );
 function itsg_create_sitemap() {
 
     $postsForSitemap = get_posts(array(
         'numberposts' => -1,
         'orderby' => 'modified',
-        'post_type'  => array( 'page' ),
+        'post_type'  => array( 'page', 'article' ),
         'order'    => 'DESC'
     ));
 

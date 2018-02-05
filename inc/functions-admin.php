@@ -12,7 +12,7 @@ final class EmAdmin {
 
 		add_filter('manage_pages_columns', array('EmAdmin', 'my_columns'));
 		add_action('manage_pages_custom_column',  array('EmAdmin', 'my_show_columns'));
-		add_filter('manage_edit-page_sortable_columns', array('RegEmArt', 'sort_column'));
+		add_filter('manage_edit-page_sortable_columns', array('EmAdmin', 'sort_column'));
 		
 
 		add_filter('manage_pages_columns', array('EmAdmin', 'remove_columns'));

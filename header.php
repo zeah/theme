@@ -6,19 +6,6 @@ wp_head();
 // echo '<link rel="icon" href="https://kredittkort-listen.no/wp-content/uploads/2016/03/cropped-kredittkort-listen-2-copy-32x32.jpg">';
 echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
 
-// global $post;
-// $meta = get_post_meta($post->ID, 'emtext');
-// if (isset($meta[0]) && $meta[0] != '')
-// 	echo '<meta name="description" content="'.$meta[0].'">';
-
-
-// $meta = get_post_meta($post->ID, 'emtitle');
-// if (isset($meta[0]) && $meta[0] != '')
-// 	echo '<title>'.$meta[0].'</title>';
-// else
-// 	echo '<title>'.get_the_title($post).'</title>';
-
-// echo '</head><body>';
 $mobile = wp_is_mobile();
 
 echo '<div class="emtop"><div class="topstuff-container"><div class="topstuff">';
@@ -41,17 +28,15 @@ if (!$mobile)
 echo '</div></div>';
 // show_admin_bar(true);
 
-// $top = '<div class="topstuff">';
-// if (is_active_sidebar('emthemelogo'))
-// 	$top .= '<div class="emtheme-logo">';
+$nav = '<div class="nav-container">';
 
-// start of top menu html element
-// $nav = '<div class="nav-container"><div class="nav">';
-$nav = '<div class="nav-container"><nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
-// $nav = '<div class="nav">';
+// if ($mobile)
+// 	$nav .= '<div class="nav-mobile-overlay"></div>';
+
+$nav .= '<nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
 
 if ($mobile)
-	$nav .= '<div class="mobile-overlay"></div><div class="nav-dropdown-mobile">';
+	$nav .= '<div class="nav-dropdown-mobile">';
 
 // parameters for page search in database
 $args = [
@@ -131,9 +116,15 @@ foreach ($titles as $key => $value) {
 if ($mobile)
 	$nav .= '</div>';
 
+
 // html end of top menu elemenet
 // $nav .= '</div>';
-$nav .= '</div></div></div>';
+$nav .= '</nav>';
+
+if ($mobile)
+	$nav .= '<div class="nav-mobile-overlay"></div>';
+
+$nav .= '</div></div>';
 // $nav .= '</nav></div>';
 
 // printing html
