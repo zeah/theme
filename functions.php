@@ -3,11 +3,15 @@ require_once 'inc/functions-admin.php';
 require_once 'inc/functions-page.php';
 require_once 'inc/functions-shortcode.php';
 require_once 'inc/themeoptions.php';
+require_once 'inc/functions-widget.php';
 
-EmAdmin::init();
-EmPage::init();
+// EmAdmin::init();
+EmAdmin::get_instance();
+// EmPage::init();
+EmPage::get_instance();
+EmWidget::get_instance();
 EmThemeShortCode::init();
-EmOptions::init();
+// EmOptions::init();
 
 add_action('wp_enqueue_scripts', 'addingStyleResource');
 function addingStyleResource() {
@@ -29,14 +33,13 @@ function getmeta($m) {
 }
 
 // add_action( 'publish_post', 'itsg_create_sitemap' );
-add_action( 'publish_page', 'itsg_create_sitemap' );
-add_action( 'publish_article', 'itsg_create_sitemap' );
+// add_action( 'publish_page', 'itsg_create_sitemap' );
 function itsg_create_sitemap() {
 
     $postsForSitemap = get_posts(array(
         'numberposts' => -1,
         'orderby' => 'modified',
-        'post_type'  => array( 'page', 'article' ),
+        'post_type'  => array( 'page' ),
         'order'    => 'DESC'
     ));
 
