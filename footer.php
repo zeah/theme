@@ -1,5 +1,23 @@
 <?php 
+require_once 'inc/options/emoption-logger.php';
+
 $html = '<div class="em-footer"><div class="em-inner-footer">';
+
+// $logger = EmoLogger::get_instance();
+// $html .= $logger->add_user();
+
+// $html .= $_SERVER['REMOTE_ADDR'];
+// global $wpdb;
+
+// if (! $wpdb->get_var('select ip from wp_em_logger where ip = "'.$_SERVER['REMOTE_ADDR'].'"')) {
+// 	$data = [
+// 		'ip' => $_SERVER['REMOTE_ADDR'],
+// 		'email' => 'test@ja.no'
+// 	];
+
+// 	$wpdb->insert('wp_em_logger', $data);
+// }
+
 
 // social media column
 if (get_option('em_social_active')) {
