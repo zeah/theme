@@ -2,15 +2,17 @@
 
 final class EmOptions {
 	public static function init() {
-		add_action('admin_menu', array('EmOptions', 'add_options_menu'));
-		add_action( 'admin_init', array('EmOptions', 'initContact') );
-		add_action( 'admin_init', array('EmOptions', 'initForside') );
+		// add_action('admin_menu', array('EmOptions', 'add_options_menu'));
+		// add_action( 'admin_init', array('EmOptions', 'initContact') );
+		// add_action( 'admin_init', array('EmOptions', 'initForside') );
+		// add_action( 'admin_init', array('EmOptions', 'initEmail') );
 	}
 
 	public static function add_options_menu() {
-		add_menu_page('EmTheme Options', 'EM Options', 'manage_options', 'em-options-page', array('EmOptions', 'em_options_callback'), '', 61);
-		add_submenu_page( 'em-options-page', 'Kontakt Informasjon', 'Kontakt', 'manage_options', 'em-contact-page', array('EmOptions', 'em_contact_callback') );
-		add_submenu_page( 'em-options-page', 'Forside Settings', 'Forside', 'manage_options', 'em-forside-page', array('EmOptions', 'em_forside_callback') );
+		// add_menu_page('EmTheme Options', 'EM Theme', 'manage_options', 'em-options-page', array('EmOptions', 'em_options_callback'), '', 61);
+		// add_submenu_page( 'em-options-page', 'Kontakt Informasjon', 'Kontakt', 'manage_options', 'em-contact-page', array('EmOptions', 'em_contact_callback') );
+		// add_submenu_page( 'em-options-page', 'Forside Settings', 'Forside', 'manage_options', 'em-forside-page', array('EmOptions', 'em_forside_callback') );
+		// add_submenu_page( 'em-options-page', 'Email Collecter', 'Email', 'manage_options', 'em-email-page', array('EmOptions', 'em_email_callback') );
 	}
 
 	public static function initContact() {
@@ -163,115 +165,123 @@ final class EmOptions {
 	/* 
 		FRONTPAGE OPTIONS 
 	*/
-	public static function initForside() {
-		$args = [
-					'sanitize_callback' => array('EmOptions', 'san_callback')
-				];
+	// public static function initForside() {
+	// 	$args = [
+	// 				'sanitize_callback' => array('EmOptions', 'san_callback')
+	// 			];
 
-		register_setting('em_options_forside', 'em_forside_active', $args);
-		register_setting('em_options_forside', 'em_forside_id', $args);
+	// 	register_setting('em_options_forside', 'em_forside_active', $args);
+	// 	register_setting('em_options_forside', 'em_forside_id', $args);
 		
-		register_setting('em_options_forside', 'em_monday', $args);
-		register_setting('em_options_forside', 'em_monday_time_start', $args);
-		register_setting('em_options_forside', 'em_monday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_monday', $args);
+	// 	register_setting('em_options_forside', 'em_monday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_monday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_tuesday', $args);
-		register_setting('em_options_forside', 'em_tuesday_time_start', $args);
-		register_setting('em_options_forside', 'em_tuesday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_tuesday', $args);
+	// 	register_setting('em_options_forside', 'em_tuesday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_tuesday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_wednesday', $args);
-		register_setting('em_options_forside', 'em_wednesday_time_start', $args);
-		register_setting('em_options_forside', 'em_wednesday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_wednesday', $args);
+	// 	register_setting('em_options_forside', 'em_wednesday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_wednesday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_thursday', $args);
-		register_setting('em_options_forside', 'em_thursday_time_start', $args);
-		register_setting('em_options_forside', 'em_thursday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_thursday', $args);
+	// 	register_setting('em_options_forside', 'em_thursday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_thursday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_friday', $args);
-		register_setting('em_options_forside', 'em_friday_time_start', $args);
-		register_setting('em_options_forside', 'em_friday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_friday', $args);
+	// 	register_setting('em_options_forside', 'em_friday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_friday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_saturday', $args);
-		register_setting('em_options_forside', 'em_saturday_time_start', $args);
-		register_setting('em_options_forside', 'em_saturday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_saturday', $args);
+	// 	register_setting('em_options_forside', 'em_saturday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_saturday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_sunday', $args);
-		register_setting('em_options_forside', 'em_sunday_time_start', $args);
-		register_setting('em_options_forside', 'em_sunday_time_end', $args);
+	// 	register_setting('em_options_forside', 'em_sunday', $args);
+	// 	register_setting('em_options_forside', 'em_sunday_time_start', $args);
+	// 	register_setting('em_options_forside', 'em_sunday_time_end', $args);
 
-		add_settings_section( 'em_forside_settings', 'Til hva tider skal forsiden vise', array('EmOptions', 'em_for_callback'), 'em-forside-page' );
-		add_settings_field( 'em-forside-active', 'Aktiv funksjon', array('EmOptions', 'foract_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-forside-id', 'Alternative Forside ID', array('EmOptions', 'forid_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-monday', 'Monday', array('EmOptions', 'monday_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-tuesday', 'Tuesday', array('EmOptions', 'tuesday_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-wednesday', 'Wednesday', array('EmOptions', 'wednesday_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-thursday', 'Thursday', array('EmOptions', 'thursday_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-friday', 'Friday', array('EmOptions', 'friday_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-saturday', 'Saturday', array('EmOptions', 'saturday_callback'), 'em-forside-page', 'em_forside_settings' );
-		add_settings_field( 'em-sunday', 'Sunday', array('EmOptions', 'sunday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_section( 'em_forside_settings', 'Til hva tider skal forsiden vise', array('EmOptions', 'em_for_callback'), 'em-forside-page' );
+	// 	add_settings_field( 'em-forside-active', 'Aktiv funksjon', array('EmOptions', 'foract_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-forside-id', 'Alternative Forside ID', array('EmOptions', 'forid_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-monday', 'Monday', array('EmOptions', 'monday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-tuesday', 'Tuesday', array('EmOptions', 'tuesday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-wednesday', 'Wednesday', array('EmOptions', 'wednesday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-thursday', 'Thursday', array('EmOptions', 'thursday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-friday', 'Friday', array('EmOptions', 'friday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-saturday', 'Saturday', array('EmOptions', 'saturday_callback'), 'em-forside-page', 'em_forside_settings' );
+	// 	add_settings_field( 'em-sunday', 'Sunday', array('EmOptions', 'sunday_callback'), 'em-forside-page', 'em_forside_settings' );
 
-	}
+	// }
 
-	public static function em_forside_callback() {
-		echo '<form action="options.php" method="POST">';
-		settings_fields('em_options_forside');
-		do_settings_sections('em-forside-page');
-		// do_settings_sections('em_social_options');
-		submit_button('save');
-		echo '</form>';
-	}
+	// public static function em_forside_callback() {
+	// 	echo '<form action="options.php" method="POST">';
+	// 	settings_fields('em_options_forside');
+	// 	do_settings_sections('em-forside-page');
+	// 	// do_settings_sections('em_social_options');
+	// 	submit_button('save');
+	// 	echo '</form>';
+	// }
 
-	public static function em_for_callback() {
-		echo 'Choose an alternative frontpage to show at set times each week.<br>If no valid page/post ID is set, then default frontpage is shown.';
-	}
+	// public static function em_for_callback() {
+	// 	echo 'Choose an alternative frontpage to show at set times each week.<br>If no valid page/post ID is set, then default frontpage is shown.';
+	// }
 
-	public static function time_helper($id) {
-		$time = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00'];
-		$html = '<select name="'.$id.'">';
+	// public static function time_helper($id) {
+	// 	$time = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00'];
+	// 	$html = '<select name="'.$id.'">';
 
-		$set = get_option($id);
-		foreach($time as $t) 
-			$html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.$t.':00</option>';
-			// $html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.substr($t, 0, 2).':00</option>';
+	// 	$set = get_option($id);
+	// 	foreach($time as $t) 
+	// 		$html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.$t.':00</option>';
+	// 		// $html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.substr($t, 0, 2).':00</option>';
 		
-		$html .= '</select>';
-		return $html;
+	// 	$html .= '</select>';
+	// 	return $html;
+	// }
+
+	// public static function foract_callback() {
+	// 	echo '<input type="checkbox" name="em_forside_active"'.(get_option('em_forside_active') ? ' checked' : '').'>';
+	// }
+
+	// public static function forid_callback() {
+	// 	echo '<input type="text" style="width: 4em" name="em_forside_id" value="'.get_option('em_forside_id').'">';
+	// }
+
+	// public static function monday_callback() {
+	// 	echo '<input type="checkbox" name="em_monday" '.(get_option('em_monday') ? 'checked' : '').'>'.EmOptions::time_helper('em_monday_time_start').EmOptions::time_helper('em_monday_time_end');
+	// }
+
+	// public static function tuesday_callback() {
+	// 	echo '<input type="checkbox" name="em_tuesday" '.(get_option('em_tuesday') ? 'checked' : '').'>'.EmOptions::time_helper('em_tuesday_time_start').EmOptions::time_helper('em_tuesday_time_end');
+	// }
+
+	// public static function wednesday_callback() {
+	// 	echo '<input type="checkbox" name="em_wednesday" '.(get_option('em_wednesday') ? 'checked' : '').'>'.EmOptions::time_helper('em_wednesday_time_start').EmOptions::time_helper('em_wednesday_time_end');
+	// }
+
+	// public static function thursday_callback() {
+	// 	echo '<input type="checkbox" name="em_thursday" '.(get_option('em_thursday') ? 'checked' : '').'>'.EmOptions::time_helper('em_thursday_time_start').EmOptions::time_helper('em_thursday_time_end');
+	// }
+
+	// public static function friday_callback() {
+	// 	echo '<input type="checkbox" name="em_friday" '.(get_option('em_friday') ? 'checked' : '').'>'.EmOptions::time_helper('em_friday_time_start').EmOptions::time_helper('em_friday_time_end');
+	// }
+
+	// public static function saturday_callback() {
+	// 	echo '<input type="checkbox" name="em_saturday" '.(get_option('em_saturday') ? 'checked' : '').'>'.EmOptions::time_helper('em_saturday_time_start').EmOptions::time_helper('em_saturday_time_end');
+	// }
+
+	// public static function sunday_callback() {
+	// 	echo '<input type="checkbox" name="em_sunday" '.(get_option('em_sunday') ? 'checked' : '').'>'.EmOptions::time_helper('em_sunday_time_start').EmOptions::time_helper('em_sunday_time_end');
+	// }
+
+	public static function initEmail() {
+
 	}
 
-	public static function foract_callback() {
-		echo '<input type="checkbox" name="em_forside_active"'.(get_option('em_forside_active') ? ' checked' : '').'>';
-	}
-
-	public static function forid_callback() {
-		echo '<input type="text" style="width: 4em" name="em_forside_id" value="'.get_option('em_forside_id').'">';
-	}
-
-	public static function monday_callback() {
-		echo '<input type="checkbox" name="em_monday" '.(get_option('em_monday') ? 'checked' : '').'>'.EmOptions::time_helper('em_monday_time_start').EmOptions::time_helper('em_monday_time_end');
-	}
-
-	public static function tuesday_callback() {
-		echo '<input type="checkbox" name="em_tuesday" '.(get_option('em_tuesday') ? 'checked' : '').'>'.EmOptions::time_helper('em_tuesday_time_start').EmOptions::time_helper('em_tuesday_time_end');
-	}
-
-	public static function wednesday_callback() {
-		echo '<input type="checkbox" name="em_wednesday" '.(get_option('em_wednesday') ? 'checked' : '').'>'.EmOptions::time_helper('em_wednesday_time_start').EmOptions::time_helper('em_wednesday_time_end');
-	}
-
-	public static function thursday_callback() {
-		echo '<input type="checkbox" name="em_thursday" '.(get_option('em_thursday') ? 'checked' : '').'>'.EmOptions::time_helper('em_thursday_time_start').EmOptions::time_helper('em_thursday_time_end');
-	}
-
-	public static function friday_callback() {
-		echo '<input type="checkbox" name="em_friday" '.(get_option('em_friday') ? 'checked' : '').'>'.EmOptions::time_helper('em_friday_time_start').EmOptions::time_helper('em_friday_time_end');
-	}
-
-	public static function saturday_callback() {
-		echo '<input type="checkbox" name="em_saturday" '.(get_option('em_saturday') ? 'checked' : '').'>'.EmOptions::time_helper('em_saturday_time_start').EmOptions::time_helper('em_saturday_time_end');
-	}
-
-	public static function sunday_callback() {
-		echo '<input type="checkbox" name="em_sunday" '.(get_option('em_sunday') ? 'checked' : '').'>'.EmOptions::time_helper('em_sunday_time_start').EmOptions::time_helper('em_sunday_time_end');
+	public static function em_email_callback() {
+		echo 'hi';
 	}
 		
 }
