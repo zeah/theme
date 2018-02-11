@@ -2,7 +2,7 @@
 require_once 'inc/functions-admin.php';
 require_once 'inc/functions-page.php';
 require_once 'inc/functions-shortcode.php';
-require_once 'inc/themeoptions.php';
+// require_once 'inc/themeoptions.php';
 require_once 'inc/functions-widget.php';
 
 // EmAdmin::init();
@@ -10,7 +10,7 @@ EmAdmin::get_instance();
 // EmPage::init();
 EmPage::get_instance();
 EmWidget::get_instance();
-EmThemeShortCode::init();
+EmthemeShortCoder::get_instance();
 // EmOptions::init();
 
 add_action('wp_enqueue_scripts', 'addingStyleResource');

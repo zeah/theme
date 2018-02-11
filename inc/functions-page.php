@@ -82,7 +82,8 @@ final class EmPage {
 	public function nav_callback() {
 		wp_nonce_field( basename(__FILE__), 'em_nonce' );
 
-		$inputs = ['Navigation' => 'showinnav', 'Mobile Navigation' => 'showinmob'];
+		$inputs = ['Navigation' => 'showinnav'];
+		// $inputs = ['Navigation' => 'showinnav', 'Mobile Navigation' => 'showinmob'];
 		
 		$html = '';
 		foreach ($inputs as $key => $value) 
