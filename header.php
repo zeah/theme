@@ -1,5 +1,43 @@
 <?php 
 
+
+$logger = EmoLogger::get_instance();
+
+$logger->welcome_user();
+
+// echo EmoLogger::table_name();
+// if (isset($_COOKIE['bruker'])) { 
+// 	if ($wpdb->get_var('select email from wp_em_logger where uniqueid = "'.$_COOKIE['bruker'].'"') == '') {
+// 		echo 'no email set yet';	
+// 		echo get_template_directory();
+// 		// wp_enqueue_script( 'emsearch', get_template_directory().'/assets/email.js', array(), false, true );
+// 		enqueue_email_script();
+// 		// add_action('wp_enqueue_scripts', 'enqueue_email_script');
+// 	}
+// 	// echo $_COOKIE['bruker'];
+// }
+// else {
+// // if (! isset($_COOKIE['bruker'])) {
+// 	$unique = uniqid();
+	
+// 	setcookie('bruker', $unique);
+
+// 	global $wpdb; // needed?
+// 	$table = $wpdb->prefix . EmoLogger::table_name();
+
+// 	$wpdb->insert($table, array(
+// 		// 'hit_date' => date('l'),
+// 		'ip' => $_SERVER['REMOTE_ADDR'],
+// 		'uniqueid' => $unique,
+// 		'email' => ''
+// 		));
+// }
+
+function enqueue_email_script() {
+	// wp_enqueue_script( 'emmail', '/wp-content/themes/emtheme2/assets/email.js', array(), false, true );
+	wp_enqueue_script( 'emmail', get_template_directory_uri().'/assets/email.js', array(), false, true );
+}
+
 $mobile = wp_is_mobile();
 
 if ($mobile) {
@@ -104,6 +142,7 @@ foreach (get_pages($args) as $key => $value) {
 		$item = $titles[$value->post_parent];
 
 		// if mobile then top child is same as top menu item (as on mobile hover is impossible)
+		// (this adds top menu item as a child on mobile devices)
 		if ($mobile && !$mobile_added) {
 			$mobile_added = true;
 			$item->link = null;

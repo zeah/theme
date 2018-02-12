@@ -3,7 +3,7 @@
 final class EmoLogger {
 	/* SINGLETON */
 	private static $instance = null;
-	private static $table_name = 'em_logger';
+	private $table_name = 'em_logger';
 	public static function get_instance($activate = true) {
 
 		if (self::$instance === null)
@@ -13,22 +13,26 @@ final class EmoLogger {
 	}
 
 	private function __construct($activate = true) {
-		if ( (! $activate) || (! current_user_can('read')) || (! is_admin()) )
+		if ( (! $activate) )
 			return;
 
 		$this->wp_hooks();
+
+		if ( (! current_user_can('edit')) || (! is_admin()) )
+			return;
 
 		$this->init_db();
 	}
 
 	private function wp_hooks() {
-	
+		add_action('wp_ajax_emmail_action', array($this, 'emmail_action'));
+		add_action('wp_ajax_nopriv_emmail_action', array($this, 'emmail_action'));
 	}	
 
 	private function init_db() {
 		global $wpdb;
 
-		$table = $wpdb->prefix . self::$table_name;
+		$table = $wpdb->prefix . $this->table_name;
 
 		if ($this->table_exists($table))
 			return;
@@ -37,6 +41,7 @@ final class EmoLogger {
 		id INTEGER(10) UNSIGNED AUTO_INCREMENT,
 		hit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		ip VARCHAR(255),
+		uniqueid VARCHAR(255),
 		email VARCHAR(255),
 		PRIMARY KEY (id) )';
 
@@ -70,11 +75,39 @@ final class EmoLogger {
 	public function add_email() {
 		// adding email to database
 	}
+
+
+	public function welcome_user() {
+		global $wpdb;
+		$id = uniqid();
+
+		// creates cookie and database entry.
+		if (! isset($_COOKIE['user'])) {
+			setcookie('user', $id);
+
+			$wpdb->insert($wpdb->prefix . $this->table_name, array(
+				'ip' => $_SERVER['REMOTE_ADDR'],
+				'uniqueid' => $id,
+				'email' => ''
+			));
+
+			$this->em_ajax();
+		}
+		else {
+			if ($wpdb->get_var('select email from '.$wpdb->prefix.$this->table_name.' where uniqueid = "'.$_COOKIE['user'].'"') == '')
+				$this->em_ajax();
+		}
+	}
+
+	private function em_ajax() {
+		wp_enqueue_script('em-email', get_template_directory_uri().'/assets/email.js', array('jquery'), '0.1', true);
+		wp_localize_script( 'em-email', 'emmail', array( 'ajax_url' => admin_url('admin-ajax.php')) );
+	}
+
+	public function emmail_action() {
+		global $wpdb;
+		// $wpdb->update($wpdb->prefix.$this->table_name, array( 'email' => $_POST['emmail']), array('uniqueid' => $_COOKIE['user']));
+
+		wp_die();
+	}
 } 
-
-
-if (isset($_POST['em_email'])) {
-	$logger = EmoLogger::get_instance();
-
-	// if ABSPATH ?? to check if ajax or not
-}
