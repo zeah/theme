@@ -18,7 +18,7 @@ final class EmoLogger {
 
 		$this->wp_hooks();
 
-		if ( (! current_user_can('edit')) || (! is_admin()) )
+		if ( (! current_user_can('install_themes')) || (! is_admin()) )
 			return;
 
 		$this->init_db();
@@ -41,6 +41,7 @@ final class EmoLogger {
 		id INTEGER(10) UNSIGNED AUTO_INCREMENT,
 		hit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		ip VARCHAR(255),
+		name VARCHAR(255),
 		uniqueid VARCHAR(255),
 		email VARCHAR(255),
 		PRIMARY KEY (id) )';
@@ -72,41 +73,37 @@ final class EmoLogger {
 		return $wpdb->get_var('show tables like "'.$tables.'"');
 	}
 
-	public function add_email() {
-		// adding email to database
-	}
-
-
 	public function welcome_user() {
 		global $wpdb;
 		$id = uniqid();
+		$this->em_ajax();
 
 		// creates cookie and database entry.
-		if (! isset($_COOKIE['user'])) {
-			setcookie('user', $id);
+		// if (! isset($_COOKIE['user'])) {
+		// 	setcookie('user', $id, time()+(60*60*24*365), '/');
 
-			$wpdb->insert($wpdb->prefix . $this->table_name, array(
-				'ip' => $_SERVER['REMOTE_ADDR'],
-				'uniqueid' => $id,
-				'email' => ''
-			));
+		// 	$wpdb->insert($wpdb->prefix . $this->table_name, array(
+		// 		'ip' => $_SERVER['REMOTE_ADDR'],
+		// 		'uniqueid' => $id,
+		// 		'email' => ''
+		// 	));
 
-			$this->em_ajax();
-		}
-		else {
-			if ($wpdb->get_var('select email from '.$wpdb->prefix.$this->table_name.' where uniqueid = "'.$_COOKIE['user'].'"') == '')
-				$this->em_ajax();
-		}
+		// 	$this->em_ajax();
+		// }
+		// else {
+		// 	if ($wpdb->get_var('select email from '.$wpdb->prefix.$this->table_name.' where uniqueid = "'.$_COOKIE['user'].'"') == '')
+		// 		$this->em_ajax();
+		// }
 	}
 
 	private function em_ajax() {
 		wp_enqueue_script('em-email', get_template_directory_uri().'/assets/email.js', array('jquery'), '0.1', true);
-		wp_localize_script( 'em-email', 'emmail', array( 'ajax_url' => admin_url('admin-ajax.php')) );
+		wp_localize_script( 'em-email', 'emmail', array( 'ajax_url' => admin_url('admin-ajax.php'), 'tekst' => 'test tekst') );
 	}
 
 	public function emmail_action() {
 		global $wpdb;
-		// $wpdb->update($wpdb->prefix.$this->table_name, array( 'email' => $_POST['emmail']), array('uniqueid' => $_COOKIE['user']));
+		$wpdb->update($wpdb->prefix.$this->table_name, array( 'email' => $_POST['emmail']), array('uniqueid' => $_COOKIE['user']));
 
 		wp_die();
 	}
