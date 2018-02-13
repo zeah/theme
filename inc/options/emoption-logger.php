@@ -16,15 +16,17 @@ final class EmoLogger {
 		if ( (! $activate) )
 			return;
 
-		$this->wp_hooks();
+		$this->public_wp_hooks();
 
-		if ( (! current_user_can('install_themes')) || (! is_admin()) )
+		if ( (! current_user_can('publish_pages')) || (! is_admin()) )
 			return;
 
 		$this->init_db();
+
+		$this->options_hooks();
 	}
 
-	private function wp_hooks() {
+	private function public_wp_hooks() {
 		add_action('wp_ajax_emmail_action', array($this, 'emmail_action'));
 		add_action('wp_ajax_nopriv_emmail_action', array($this, 'emmail_action'));
 	}	
@@ -106,5 +108,70 @@ final class EmoLogger {
 		$wpdb->update($wpdb->prefix.$this->table_name, array( 'email' => $_POST['emmail']), array('uniqueid' => $_COOKIE['user']));
 
 		wp_die();
+	}
+
+
+
+	public function options_hooks() {
+		add_action('admin_menu', array($this, 'add_logger_menu'));
+		add_action('admin_init', array($this, 'initLogger'));
+	}
+
+	public function add_logger_menu() {
+		add_submenu_page( 'em-options-page', 'Email Logger', 'Popup/Email Logger', 'manage_options', 'em-logger-page', array($this, 'email_callback') );
+	}
+
+	public function initLogger() {
+		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
+
+		register_setting('em_options_logger', 'em_popup_title', $args);
+		register_setting('em_options_logger', 'em_popup_info', $args);
+
+
+		add_settings_section( 'em_logger_settings', 'Popup Settings', array($this, 'em_logger_callback'), 'em-logger-page' );
+		add_settings_field( 'em-popup-title', 'Popup Title', array($this, 'popup_title_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-infoen', 'Popup Info 1', array($this, 'popup_infoen_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-infoto', 'Popup Info 2', array($this, 'popup_infoto_callback'), 'em-logger-page', 'em_logger_settings' );
+
+		// register settings
+		// register settings section
+		// register settings field
+	}
+
+	public function san_callback($input) {
+
+		if (is_array($input)) {
+			foreach ($input as $key => $value)
+				$input[$key] = sanitize_text_field($value);
+
+			return $input;
+		}
+		return sanitize_text_field( $input );
+	}
+
+	public function email_callback() {
+		echo '<form action="options.php" method="POST">';
+		settings_fields('em_options_logger');
+		do_settings_sections('em-logger-page');
+		submit_button('save');
+		echo '</form>';
+	}
+
+	public function em_logger_callback() {
+		echo 'Customize text and picture of popup window '.print_r(get_option('em_popup_info'), true);
+	}
+
+	public function popup_title_callback() {
+		echo '<input type="text" name="em_popup_title" value="'.get_option('em_popup_title').'">';
+	}
+
+	public function popup_infoen_callback() {
+		$opt = get_option('em_popup_info');
+		echo '<input type="text" name="em_popup_info[infoen]" value="'.$opt['infoen'].'">';
+	}
+
+	public function popup_infoto_callback() {
+		$opt = get_option('em_popup_info');
+		echo '<input type="text" name="em_popup_info[infoto]" value="'.$opt['infoto'].'">';
 	}
 } 

@@ -19,7 +19,7 @@ final class EmoContact {
 
 	private function wp_hooks() {
 		add_action('admin_menu', array($this, 'add_contact_menu'));
-		add_action( 'admin_init', array($this, 'initContact') );
+		add_action('admin_init', array($this, 'initContact'));
 	}	
 
 	public function add_contact_menu() {
