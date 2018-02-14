@@ -4,6 +4,8 @@ final class EmoLogger {
 	/* SINGLETON */
 	private static $instance = null;
 	private $table_name = 'em_logger';
+	private $data = null;
+
 	public static function get_instance($activate = true) {
 
 		if (self::$instance === null)
@@ -100,7 +102,11 @@ final class EmoLogger {
 
 	private function em_ajax() {
 		wp_enqueue_script('em-email', get_template_directory_uri().'/assets/email.js', array('jquery'), '0.1', true);
-		wp_localize_script( 'em-email', 'emmail', array( 'ajax_url' => admin_url('admin-ajax.php'), 'tekst' => 'test tekst') );
+		wp_localize_script( 'em-email', 'emmail', array( 
+			'ajax_url' => admin_url('admin-ajax.php'), 
+			'data' => get_option('em_popup_data'),
+			'active' => get_option('em_popup_activate')
+		) );
 	}
 
 	public function emmail_action() {
@@ -115,6 +121,13 @@ final class EmoLogger {
 	public function options_hooks() {
 		add_action('admin_menu', array($this, 'add_logger_menu'));
 		add_action('admin_init', array($this, 'initLogger'));
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_script'));
+
+	}
+
+	public function enqueue_script() {
+		wp_enqueue_script('em-admin-email', get_template_directory_uri().'/assets/em-admin-email.js', array('jquery'), '0.1', true);
+		wp_enqueue_media();
 	}
 
 	public function add_logger_menu() {
@@ -124,14 +137,30 @@ final class EmoLogger {
 	public function initLogger() {
 		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
 
-		register_setting('em_options_logger', 'em_popup_title', $args);
-		register_setting('em_options_logger', 'em_popup_info', $args);
+		// register_setting('em_options_logger', 'em_popup_title', $args);
+		// register_setting('em_options_logger', 'em_popup_info', $args);
+		register_setting('em_options_logger', 'em_popup_data', $args);
+		register_setting('em_options_logger', 'em_popup_activate', $args);
 
 
 		add_settings_section( 'em_logger_settings', 'Popup Settings', array($this, 'em_logger_callback'), 'em-logger-page' );
-		add_settings_field( 'em-popup-title', 'Popup Title', array($this, 'popup_title_callback'), 'em-logger-page', 'em_logger_settings' );
-		add_settings_field( 'em-popup-infoen', 'Popup Info 1', array($this, 'popup_infoen_callback'), 'em-logger-page', 'em_logger_settings' );
-		add_settings_field( 'em-popup-infoto', 'Popup Info 2', array($this, 'popup_infoto_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-aktivert', 'Aktivert', array($this, 'popup_aktivert_callback'), 'em-logger-page', 'em_logger_settings' );
+		
+		add_settings_field( 'em-popup-title', 'Title', array($this, 'popup_title_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-info-one', 'Info Paragraph 1', array($this, 'popup_info_one_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-info-two', 'Info Paragraph 2', array($this, 'popup_info_two_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-info-three', 'Info Paragraph 3', array($this, 'popup_info_three_callback'), 'em-logger-page', 'em_logger_settings' );
+
+		// add_settings_field( 'em-popup-input-title', 'Title til input section', array($this, 'popup_input_title_callback'), 'em-logger-page', 'em_logger_settings' );
+
+		add_settings_field( 'em-popup-name-title', 'Tekst til navn input', array($this, 'popup_name_text_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-email-text', 'Tekst til epost input', array($this, 'popup_email_text_callback'), 'em-logger-page', 'em_logger_settings' );
+
+		add_settings_field( 'em-popup-gobutton-text', 'Tekst på "GO" knapp', array($this, 'popup_gobutton_text_callback'), 'em-logger-page', 'em_logger_settings' );
+		// add_settings_field( 'em-popup-input-subtekst', 'Tekst under inputs', array($this, 'popup_input_subtekst_callback'), 'em-logger-page', 'em_logger_settings' );
+		
+
+		add_settings_field( 'em-popup-image', 'Logo', array($this, 'popup_logo_callback'), 'em-logger-page', 'em_logger_settings' );
 
 		// register settings
 		// register settings section
@@ -139,15 +168,33 @@ final class EmoLogger {
 	}
 
 	public function san_callback($input) {
+		if (! is_array($input))
+			return sanitize_text_field($input);
 
-		if (is_array($input)) {
-			foreach ($input as $key => $value)
-				$input[$key] = sanitize_text_field($value);
+		$array = [];
 
-			return $input;
+		foreach($input as $key => $value) {
+			if (is_array($value))
+				$array[$key] = $this->san_callback($value);
+			else if ($value != '')
+				$array[$key] = sanitize_text_field($value);
 		}
-		return sanitize_text_field( $input );
+
+		return $array;
 	}
+
+	private function g_opt($input, $input2 = null) {
+		if ($this->data === null)
+			$this->data = get_option('em_popup_data');
+
+		$d = $this->data;
+
+		if ($input2 !== null)
+			return isset($d[$input][$input2]) ? esc_attr($d[$input][$input2]) : '';
+			
+		return isset($d[$input]) ? esc_attr($d[$input]) : '';
+	}
+
 
 	public function email_callback() {
 		echo '<form action="options.php" method="POST">';
@@ -158,20 +205,105 @@ final class EmoLogger {
 	}
 
 	public function em_logger_callback() {
-		echo 'Customize text and picture of popup window '.print_r(get_option('em_popup_info'), true);
+		echo 'Customize text and picture of popup window';
+		// echo 'Customize text and picture of popup window '.print_r(get_option('em_popup_data'), true);
+	}
+
+	public function popup_aktivert_callback() {
+		echo '<input type="checkbox" name="em_popup_activate"'.(get_option('em_popup_activate') ? ' checked' : '').'>';
 	}
 
 	public function popup_title_callback() {
-		echo '<input type="text" name="em_popup_title" value="'.get_option('em_popup_title').'">';
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['title']) ? $opt['title'] : '';
+
+		// echo '<input type="text" name="em_popup_data[title]" value="'.$value.'">';
+		echo '<input type="text" name="em_popup_data[title]" value="'.$this->g_opt('title').'">';
 	}
 
-	public function popup_infoen_callback() {
-		$opt = get_option('em_popup_info');
-		echo '<input type="text" name="em_popup_info[infoen]" value="'.$opt['infoen'].'">';
+	public function popup_info_one_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['info']['one']) ? $opt['info']['one'] : '';
+
+		echo '<input type="text" name="em_popup_data[info][one]" value="'.$this->g_opt('info', 'one').'">';
 	}
 
-	public function popup_infoto_callback() {
-		$opt = get_option('em_popup_info');
-		echo '<input type="text" name="em_popup_info[infoto]" value="'.$opt['infoto'].'">';
+	public function popup_info_two_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['info']['two']) ? $opt['info']['two'] : '';
+
+		echo '<input type="text" name="em_popup_data[info][two]" value="'.$this->g_opt('info', 'two').'">';
+	}
+
+	public function popup_info_three_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['info']['three']) ? $opt['info']['three'] : '';
+
+		echo '<input type="text" name="em_popup_data[info][three]" value="'.$this->g_opt('info', 'three').'">';
+	}
+
+	public function popup_input_title_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['input_title']) ? $opt['input_title'] : '';
+
+		echo '<input type="text" name="em_popup_data[input_title]" value="'.$this->g_opt('input_title').'">';
+	}
+
+	public function popup_gobutton_text_callback() {
+		echo '<input type="text" name="em_popup_data[gobutton_text]" value="'.$this->g_opt('gobutton_text').'">';
+	}
+
+	public function popup_name_text_callback() {
+		echo '<input type="text" name="em_popup_data[name_text]" value="'.$this->g_opt('name_text').'">';
+	}
+
+	public function popup_email_text_callback() {
+		echo '<input type="text" name="em_popup_data[email_text]" value="'.$this->g_opt('email_text').'">';
+	}
+
+
+
+	// public function popup_gobutton_title_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['gobutton_title']) ? $opt['gobutton_title'] : '';
+
+		// echo '<input type="text" name="em_popup_data[gobutton_title]" value="'.$this->g_opt('gobutton_title').'">';
+	// }
+
+	// public function popup_namebutton_tekst_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['namebutton_tekst']) ? $opt['namebutton_tekst'] : '';
+
+		// echo '<input type="text" name="em_popup_data[namebutton_tekst]" value="'.$this->g_opt('namebutton_tekst').'">';
+	// }
+
+	// public function popup_namebutton_title_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['namebutton_title']) ? $opt['namebutton_title'] : '';
+
+		// echo '<input type="text" name="em_popup_data[namebutton_title]" value="'.$this->g_opt('namebutton_title').'">';
+	// }
+
+	public function popup_input_subtekst_callback() {
+		// $opt = get_option('em_popup_data');
+
+		// $value = isset($opt['inputsubtekst']) ? $opt['inputsubtekst'] : '';
+
+		echo '<input type="text" name="em_popup_data[input_subtekst]" value="'.$this->g_opt('input_subtekst').'">';
+	}
+
+	public function popup_logo_callback() {
+		echo '<img id="em-popup-logo-image" style="max-width: 200px; padding-bottom: 10px; display: block;" src="'.$this->g_opt('logo').'">
+		<input type="button" class="button button-secondary" value="Choose Logo" id="em-popup-logo-button">
+		<input type="button" class="button button-secondary" value="Remove Logo" id="em-popup-remove-button">
+		<input type="hidden" id="em-popup-logo" name="em_popup_data[logo]" value="'.$this->g_opt('logo').'">';
 	}
 } 
