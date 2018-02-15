@@ -154,10 +154,11 @@ jQuery( document ).ready(function() {
 			document.removeEventListener('mousemove', emmouse);
 			document.body.appendChild(popup_container);
 
-				jQuery(top).animate({
+			jQuery(top).animate({
 					opacity: 1
 				}, 300, function() {
 					jQuery(popup).css('opacity', '1');
+					
 					jQuery(popup).animate({
 						maxHeight: '500px',
 						paddingTop: '40px'
@@ -177,9 +178,11 @@ jQuery( document ).ready(function() {
 				action : 'emmail_action',
 				emmail : email,
 				emmailsrc: emailsrc,
-				emname: name
+				emname: name,
+				security: emmail['nonce']
 			},
 			success : function( response ) {
+				// console.dir(response);
 			}
 		});
 	}

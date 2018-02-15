@@ -28,7 +28,6 @@ final class EmHead {
 			});
 
 			var m = document.querySelectorAll("span.em-nav-item");
-			console.dir(m);
 			for (var mm of m) 
 				mm.addEventListener("click", function() {
 					this.nextSibling.classList.toggle("nav-show");

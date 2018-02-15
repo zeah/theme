@@ -77,7 +77,6 @@ final class EmoLogger {
 	/* CALLED in head.php - before html is sent */
 	public function welcome_user() {
 		global $wpdb;
-
 		// unique identifier for visiter in the database
 		$id = uniqid();
 
@@ -89,9 +88,11 @@ final class EmoLogger {
 		if (! isset($_COOKIE['user'])) {
 			setcookie('user', $id, time()+(60*60*24*365), '/');
 
+			// echo 'hi '.$_COOKIE['user'];
+
 			// do nothing if cookie can't be set
-			if (! isset($_COOKIE['user']))
-				return;
+			// if (! isset($_COOKIE['user']))
+			// 	return;
 
 			// initial a visitor in the db
 			$wpdb->insert($wpdb->prefix . $this->table_name, array(
@@ -112,22 +113,32 @@ final class EmoLogger {
 
 	/* enqueue the javascript to do the ajax and popup */
 	private function ajaxpopup() {
-		if (wp_is_mobile())
-			return;
 		
-		// script for popup and ajax
-		wp_enqueue_script('em-email', get_template_directory_uri().'/assets/email.js', array('jquery'), '0.1', true);
-
-		// javascript object from php
-		wp_localize_script( 'em-email', 'emmail', array( 
+		$args = array(
 			'ajax_url' => admin_url('admin-ajax.php'), 
 			'data' => get_option('em_popup_data'),
-			'active' => get_option('em_popup_activate')
-		) );
+			'active' => get_option('em_popup_activate'),
+			'nonce' => wp_create_nonce( 'em_ajax_post_validation' )
+		);
+
+		if (wp_is_mobile()) {
+			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/email-mobile.js', array('jquery'), '0.1', true);
+			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/email-mobile.css', array(), '0.1', '(max-width: 60em)');
+			wp_localize_script( 'em-email-mobile', 'emmail', $args);
+		}
+		else {
+			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/email.js', array('jquery'), '0.1', true);
+			wp_localize_script( 'em-email', 'emmail', $args);
+		}
+
+
+		// javascript object from php
 	}
 
 	public function emmail_action() {
 		global $wpdb;
+
+		check_ajax_referer( 'em_ajax_post_validation', 'security' );
 
 		// validates email
 		if (! is_email($_POST['emmail']))
@@ -138,6 +149,7 @@ final class EmoLogger {
 			'emailsrc' => $_POST['emmailsrc'],
 			'name' => $_POST['emname']
 		), array('uniqueid' => $_COOKIE['user']));
+
 
 		wp_die();
 	}
@@ -178,14 +190,17 @@ final class EmoLogger {
 		add_settings_field( 'em-popup-aktivert', 'Aktivert', array($this, 'popup_aktivert_callback'), 'em-logger-page', 'em_logger_settings' );
 		
 		add_settings_field( 'em-popup-title', 'Title', array($this, 'popup_title_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-title-mobile', 'Title (Mobile)', array($this, 'popup_title_mobile_callback'), 'em-logger-page', 'em_logger_settings' );
 		add_settings_field( 'em-popup-info-one', 'Info Paragraph 1', array($this, 'popup_info_one_callback'), 'em-logger-page', 'em_logger_settings' );
 		add_settings_field( 'em-popup-info-two', 'Info Paragraph 2', array($this, 'popup_info_two_callback'), 'em-logger-page', 'em_logger_settings' );
 		add_settings_field( 'em-popup-info-three', 'Info Paragraph 3', array($this, 'popup_info_three_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-info-mobile', 'Info (Mobile)', array($this, 'popup_info_mobile_callback'), 'em-logger-page', 'em_logger_settings' );
 
 
 		add_settings_field( 'em-popup-name-title', 'Tekst til navn input', array($this, 'popup_name_text_callback'), 'em-logger-page', 'em_logger_settings' );
 		add_settings_field( 'em-popup-email-text', 'Tekst til epost input', array($this, 'popup_email_text_callback'), 'em-logger-page', 'em_logger_settings' );
 		add_settings_field( 'em-popup-gobutton-text', 'Tekst på "GO" knapp', array($this, 'popup_gobutton_text_callback'), 'em-logger-page', 'em_logger_settings' );
+		add_settings_field( 'em-popup-gobutton-text-mobile', 'Tekst på "GO" knapp (Mobile)', array($this, 'popup_gobutton_text_mobile_callback'), 'em-logger-page', 'em_logger_settings' );
 
 		add_settings_field( 'em-popup-image', 'Logo', array($this, 'popup_logo_callback'), 'em-logger-page', 'em_logger_settings' );
 	}
@@ -245,6 +260,10 @@ final class EmoLogger {
 		echo '<input type="text" name="em_popup_data[title]" value="'.$this->g_opt('title').'">';
 	}
 
+	public function popup_title_mobile_callback() {
+		echo '<input type="text" name="em_popup_data[title_mobile]" value="'.$this->g_opt('title_mobile').'">';
+	}
+
 	public function popup_info_one_callback() {
 		echo '<input type="text" name="em_popup_data[info][one]" value="'.$this->g_opt('info', 'one').'">';
 	}
@@ -257,8 +276,16 @@ final class EmoLogger {
 		echo '<input type="text" name="em_popup_data[info][three]" value="'.$this->g_opt('info', 'three').'">';
 	}
 
+	public function popup_info_mobile_callback() {
+		echo '<input type="text" name="em_popup_data[info_mobile]" value="'.$this->g_opt('info_mobile').'">';
+	}
+
 	public function popup_gobutton_text_callback() {
 		echo '<input type="text" name="em_popup_data[gobutton_text]" value="'.$this->g_opt('gobutton_text').'">';
+	}
+
+	public function popup_gobutton_text_mobile_callback() {
+		echo '<input type="text" name="em_popup_data[gobutton_text_mobile]" value="'.$this->g_opt('gobutton_text_mobile').'">';
 	}
 
 	public function popup_name_text_callback() {
