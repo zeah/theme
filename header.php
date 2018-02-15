@@ -1,42 +1,9 @@
 <?php 
 
-
+/* setting cookies and inserting ajax for email logging to database if email not yet set */
 $logger = EmoLogger::get_instance();
-
 $logger->welcome_user();
 
-// echo EmoLogger::table_name();
-// if (isset($_COOKIE['bruker'])) { 
-// 	if ($wpdb->get_var('select email from wp_em_logger where uniqueid = "'.$_COOKIE['bruker'].'"') == '') {
-// 		echo 'no email set yet';	
-// 		echo get_template_directory();
-// 		// wp_enqueue_script( 'emsearch', get_template_directory().'/assets/email.js', array(), false, true );
-// 		enqueue_email_script();
-// 		// add_action('wp_enqueue_scripts', 'enqueue_email_script');
-// 	}
-// 	// echo $_COOKIE['bruker'];
-// }
-// else {
-// // if (! isset($_COOKIE['bruker'])) {
-// 	$unique = uniqid();
-	
-// 	setcookie('bruker', $unique);
-
-// 	global $wpdb; // needed?
-// 	$table = $wpdb->prefix . EmoLogger::table_name();
-
-// 	$wpdb->insert($table, array(
-// 		// 'hit_date' => date('l'),
-// 		'ip' => $_SERVER['REMOTE_ADDR'],
-// 		'uniqueid' => $unique,
-// 		'email' => ''
-// 		));
-// }
-
-function enqueue_email_script() {
-	// wp_enqueue_script( 'emmail', '/wp-content/themes/emtheme2/assets/email.js', array(), false, true );
-	wp_enqueue_script( 'emmail', get_template_directory_uri().'/assets/email.js', array(), false, true );
-}
 
 $mobile = wp_is_mobile();
 
@@ -46,6 +13,7 @@ if ($mobile) {
 
 final class EmHead {
 
+	/* javascript for mobile menu */
 	public static function add_footer() {
 		echo '<script> (function() { 
 			var o = document.querySelector(".nav-mobile-top");
@@ -76,31 +44,38 @@ echo '<!DOCTYPE html><html lang="no"><head>';
 wp_head();
 echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
 
-
+// top container 
 echo '<div class="emtop"><div class="topstuff-container"><div class="topstuff">';
 
+// logo widget for mobile
 if ($mobile && is_active_sidebar('emtheme-logo-mobile')) {
 	echo '<div class="emtheme-logo-mobile">';
 	dynamic_sidebar('emtheme-logo-mobile');
 	echo '</div>';
 }
 
+// logo widget for non-mobile
 elseif (!$mobile && is_active_sidebar('emtheme-logo')) {
 	echo '<div class="emtheme-logo">';
 	dynamic_sidebar('emtheme-logo');
 	echo '</div>';
 }
 
+// site title and tagline for non-mobile devices
 if (!$mobile)
 	echo '<div class="topstuff-text"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div>';
 
+// end div for topstuff-container and topstuff 
 echo '</div></div>';
 
+// menu
 $nav = '<div class="nav-container">';
 
+// to hide entire menu for mobile
 if ($mobile)
 	$nav .= '<div class="nav-mobile-top"></div>';
 
+// menu items container
 $nav .= '<nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
 
 // parameters for page search in database
@@ -116,7 +91,6 @@ class Nav {
 	public $link;
 	public $children = array();
 }
-
 
 // sorting pages into iterator with correct layout
 $titles = array();
@@ -154,6 +128,7 @@ foreach (get_pages($args) as $key => $value) {
 	}
 }
 
+// adding menu items to html
 foreach ($titles as $key => $value) {
 	$is_parent = false;
 	$parent_icon = '';

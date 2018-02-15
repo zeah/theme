@@ -1,7 +1,5 @@
 jQuery( document ).ready(function() {
 
-	// document.onmousemove = mouse_callback;
-
 	var makediv = function(c) {
 		var e = document.createElement('div');
 		e.classList.add(c);
@@ -19,25 +17,18 @@ jQuery( document ).ready(function() {
 	var popup_container = makediv('em-popup');
 
 	var popup = makediv('em-popup-inner');
-	// popup.classList.add('em-popup-inner-show');
 
 	var top = makediv('em-popup-top');
-	// var topleft = makediv('em-popup-top-left');
-	// var topright = makediv('em-popup-top-right');
 
 	var cross = makediv('em-popup-kryss');
 	cross.addEventListener('click', function() {
 		jQuery(popup_container).fadeOut(1500, function() {
 			jQuery(this).remove();
 		});
-		// document.body.removeChild(popup_container);
 	});
 
-	// top.appendChild(topleft);
 	top.appendChild(cross);
-	// top.appendChild(topright);
 	popup_container.appendChild(top);
-
 
 	var inputs = makediv('em-popup-inputs');
 
@@ -62,8 +53,52 @@ jQuery( document ).ready(function() {
 	gobutton.classList.add('em-popup-gobutton');
 	gobutton.appendChild(document.createTextNode(emmail.data['gobutton_text']))
 
-	gobutton.addEventListener('click', function() {
-		console.log('hi');
+
+	var goButtonCallback = function() {
+
+		function validateEmail(mail) {
+			if (/^\w+([\+\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+				return true;
+
+			console.log('false');
+			return false;
+		}
+
+		function validateName(name) {
+			if (name == '')
+				return true;
+
+			if (/^[A-åa-å\s]+$/.test(name))
+				return true;
+
+			console.log('fake name');
+			return false;
+		}
+
+		if (! validateEmail(email_input.value)) {
+			jQuery(email_input).animate({
+				'borderWidth': 4
+			}, 300, function() {
+				jQuery(email_input).animate({
+					'borderWidth': 0
+				}, 300)
+			});
+			return;
+		}
+
+		if (! validateName(name_input.value)) {
+			jQuery(name_input).animate({
+				'borderWidth': 4
+			}, 300, function() {
+				jQuery(name_input).animate({
+					'borderWidth': 0
+				}, 300)
+			});
+			return;
+		}
+
+		sendAjax(email_input.value, 'leave_popup', name_input.value);
+
 		jQuery(popup).animate({
 			height: 0,
 			paddingTop: 0
@@ -73,26 +108,20 @@ jQuery( document ).ready(function() {
 				jQuery(popup_container).remove();
 			});
 		});
-		// popup.classList.add('em-popup-inner-show');
-	});
+	};
 
+	gobutton.addEventListener('click', goButtonCallback);
 	go.appendChild(gobutton);
 
 	inputs.appendChild(go);
 
 	popup.appendChild(inputs);
 
-
 	var textcontainer = makediv('em-popup-text-container');
 	var texttitle = makediv('em-popup-text-title');
 	texttitle.appendChild(document.createTextNode(emmail.data['title']));
 
 	textcontainer.appendChild(texttitle);
-	// console.log(Object.keys(emmail.data['info']).length);
-
-	// for (var key in emmail.data['info']) {
-
-	// }
 
 	var logocontainer = makediv('em-popup-text-logo-container');
 	var logo = document.createElement('img');
@@ -101,8 +130,6 @@ jQuery( document ).ready(function() {
 	logocontainer.appendChild(logo);
 
 	textcontainer.appendChild(logocontainer);
-
-
 
 	var infocontainer = makediv('em-popup-text-info-container');
 
@@ -113,73 +140,13 @@ jQuery( document ).ready(function() {
 	}
 	textcontainer.appendChild(infocontainer);
 
-
-
 	popup.appendChild(textcontainer);
 	popup_container.appendChild(popup);
-	// name input email input button
-
-	// title
-
-	// text text text
-
-
-	// var popup = document.createElement('div');
-
-
-	// popup.classList.add('em-popup');
-
-
-	// // popup.appendChild(document.createTextNode('hi hello'));
-
-	// var tekst = document.createElement('div');
-	// tekst.classList.add('em-popup-tekst');
-	// tekst.appendChild(document.createTextNode(emmail.tekst));
-
-	// popup.appendChild(tekst);
-
-	// var email = document.createElement('input');
-	// email.setAttribute('type', 'text');
-	// email.setAttribute('placeholder', 'din epost her');
-	// email.classList.add('em-popup-email');
-
-	// popup.appendChild(email);
-
-	// var kryss = document.createElement('div');
-	// kryss.classList.add('em-popup-kryss');
-	// kryss.addEventListener('click', function() {
-	// 	document.body.removeChild(popup);
-	// });
-
-	// popup.appendChild(kryss);
-
-	// var bcont = document.createElement('div');
-	// bcont.classList.add('em-popup-bcont');
-
-	// popup.appendChild(bcont);
-
-	// // var nei = document.createElement('button');
-	// // nei.setAttribute('type', 'button');
-	// // nei.classList.add('em-popup-nei');
-	// // nei.classList.add('em-popup-button');
-	// // nei.appendChild(document.createTextNode('Nei takk'));
-
-	// // bcont.appendChild(nei);
-
-	// var ja = document.createElement('button');
-	// ja.setAttribute('type', 'button');
-	// ja.classList.add('em-popup-ja');
-	// ja.classList.add('em-popup-button');
-	// ja.appendChild(document.createTextNode('FÅ TILBUD'));
-
-	// bcont.appendChild(ja);
-
-
 
 	document.addEventListener('mousemove', emmouse);
+	
 	var aktivert = false;
 	function emmouse(e) {
-
 		if (!aktivert && e.clientY > 100) 
 			aktivert = true;
 
@@ -187,8 +154,6 @@ jQuery( document ).ready(function() {
 			document.removeEventListener('mousemove', emmouse);
 			document.body.appendChild(popup_container);
 
-			// jquery animation here instead of css3 animation
-			// jQuery(top).fadeIn('fast', function() {
 				jQuery(top).animate({
 					opacity: 1
 				}, 300, function() {
@@ -200,20 +165,19 @@ jQuery( document ).ready(function() {
 
 				});
 			});
-
 		}
 	}
+	// console.dir(emmail);
 
-
-	console.dir(emmail);
-
-	function sendAjax() {
+	function sendAjax(email, emailsrc, name) {
 		jQuery.ajax({
 			url : emmail.ajax_url,
 			type : 'post',
 			data : {
 				action : 'emmail_action',
-				emmail : 'testdser'
+				emmail : email,
+				emmailsrc: emailsrc,
+				emname: name
 			},
 			success : function( response ) {
 			}
