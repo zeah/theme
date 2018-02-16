@@ -294,9 +294,9 @@ p:empty {
 .em-popup {
 	position: fixed;
 	margin: auto;
-	width: 50%;
-	height: 40%;
-	top: 150px;
+	width: 800px;
+	/*height: 40%;*/
+	top: 120px;
 	left: 0;
 	right: 0;
 	z-index: 999;
@@ -351,7 +351,8 @@ p:empty {
 	padding: 0px 20px 20px 20px;
 	max-height: 0px;
 	background-color: hsl(220, 20%, 90%);
-
+	background-image: url('assets/image/60-lines.png');
+	background-repeat: repeat;
 	overflow-y: hidden;
 	opacity: 0;
 }
@@ -373,14 +374,23 @@ p:empty {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-shadow: 0px 0px 1px black;
 }
 
 .em-popup-input {
-	width: 70%;
+	width: 60%;
 	margin-left: 20px;
 	height: 30px;
 	font-size: 24px;
+	outline: 1px solid hsl(0, 0%, 50%);
 	border: solid 0px hsl(0, 80%, 70%);
+	padding-left: 20px;
+	text-shadow: 0px 0px 1px black;
+}
+
+.em-popup-input:focus {
+	outline: 2px solid hsl(22, 50%, 90%);
+	/*border: solid 1px hsl(0, 00%, 50%);*/
 }
 
 .em-popup-go {
@@ -394,14 +404,15 @@ p:empty {
 	background-color: hsl(22, 95%, 60%);
 	color: white;
 	height: 34px;
-	padding: 0 30px;
+	padding: 0 10px;
 	font-size: 24px;
 	font-family: arial;
-	border: outset 1px hsl(0, 0%, 99%);
+	border: outset 1px hsl(0, 0%, 89%);
 	cursor: pointer;
 	outline: none;
 	transition: background-color 0.4s;
 	white-space: nowrap;
+	text-shadow: 0px 0px 1px black;
 }
 
 .em-popup-gobutton:hover {
@@ -421,9 +432,11 @@ p:empty {
 	display: flex;
 	flex-wrap: wrap;
 	font-family: arial;
-	background-color: hsl(220, 20%, 85%);
-	border: dashed 3px hsl(220, 20%, 80%);
+	background-color: hsl(220, 20%, 95%);
+	border: dashed 1px hsl(220, 20%, 90%);
+	outline: dashed 1px hsl(220, 20%, 90%);
 	justify-content: space-between;
+	/*box-shadow: 0px 0px 1px black;*/
 }
 
 .em-popup-text-title {
@@ -431,9 +444,11 @@ p:empty {
 	text-align: center;
 	margin-bottom: 10px;
 	font-size: 30px;
-	border-bottom: solid 1px hsl(220, 20%, 82%);
-	height: 30px;
-	line-height: 10px;
+	border-bottom: solid 1px hsl(220, 20%, 92%);
+	height: 40px;
+	line-height: 20px;
+
+	text-shadow: 0px 0px 1px black;
 }
 
 .em-popup-text-logo-container {
@@ -445,7 +460,7 @@ p:empty {
 }
 
 .em-popup-text-info-container {
-	width: 40%;
+	width: 50%;
 }
 
 .em-popup-text-info {
@@ -454,6 +469,8 @@ p:empty {
 	padding-bottom: 20px;
 	list-style-type: circle;
 	display: list-item;
+
+	/*text-shadow: 0px 0px 1px black;*/
 }
 
 .em-popup-text-info:last-child {

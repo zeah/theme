@@ -33,7 +33,11 @@ jQuery( document ).ready(function() {
 	var inputs = makediv('em-popup-inputs');
 
 	var name = makediv('em-popup-name');
+	// var name_text = makediv('em-popup-name-text');
 	name.appendChild(document.createTextNode(emmail.data['name_text']));
+
+	// name.appendChild(name_text);
+
 	var name_input = textInput('em-popup-input');
 	name.appendChild(name_input);
 
