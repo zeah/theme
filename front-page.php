@@ -5,7 +5,7 @@ if (time_check()) {
 	global $post;
 	$post = get_post(get_option('em_forside_id'));
 	setup_postdata($post);
-	get_template_part('index');
+	get_template_part('page-altfrontpage');
 	wp_reset_postdata();
 }
 // else using default front page

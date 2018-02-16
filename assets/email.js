@@ -64,7 +64,6 @@ jQuery( document ).ready(function() {
 			if (/^\w+([\+\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
 				return true;
 
-			console.log('false');
 			return false;
 		}
 
@@ -75,7 +74,6 @@ jQuery( document ).ready(function() {
 			if (/^[A-åa-å\s]+$/.test(name))
 				return true;
 
-			console.log('fake name');
 			return false;
 		}
 

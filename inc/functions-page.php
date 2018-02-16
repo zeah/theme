@@ -126,7 +126,7 @@ final class EmPage {
 	/* ADD TO HEADER (META DESCRIPTION, TITLE)*/
 	public function add_head() {
 		global $post;
-		if ($post->post_type == 'page') {
+		if ($post && $post->post_type == 'page') {
 			echo $this->getmeta('emtext') ? '<meta name="description" content="'.$this->getmeta('emtext').'">' : '';
 			echo $this->getmeta('emtitle') ? '<title>'.$this->getmeta('emtitle').'</title>' : '';
 		}
@@ -135,7 +135,7 @@ final class EmPage {
 	/* ADD TO FOOTER  (STRUCTURED DATA) */
 	public static function add_footer() {
 		global $post;
-		if ($post->post_type == 'page') 
+		if ($post && $post->post_type == 'page') 
 			echo json_decode($this->getmeta('emstrucdata')) ? '<script type="application/ld+json">'.json_encode(json_decode($this->getmeta('emstrucdata'))).'</script>' : '';
 	}
 

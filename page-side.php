@@ -1,6 +1,6 @@
 <?php 
 /**
- Template Name: Ignore flexbox
+ Template Name: Dont show page title
  Template Post Type: article, page
 */
 
@@ -12,7 +12,6 @@ setup_postdata( $post );
 
 $postid = get_the_ID(); // to be used in footer.php
 $html = '<div class="main">';
-$html .= '<div class="content-title"><h1>'.get_the_title().'</h1></div>';
 
 $content = get_the_content();
 // removing flexbox shortcode

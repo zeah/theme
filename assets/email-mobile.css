@@ -22,6 +22,13 @@
 
 	box-shadow: 0px 0px 5px black;
 	overflow: hidden;
+	color: white;
+	text-shadow: 0px 0px 1px black;
+}
+
+.em-m-popup-title {
+	/*color: white;
+	text-shadow: 0px 0px 1px black;*/
 }
 
 .em-m-popup-input-container {
@@ -34,8 +41,9 @@
 }
 
 .em-m-popup-info {
-	font-size: 0.5em;
+	font-size: 0.7em;
 	line-height: 20px;
+	margin-bottom: 10px;
 }
 
 .em-m-popup-input-name,
@@ -48,10 +56,25 @@
 
 .em-m-popup-input {
 	height: 20px;
+	border: solid 0px red;
 	/*display: inline-block;*/
 	/*margin-right: 0;*/
 }
 
 .em-m-popup-button {
-	margin-bottom: 30px;
+	border: none;
+	background-color: hsl(122, 50%, 40%);
+	color: white;
+	height: 54px;
+	padding: 0 15px;
+	font-size: 24px;
+	font-family: arial;
+	cursor: pointer;
+	outline: none;
+	transition: background-color 0.4s;
+	white-space: nowrap;
+	text-shadow: 0px 0px 1px black;
+	margin: 15px 0;
+	border-radius: 5px;
+	border: solid 1px hsl(122, 50%, 30%);
 }

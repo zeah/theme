@@ -56,6 +56,71 @@ jQuery(document).ready(function($) {
 	let gobutton = document.createElement('button');
 	gobutton.setAttribute('type', 'button');
 	gobutton.classList.add('em-m-popup-button');
+
+	jQuery(gobutton).on('click', function() {
+
+		function validateEmail(mail) {
+			if (/^\w+([\+\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+				return true;
+
+			return false;
+		}
+
+		function validateName(name) {
+			if (name == '')
+				return true;
+
+			if (/^[A-åa-å\s]+$/.test(name))
+				return true;
+
+			return false;
+		}
+
+		if (! validateEmail(emailInput.value)) {
+			jQuery(emailInput).animate({
+				'borderWidth': 4
+			}, 300, function() {
+				jQuery(emailInput).animate({
+					'borderWidth': 0
+				}, 300)
+			});
+			return;
+		}
+
+		if (! validateName(nameInput.value)) {
+			jQuery(nameInput).animate({
+				'borderWidth': 4
+			}, 300, function() {
+				jQuery(nameInput).animate({
+					'borderWidth': 0
+				}, 300)
+			});
+			return;
+		}
+		jQuery(gobutton).off('click');
+
+		jQuery.ajax({
+			url : emmail.ajax_url,
+			type : 'post',
+			data : {
+				action : 'emmail_action',
+				emmail : emailInput.value,
+				emmailsrc: 'mobile_bottom',
+				emname: nameInput.value,
+				security: emmail['nonce']
+			},
+			success : function( response ) {
+				// console.dir(response);
+			}
+		});
+
+		jQuery(container).animate({
+			maxHeight: 0
+		}, 500, function() {
+			jQuery(container).remove();
+		})
+	});
+
 	gobutton.appendChild(document.createTextNode(emmail.data['gobutton_text_mobile']));
 
 	container.appendChild(gobutton);
@@ -65,7 +130,7 @@ jQuery(document).ready(function($) {
 	function activateAni() {
 		jQuery(title).one('click', function() {
 			jQuery(container).animate({
-				maxHeight: 200
+				maxHeight: 300
 			}, 500, function() {
 				jQuery(title).one('click', function() {
 					jQuery(container).animate({
