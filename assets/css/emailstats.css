@@ -1,0 +1,30 @@
+.es-container {
+	margin: 10px;
+}
+
+.es-table {
+	border-collapse: separate;
+	border-spacing: 0 10px;
+	text-align: left;
+	margin-bottom: 30px;
+	table-layout: fixed;
+}
+
+.es-col {
+	width: 150px;
+	/*background-color: red;*/
+}
+
+.es-tr {
+	border-bottom: solid 1px hsl(0, 0%, 70%);
+	padding-bottom: 50px;
+}
+
+.es-th {
+	border-bottom: solid 2px hsl(0, 0%, 40%);
+	/*min-width: 100px;*/
+}
+
+.es-td {
+	border-bottom: solid 1px hsl(0, 0%, 70%);
+}

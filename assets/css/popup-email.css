@@ -1,0 +1,184 @@
+/*
+
+*/
+
+/* container element for modal window */
+.em-popup {
+	position: fixed;
+	
+	margin: auto;
+	top: 12rem;
+	left: 0;
+	right: 0;
+
+	width: 80rem;
+
+	font-family: "Open Sans Condensed", sans-serif;
+
+	z-index: 999;
+}
+
+/* top bar with close button 
+	popup window will scroll into view from under this */
+.em-popup-top {
+	position: absolute;
+	left: -0.7rem;
+	right: -0.7rem;
+	top: -0.5rem;
+	height: 3rem;
+
+	z-index: 9999;
+	background-color: hsl(220, 20%, 95%);
+	border: solid 1px hsl(220, 20%, 85%);
+	box-shadow: -1px -1px 7px black; /* top-left shadow */
+	display: flex; 
+	justify-content: flex-end; /* floating right */
+	opacity: 0; /* for jQuery animation */
+}
+
+/* visual part of close button */
+.em-popup-kryss:before {
+	content: 'x';
+}
+
+/* close button container */
+.em-popup-kryss {
+	height: 2rem;
+	margin: 0 2rem;
+	padding: 0 2rem;
+	border: solid 1px hsl(0, 0%, 80%);
+	border-radius: 3px;
+
+	align-self: center;
+
+	line-height: 1.8rem;
+	font-size: 2rem;
+	font-weight: 700;
+	/*font-family: "Open Sans Condensed", sans-serif;*/
+	color: hsl(0, 0%, 50%);
+	text-shadow: 0 0 1px black;
+
+	cursor: pointer;
+	transition: all 0.4s;
+}
+
+/* close button hover effects */
+.em-popup-kryss:hover {
+	background-color: hsl(0, 65%, 75%);
+	box-shadow: 0 0 2px black;
+	text-shadow: 0 0 3px black;
+}
+
+/* second container for popup modal (without close button )*/
+.em-popup-inner {
+	padding: 0 2rem 2rem 2rem;
+	max-height: 0; /* at init it will use jQuery to grow in height */
+	opacity: 0; /* same */
+	overflow-y: hidden;
+	
+	box-shadow: 1px 1px 5px black;
+	background-color: hsl(220, 20%, 90%);
+	background-image: url('../image/60-lines.png'); /* transparent background in image */
+	background-repeat: repeat;
+
+	font-family: "Robot", sans-serif;
+}
+
+/* container for email/name inputs and button */
+.em-popup-inputs {
+	display: flex;
+
+	justify-content: space-around;
+	align-items: center;
+	line-height: 4.5rem;
+	
+	font-size: 2.4rem;
+}
+
+.em-popup-name,
+.em-popup-email {
+	text-align: center;
+	text-shadow: 0 0 1px black;
+	white-space: nowrap;
+}
+
+.em-popup-input {
+	width: 60%;
+	margin-left: 2rem;
+	padding-left: 1rem; /* space inside the input */
+
+	outline: 1px solid hsl(0, 0%, 50%);
+	border: solid 0 hsl(0, 80%, 70%); /* for jquery animation */
+
+	font-size: inherit; /* controls the height of the input elements */
+}
+
+.em-popup-input:focus {
+	outline: 2px solid hsl(22, 50%, 90%);
+}
+
+.em-popup-gobutton {
+	background-color: hsl(22, 95%, 60%);
+	padding: 0 1rem;
+
+	border: outset 1px hsl(0, 0%, 89%);
+	outline: none; /* removing outline when clicking */
+	color: hsl(0, 0%, 100%);
+	text-shadow: 0 0 1px black;
+
+	white-space: nowrap;
+	font-size: inherit;
+
+	cursor: pointer;
+	transition: background-color 0.4s;
+}
+
+.em-popup-gobutton:hover {
+	background-color: hsl(22, 95%, 50%);
+}
+
+.em-popup-gobutton:active {
+	border: inset 1px hsl(0, 0%, 99%);
+}
+
+.em-popup-text-container {
+	display: flex;
+
+	flex-wrap: wrap;
+	justify-content: space-between;
+	background-color: hsl(220, 20%, 95%);
+
+	margin-top: 1.5rem;
+	padding: 2rem 3rem;
+	border: dashed 1px hsl(220, 20%, 90%);
+	outline: dashed 1px hsl(220, 20%, 90%);
+}
+
+.em-popup-text-title {
+	width: 100%; /* to take one line in flexbox */
+	margin-bottom: 2rem;
+	line-height: 3rem;
+	
+	text-align: center;
+	font-size: 3rem;
+	text-shadow: 0 0 1px black;
+}
+
+.em-popup-text-logo-container {
+	width: 40%;
+}
+
+.em-popup-logo-img {
+	width: 100%;
+}
+
+.em-popup-text-info-container {
+	width: 50%;
+	font-size: 1.6rem;	
+}
+
+.em-popup-text-info {
+	padding-bottom: 2rem;
+	list-style-type: circle;
+	display: list-item;
+}

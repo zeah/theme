@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto');
+
+/*
+	HEADER
+	NAVIGATION
+	CONTENT
+		FLEXBOX SHORTCODE
+		WORDPRESS IMAGE SHORTCODE 
+	FOOTER 
+*/
+
+/* 
+	General stuff and fixes for wordpress
+*/
+html {
+	background-color: hsl(10, 10%, 90%);
+	font-size: 62.5%;
+	font-family: "roboto", sans-serif;
+	box-sizing: border-box;
+}
+
+/* wordpress fix */
+body {
+	margin: 0 !important;
+}
+
+/* to fix wordpress content filter */
+p:empty {
+	display: none;
+}
+
+/* wordpress widgets get output in <li>s */
+.widget {
+	list-style: none;
+}
+
+
+/* 
+	HEADER 
+	Logo-Widget, Site Title, Site Tagline
+	Navigation
+*/
+
+/* container for widget, title and tagline */
+.topstuff-container {
+	background-color: hsl(0, 0%, 100%);
+}
+
+/* inner container (for margin: auto)*/
+.topstuff {
+	display: flex;
+
+	width: 112rem;
+	margin: auto;
+	padding: 1.5em 0;
+
+	align-items: center;
+}
+
+
+.emtheme-logo {
+	margin-right: 4rem;
+}
+
+/* container for site name and tagline */
+.topstuff-text {
+	line-height: 1;
+}
+
+/* sitename div element */
+.sitename {
+	font-size: 4rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	font-family: "Open Sans Condensed", sans-serif;
+}
+
+/* tagline div element */
+.tagline {
+	font-size: 2rem;
+	text-indent: 4rem;
+	white-space: nowrap;
+}
+
+
+/* 
+	NAVIGATION 
+	Top Menu
+*/
+
+/* container for top menu */
+.nav-container {
+	border-bottom: 2px solid hsl(25, 100%, 60%);
+
+	background-image: linear-gradient(
+		0deg, 
+		hsl(0, 0%, 15%), 
+		hsl(0, 0%, 10%) 50%, 
+		hsl(0, 0%, 15%) 90%
+		);
+	margin-bottom: 1rem;
+}
+
+/* inner container for top menu */
+.nav {
+	display: flex;
+	width: 112rem;
+	margin: auto;
+
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 1.7em;
+	font-weight: 700;
+	text-transform: capitalize;
+	text-align: center;
+	white-space: nowrap;
+}
+
+/* container for menu anchor element */
+.em-nav-item {
+	border-right: solid 1px hsl(0, 0%, 40%);
+	display: block;
+	min-width: 13rem;
+	white-space: nowrap;
+}
+
+.em-nav-item:last-child {
+	border-right: none;
+}
+
+/* adding down arrow to menu parents */
+.em-nav-item-parent:after {
+	content: ' \25bc';
+	font-size: 1.4rem;
+}
+
+/* hover effect on menu items */
+.em-nav-item:hover {
+	background-image: linear-gradient(0deg, 
+		hsl(0, 0%, 25%), 
+		hsl(0, 0%, 20%) 50%, 
+		hsl(0, 0%, 25%) 90%
+		);
+}
+
+/* anchor element in menu */
+.em-nav-lenke {
+	display: block;
+	
+	padding: 0 1rem;
+	line-height: 3.5rem;
+
+	text-decoration: none;
+	color: hsl(0, 50%, 99%);
+}
+
+/* show sub-menus on hover */
+.em-nav-parent-container:hover .em-nav-sub-container {
+	display: block;
+}
+
+/* submenu default css */ 
+.em-nav-sub-container {
+	display: none;
+	position: absolute;
+	z-index: 9999; /* to be above content in .main element */
+}
+
+/* container for anchor element in submenus */
+.em-nav-subitem {
+	border-right: none; /* removing inherited border */
+	
+	background-image: none; /* removing inherited bg-image */
+	background-color: hsl(120, 10%, 90%);
+}
+
+/* container for anchor element in submenus */
+.em-nav-subitem:hover {
+	background-image: none; /* removing inherited bg-image */
+	background-color: hsl(120, 5%, 80%);
+}
+
+/* adds border-bottom equal to of .nav */
+.em-nav-subitem:last-child {
+	border-bottom: 2px solid hsl(25, 100%, 60%);
+}
+
+/* menu anchor font color */
+.em-nav-sublenke {
+	color: hsl(0, 0%, 20%);
+}
+
+
+/*
+	CONTENT SECTION 
+*/
+
+/* element of which is centered, has width and background-color of white */
+.main {
+	margin: 0 auto;
+	max-width: 112rem;
+	min-height: 100vh;
+	/*padding-bottom: 10%;*/
+	/*position: relative;
+	z-index: 999999;*/
+	background-color: hsl(0, 0%, 100%);
+	box-shadow: 0 0 5px black;
+}
+
+/* custom css for wordpress template: altfrontpage */
+.main-alt {
+	max-width: 90vw;
+}
+
+/* container element for wordpress page title */
+.content-title {
+	display: inline-block;
+	margin: 1em;
+	margin-bottom: 2em;
+}
+
+/* the <h1> inside above element */
+.content-title-text {
+	margin: 0; /* removes default h1 styling */
+	
+	border-bottom: solid 0.2rem black;
+
+	font-family: "Open Sans Condensed", sans-serif;
+	font-weight: 600;
+	font-size: 4rem;
+	text-transform: uppercase;
+}
+
+/* custom css for wordpress template: altfrontpage */
+.content-title-alt {
+	text-align: center;
+	border: none;
+}
+
+/* container element for wordpress content for page */
+.content {
+	display: inline-block; /* to uncollapse top/bottom margins */
+	margin: 1rem;
+	font-size: 1.6rem;
+	line-height: 1.6;
+
+	padding-bottom: 10vh;
+}
+
+
+/* 
+	SHORTCODE FLEXBOX SECTION
+	flexbox shortcode from wordpress content 
+*/
+
+/* flexbox */
+.content-3 {
+	display: inline-flex;
+	position: relative;
+}
+
+/* left and right elements */
+.em-left,
+.em-right {
+	margin: 0 2rem;
+	position: sticky;
+	top: 8rem; /* position of where element gets stuck to */
+	align-self: flex-start; /* for sticky to work in flexbox */
+}
+
+/* limits image width to 200px */
+.em-right img,
+.em-left img {
+	max-width: 20rem;
+}
+
+/* left column element to be forced first */
+.em-left {
+	order: 1;
+}
+
+/* center column element to be forced after .left */
+.em-center {
+	margin: 0 2rem;
+ 	order: 2;
+}
+
+/* left column element to be forced after .center */
+.em-right {
+	order: 3;
+}
+
+/* 
+	SECTION
+	IMAGE SHORTCODE FOR WORDPRESS
+*/
+
+/* Floats image right */
+.alignright {
+	float: right;
+	padding-left: 1.5rem;
+}
+
+/* Floats image left */
+.alignleft {
+	float: left;
+	padding-right: 1.5rem;
+}
+
+/* centers image */
+.aligncenter {
+	margin: auto;
+}
+
+/* removes margin from image caption in <p> */
+.wp-caption-text {
+	margin: 0;
+}
+
+
+/*
+	SECTION
+	FOOTER
+*/
+
+/* container element for footer */
+.em-footer {
+	display: flex;
+	
+	min-height: 15rem;
+	margin-top: 5rem;
+	justify-content: center;
+	
+	background-color: hsl(0, 0%, 0%);
+	box-shadow: 0 0 2px black;
+
+	color: hsl(0, 0%, 80%);
+	font-size: 1.4rem;
+}
+
+/* inner container with width and centering */
+.em-inner-footer {
+	display: flex;
+	width: 112rem;
+	margin: 2rem 0;
+	justify-content: space-evenly;
+}
+
+/* fix for list elements */
+.em-footer-ul {
+	padding: 0;
+	margin: 0;
+}
+
+/* fix for list elements */
+.em-footer-listitem {
+	list-style: none;
+	margin-bottom: 0.5rem;
+}
+
+/* special rule for email info */
+.em-footer-epost {
+	text-transform: lowercase;
+	margin-bottom: 1rem;
+}
+
+/* footer section titles */
+.em-socialmedia-container:before,
+.em-aboutus-container:before,
+.em-contact-container:before {
+	display: block;
+	font-size: 2.5rem;
+	font-weight: 600;
+}
+
+/* footer section title for contact */
+.em-contact-container:before {
+	content: 'Kontakt';
+}
+
+/* footer section title for about us */
+.em-aboutus-container:before {
+	content: 'Om Oss';
+}
+
+/* footer section title for social media */
+.em-socialmedia-container:before {
+	content: 'Sosiale Medier';
+}
+
+/* flexbox settings */
+.em-socialmedia-container,
+.em-contact-container,
+.em-aboutus-container {
+	flex-basis: 33%;
+}
+
+/* anchor element */
+.em-footer-link {
+	color: hsl(0, 0%, 80%);
+	text-decoration: none;
+}

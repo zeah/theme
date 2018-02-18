@@ -1,0 +1,219 @@
+p:empty {
+	display: none;
+}
+
+/* TOP STUFF */
+.emtop {
+	background-color: hsl(0, 0%, 15%);
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	margin: 0 -6px;
+	height: 32px;
+}
+
+.topstuff-container {
+	flex: 1;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+
+}
+
+.emtheme-logo-mobile {
+	padding-left: 8px;
+	display: flex;
+	color: hsl(0, 0%, 98%);
+}
+
+.emtheme-logo-mobile p {
+	padding-left: 8px;
+	margin: 0;
+	height: 100%;
+	line-height: 32px;
+	font-family: arial;
+	font-size: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.emtheme-logo-mobile img {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.emtheme-logo-mobile li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* NAVIGATION */
+.nav-container {
+	position: relative;
+	z-index: 900;
+	background-color: inherit;
+}
+
+.nav-mobile-top:before {
+	content: '\2261';
+	font-family: arial;
+	font-size: 42px;
+	height: 32px;
+	line-height: 32px;
+	color: white;
+	overflow: hidden;
+	text-align: right;
+	padding-right: 10px;
+	width: 100%;
+	text-shadow: 0px 0px 2px white;
+	float: right;
+	transition: all 2s ease;
+
+}
+
+.nav {
+	z-index: 999;
+	position: absolute;
+	top: 32px;
+	right: 10px;
+	background-color: inherit;
+}
+
+.nav-active:before {
+	text-shadow: 0px 0px 15px white;
+}
+
+.em-nav-item {
+	background-color: inherit;
+	display: block;
+	white-space: nowrap;
+	/*margin: 15px 10px;*/
+	border-bottom: solid 1px hsl(0, 0%, 20%);
+	padding: 15px 10px;
+}
+
+.em-nav-parent-container > span.em-nav-item {
+	margin: 0px 10px;
+	padding: 15px 10px;
+}
+
+.em-nav-item:last-child {
+	border-bottom: none;
+}
+
+.em-nav-lenke {
+	display: block;
+	padding: 0 10px;
+	cursor: pointer;
+	text-decoration: none;
+	font-family: arial;
+	font-size: 1.1em;
+	text-transform: capitalize;
+	color: hsl(0, 50%, 99%);
+}
+
+.em-nav-sublenke {
+	font-size: 0.7em;
+}
+
+.em-nav-item-parent:after {
+	content: ' \25bc';
+	font-size: 14px;
+}
+
+.nav,
+.em-nav-sub-container {
+	display: none;
+}
+
+.em-nav-subitem {
+	border: none;
+	background-color: hsl(0, 0%, 20%);
+}
+.nav-show {
+	display: block;
+}
+
+
+/* MAIN */
+.main {
+	font-family: arial;
+	line-height: 150%;
+	min-height: 70vh;
+}
+
+.wp-caption-text {
+	padding: 0;
+	margin: 0;
+}
+
+.aligncenter {
+	text-align: center;
+	margin: auto;
+}
+
+.alignleft {
+	text-align: center;
+	float: left;
+}
+.alignright {
+	text-align: center;
+	float: right;
+}
+
+.alignnone img,
+.aligncenter img,
+.alignright img,
+.alignleft img {
+	max-width: 100%;
+}
+
+/* FOOTER */
+.em-inner-footer {
+	color: white;
+	background-color: hsl(0, 0%, 5%);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.8em;
+	font-family: arial;
+}
+
+.em-inner-footer li {
+	list-style: none;
+}
+
+.em-footer-ul {
+	padding: 0;
+}
+
+.em-footer-post {
+	display: inline;
+	padding-right: 5px;
+}
+
+.em-socialmedia-container:before {
+	content: 'Sosiale medier';
+}
+.em-socialmedia-container {
+	flex-basis: 40%;
+}
+
+.em-contact-container:before {
+	content: 'Kontakt';
+}
+.em-contact-container {
+	flex-basis: 40%;
+}
+
+.em-aboutus-container:before {
+	content: 'Om Oss';
+	display: block;
+}
+
+.em-socialmedia-container,
+.em-contact-container,
+.em-aboutus-container {
+	padding: 15px;
+}
+

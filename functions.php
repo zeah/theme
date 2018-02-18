@@ -51,8 +51,8 @@ final class Emfunc {
     }
 
     public function add_style() {
-        wp_enqueue_style('style', get_stylesheet_uri(), array(), '1.0.1', '(min-width: 1000px)');
-        wp_enqueue_style('style-mobile', get_stylesheet_directory_uri() . '/style-mobile.css', array(), null, '(max-width: 1000px)');
+        wp_enqueue_style('style', get_template_directory_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 1000px)');
+        wp_enqueue_style('style-mobile', get_template_directory_uri().'/assets/css/style-mobile.css', array(), null, '(max-width: 1000px)');
     }
 
     public function add_sitemap() {

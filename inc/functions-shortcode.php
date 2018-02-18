@@ -39,6 +39,6 @@ final class EmthemeShortcode {
 	private function helper_col($value) {
 		$v = ['left', 'right', 'center'];
 
-		return in_array($value, $v) ? ' class="'.$value.'"' : '';
+		return in_array($value, $v) ? ' class="em-'.$value.'"' : '';
 	}
 }

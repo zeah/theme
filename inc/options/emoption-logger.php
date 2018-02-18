@@ -123,14 +123,14 @@ final class EmoLogger {
 		);
 
 		if (wp_is_mobile()) {
-			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/email-mobile.js', array('jquery'), '0.1', true);
-			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/email-mobile.css', array(), '0.1', '(max-width: 60em)');
+			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '0.1', true);
+			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '0.1', '(max-width: 60em)');
 			wp_localize_script( 'em-email-mobile', 'emmail', $args);
 		}
 		else {
-			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/email.js', array('jquery'), '0.1', true);
+			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/js/popup-email.js', array('jquery'), '0.1', true);
 			wp_localize_script( 'em-email', 'emmail', $args);
-			wp_enqueue_style('em-email--style', get_template_directory_uri().'/assets/email.css', array(), '0.1', '(min-width: 60em)');
+			wp_enqueue_style('em-email--style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
 
 		}
 
@@ -163,20 +163,30 @@ final class EmoLogger {
 		add_action('admin_menu', array($this, 'add_logger_menu'));
 		add_action('admin_init', array($this, 'initLogger'));
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_script'));
-		add_action('admin_head', array($this, 'email_stats_css'));
+		// add_action('admin_head', array($this, 'email_stats_css'));
 
 	}
 
 	/* enqueuing javascript for image selector */
 	public function enqueue_script() {
 		$screen = get_current_screen();
-		if ($screen->id != 'em-theme_page_em-logger-page')
-			return;
+		// echo $screen->id;
+		if ($screen->id == 'em-theme_page_em-logger-page') {
+			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
+			wp_enqueue_script('em-admin-email', get_template_directory_uri().'/assets/js/em-admin-email.js', array('jquery'), '0.1', true);
+			wp_enqueue_media();
+		}
+		else if ($screen->id == 'em-theme_page_em-emailstats-page') {
 
-		wp_enqueue_style('em-email--style', get_template_directory_uri().'/assets/email.css', array(), '0.1', '(min-width: 60em)');
+			global $wpdb;
+			$table = $wpdb->prefix . $this->table_name;
 
-		wp_enqueue_script('em-admin-email', get_template_directory_uri().'/assets/em-admin-email.js', array('jquery'), '0.1', true);
-		wp_enqueue_media();
+			$results = $wpdb->get_results("select * from $table");
+
+			wp_enqueue_style('em-email-stats-style', get_template_directory_uri().'/assets/css/emailstats.css', array(), '0.1', '(min-width: 60em)');
+			wp_enqueue_script('em-stats-email', get_template_directory_uri().'/assets/js/emailstats.js', array('jquery'), '0.1', true);
+			wp_localize_script('em-stats-email', 'emaildb', $results);
+		}
 	}
 
 	/* addning the submenu page for popup logger */
@@ -334,31 +344,32 @@ final class EmoLogger {
 	}
 
 	public function email_stats_callback() {
-		if ( (! current_user_can('publish_pages')) || (! is_admin()) )
-			return;
+		echo '<div class="es-container"></div>';
+		// if ( (! current_user_can('publish_pages')) || (! is_admin()) )
+		// 	return;
 
-		global $wpdb;
-		$table = $wpdb->prefix . $this->table_name;
+		// global $wpdb;
+		// $table = $wpdb->prefix . $this->table_name;
 
-		$col = $wpdb->get_results("select email, name from $table where not email = ''");
-		$count = $wpdb->num_rows;
+		// $col = $wpdb->get_results("select email, name from $table where not email = ''");
+		// $count = $wpdb->num_rows;
 
-		$desktop_hits = $wpdb->get_var("select count(emailsrc) from $table where emailsrc = 'leave_popup'");
-		$mobile_hits = $wpdb->get_var("select count(emailsrc) from $table where emailsrc = 'mobile_bottom'");
+		// $desktop_hits = $wpdb->get_var("select count(emailsrc) from $table where emailsrc = 'leave_popup'");
+		// $mobile_hits = $wpdb->get_var("select count(emailsrc) from $table where emailsrc = 'mobile_bottom'");
 
-		$html = '<div class="email-stats-container">';
-		$html .= '<div class="email-counter">'.$count.' emails found.<br>'.$desktop_hits.' from leave popup.<br>'.$mobile_hits.' from mobile popup.</div>';
+		// $html = '<div class="email-stats-container">';
+		// $html .= '<div class="email-counter">'.$count.' emails found.<br>'.$desktop_hits.' from leave popup.<br>'.$mobile_hits.' from mobile popup.</div>';
 
-		$html .= '<table class="em-table-stats"><tr><th>Name</th><th>Email</th></tr>';
-		foreach($col as $key => $object)
-			if ($object->email)
-				$html .= '<tr><td>'.$object->name.'</td><td>'.$object->email.'</td></tr>';
+		// $html .= '<table class="em-table-stats"><tr><th>Name</th><th>Email</th></tr>';
+		// foreach($col as $key => $object)
+		// 	if ($object->email)
+		// 		$html .= '<tr><td>'.$object->name.'</td><td>'.$object->email.'</td></tr>';
 
-		$html .= '</table>';
-		$html .= '</div>'; // end of email stats container
+		// $html .= '</table>';
+		// $html .= '</div>'; // end of email stats container
 
-		echo $html;
-		$wpdb->flush();
+		// echo $html;
+		// $wpdb->flush();
 	}
 	public function email_stats_css() {
 		echo '<style>
