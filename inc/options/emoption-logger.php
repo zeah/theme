@@ -122,17 +122,19 @@ final class EmoLogger {
 			'nonce' => wp_create_nonce( 'em_ajax_post_validation' )
 		);
 
+		// validates and escapes the url
+		if (isset($args['data']['logo'])) 
+			$args['data']['logo'] = esc_url($args['data']['logo']);
 
 		if (wp_is_mobile()) {
 			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '0.1', true);
+			wp_localize_script('em-email-mobile', 'emmail', $args);
 			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '0.1', '(max-width: 60em)');
-			wp_localize_script( 'em-email-mobile', 'emmail', $args);
 		}
 		else {
 			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/js/popup-email.js', array('jquery'), '0.1', true);
-			wp_localize_script( 'em-email', 'emmail', $args);
-			wp_enqueue_style('em-email--style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
-
+			wp_localize_script('em-email', 'emmail', $args);
+			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
 		}
 
 
@@ -171,12 +173,14 @@ final class EmoLogger {
 	/* enqueuing javascript for image selector */
 	public function enqueue_script() {
 		$screen = get_current_screen();
-		// echo $screen->id;
+		
+		// popup settings
 		if ($screen->id == 'em-theme_page_em-logger-page') {
 			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
 			wp_enqueue_script('em-admin-email', get_template_directory_uri().'/assets/js/em-admin-email.js', array('jquery'), '0.1', true);
 			wp_enqueue_media();
 		}
+		// email collection stats
 		else if ($screen->id == 'em-theme_page_em-emailstats-page') {
 
 			global $wpdb;
@@ -270,25 +274,25 @@ final class EmoLogger {
 		echo 'Customize text and picture of popup window';
 
 
-		echo '<div class="em-popup" style="margin: 0; max-width: 50%; left: auto; right: 60px;">
+		echo '<div class="em-popup" style="margin: 0; left: auto; right: 60px;">
 		<div class="em-popup-top" style="opacity: 1;">
 		<div class="em-popup-kryss"></div></div>
 
 		<div class="em-popup-inner" style="opacity: 1; max-height: 50rem; padding-top: 4rem;">
-		<div class="em-popup-inputs" style="font-size: 24px !important;">
-		<div class="em-popup-name">'.$this->g_opt('name_text').'<input type="text" class="em-popup-input"></div>
-		<div class="em-popup-email">'.$this->g_opt('email_text').'<input type="text" class="em-popup-input"></div>
-		<div class="em-popup-go"><button type="button" style="max-width: 200px;" class="em-popup-gobutton">'.$this->g_opt('gobutton_text').'</button></div>
+		<div class="em-popup-inputs">
+		<div class="em-popup-name">'.esc_html($this->g_opt('name_text')).'<input type="text" class="em-popup-input"></div>
+		<div class="em-popup-email">'.esc_html($this->g_opt('email_text')).'<input type="text" class="em-popup-input"></div>
+		<div class="em-popup-go"><button type="button" class="em-popup-gobutton">'.esc_html($this->g_opt('gobutton_text')).'</button></div>
 		</div>
 
-		<div class="em-popup-text-container" style="padding: 0 20px 20px 20px;">
-		<div class="em-popup-text-title">'.$this->g_opt('title').'</div>
+		<div class="em-popup-text-container">
+		<div class="em-popup-text-title">'.esc_html($this->g_opt('title')).'</div>
 		<div class="em-popup-text-logo-container">
-		<img class="em-popup-logo-img" src="'.$this->g_opt('logo').'"></div>
+		<img class="em-popup-logo-img" src="'.esc_html($this->g_opt('logo')).'"></div>
 		<div class="em-popup-text-info-container">
-		<div class="em-popup-text-info">'.$this->g_opt('info', 'one').'</div>
-		<div class="em-popup-text-info">'.$this->g_opt('info', 'two').'</div>
-		<div class="em-popup-text-info">'.$this->g_opt('info', 'three').'</div>
+		<div class="em-popup-text-info">'.esc_html($this->g_opt('info', 'one')).'</div>
+		<div class="em-popup-text-info">'.esc_html($this->g_opt('info', 'two')).'</div>
+		<div class="em-popup-text-info">'.esc_html($this->g_opt('info', 'three')).'</div>
 		</div></div></div></div>';
 
 	}
@@ -347,49 +351,5 @@ final class EmoLogger {
 
 	public function email_stats_callback() {
 		echo '<div class="es-container"></div>';
-		// if ( (! current_user_can('publish_pages')) || (! is_admin()) )
-		// 	return;
-
-		// global $wpdb;
-		// $table = $wpdb->prefix . $this->table_name;
-
-		// $col = $wpdb->get_results("select email, name from $table where not email = ''");
-		// $count = $wpdb->num_rows;
-
-		// $desktop_hits = $wpdb->get_var("select count(emailsrc) from $table where emailsrc = 'leave_popup'");
-		// $mobile_hits = $wpdb->get_var("select count(emailsrc) from $table where emailsrc = 'mobile_bottom'");
-
-		// $html = '<div class="email-stats-container">';
-		// $html .= '<div class="email-counter">'.$count.' emails found.<br>'.$desktop_hits.' from leave popup.<br>'.$mobile_hits.' from mobile popup.</div>';
-
-		// $html .= '<table class="em-table-stats"><tr><th>Name</th><th>Email</th></tr>';
-		// foreach($col as $key => $object)
-		// 	if ($object->email)
-		// 		$html .= '<tr><td>'.$object->name.'</td><td>'.$object->email.'</td></tr>';
-
-		// $html .= '</table>';
-		// $html .= '</div>'; // end of email stats container
-
-		// echo $html;
-		// $wpdb->flush();
 	}
-	// public function email_stats_css() {
-	// 	echo '<style>
-	// 			.email-stats-container {
-	// 				margin: 20px;
-	// 				font-size: 18px
-	// 			}
-	// 			.em-table-stats { 
-	// 				text-align: left;
-	// 				cell-spacing: 20px;
-	// 				border-collapse: collapse;
-	// 			}
-	// 			.em-table-stats td,
-	// 			.em-table-stats th {
-	// 				padding: 15px;
-	// 				border-bottom: black 1px solid;
-	// 			}
-
-	// 		</style>';
-	// }
 } 

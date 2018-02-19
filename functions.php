@@ -97,6 +97,25 @@ final class Emfunc {
     }
 }
 
+final class EmHelp {
+    public static function sanitize($input) {
+        if (! is_array($input))
+            return sanitize_text_field($input);
+
+        $array = [];
+
+        // recurvise for multidimensional arrays
+        foreach($input as $key => $value) {
+            if (is_array($value))
+                $array[$key] = $this->san_callback($value);
+            else if ($value != '')
+                $array[$key] = sanitize_text_field($value);
+        }
+
+        return $array;
+    }
+}
+
 
 // add_action('wp_ajax_emmail_action', 'email_action');
 // add_action('wp_ajax_nopriv_emmail_action', 'email_action');

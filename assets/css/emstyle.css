@@ -333,6 +333,7 @@ p:empty {
 	
 	min-height: 15rem;
 	margin-top: 5rem;
+	padding-bottom: 5rem;
 	justify-content: center;
 	
 	background-color: hsl(0, 0%, 0%);
@@ -348,6 +349,8 @@ p:empty {
 	width: 112rem;
 	margin: 2rem 0;
 	justify-content: space-evenly;
+
+	/*border: solid white 1px;*/
 }
 
 /* fix for list elements */
@@ -397,10 +400,21 @@ p:empty {
 .em-contact-container,
 .em-aboutus-container {
 	flex-basis: 33%;
+	/*border: yellow solid 1px;*/
 }
 
 /* anchor element */
 .em-footer-link {
 	color: hsl(0, 0%, 80%);
 	text-decoration: none;
+}
+
+.em-footer-link:hover {
+	color: hsl(22, 50%, 50%);
+}
+
+/* special rule for postal format */
+.em-footer-post {
+	display: inline;
+	padding-right: 0.5rem;
 }

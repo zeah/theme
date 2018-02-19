@@ -3,6 +3,7 @@
 final class EmoContact {
 	/* SINGLETON */
 	private static $instance = null;
+	private $data = null;
 	public static function get_instance($activate = true) {
 
 		if (self::$instance === null)
@@ -37,6 +38,8 @@ final class EmoContact {
 	public static function initContact() {
 		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
 		register_setting('em_options_contact', 'em_social_active', $args);
+		register_setting('em_options_contact', 'em_contact_data', $args);
+
 		register_setting('em_options_contact', 'em_epost', $args);
 		register_setting('em_options_contact', 'em_avdeling', $args);
 		register_setting('em_options_contact', 'em_selskap', $args);
@@ -78,7 +81,34 @@ final class EmoContact {
 	}
 
 	public function san_callback($input) {
-		return sanitize_text_field( $input );
+		if (! is_array($input))
+			return sanitize_text_field($input);
+
+		$array = [];
+
+		// recurvise for multidimensional arrays
+		foreach($input as $key => $value) {
+			if (is_array($value))
+				$array[$key] = $this->san_callback($value);
+			else if ($value != '')
+				$array[$key] = sanitize_text_field($value);
+		}
+
+		return $array;
+	}
+
+	private function g_opt($input, $input2 = null) {
+		// $data is the array to be retrieved - array gets retrived only once from database
+		if ($this->data === null)
+			$this->data = get_option('em_contact_data');
+
+		$d = $this->data;
+
+		// double dimensional array
+		if ($input2 !== null)
+			return isset($d[$input][$input2]) ? esc_attr($d[$input][$input2]) : '';
+			
+		return isset($d[$input]) ? esc_attr($d[$input]) : '';
 	}
 
 		/* CONTACT PAGE (SOCIAL MEDIA + CONTACT INFO + ABOUT US)*/
@@ -101,31 +131,31 @@ final class EmoContact {
 	}
 
 	public function epost_callback() {
-		echo '<input type="text" name="em_epost" placeholder="epost" value="'.get_option('em_epost').'">';
+		echo '<input type="text" name="em_contact_data[contact][epost]" placeholder="epost" value="'.$this->g_opt('contact', 'epost').'">';
 	}
 
 	public function avdeling_callback() {
-		echo '<input type="text" name="em_avdeling" placeholder="avdeling" value="'.get_option('em_avdeling').'">';
+		echo '<input type="text" name="em_contact_data[contact][avdeling]" placeholder="avdeling" value="'.$this->g_opt('contact', 'avdeling').'">';
 	}
 	
 	public function selskap_callback() {
-		echo '<input type="text" name="em_selskap" placeholder="selskap" value="'.get_option('em_selskap').'">';
+		echo '<input type="text" name="em_contact_data[contact][selskap]" placeholder="selskap" value="'.$this->g_opt('contact', 'selskap').'">';
 	}
 	
 	public function poststed_callback() {
-		echo '<input type="text" name="em_poststed" placeholder="poststed" value="'.get_option('em_poststed').'">';
+		echo '<input type="text" name="em_contact_data[contact][poststed]" placeholder="poststed" value="'.$this->g_opt('contact', 'poststed').'">';
 	}
 	
 	public function postnr_callback() {
-		echo '<input type="text" name="em_postnr" placeholder="postnr" value="'.get_option('em_postnr').'">';
+		echo '<input type="text" name="em_contact_data[contact][postnr]" placeholder="postnr" value="'.$this->g_opt('contact', 'postnr').'">';
 	}
 	
 	public function vei_callback() {
-		echo '<input type="text" name="em_vei" placeholder="vei" value="'.get_option('em_vei').'">';
+		echo '<input type="text" name="em_contact_data[contact][vei]" placeholder="vei" value="'.$this->g_opt('contact', 'vei').'">';
 	}
 	
 	public function land_callback() {
-		echo '<input type="text" name="em_land" placeholder="land" value="'.get_option('em_land').'">';
+		echo '<input type="text" name="em_contact_data[contact][land]" placeholder="land" value="'.$this->g_opt('contact', 'land').'">';
 	}
 
 	/* SOCIAL MEDIA */
@@ -138,19 +168,19 @@ final class EmoContact {
 	}
 	
 	public function twitter_callback() {
-		echo '<input type="text" name="em_twitter" placeholder="twitter" value="'.get_option('em_twitter').'">';
+		echo '<input type="text" name="em_contact_data[social][twitter]" placeholder="twitter" value="'.$this->g_opt('social', 'twitter').'">';
 	}
 	
 	public function facebook_callback() {
-		echo '<input type="text" name="em_facebook" placeholder="facebook" value="'.get_option('em_facebook').'">';
+		echo '<input type="text" name="em_contact_data[social][facebook]" placeholder="facebook" value="'.$this->g_opt('social', 'facebook').'">';
 	}
 	
 	public function google_callback() {
-		echo '<input type="text" name="em_google" placeholder="google" value="'.get_option('em_google').'">';
+		echo '<input type="text" name="em_contact_data[social][google]" placeholder="google" value="'.$this->g_opt('social', 'google').'">';
 	}
 	
 	public function youtube_callback() {
-		echo '<input type="text" name="em_youtube" placeholder="youtube" value="'.get_option('em_youtube').'">';
+		echo '<input type="text" name="em_contact_data[social][youtube]" placeholder="youtube" value="'.$this->g_opt('social', 'youtube').'">';
 	}
 	
 	/* ABOUT US */
@@ -163,7 +193,7 @@ final class EmoContact {
 	}
 
 	public function omosstext_callback() {
-		echo '<textarea name="em_omoss" cols="50" rows="5">'.get_option('em_omoss').'</textarea><br>[p] for ny paragraph.';
+		echo '<textarea name="em_contact_data[omoss]" cols="50" rows="5">'.$this->g_opt('omoss').'</textarea><br>[p] for ny paragraph.';
 	}
 
 }

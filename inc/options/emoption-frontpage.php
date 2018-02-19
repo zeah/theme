@@ -3,6 +3,8 @@
 final class EmoFrontpage {
 	/* SINGLETON */
 	private static $instance = null;
+	private $option = null;
+
 	public static function get_instance($activate = true) {
 
 		if (self::$instance === null)
@@ -40,39 +42,55 @@ final class EmoFrontpage {
 		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
 
 		register_setting('em_options_forside', 'em_forside_active', $args);
-		register_setting('em_options_forside', 'em_forside_id', $args);
+		register_setting('em_options_forside', 'em_forside_data',  $args);
+
+
+		// register_setting('em_options_forside', 'em_forside_id', $args);
 		
-		register_setting('em_options_forside', 'em_monday', $args);
-		register_setting('em_options_forside', 'em_monday_time_start', $args);
-		register_setting('em_options_forside', 'em_monday_time_end', $args);
+		// register_setting('em_options_forside', 'em_monday', $args);
+		// register_setting('em_options_forside', 'em_monday_time_start', $args);
+		// register_setting('em_options_forside', 'em_monday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_tuesday', $args);
-		register_setting('em_options_forside', 'em_tuesday_time_start', $args);
-		register_setting('em_options_forside', 'em_tuesday_time_end', $args);
+		// register_setting('em_options_forside', 'em_tuesday', $args);
+		// register_setting('em_options_forside', 'em_tuesday_time_start', $args);
+		// register_setting('em_options_forside', 'em_tuesday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_wednesday', $args);
-		register_setting('em_options_forside', 'em_wednesday_time_start', $args);
-		register_setting('em_options_forside', 'em_wednesday_time_end', $args);
+		// register_setting('em_options_forside', 'em_wednesday', $args);
+		// register_setting('em_options_forside', 'em_wednesday_time_start', $args);
+		// register_setting('em_options_forside', 'em_wednesday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_thursday', $args);
-		register_setting('em_options_forside', 'em_thursday_time_start', $args);
-		register_setting('em_options_forside', 'em_thursday_time_end', $args);
+		// register_setting('em_options_forside', 'em_thursday', $args);
+		// register_setting('em_options_forside', 'em_thursday_time_start', $args);
+		// register_setting('em_options_forside', 'em_thursday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_friday', $args);
-		register_setting('em_options_forside', 'em_friday_time_start', $args);
-		register_setting('em_options_forside', 'em_friday_time_end', $args);
+		// register_setting('em_options_forside', 'em_friday', $args);
+		// register_setting('em_options_forside', 'em_friday_time_start', $args);
+		// register_setting('em_options_forside', 'em_friday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_saturday', $args);
-		register_setting('em_options_forside', 'em_saturday_time_start', $args);
-		register_setting('em_options_forside', 'em_saturday_time_end', $args);
+		// register_setting('em_options_forside', 'em_saturday', $args);
+		// register_setting('em_options_forside', 'em_saturday_time_start', $args);
+		// register_setting('em_options_forside', 'em_saturday_time_end', $args);
 
-		register_setting('em_options_forside', 'em_sunday', $args);
-		register_setting('em_options_forside', 'em_sunday_time_start', $args);
-		register_setting('em_options_forside', 'em_sunday_time_end', $args);
+		// register_setting('em_options_forside', 'em_sunday', $args);
+		// register_setting('em_options_forside', 'em_sunday_time_start', $args);
+		// register_setting('em_options_forside', 'em_sunday_time_end', $args);
 	}
 
 	public function san_callback($input) {
-		return sanitize_text_field( $input );
+		if (! is_array($input))
+			return sanitize_text_field($input);
+
+		$array = [];
+
+		// recurvise for multidimensional arrays
+		foreach($input as $key => $value) {
+			if (is_array($value))
+				$array[$key] = $this->san_callback($value);
+			else if ($value != '')
+				$array[$key] = sanitize_text_field($value);
+		}
+
+		return $array;
 	}
 	/* registering setting fields */
 	public function initForside() {
@@ -90,8 +108,18 @@ final class EmoFrontpage {
 
 	}
 
+	private function g_opt($o, $checkbox = false) {
+		if ($this->option === null)
+			$this->option = get_option('em_forside_data');
+
+		if ($checkbox)
+			return isset($this->options[$o]) ? ' checked' : '';
+		else
+			return isset($this->options[$o]) ? esc_attr($this->options[$o]) : '';
+	}
+
 	public function forside_text_callback() {
-		echo 'Choose an alternative frontpage to show at set times each week.<br>If no valid page/post ID is set, then default frontpage is shown.';
+		echo 'Choose an alternative frontpage to show at set times each week.<br>If no valid page/post ID is set, then default frontpage is shown.<br>';
 	}
 
 	public function foract_callback() {
@@ -99,46 +127,63 @@ final class EmoFrontpage {
 	}
 
 	public function forid_callback() {
-		echo '<input type="text" style="width: 4em" name="em_forside_id" value="'.get_option('em_forside_id').'">';
+		echo '<input type="text" size="4" name="em_forside_data[id]" value="'.$this->g_opt('id').'">';
 	}
 
 	public function monday_callback() {
-		echo '<input type="checkbox" name="em_monday" '.(get_option('em_monday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_monday_time_start').$this->get_time_dropdown('em_monday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[monday]"'.$this->g_opt('monday', true).'>'.$this->get_dropdowns('monday');
 	}
 
 	public function tuesday_callback() {
-		echo '<input type="checkbox" name="em_tuesday" '.(get_option('em_tuesday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_tuesday_time_start').$this->get_time_dropdown('em_tuesday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[tuesday]"'.$this->g_opt('tuesday', true).'>'.$this->get_dropdowns('tuesday');
 	}
 
 	public function wednesday_callback() {
-		echo '<input type="checkbox" name="em_wednesday" '.(get_option('em_wednesday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_wednesday_time_start').$this->get_time_dropdown('em_wednesday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[wednesday]"'.$this->g_opt('wednesday', true).'>'.$this->get_dropdowns('wednesday');
 	}
 
 	public function thursday_callback() {
-		echo '<input type="checkbox" name="em_thursday" '.(get_option('em_thursday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_thursday_time_start').$this->get_time_dropdown('em_thursday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[thursday]"'.$this->g_opt('thursday', true).'>'.$this->get_dropdowns('thursday');
 	}
 
 	public function friday_callback() {
-		echo '<input type="checkbox" name="em_friday" '.(get_option('em_friday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_friday_time_start').$this->get_time_dropdown('em_friday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[friday]"'.$this->g_opt('friday', true).'>'.$this->get_dropdowns('friday');
 	}
 
 	public function saturday_callback() {
-		echo '<input type="checkbox" name="em_saturday" '.(get_option('em_saturday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_saturday_time_start').$this->get_time_dropdown('em_saturday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[saturday]"'.$this->g_opt('saturday', true).'>'.$this->get_dropdowns('saturday');
 	}
 
 	public function sunday_callback() {
-		echo '<input type="checkbox" name="em_sunday" '.(get_option('em_sunday') ? 'checked' : '').'>'.$this->get_time_dropdown('em_sunday_time_start').$this->get_time_dropdown('em_sunday_time_end');
+		echo '<input type="checkbox" name="em_forside_data[sunday]"'.$this->g_opt('sunday', true).'>'.$this->get_dropdowns('sunday');
 	}
 
-	private function get_time_dropdown($id) {
+	private function get_dropdowns($id) {
+		$pfix = ['_ts', '_te'];
 		$time = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00'];
-		$html = '<select name="'.$id.'">';
+		$html = '';
 
-		$set = get_option($id);
-		foreach($time as $t) 
-			$html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.$t.':00</option>';
-		
-		$html .= '</select>';
+		foreach ($pfix as $p) {
+			$html .= '<select name="em_forside_data['.$id.$p.']">';
+
+			$set = $this->g_opt($id.$p);
+			foreach ($time as $t)
+				$html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.$t.':00</option>';
+
+			$html .= '</select>';
+		}
 		return $html;
 	}
+
+	// private function get_time_dropdown($id) {
+	// 	$time = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00'];
+	// 	$html = '<select name="'.$id.'">';
+
+	// 	$set = get_option($id);
+	// 	foreach($time as $t) 
+	// 		$html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.$t.':00</option>';
+		
+	// 	$html .= '</select>';
+	// 	return $html;
+	// }
 }
