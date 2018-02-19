@@ -52,7 +52,7 @@ p:empty {
 
 	width: 112rem;
 	margin: auto;
-	padding: 1.5em 0;
+	padding: 1.5rem 0;
 
 	align-items: center;
 }
@@ -108,7 +108,7 @@ p:empty {
 	margin: auto;
 
 	font-family: 'Open Sans Condensed', sans-serif;
-	font-size: 1.7em;
+	font-size: 2rem;
 	font-weight: 700;
 	text-transform: capitalize;
 	text-align: center;
@@ -162,15 +162,16 @@ p:empty {
 .em-nav-sub-container {
 	display: none;
 	position: absolute;
+	background-color: hsl(120, 10%, 90%);
 	z-index: 9999; /* to be above content in .main element */
 }
 
 /* container for anchor element in submenus */
 .em-nav-subitem {
+	margin-bottom: 1rem;
 	border-right: none; /* removing inherited border */
 	
 	background-image: none; /* removing inherited bg-image */
-	background-color: hsl(120, 10%, 90%);
 }
 
 /* container for anchor element in submenus */
@@ -182,6 +183,7 @@ p:empty {
 /* adds border-bottom equal to of .nav */
 .em-nav-subitem:last-child {
 	border-bottom: 2px solid hsl(25, 100%, 60%);
+	margin-bottom: 0;
 }
 
 /* menu anchor font color */
@@ -214,7 +216,7 @@ p:empty {
 /* container element for wordpress page title */
 .content-title {
 	display: inline-block;
-	margin: 1em;
+	margin: 3em;
 	margin-bottom: 2em;
 }
 
@@ -238,8 +240,11 @@ p:empty {
 
 /* container element for wordpress content for page */
 .content {
-	display: inline-block; /* to uncollapse top/bottom margins */
-	margin: 1rem;
+	box-sizing: border-box;
+	display: inline-block;
+	width: 100%;
+	padding: 1rem 3rem;
+	/*margin: 3rem;*/
 	font-size: 1.6rem;
 	line-height: 1.6;
 

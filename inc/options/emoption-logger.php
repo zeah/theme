@@ -117,10 +117,11 @@ final class EmoLogger {
 		
 		$args = array(
 			'ajax_url' => admin_url('admin-ajax.php'), 
-			'data' => get_option('em_popup_data'),
-			'active' => get_option('em_popup_activate'),
+			'data' => $this->san_callback(get_option('em_popup_data')),
+			'active' => $this->san_callback(get_option('em_popup_activate')),
 			'nonce' => wp_create_nonce( 'em_ajax_post_validation' )
 		);
+
 
 		if (wp_is_mobile()) {
 			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '0.1', true);
@@ -182,6 +183,7 @@ final class EmoLogger {
 			$table = $wpdb->prefix . $this->table_name;
 
 			$results = $wpdb->get_results("select * from $table");
+			$wpdb->flush();
 
 			wp_enqueue_style('em-email-stats-style', get_template_directory_uri().'/assets/css/emailstats.css', array(), '0.1', '(min-width: 60em)');
 			wp_enqueue_script('em-stats-email', get_template_directory_uri().'/assets/js/emailstats.js', array('jquery'), '0.1', true);
@@ -268,18 +270,18 @@ final class EmoLogger {
 		echo 'Customize text and picture of popup window';
 
 
-		echo '<div class="em-popup" style="margin: 0; left: auto; right: 60px;">
+		echo '<div class="em-popup" style="margin: 0; max-width: 50%; left: auto; right: 60px;">
 		<div class="em-popup-top" style="opacity: 1;">
 		<div class="em-popup-kryss"></div></div>
 
-		<div class="em-popup-inner" style="opacity: 1; max-height: 500px; padding-top: 40px;">
-		<div class="em-popup-inputs">
+		<div class="em-popup-inner" style="opacity: 1; max-height: 50rem; padding-top: 4rem;">
+		<div class="em-popup-inputs" style="font-size: 24px !important;">
 		<div class="em-popup-name">'.$this->g_opt('name_text').'<input type="text" class="em-popup-input"></div>
 		<div class="em-popup-email">'.$this->g_opt('email_text').'<input type="text" class="em-popup-input"></div>
-		<div class="em-popup-go"><button type="button" class="em-popup-gobutton">'.$this->g_opt('gobutton_text').'</button></div>
+		<div class="em-popup-go"><button type="button" style="max-width: 200px;" class="em-popup-gobutton">'.$this->g_opt('gobutton_text').'</button></div>
 		</div>
 
-		<div class="em-popup-text-container">
+		<div class="em-popup-text-container" style="padding: 0 20px 20px 20px;">
 		<div class="em-popup-text-title">'.$this->g_opt('title').'</div>
 		<div class="em-popup-text-logo-container">
 		<img class="em-popup-logo-img" src="'.$this->g_opt('logo').'"></div>
@@ -371,23 +373,23 @@ final class EmoLogger {
 		// echo $html;
 		// $wpdb->flush();
 	}
-	public function email_stats_css() {
-		echo '<style>
-				.email-stats-container {
-					margin: 20px;
-					font-size: 18px
-				}
-				.em-table-stats { 
-					text-align: left;
-					cell-spacing: 20px;
-					border-collapse: collapse;
-				}
-				.em-table-stats td,
-				.em-table-stats th {
-					padding: 15px;
-					border-bottom: black 1px solid;
-				}
+	// public function email_stats_css() {
+	// 	echo '<style>
+	// 			.email-stats-container {
+	// 				margin: 20px;
+	// 				font-size: 18px
+	// 			}
+	// 			.em-table-stats { 
+	// 				text-align: left;
+	// 				cell-spacing: 20px;
+	// 				border-collapse: collapse;
+	// 			}
+	// 			.em-table-stats td,
+	// 			.em-table-stats th {
+	// 				padding: 15px;
+	// 				border-bottom: black 1px solid;
+	// 			}
 
-			</style>';
-	}
+	// 		</style>';
+	// }
 } 

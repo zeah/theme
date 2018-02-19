@@ -6,6 +6,7 @@
 require_once 'options/emoption-frontpage.php';
 require_once 'options/emoption-contact.php';
 require_once 'options/emoption-logger.php';
+require_once 'options/emoption-admin.php';
 
 final class EmAdmin {
 	/* SINGLETON */
@@ -45,6 +46,7 @@ final class EmAdmin {
 		EmoFrontpage::get_instance();
 		EmoContact::get_instance();
 		EmoLogger::get_instance();
+		EmoptionAdmin::get_instance();
 
 	}
 
@@ -90,7 +92,12 @@ final class EmAdmin {
 	}
 
 	public function emtheme_callback() {
-		echo 'hi';
+		echo '<div><h1>EM Theme Options</h1></div>';
+		echo '<form action="options.php" method="POST">';
+		settings_fields('em_options_admin');
+		do_settings_sections('em-admin-page');
+		submit_button('save');
+		echo '</form>';
 	}
 
 	// public static function init() {

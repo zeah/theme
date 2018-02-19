@@ -1,5 +1,12 @@
 <?php 
 
+if (get_option('em_admin_maint')) {
+	get_header('alt');
+	echo '<h1 style="height: 100vh">Site is under maintenace. Try again shortly.</h1>';
+	get_footer();
+	return;
+}
+
 // checking if to use alternate page
 if (time_check()) {
 	global $post;

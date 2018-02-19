@@ -12,7 +12,6 @@
 
 .es-col {
 	width: 150px;
-	/*background-color: red;*/
 }
 
 .es-tr {
@@ -22,7 +21,6 @@
 
 .es-th {
 	border-bottom: solid 2px hsl(0, 0%, 40%);
-	/*min-width: 100px;*/
 }
 
 .es-td {
