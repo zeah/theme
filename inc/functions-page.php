@@ -29,6 +29,7 @@ final class EmPage {
 		add_action('add_meta_boxes', array($this, 'add_description'));
 		add_action('add_meta_boxes', array($this, 'add_title'));
 		add_action('add_meta_boxes', array($this, 'add_strucdata'));
+		add_action('add_meta_boxes', array($this, 'add_redirect'));
 
 		add_action('do_meta_boxes', array($this, 'remove_thumbnail'));
 	}
@@ -46,7 +47,7 @@ final class EmPage {
 		if ( ! wp_verify_nonce( $_POST['em_nonce'], basename(__FILE__)))
 			return;
 
-		$metabox = ['emtext', 'emtitle', 'emstrucdata'];
+		$metabox = ['emtext', 'emtitle', 'emstrucdata', 'emredirect'];
 		$metainput = ['showinnav', 'showinmob'];
 
 		foreach ($metabox as $value)
@@ -93,29 +94,29 @@ final class EmPage {
 
 	/* <META> DESCRIPTION META BOX */
 	public function add_description() {
-		add_meta_box( 'meta-description-opt', 'Meta Description', array($this, 'description_callback'), array('page', 'post'), 'advanced', 'high');
+		add_meta_box( 'meta-description-opt', 'Meta Description', array($this, 'description_callback'), array('page'), 'advanced', 'high');
 	}
 	public function description_callback() {
-		echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.$this->getmeta('emtext').'</textarea>';
+		echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.esc_html($this->getmeta('emtext')).'</textarea>';
 	}
 
 	/* <TITLE> META BOX */
 	public function add_title() {
-		 add_meta_box( 'title-opt', 'Page Title', array($this, 'title_callback'), array('page', 'post'), 'advanced', 'high');
+		 add_meta_box( 'title-opt', 'Page Title', array($this, 'title_callback'), array('page'), 'advanced', 'high');
 	}
 	public function title_callback() {
-		echo '<input type="text" name="emtitle" style="width: 100%" value="'.$this->getmeta('emtitle').'">';
+		echo '<input type="text" name="emtitle" style="width: 100%" value="'.esc_attr($this->getmeta('emtitle')).'">';
 	}
 
 	/* STRUCTURED DATA META BOX */
 	public function add_strucdata() {
-		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array($this, 'strucdata_callback'), array('page', 'post'), 'advanced', 'high');
+		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array($this, 'strucdata_callback'), array('page'), 'advanced', 'high');
 	}
 	public function strucdata_callback() {
 		if (json_decode($this->getmeta('emstrucdata')))
 			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.json_encode(json_decode($this->getmeta('emstrucdata')), JSON_PRETTY_PRINT).'</textarea>';
 		else
-			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.$this->getmeta('emstrucdata').'</textarea>';
+			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.esc_html($this->getmeta('emstrucdata')).'</textarea>';
 	}
 
 	/* REMOVE THUMBNAIL FROM PAGE */
@@ -127,16 +128,25 @@ final class EmPage {
 	public function add_head() {
 		global $post;
 		if ($post && $post->post_type == 'page') {
-			echo $this->getmeta('emtext') ? '<meta name="description" content="'.$this->getmeta('emtext').'">' : '';
-			echo $this->getmeta('emtitle') ? '<title>'.$this->getmeta('emtitle').'</title>' : '';
+			echo $this->getmeta('emtext') ? '<meta name="description" content="'.esc_attr($this->getmeta('emtext')).'">' : '';
+			echo $this->getmeta('emtitle') ? '<title>'.esc_html($this->getmeta('emtitle')).'</title>' : '';
 		}
 	}
 
 	/* ADD TO FOOTER  (STRUCTURED DATA) */
-	public static function add_footer() {
+	public function add_footer() {
 		global $post;
 		if ($post && $post->post_type == 'page') 
 			echo json_decode($this->getmeta('emstrucdata')) ? '<script type="application/ld+json">'.json_encode(json_decode($this->getmeta('emstrucdata'))).'</script>' : '';
+	}
+
+	/* PERMANENT MOVE META BOX */
+	public function add_redirect() {
+		add_meta_box( 'meta-description-opt', 'Permanent Redirect URL (301)', array($this, 'redirect_callback'), array('page', 'post'), 'advanced');
+	}
+
+	public function redirect_callback() {
+		echo '<input type="text" size="100" name="emredirect" value="'.esc_attr($this->getmeta('emredirect')).'">';
 	}
 
 

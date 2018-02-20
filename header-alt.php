@@ -1,4 +1,17 @@
 <?php
+
+global $post;
+$meta = get_post_meta($post->ID, 'emredirect');
+if (isset($meta[0])) {
+	$url = esc_url($meta[0]);
+
+	if ($url) {
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: $url");
+		exit();
+	}
+}
+
 $logger = EmoLogger::get_instance();
 $logger->welcome_user();
 

@@ -1,9 +1,23 @@
 <?php 
 
+
+// IF PAGE IS MOVED
+global $post;
+$meta = get_post_meta($post->ID, 'emredirect');
+if (isset($meta[0])) {
+	$url = esc_url($meta[0]);
+
+	if ($url) {
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: $url");
+		exit();
+	}
+}
+// echo $meta[0];
+
 /* setting cookies and inserting ajax for email logging to database if email not yet set */
 $logger = EmoLogger::get_instance();
 $logger->welcome_user();
-
 
 $mobile = wp_is_mobile();
 

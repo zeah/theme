@@ -39,23 +39,10 @@ final class EmoContact {
 		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
 		register_setting('em_options_contact', 'em_social_active', $args);
 		register_setting('em_options_contact', 'em_contact_data', $args);
-
-		register_setting('em_options_contact', 'em_epost', $args);
-		register_setting('em_options_contact', 'em_avdeling', $args);
-		register_setting('em_options_contact', 'em_selskap', $args);
-		register_setting('em_options_contact', 'em_poststed', $args);
-		register_setting('em_options_contact', 'em_postnr', $args);
-		register_setting('em_options_contact', 'em_vei', $args);
-		register_setting('em_options_contact', 'em_land', $args);
 		
 		register_setting('em_options_contact', 'em_contact_active', $args);
-		register_setting('em_options_contact', 'em_twitter', $args);
-		register_setting('em_options_contact', 'em_facebook', $args);
-		register_setting('em_options_contact', 'em_youtube', $args);
-		register_setting('em_options_contact', 'em_google', $args);
 		
 		register_setting('em_options_contact', 'em_omoss_active', $args);
-		register_setting('em_options_contact', 'em_omoss', $args);
 
 		add_settings_section( 'em_contact_settings', 'Kontakt Informasjon', array($this, 'em_settings_callback'), 'em-contact-page' );
 		add_settings_field( 'em-contact-active', 'Kontakter Aktivert', array($this, 'conact_callback'), 'em-contact-page', 'em_contact_settings' );

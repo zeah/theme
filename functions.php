@@ -115,13 +115,3 @@ final class EmHelp {
         return $array;
     }
 }
-
-
-// add_action('wp_ajax_emmail_action', 'email_action');
-// add_action('wp_ajax_nopriv_emmail_action', 'email_action');
-
-// function email_action() {
-//     echo 'hi';
-
-//     wp_die();
-// }

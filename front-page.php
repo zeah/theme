@@ -1,5 +1,47 @@
 <?php 
 
+
+if (isset($_GET['unsub']) &&  isset($_GET['email'])) {
+	
+	$unsub = UnSub::get_instance();
+
+	$unsub->unsub($_GET['email']);
+
+	return;
+}
+
+final class UnSub {
+	private static $instance = null;
+	private $table_name = 'em_logger';
+
+	public static function get_instance($active = true) {
+		if (self::$instance === null)
+			self::$instance = new self();
+
+		return self::$instance;
+	}
+
+	private function __construct($active = true) {
+		if (! $active)
+			return;
+	}
+
+	public function unsub($email) {
+		global $wpdb;
+
+		$table = $wpdb->prefix . $this->table_name;
+
+		if ($wpdb->delete($table, array('email' => $email)))
+			echo 'Unsubscribe successfull!';
+		else
+			echo 'Unsubscribe unsuccessfull.';
+
+
+		$wpdb->flush();
+
+	}
+}
+
 if (get_option('em_admin_maint')) {
 	get_header('alt');
 	echo '<h1 style="height: 100vh">Site is under maintenace. Try again shortly.</h1>';
@@ -44,32 +86,6 @@ function time_check() {
 	if ($forside[$today.'_te'] != '00')
 		if (!($forside[$today.'_te'] > date('H')))
 			return false;
-
-
-	// if (!isset($forside[''] || )
-
-	// // if alternate page is valid
-	// if ( ! get_post(get_option('em_forside_id')))
-	// 	return false;
-
-	// // convert today to meta key
-	// $today = 'em_'.strtolower(date('l'));
-	
-	// // setting php time to CET time
-	// date_default_timezone_set('Europe/Oslo');
-
-	// // checks if today is active as alternate page
-	// if ( ! (get_option($today)))
-	// 	return false;
-
-	// // if after set start time
-	// if ( ! (get_option($today.'_time_start') <= date('H')))
-	// 	return false;
-
-	// // if before set end time
-	// if ( ! (get_option($today.'_time_end') == '00')) // skip if end time is midnight
-	// 	if ( ! (get_option($today.'_time_end') > date('H')))
-	// 		return false;
 
 	// if current time is set to be alternate page
 	return true;

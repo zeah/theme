@@ -45,35 +45,6 @@ final class EmoFrontpage {
 		register_setting('em_options_forside', 'em_forside_data',  $args);
 
 
-		// register_setting('em_options_forside', 'em_forside_id', $args);
-		
-		// register_setting('em_options_forside', 'em_monday', $args);
-		// register_setting('em_options_forside', 'em_monday_time_start', $args);
-		// register_setting('em_options_forside', 'em_monday_time_end', $args);
-
-		// register_setting('em_options_forside', 'em_tuesday', $args);
-		// register_setting('em_options_forside', 'em_tuesday_time_start', $args);
-		// register_setting('em_options_forside', 'em_tuesday_time_end', $args);
-
-		// register_setting('em_options_forside', 'em_wednesday', $args);
-		// register_setting('em_options_forside', 'em_wednesday_time_start', $args);
-		// register_setting('em_options_forside', 'em_wednesday_time_end', $args);
-
-		// register_setting('em_options_forside', 'em_thursday', $args);
-		// register_setting('em_options_forside', 'em_thursday_time_start', $args);
-		// register_setting('em_options_forside', 'em_thursday_time_end', $args);
-
-		// register_setting('em_options_forside', 'em_friday', $args);
-		// register_setting('em_options_forside', 'em_friday_time_start', $args);
-		// register_setting('em_options_forside', 'em_friday_time_end', $args);
-
-		// register_setting('em_options_forside', 'em_saturday', $args);
-		// register_setting('em_options_forside', 'em_saturday_time_start', $args);
-		// register_setting('em_options_forside', 'em_saturday_time_end', $args);
-
-		// register_setting('em_options_forside', 'em_sunday', $args);
-		// register_setting('em_options_forside', 'em_sunday_time_start', $args);
-		// register_setting('em_options_forside', 'em_sunday_time_end', $args);
 	}
 
 	public function san_callback($input) {
