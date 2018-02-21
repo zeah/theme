@@ -12,7 +12,7 @@ if (isset($meta[0])) {
 	}
 }
 
-$logger = EmoLogger::get_instance();
+$logger = Emtheme_Logger::get_instance();
 $logger->welcome_user();
 
 echo '<!DOCTYPE html><html lang="no"><head>';

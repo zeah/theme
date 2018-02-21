@@ -1,9 +1,9 @@
 <?php
 
-final class EmoFrontpage {
+final class Emtheme_Frontpage {
 	/* SINGLETON */
 	private static $instance = null;
-	private $option = null;
+	private $data = null;
 
 	public static function get_instance($activate = true) {
 
@@ -80,13 +80,17 @@ final class EmoFrontpage {
 	}
 
 	private function g_opt($o, $checkbox = false) {
-		if ($this->option === null)
-			$this->option = get_option('em_forside_data');
+		if ($this->data === null)
+			$this->data = get_option('em_forside_data');
 
-		if ($checkbox)
-			return isset($this->options[$o]) ? ' checked' : '';
+		// print_r($this->data);
+
+		if ($checkbox) {
+			// if ($o == 'monday')
+			return isset($this->data[$o]) ? ' checked' : '';
+		}
 		else
-			return isset($this->options[$o]) ? esc_attr($this->options[$o]) : '';
+			return isset($this->data[$o]) ? esc_attr($this->data[$o]) : '';
 	}
 
 	public function forside_text_callback() {

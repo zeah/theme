@@ -3,14 +3,14 @@
 
 if (isset($_GET['unsub']) &&  isset($_GET['email'])) {
 	
-	$unsub = UnSub::get_instance();
+	$unsub = Emtheme_UnSub::get_instance();
 
 	$unsub->unsub($_GET['email']);
 
 	return;
 }
 
-final class UnSub {
+final class Emtheme_UnSub {
 	private static $instance = null;
 	private $table_name = 'em_logger';
 
@@ -54,9 +54,14 @@ if (time_check()) {
 	global $post;
 
 	$forside = get_option('em_forside_data');
+
 	$post = get_post($forside['id']);
+
+	// print_r($post);
 	setup_postdata($post);
-	get_template_part('page-altfrontpage');
+
+	get_template_part('page-templates/alternate-frontpage');
+
 	wp_reset_postdata();
 }
 // else using default front page

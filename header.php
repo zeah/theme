@@ -16,16 +16,16 @@ if (isset($meta[0])) {
 // echo $meta[0];
 
 /* setting cookies and inserting ajax for email logging to database if email not yet set */
-$logger = EmoLogger::get_instance();
+$logger = Emtheme_Logger::get_instance();
 $logger->welcome_user();
 
 $mobile = wp_is_mobile();
 
 if ($mobile) {
-	add_filter('wp_footer', array('EmHead', 'add_footer'));
+	add_filter('wp_footer', array('Emtheme_Head', 'add_footer'));
 }
 
-final class EmHead {
+final class Emtheme_Head {
 
 	/* javascript for mobile menu */
 	public static function add_footer() {
@@ -60,19 +60,23 @@ echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head
 // top container 
 echo '<div class="emtop"><div class="topstuff-container"><div class="topstuff">';
 
-// logo widget for mobile
-if ($mobile && is_active_sidebar('emtheme-logo-mobile')) {
-	echo '<div class="emtheme-logo-mobile">';
-	dynamic_sidebar('emtheme-logo-mobile');
-	echo '</div>';
-}
 
-// logo widget for non-mobile
-elseif (!$mobile && is_active_sidebar('emtheme-logo')) {
-	echo '<div class="emtheme-logo">';
-	dynamic_sidebar('emtheme-logo');
-	echo '</div>';
+if (get_theme_mod('your_theme_logo')) {
+	echo '<div><img src="'.get_theme_mod('your_theme_logo').'"></div>';
 }
+// logo widget for mobile
+// if ($mobile && is_active_sidebar('emtheme-logo-mobile')) {
+// 	echo '<div class="emtheme-logo-mobile">';
+// 	dynamic_sidebar('emtheme-logo-mobile');
+// 	echo '</div>';
+// }
+
+// // logo widget for non-mobile
+// elseif (!$mobile && is_active_sidebar('emtheme-logo')) {
+// 	echo '<div class="emtheme-logo">';
+// 	dynamic_sidebar('emtheme-logo');
+// 	echo '</div>';
+// }
 
 // site title and tagline for non-mobile devices
 if (!$mobile)
@@ -86,7 +90,7 @@ $nav = '<div class="nav-container">';
 
 // to hide entire menu for mobile
 if ($mobile)
-	$nav .= '<div class="nav-mobile-top"></div>';
+	$nav .= '<div class="nav-mobile-top"><i class="material-icons">menu</i></div>';
 
 // menu items container
 $nav .= '<nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';

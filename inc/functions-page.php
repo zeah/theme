@@ -1,6 +1,6 @@
 <?php 
 
-final class EmPage {
+final class Emtheme_Page {
 	private static $instance = null;
 	public static function get_instance($activate = true) {
 
@@ -126,6 +126,7 @@ final class EmPage {
 
 	/* ADD TO HEADER (META DESCRIPTION, TITLE)*/
 	public function add_head() {
+		echo '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
 		global $post;
 		if ($post && $post->post_type == 'page') {
 			echo $this->getmeta('emtext') ? '<meta name="description" content="'.esc_attr($this->getmeta('emtext')).'">' : '';

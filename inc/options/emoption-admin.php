@@ -1,7 +1,7 @@
 <?php 
 
 
-final class EmoptionAdmin {
+final class Emtheme_Options {
 	private static $instance = null;
 
 	public static function get_instance($active = true) {
@@ -20,8 +20,27 @@ final class EmoptionAdmin {
 	}
 
 	private function wp_hooks() {
+		add_action('admin_menu', array($this, 'add_emtheme_menu'));
+
 		add_action( 'admin_init', array($this, 'initAdminside') );
 		add_action( 'admin_init', array($this, 'registerSettings') );
+	
+		Emtheme_Frontpage::get_instance();
+		Emtheme_Contact::get_instance();
+		Emtheme_Logger::get_instance();
+	}
+
+	public function add_emtheme_menu() {
+		add_menu_page('EmTheme Options', 'EM Theme', 'manage_options', 'em-options-page', array($this, 'emtheme_callback'), '', 61);
+	}
+
+	public function emtheme_callback() {
+		echo '<div><h1>EM Theme Options</h1></div>';
+		echo '<form action="options.php" method="POST">';
+		settings_fields('em_options_admin');
+		do_settings_sections('em-admin-page');
+		submit_button('save');
+		echo '</form>';
 	}
 
 	public function san_callback($input) {

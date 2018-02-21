@@ -3,7 +3,9 @@
 Template Name: alternative front-page
 
 */
+
 get_header('alt');
+
 
 global $post;
 setup_postdata($post);

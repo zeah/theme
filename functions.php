@@ -2,24 +2,35 @@
 require_once 'inc/functions-admin.php';
 require_once 'inc/functions-page.php';
 require_once 'inc/functions-shortcode.php';
-require_once 'inc/functions-widget.php';
+// require_once 'inc/functions-widget.php';
+require_once 'inc/options/emtheme_customizer.php';
 
-/* admin menu and theme options */
-EmAdmin::get_instance();
+add_action('after_setup_theme', 'emtheme_setup');
 
-/* page-edit page stuff (meta boxes and saving) */
-EmPage::get_instance();
+if ( ! isset( $content_width ) )
+    $content_width = 1920; /* pixels */
 
-/* widgets (top logo/top logo mobile) */
-EmWidget::get_instance();
+if (! function_exists('emtheme_setup')) {
+    function emtheme_setup() {
+        Emtheme_Admin::get_instance();
 
-/* shortcodes ([col]) */
-EmthemeShortCode::get_instance();
+        /* page-edit page stuff (meta boxes and saving) */
+        Emtheme_Page::get_instance();
 
-/* css, sitemap, filters */
-Emfunc::get_instance();
+        /* widgets (top logo/top logo mobile) */
+        // EmWidget::get_instance();
 
-final class Emfunc {
+        /* shortcodes ([col]) */
+        Emtheme_ShortCode::get_instance();
+
+        /* css, sitemap, filters */
+        Emtheme_function::get_instance();
+
+        Emtheme_customizer::get_instance();
+    }
+}
+
+final class Emtheme_function {
     private static $instance = null;
 
     public static function get_instance($activate = true) {
@@ -51,8 +62,10 @@ final class Emfunc {
     }
 
     public function add_style() {
-        wp_enqueue_style('style', get_template_directory_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 1000px)');
-        wp_enqueue_style('style-mobile', get_template_directory_uri().'/assets/css/style-mobile.css', array(), null, '(max-width: 1000px)');
+        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 1000px)');
+        // wp_enqueue_style('style', get_template_directory_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 1000px)');
+        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), null, '(max-width: 1000px)');
+        // wp_enqueue_style('style-mobile', get_template_directory_uri().'/assets/css/style-mobile.css', array(), null, '(max-width: 1000px)');
     }
 
     public function add_sitemap() {
@@ -97,7 +110,7 @@ final class Emfunc {
     }
 }
 
-final class EmHelp {
+final class Emtheme_Help {
     public static function sanitize($input) {
         if (! is_array($input))
             return sanitize_text_field($input);
@@ -114,4 +127,5 @@ final class EmHelp {
 
         return $array;
     }
+
 }

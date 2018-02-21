@@ -1,6 +1,6 @@
 <?php 
 
-final class EmoContact {
+final class Emtheme_Contact {
 	/* SINGLETON */
 	private static $instance = null;
 	private $data = null;

@@ -8,7 +8,7 @@ require_once 'options/emoption-contact.php';
 require_once 'options/emoption-logger.php';
 require_once 'options/emoption-admin.php';
 
-final class EmAdmin {
+final class Emtheme_Admin {
 	/* SINGLETON */
 	private static $instance = null;
 	public static function get_instance($activate = true) {
@@ -42,12 +42,7 @@ final class EmAdmin {
 		add_filter( 'manage_edit-page_sortable_columns', array($this, 'sorting_column') );
 
 		/* adds theme page to admin menu */
-		add_action('admin_menu', array($this, 'add_emtheme_menu'));
-		EmoFrontpage::get_instance();
-		EmoContact::get_instance();
-		EmoLogger::get_instance();
-		EmoptionAdmin::get_instance();
-
+		Emtheme_Options::get_instance();
 	}
 
 	/* removes admin menu items */

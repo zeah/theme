@@ -1,10 +1,10 @@
 <?php 
 
-$emsoc = Emsoc::get_instance();
+$emsoc = Emtheme_footer::get_instance();
 
 echo $emsoc->get_footer();
 
-final class Emsoc {
+final class Emtheme_footer {
 	private static $instance = null;
 	private $data = null;
 

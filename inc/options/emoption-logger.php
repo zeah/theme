@@ -1,6 +1,6 @@
 <?php 
 
-final class EmoLogger {
+final class Emtheme_Logger {
 	/* SINGLETON */
 	private static $instance = null;
 	private $table_name = 'em_logger';
@@ -77,6 +77,12 @@ final class EmoLogger {
 
 	/* CALLED in head.php - before html is sent */
 	public function welcome_user() {
+
+		// if ( isset( $_REQUEST['wp_customize'] ) )
+		if (is_customize_preview())
+			echo 'customizer window';
+
+
 		global $wpdb;
 		// unique identifier for visiter in the database
 		$id = uniqid();

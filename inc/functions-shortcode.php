@@ -1,6 +1,6 @@
 <?php 
 
-final class EmthemeShortcode {
+final class Emtheme_Shortcode {
 	/* SINGLETON */
 	private static $instance = null;
 	public static function get_instance($activate = true) {
