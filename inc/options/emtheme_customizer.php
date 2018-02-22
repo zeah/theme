@@ -65,15 +65,33 @@ final class Emtheme_Customizer {
 		//   'panel' => 'em_menus',
 		// ) );
 
-		// // add a setting for the site logo
-		// $wp_customize->add_setting('your_theme_logo');
-		// // Add a control to upload the logo
-		// $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'your_theme_logo',
-		// 	array(
-		// 	'label' => 'Upload Logo',
-		// 	'section' => 'test_section',
-		// 	'settings' => 'your_theme_logo',
-		// ) ) );
+		// add a setting for the site logo
+		$wp_customize->add_setting('emtheme_logo');
+		$wp_customize->add_setting('emtheme_logo_mobile');
+		$wp_customize->add_setting('emtheme_title_mobile');
+
+		// Add a control to upload the logo
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo',
+			array(
+				'label' => 'Upload Logo',
+				'section' => 'title_tagline',
+				'settings' => 'emtheme_logo',
+		) ) );
+
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo_mobile',
+			array(
+				'label' => 'Upload Mobile Logo',
+				'section' => 'title_tagline',
+				'settings' => 'emtheme_logo_mobile',
+		) ) );
+
+		$wp_customize->add_control('emtheme_title_mobile', 
+			array(
+				'label' => 'Mobile Title',
+				'section' => 'title_tagline',
+				'settings' => 'emtheme_title_mobile'
+			)
+		);
 
      // 1. Define a new section (if desired) to the Theme Customizer
       // $wp_customize->add_section( 'mytheme_options', 

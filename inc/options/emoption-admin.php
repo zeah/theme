@@ -51,11 +51,13 @@ final class Emtheme_Options {
 		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
 
 		register_setting('em_options_admin', 'em_admin_maint', $args);
+		register_setting('em_options_admin', 'emtheme_shownav', $args);
 	}
 
 	public function initAdminside() {
 		add_settings_section( 'em_admin_settings', 'Maintenance mode', array($this, 'maint_text_callback'), 'em-admin-page' );
 		add_settings_field( 'em-admin-active', 'Maintenance Aktiv', array($this, 'maint_callback'), 'em-admin-page', 'em_admin_settings' );
+		add_settings_field( 'emtheme-shownav', 'Disable Automatic Menu', array($this, 'shownav_callback'), 'em-admin-page', 'em_admin_settings' );
 	
 	}
 
@@ -65,5 +67,9 @@ final class Emtheme_Options {
 
 	public function maint_callback() {
 		echo '<input type="checkbox" name="em_admin_maint"'.(get_option('em_admin_maint') ? ' checked' : '').'>';
+	}
+
+	public function shownav_callback() {
+		echo '<input type="checkbox" name="emtheme_shownav"'.(get_option('emtheme_shownav') ? ' checked' : '').'>';
 	}
 }

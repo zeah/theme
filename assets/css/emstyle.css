@@ -15,7 +15,7 @@
 html {
 	background-color: hsl(10, 10%, 90%);
 	font-size: 62.5%;
-	font-family: "roboto", sans-serif;
+	font-family: "Roboto", sans-serif;
 	box-sizing: border-box;
 }
 
@@ -41,12 +41,8 @@ p:empty {
 	Navigation
 */
 
-/* container for widget, title and tagline */
-.topstuff-container {
-	background-color: hsl(0, 0%, 100%);
-}
 
-/* inner container (for margin: auto)*/
+/* container for logo, title, tagline */
 .topstuff {
 	display: flex;
 
@@ -57,30 +53,56 @@ p:empty {
 	align-items: center;
 }
 
+/* hiding mobile only */
+.emtheme-mobile-icon {
+	display: none !important;
+}
+
+/* hiding mobile only */
+.emtheme-logo-mobile-container {
+	display: none;
+}
+
+/* hiding mobile only */
+.emtheme-mobile-title {
+	display: none;
+}
 
 .emtheme-logo {
 	margin-right: 4rem;
 }
 
-/* container for site name and tagline */
-.topstuff-text {
-	line-height: 1;
+.emtheme-title {
+	font-size: 4.6rem;
+	font-weight: 700;
+	font-family: "Open Sans Condensed", sans-serif;
 }
 
+.emtheme-tagline {
+	margin-left: 4rem;
+
+	font-size: 1.6rem;
+}
+
+/* container for site name and tagline */
+/*.topstuff-text {
+	line-height: 1;
+}*/
+
 /* sitename div element */
-.sitename {
+/*.sitename {
 	font-size: 4rem;
 	font-weight: 700;
 	letter-spacing: 0.1em;
 	font-family: "Open Sans Condensed", sans-serif;
-}
+}*/
 
 /* tagline div element */
-.tagline {
+/*.tagline {
 	font-size: 2rem;
 	text-indent: 4rem;
 	white-space: nowrap;
-}
+}*/
 
 
 /* 
@@ -90,20 +112,21 @@ p:empty {
 
 /* container for top menu */
 .nav-container {
+	background-image: linear-gradient(
+			0deg, 
+			hsl(0, 0%, 15%), 
+			hsl(0, 0%, 10%) 50%, 
+			hsl(0, 0%, 15%) 90%
+			);
+	margin-bottom: 1rem;
 	border-bottom: 2px solid hsl(25, 100%, 60%);
 
-	background-image: linear-gradient(
-		0deg, 
-		hsl(0, 0%, 15%), 
-		hsl(0, 0%, 10%) 50%, 
-		hsl(0, 0%, 15%) 90%
-		);
-	margin-bottom: 1rem;
 }
 
 /* inner container for top menu */
 .nav {
 	display: flex;
+	flex-wrap: wrap;
 	width: 112rem;
 	margin: auto;
 
@@ -113,6 +136,8 @@ p:empty {
 	text-transform: capitalize;
 	text-align: center;
 	white-space: nowrap;
+
+	background-image: inherit;
 }
 
 /* container for menu anchor element */
@@ -199,7 +224,8 @@ p:empty {
 /* element of which is centered, has width and background-color of white */
 .main {
 	margin: 0 auto;
-	max-width: 112rem;
+	width: 112rem;
+	max-width: 100%;
 	min-height: 100vh;
 	/*padding-bottom: 10%;*/
 	/*position: relative;

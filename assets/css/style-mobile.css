@@ -15,44 +15,41 @@ body {
 
 /* TOP STUFF */
 .emtop {
-	background-color: hsl(0, 0%, 15%);
 	display: flex;
 	justify-content: space-between;
 	margin-top: 1rem;
-	height: 3.2rem;
+	height: 4.6rem;
+	background-color: hsl(0, 0%, 15%);
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
+	line-height: 4.6rem;
+	
 }
 
-.topstuff-container {
-	min-width: 0;
-	white-space: nowrap;
-	overflow: hidden;
+.topstuff {
+	display: flex;
+}
+
+.emtheme-logo-container {
+	display: none;
+}
+
+.emtheme-toptext-container {
+	display: none;
 }
 
 .emtheme-logo-mobile {
-	display: flex;
-	color: hsl(0, 0%, 90%);
-	font-size: 1.6rem;
-	line-height: 3.2rem;
+	height: 4.6rem;
 }
 
-.emtheme-logo-mobile p {
-	margin: 0;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.emtheme-logo-mobile img {
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-
-.widget {
+.emtheme-mobile-title {
+	/*line-height: 4.6rem;*/
 	padding-left: 1rem;
-	list-style: none;
+
+	font-size: 3rem;
+	color: hsl(0, 0%, 90%);
 }
+
 
 /* NAVIGATION */
 .nav-container {
@@ -63,38 +60,21 @@ body {
 }
 
 .material-icons {
-	font-size: 3.2rem !important;
+	font-size: 4.6rem !important;
 	color: hsl(0, 0%, 90%) !important;
 	padding-right: 1rem;
 }
-/*.nav-mobile-top:before {
-	content: '\2261';
-	font-family: arial;
-	font-size: 4rem;
-	font-weight: 800;
-	height: 32px;
-	line-height: 3.2rem;
-	color: hsl(0, 0%, 100%);
-	overflow: hidden;
-	text-align: right;
-	padding-right: 1rem;
-	width: 100%;
-	text-shadow: 0 0 2px white;
-	float: right;
-	transition: all 2s ease;
-
-}*/
 
 .nav {
 	z-index: 999;
 	position: absolute;
-	top: 3.2rem;
+	top: 4rem;
 	right: 0;
 	background-color: inherit;
 }
 
-.nav-active > .material-icons {
-	text-shadow: 0 0 15px white;
+.nav-active {
+	text-shadow: 0 0 10px white;
 }
 
 .nav-mobile-top {
@@ -103,18 +83,11 @@ body {
 
 .em-nav-item {
 	background-color: inherit;
-	/*display: block;*/
 	white-space: nowrap;
 	border-bottom: solid 1px hsl(0, 0%, 20%);
 	padding: 1.5rem 1rem;
 }
 
-.em-nav-item-parent {
-	/*margin: 10px 10px;
-	padding: 15px 10px;*/
-	/*padding-left: 3rem;*/
-	/*line-height: 1rem;*/
-}
 
 .em-nav-item:last-child {
 	border-bottom: none;
@@ -122,11 +95,7 @@ body {
 
 .em-nav-lenke {
 	display: block;
-	/*padding: 0 10px;*/
-	/*cursor: pointer;*/
 	text-decoration: none;
-	/*font-family: arial;*/
-	/*font-size: 1.1em;*/
 	text-transform: capitalize;
 	color: hsl(0, 50%, 99%);
 }
@@ -137,7 +106,6 @@ body {
 
 .em-nav-item-parent:after {
 	content: ' \25bc';
-	/*font-size: 14px;*/
 }
 
 .nav,
