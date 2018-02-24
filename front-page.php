@@ -5,6 +5,11 @@ if (isset($_GET['unsub']) &&  isset($_GET['email'])) {
 	
 	$unsub = Emtheme_UnSub::get_instance();
 
+	if (! is_email($_GET['email'])) {
+		echo $_GET['email'].' is not a valid email.';
+		return;
+	}
+
 	$unsub->unsub($_GET['email']);
 
 	return;
@@ -36,9 +41,7 @@ final class Emtheme_UnSub {
 		else
 			echo 'Unsubscribe unsuccessfull.';
 
-
 		$wpdb->flush();
-
 	}
 }
 

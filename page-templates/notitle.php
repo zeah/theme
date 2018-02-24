@@ -21,9 +21,9 @@ $html .= '<div class="content">'.apply_filters('the_content', $content).'</div>'
 
 $html .= '</div>';
 
-wp_reset_postdata();
 echo $html;
 
 get_footer();
+wp_reset_postdata();
 
 

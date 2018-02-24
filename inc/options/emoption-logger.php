@@ -62,14 +62,15 @@ final class Emtheme_Logger {
 		// creating table
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
+		$wpdb->flush();
 	}
 
 	/* helper function for checking whether the table is already created */
 	private function table_exists($table) {
 		$table = esc_sql($table);
 		global $wpdb;
-
-		if ($wpdb->get_var('show tables like "'.$table.'"') != $table)
+		// if ($wpdb->get_var('show tables like "'.$table.'"') != $table)
+		if ($wpdb->get_var("show tables like '$table'") != $table)
 			return false;
 
 		return true;
@@ -78,9 +79,8 @@ final class Emtheme_Logger {
 	/* CALLED in head.php - before html is sent */
 	public function welcome_user() {
 
-		// if ( isset( $_REQUEST['wp_customize'] ) )
-		if (is_customize_preview())
-			echo 'customizer window';
+		// if (is_customize_preview())
+		// 	echo 'customizer window';
 
 
 		global $wpdb;
@@ -95,26 +95,27 @@ final class Emtheme_Logger {
 		if (! isset($_COOKIE['user'])) {
 			setcookie('user', $id, time()+(60*60*24*365), '/');
 
-			// echo 'hi '.$_COOKIE['user'];
-
-			// do nothing if cookie can't be set
-			// if (! isset($_COOKIE['user']))
-			// 	return;
+			$table = $wpdb->prefix.$this->table_name;
+			// $table = esc_sql($wpdb->prefix.$this->table_name);
 
 			// initial a visitor in the db
-			$wpdb->insert($wpdb->prefix . $this->table_name, array(
+			$wpdb->insert($table, array(
 				'ip' => $_SERVER['REMOTE_ADDR'],
 				'uniqueid' => $id
 			));
+
+			$wpdb->flush();
 
 			// enqueue the javascript
 			$this->ajaxpopup();
 		}
 		else {
-			// check if email as been set
-			if ($wpdb->get_var('select email from '.$wpdb->prefix.$this->table_name.' where uniqueid = "'.$_COOKIE['user'].'"') === null)
-				// enqueue the javascript
+			$table = esc_sql($wpdb->prefix.$this->table_name);
+			$user = esc_sql($_COOKIE['user']);
+
+			if ($wpdb->get_var("select email from $table where uniqueid = '$user'") === null) 
 				$this->ajaxpopup();
+			$wpdb->flush();
 		}
 	}
 
@@ -133,14 +134,14 @@ final class Emtheme_Logger {
 			$args['data']['logo'] = esc_url($args['data']['logo']);
 
 		if (wp_is_mobile()) {
-			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '0.1', true);
+			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '1.0.0', true);
 			wp_localize_script('em-email-mobile', 'emmail', $args);
-			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '0.1', '(max-width: 60em)');
+			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '1.0.0', '(max-width: 60em)');
 		}
 		else {
-			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/js/popup-email.js', array('jquery'), '0.1', true);
+			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/js/popup-email.js', array('jquery'), '1.0.0', true);
 			wp_localize_script('em-email', 'emmail', $args);
-			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
+			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '1.0.0', '(min-width: 60em)');
 		}
 
 
@@ -162,7 +163,7 @@ final class Emtheme_Logger {
 			'name' => $_POST['emname']
 		), array('uniqueid' => $_COOKIE['user']));
 
-
+		$wpdb->flush();
 		wp_die();
 	}
 
@@ -172,8 +173,6 @@ final class Emtheme_Logger {
 		add_action('admin_menu', array($this, 'add_logger_menu'));
 		add_action('admin_init', array($this, 'initLogger'));
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_script'));
-		// add_action('admin_head', array($this, 'email_stats_css'));
-
 	}
 
 	/* enqueuing javascript for image selector */
@@ -190,7 +189,7 @@ final class Emtheme_Logger {
 		else if ($screen->id == 'em-theme_page_em-emailstats-page') {
 
 			global $wpdb;
-			$table = $wpdb->prefix . $this->table_name;
+			$table = esc_sql($wpdb->prefix . $this->table_name);
 
 			$results = $wpdb->get_results("select * from $table");
 			$wpdb->flush();

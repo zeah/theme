@@ -40,6 +40,8 @@ final class Emtheme_Page {
 	}
 
 	public function save_meta($post_id) {
+		if (! is_admin() )
+			return;
 		if ( ! current_user_can( 'edit_posts' ))
 			return;
 		if ( ! isset($_POST['em_nonce']))
@@ -116,7 +118,7 @@ final class Emtheme_Page {
 		if (json_decode($this->getmeta('emstrucdata')))
 			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.json_encode(json_decode($this->getmeta('emstrucdata')), JSON_PRETTY_PRINT).'</textarea>';
 		else
-			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.esc_html($this->getmeta('emstrucdata')).'</textarea>';
+			echo '<textarea style="width: 100%; height: 20em;" name="emstrucdata">'.esc_textarea($this->getmeta('emstrucdata')).'</textarea>';
 	}
 
 	/* REMOVE THUMBNAIL FROM PAGE */

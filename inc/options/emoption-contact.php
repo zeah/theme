@@ -73,7 +73,7 @@ final class Emtheme_Contact {
 
 		$array = [];
 
-		// recurvise for multidimensional arrays
+		// recursive for multidimensional arrays
 		foreach($input as $key => $value) {
 			if (is_array($value))
 				$array[$key] = $this->san_callback($value);

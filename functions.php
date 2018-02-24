@@ -62,10 +62,8 @@ final class Emtheme_function {
     }
 
     public function add_style() {
-        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 1000px)');
-        // wp_enqueue_style('style', get_template_directory_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 1000px)');
-        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), null, '(max-width: 1000px)');
-        // wp_enqueue_style('style-mobile', get_template_directory_uri().'/assets/css/style-mobile.css', array(), null, '(max-width: 1000px)');
+        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 961px)');
+        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), '1.0.0', '(max-width: 960px)');
     }
 
     public function add_sitemap() {

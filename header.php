@@ -69,12 +69,12 @@ if (get_theme_mod('emtheme_logo_mobile'))
 	$top .= '<div class="emtheme-logo-mobile-container"><img class="emtheme-logo-mobile" src="'.esc_url(get_theme_mod('emtheme_logo_mobile')).'"></div>';
 
 if (get_theme_mod('emtheme_title_mobile'))
-	$top .= '<div class="emtheme-mobile-title">'.get_theme_mod('emtheme_title_mobile').'</div>';
+	$top .= '<div class="emtheme-mobile-title">'.esc_html(get_theme_mod('emtheme_title_mobile')).'</div>';
 
 
 
-$emtheme_name = get_bloginfo('name');
-$emtheme_tagline = get_bloginfo('description');
+$emtheme_name = esc_html(get_bloginfo('name'));
+$emtheme_tagline = esc_html(get_bloginfo('description'));
 
 if ($emtheme_name || $emtheme_tagline)
 	$top .= '<div class="emtheme-toptext-container">';
@@ -90,30 +90,6 @@ if ($emtheme_name || $emtheme_tagline)
 
 
 echo $top;
-// echo '<div class="emtop"><div class="topstuff">';
-
-
-
-// if (get_theme_mod('your_theme_logo')) {
-// 	echo '<div><img src="'.get_theme_mod('your_theme_logo').'"></div>';
-// }
-// logo widget for mobile
-// if ($mobile && is_active_sidebar('emtheme-logo-mobile')) {
-// 	echo '<div class="emtheme-logo-mobile">';
-// 	dynamic_sidebar('emtheme-logo-mobile');
-// 	echo '</div>';
-// }
-
-// // logo widget for non-mobile
-// elseif (!$mobile && is_active_sidebar('emtheme-logo')) {
-// 	echo '<div class="emtheme-logo">';
-// 	dynamic_sidebar('emtheme-logo');
-// 	echo '</div>';
-// }
-
-// site title and tagline for non-mobile devices
-// if (!$mobile)
-// 	echo '<div class="topstuff-text"><div class="sitename">'.get_bloginfo( $show = 'name' ).'</div><div class="tagline">'.get_bloginfo( $show = 'description' ).'</div></div>';
 
 // end div for topstuff-container and topstuff 
 echo '</div>';
@@ -195,14 +171,14 @@ if (! get_option('emtheme_shownav')) {
 		}
 
 		if ($value-> link !== null)
-			$nav .= '<div class="em-nav-item" itemprop="name"><a class="em-nav-lenke'.$parent_icon.'" itemprop="url" href="'.$value->link.'">'.$value->title.'</a></div>';
+			$nav .= '<div class="em-nav-item" itemprop="name"><a class="em-nav-lenke'.esc_attr($parent_icon).'" itemprop="url" href="'.esc_url($value->link).'">'.esc_html($value->title).'</a></div>';
 		else
-			$nav .= '<span class="em-nav-item em-nav-lenke'.$parent_icon.'">'.$value->title.'</span>';
+			$nav .= '<span class="em-nav-item em-nav-lenke'.esc_attr($parent_icon).'">'.esc_html($value->title).'</span>';
 
 		if ($is_parent) {
 			$nav .= '<div class="em-nav-sub-container">';
 			foreach ($value->children as $k => $v)
-				$nav .= '<div class="em-nav-item em-nav-subitem"><a class="em-nav-lenke em-nav-sublenke" href="'.$v['link'].'">'.$v['title'].'</a></div>';
+				$nav .= '<div class="em-nav-item em-nav-subitem"><a class="em-nav-lenke em-nav-sublenke" href="'.esc_url($v['link']).'">'.esc_html($v['title']).'</a></div>';
 			$nav .= '</div>';
 		}
 

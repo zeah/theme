@@ -22,7 +22,7 @@ body {
 	background-color: hsl(0, 0%, 15%);
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
-	line-height: 4.6rem;
+	line-height: 1.6;
 	
 }
 
@@ -124,8 +124,8 @@ body {
 
 /* MAIN */
 .main {
-	/*font-family: arial;*/
-	/*line-height: 150%;*/
+	padding: 0.5rem;
+	font-size: 1.6rem;
 	min-height: 70vh;
 }
 
@@ -161,13 +161,9 @@ body {
 	background-color: hsl(0, 0%, 5%);
 	display: flex;
 	flex-wrap: wrap;
-	/*font-size: 0.8em;*/
-	/*font-family: arial;*/
-}
 
-/*.em-inner-footer li {
-	list-style: none;
-}*/
+	font-size: 1.6rem;
+}
 
 
 .em-footer-ul {
