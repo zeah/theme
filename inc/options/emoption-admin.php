@@ -39,6 +39,7 @@ final class Emtheme_Options {
 		echo '<form action="options.php" method="POST">';
 		settings_fields('em_options_admin');
 		do_settings_sections('em-admin-page');
+		// do_settings_sections('em-admin-pagetwo');
 		submit_button('save');
 		echo '</form>';
 	}
@@ -52,13 +53,23 @@ final class Emtheme_Options {
 
 		register_setting('em_options_admin', 'em_admin_maint', $args);
 		register_setting('em_options_admin', 'emtheme_shownav', $args);
+		register_setting('em_options_admin', 'emtheme_styling', $args);
 	}
 
 	public function initAdminside() {
-		add_settings_section( 'em_admin_settings', 'Maintenance mode', array($this, 'maint_text_callback'), 'em-admin-page' );
-		add_settings_field( 'em-admin-active', 'Maintenance Aktiv', array($this, 'maint_callback'), 'em-admin-page', 'em_admin_settings' );
-		add_settings_field( 'emtheme-shownav', 'Disable Automatic Menu', array($this, 'shownav_callback'), 'em-admin-page', 'em_admin_settings' );
+		add_settings_section( 'em_settings_maint', 'Maintenance mode', array($this, 'maint_text_callback'), 'em-admin-page' );
+		add_settings_field( 'em-admin-active', 'Maintenance Aktiv', array($this, 'maint_callback'), 'em-admin-page', 'em_settings_maint' );
+
+		add_settings_section( 'em_settings_disnav', 'Automatic Menu', array($this, 'disnav_text_callback'), 'em-admin-page' );
+		add_settings_field( 'emtheme-shownav', 'Disable Automatic Menu', array($this, 'shownav_callback'), 'em-admin-page', 'em_settings_disnav' );
 	
+		add_settings_section( 'em_settings_styling', 'Styling', array($this, 'styling_text_callback'), 'em-admin-page' );
+		add_settings_field( 'emtheme-styling-one', 'Styling one', array($this, 'styling_one_callback'), 'em-admin-page', 'em_settings_styling' );
+		add_settings_field( 'emtheme-styling-two', 'Styling two', array($this, 'styling_two_callback'), 'em-admin-page', 'em_settings_styling' );
+		add_settings_field( 'emtheme-styling-three', 'Styling three', array($this, 'styling_three_callback'), 'em-admin-page', 'em_settings_styling' );
+		add_settings_field( 'emtheme-styling-four', 'Styling four', array($this, 'styling_four_callback'), 'em-admin-page', 'em_settings_styling' );
+
+
 	}
 
 	public function maint_text_callback() {
@@ -69,7 +80,41 @@ final class Emtheme_Options {
 		echo '<input type="checkbox" name="em_admin_maint"'.(get_option('em_admin_maint') ? ' checked' : '').'>';
 	}
 
+	public function disnav_text_callback() {
+		echo 'To show or not to show the automatic generated navigation menu <strong> for non-logged in users</strong>';
+	}
+
 	public function shownav_callback() {
 		echo '<input type="checkbox" name="emtheme_shownav"'.(get_option('emtheme_shownav') ? ' checked' : '').'>';
+	}
+
+	public function styling_text_callback() {
+		echo 'choose your style (desktop only)';
+	}
+
+	public function styling_one_callback() {
+		echo '<input type="radio" name="emtheme_styling" value="one"'.$this->styling_help('one').'>';
+	}
+
+	public function styling_two_callback() {
+		echo '<input type="radio" name="emtheme_styling" value="two"'.$this->styling_help('two').'>';
+	}
+
+	public function styling_three_callback() {
+		echo '<input type="radio" name="emtheme_styling" value="three"'.$this->styling_help('three').'>';
+	}
+
+	public function styling_four_callback() {
+		echo '<input type="radio" name="emtheme_styling" value="four"'.$this->styling_help('four').'>';
+	}
+
+
+
+	private function styling_help($v) {
+		if (get_option('emtheme_styling') == $v)
+			return ' checked';
+
+		else
+			return '';
 	}
 }

@@ -53,7 +53,7 @@ final class Emtheme_function {
 
     private function public_wp_hooks() {
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
-        add_filter('the_content', array($this, 'helper_float_image'));
+        // add_filter('the_content', array($this, 'helper_float_image'));
     }
 
     private function wp_hooks() {
@@ -62,7 +62,16 @@ final class Emtheme_function {
     }
 
     public function add_style() {
-        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 961px)');
+        $style = get_option('emtheme_styling');
+
+        if ($style == 'two')
+            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), '0.0.1', '(min-width: 961px)');
+        else if ($style == 'three')
+            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), '0.0.1', '(min-width: 961px)');
+        // default style (style one)
+        else 
+            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 961px)');
+
         wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), '1.0.0', '(max-width: 960px)');
     }
 
@@ -99,9 +108,9 @@ final class Emtheme_function {
 
 
     public function helper_float_image($content) {
-        $content = preg_replace('/\[caption.*alignright.*?\]/', '<span class="right-image editor-image">', $content);
-        $content = preg_replace('/\[caption.*alignleft.*?\]/', '<span class="left-image editor-image">', $content);
-        $content = preg_replace('/\[caption.*aligncenter.*?\]/', '<span class="center-image editor-image">', $content);
+        $content = preg_replace('/\[caption.*alignright.*?\]/', '<span class="emtheme-right-image editor-image">', $content);
+        $content = preg_replace('/\[caption.*alignleft.*?\]/', '<span class="emtheme-left-image editor-image">', $content);
+        $content = preg_replace('/\[caption.*aligncenter.*?\]/', '<span class="emtheme-center-image editor-image">', $content);
         $content = preg_replace('/\[\/caption\]/', '</span>', $content);
 
         return $content;

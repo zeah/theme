@@ -43,7 +43,8 @@ p:empty {
 
 
 /* container for logo, title, tagline */
-.topstuff {
+.emtheme-site-identity {
+/*.topstuff {*/
 	display: flex;
 
 	width: 112rem;
@@ -70,6 +71,15 @@ p:empty {
 
 .emtheme-logo {
 	margin-right: 4rem;
+}
+
+.emtheme-top-link {
+	color: black;
+	text-decoration: none;
+}
+
+.emtheme-top-link:visited {
+	color: black;
 }
 
 .emtheme-title {
@@ -167,6 +177,7 @@ p:empty {
 		);
 }
 
+
 /* anchor element in menu */
 .em-nav-lenke {
 	display: block;
@@ -216,6 +227,22 @@ p:empty {
 	color: hsl(0, 0%, 20%);
 }
 
+
+.em-nav-current {
+		background-image: linear-gradient(0deg, 
+		hsl(22, 90%, 35%), 
+		hsl(22, 90%, 30%) 50%, 
+		hsl(22, 90%, 35%) 90%
+		);
+}
+
+.em-nav-current:hover {
+		background-image: linear-gradient(0deg, 
+		hsl(22, 70%, 35%), 
+		hsl(22, 70%, 30%) 50%, 
+		hsl(22, 70%, 35%) 90%
+		);
+}
 
 /*
 	CONTENT SECTION 

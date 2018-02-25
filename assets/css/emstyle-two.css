@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto:300');
+
+/*
+	INDEX
+	#####
+
+	- default html
+	- page elements centering
+	- wordpress fixes
+	
+	1.0 TOP
+		1.1 SITE LOGO, TITLE, TAGLINE
+		1.2 NAVBAR 
+	2.0 MAIN
+		2.1 PAGE CONTENT
+		2.2 IMAGE SHORTCODE FOR WORDPRESS
+	3.0 FOOTER
+		3.1 CONTACT/ABOUT INFORMATION
+*/
+
+/* default setup */
+html {
+	font-size: 62.5%; /* 1rem = 10px */
+	font-family: "Roboto", sans-serif;
+	box-sizing: border-box;
+	background-color: hsl(0, 0%, 100%); /* b/c wordpress customizer */
+}
+
+/* page centering and section veritcal spacing */
+.emtop,
+.main,
+.em-footer {
+	width: 96rem;
+	margin: 2rem auto;
+}
+
+/* wordpress fixes */
+p:empty {
+	display: none;
+}
+
+body {
+	margin: 0 !important;
+}
+
+.widget {
+	list-style: none;
+}
+
+
+/*	
+	1.1 SECTION
+ 	HEADER 
+*/
+
+/* 	mobile elements to hide 
+	mobile title, logo and menu icon */
+.emtheme-mobile {
+	display: none !important;
+}
+
+/*	
+	site logo, title and tagline
+	top nav menu 
+*/
+.emtop {
+	position: relative;
+	padding-bottom: 2rem;
+	min-height: 11rem;
+	border-bottom: 1rem solid hsl(22, 50%, 97%);
+}
+
+/* container for site logo, title, tagline*/
+.emtheme-site-identity {
+	display: flex;
+}
+
+/* div container for logo */
+.emtheme-logo-container {
+	margin-right: auto;
+}
+
+/* 	div container for site title, tagline
+	moving it down and out of the way of navbar */
+.emtheme-toptext-container {
+	position: relative;
+	top: 3rem;
+}
+
+/* div for site title */
+.emtheme-title {
+	font-size: 4rem;
+}
+
+/* div for tagline */
+.emtheme-tagline {
+	text-align: right;
+	font-size: 2rem;
+}
+
+/* links surrounding logo and title/tag */
+.emtheme-top-link {
+	color: hsl(22, 40%, 20%);
+	text-decoration: none;
+}
+.emtheme-top-link:visited {
+	color: hsl(22, 40%, 20%);
+	text-decoration: none;
+}
+
+/*
+	1.2 NAVBAR
+	top navigation menu
+*/
+.nav-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	max-width: 80rem;
+}
+
+/* flexbox for navbar */
+.nav {
+	display: flex;
+	justify-content: flex-end; /* if menu gets pushed to two lines */
+	flex-wrap: wrap;
+}
+
+/* div container for each nav item */
+.em-nav-item {
+	padding: 0.5rem;
+	line-height: 1;
+	border: solid 1px hsl(0, 0%, 70%);
+	border-radius: 5px;
+
+	background-color: hsl(0, 0%, 95%);
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.em-nav-item:hover {
+	background-color: hsl(0, 0%, 90%);
+}
+
+/* current page */
+.em-nav-current {
+	border-bottom: solid 2px hsl(22, 50%, 50%);
+}
+
+/* top level item in navbar */
+.em-nav-flexitem {
+	margin-left: 1rem;
+	margin-bottom: 0.5rem;
+}
+.em-nav-flexitem:first-child {
+	margin-left: 0;
+}
+
+/* for submenu elementn's aboslute position */
+.em-nav-parent-container {
+	position: relative;
+}
+
+/* keeps parent nav item highlighted when hover over submenu */
+.em-nav-parent-container:hover > .em-nav-item {
+	background-color: hsl(0, 0%, 90%);
+}
+
+/* down arrow for parent item */
+.em-nav-item-parent:after {
+	content: ' \25bc';
+}
+
+/* 	submenu 
+	using max-height transitioning to reveal */
+.em-nav-sub-container {
+	position: absolute;
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 2.5s;
+}
+
+/* special rule for nav items that are in submenu */
+.em-nav-subitem {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0.5rem 0 !important;
+}
+
+/* 	revealing submenu 
+	max-height value gets set to height of window 
+	to add time before submenu closes when moving
+	mouse outside element */
+.em-nav-parent-container:hover > .em-nav-sub-container {
+	max-height: 100vh;
+}
+
+/* anchor element in nav item */
+.em-nav-lenke {
+	font-family: "Open Sans Condensed", sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	text-decoration: none;
+	white-space: nowrap;
+	text-transform: capitalize;
+	color: hsl(0, 0%, 0%);
+}
+
+
+/*
+	2.0 SECTION
+	MAIN
+*/
+
+/* container for page title and content */
+.main {
+	min-height: 90vh;
+}
+
+/*
+	2.1 SECTION
+	Page Content 
+*/
+
+/* h2 element with page title */
+.content-title-text {
+	display: inline-block;
+	box-sizing: border-box;
+	font-family: "Open Sans Condensed", sans-serif;
+	font-size: 3.2rem;
+	line-height: 0.8;
+	padding: 1rem 2rem;
+	border: 2px solid hsl(22, 70%, 90%);
+	text-transform: uppercase;
+	border-radius: 5px;
+	background-color: hsl(22, 100%, 98%);
+}
+
+/* page content */
+.content {
+	font-size: 1.4rem;
+	line-height: 1.4;
+}
+
+/* flexbox for page content */
+.content-3 {
+	display: flex;
+}
+
+/* rules for items in flexbox */
+.em-left img,
+.em-right img {
+	max-width: 20rem;
+}
+
+.em-left {
+	order: 0;
+}
+
+.em-center {
+	margin: 0 1rem;
+	order: 1;
+}
+
+/* sticky column in flexbox */
+.em-right {
+	order: 2;
+	position: sticky;
+	align-self: flex-start; /* to fix element's height for stickyness */
+	top: 6rem; /* where element will get sticky */
+}
+
+
+/* 
+	2.2 SECTION
+	IMAGE SHORTCODE FOR WORDPRESS
+*/
+
+/* Floats image right */
+.alignright {
+	float: right;
+	padding-left: 1.5rem;
+}
+
+/* Floats image left */
+.alignleft {
+	float: left;
+	padding-right: 1.5rem;
+}
+
+/* centers image */
+.aligncenter {
+	margin: auto;
+}
+
+/* removes margin from image caption in <p> */
+.wp-caption-text {
+	margin: 0;
+	margin-bottom: 2rem;
+}
+
+
+
+/*
+	3.0 SECTION
+	FOOTER
+*/
+
+
+/*
+	3.1 CONTACT/ABOUT INFO
+*/
+
+/* container for footer */
+.em-footer {
+	color: hsl(0, 0%, 00%);
+	font-size: 1.2rem;
+
+	/*margin-top: 3rem;
+	margin-bottom: 3rem;*/
+}
+
+/* footer flexbox */
+.em-inner-footer {
+	display: flex;
+	/*width: 96rem;*/
+	/*margin: 3rem auto;*/
+	padding: 1rem 0;
+	justify-content: center;
+	background-color: hsl(22, 100%, 95%);
+}
+
+.em-socialmedia-container,
+.em-contact-container,
+.em-aboutus-container {
+	/*flex-grow: 1;*/
+	flex-basis: 33%;
+	/*border: solid 1px black;*/
+}
+
+
+.em-socialmedia-container:before,
+.em-contact-container:before,
+.em-aboutus-container:before {
+	/*content: 'Kontakt';*/
+	font-size: 2rem;
+	/*border-bottom: solid 1px hsl(22, 50%, 50%);*/
+	display: block;
+}
+
+.em-contact-container:before {
+	content: 'Kontakt';
+}
+
+.em-socialmedia-container:before {
+	content: 'Sosiale Medier';
+}
+
+.em-aboutus-container:before {
+	content: 'Om Oss';
+}
+
+.em-footer-ul {
+	margin: 0;
+	padding: 0;
+}
+
+.em-footer-listitem {
+	margin: 0.5rem 0;
+	list-style: none;
+}
+
+.em-footer-post {
+	display: inline-block;
+	padding-right: 4px;
+}

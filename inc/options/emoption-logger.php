@@ -136,13 +136,15 @@ final class Emtheme_Logger {
 		if (wp_is_mobile()) {
 			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '1.0.0', true);
 			wp_localize_script('em-email-mobile', 'emmail', $args);
-			wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '1.0.0', '(max-width: 60em)');
+			// wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '1.0.0', '(max-width: 960px)');
 		}
 		else {
 			wp_enqueue_script('em-email', get_template_directory_uri().'/assets/js/popup-email.js', array('jquery'), '1.0.0', true);
 			wp_localize_script('em-email', 'emmail', $args);
-			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '1.0.0', '(min-width: 60em)');
+			// wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '1.0.0', '(min-width: 961px)');
 		}
+		wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '1.0.0', '(min-width: 961px)');
+		wp_enqueue_style('em-email-mobile-style', get_template_directory_uri().'/assets/css/popup-email-mobile.css', array(), '1.0.0', '(max-width: 960px)');
 
 
 		// javascript object from php

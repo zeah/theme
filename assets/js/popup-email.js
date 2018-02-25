@@ -152,7 +152,7 @@ jQuery( document ).ready(function() {
 		if (!aktivert && e.clientY > 100) 
 			aktivert = true;
 
-		else if (aktivert && e.clientY < 40) {
+		else if (aktivert && e.clientY < 10) {
 			document.removeEventListener('mousemove', emmouse);
 			document.body.appendChild(popup_container);
 

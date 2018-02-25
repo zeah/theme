@@ -59,17 +59,18 @@ wp_head();
 echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
 
 // top container 
-$top = '<div class="emtop"><div class="topstuff">';
+$top = '<div class="emtop"><div class="emtheme-site-identity">';
 
 if (get_theme_mod('emtheme_logo'))
-	$top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></div>';
+	// $top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></div>';
+	$top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></a></div>';
 
 
 if (get_theme_mod('emtheme_logo_mobile'))
-	$top .= '<div class="emtheme-logo-mobile-container"><img class="emtheme-logo-mobile" src="'.esc_url(get_theme_mod('emtheme_logo_mobile')).'"></div>';
+	$top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><img class="emtheme-logo-mobile" src="'.esc_url(get_theme_mod('emtheme_logo_mobile')).'"></div>';
 
 if (get_theme_mod('emtheme_title_mobile'))
-	$top .= '<div class="emtheme-mobile-title">'.esc_html(get_theme_mod('emtheme_title_mobile')).'</div>';
+	$top .= '<div class="emtheme-mobile-title emtheme-mobile">'.esc_html(get_theme_mod('emtheme_title_mobile')).'</div>';
 
 
 
@@ -77,7 +78,7 @@ $emtheme_name = esc_html(get_bloginfo('name'));
 $emtheme_tagline = esc_html(get_bloginfo('description'));
 
 if ($emtheme_name || $emtheme_tagline)
-	$top .= '<div class="emtheme-toptext-container">';
+	$top .= '<div class="emtheme-toptext-container"><a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
 
 if ($emtheme_name)
 	$top .= '<div class="emtheme-title">'.$emtheme_name.'</div>';
@@ -86,28 +87,25 @@ if ($emtheme_tagline)
 	$top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
 
 if ($emtheme_name || $emtheme_tagline)
-	$top .= '</div>';
+	$top .= '</a></div>';
 
 
 echo $top;
 
-// end div for topstuff-container and topstuff 
-echo '</div>';
+echo '</div>'; // end of emtheme-site-identitity (logo, title, tagline)
 
 // menu
-if (! get_option('emtheme_shownav')) {
+// hide if option active and user not logged in.
+if ( (!get_option('emtheme_shownav')) || current_user_can( 'read' )) {
 	$nav = '<div class="nav-container">';
 
-	$nav .= '<i class="material-icons emtheme-mobile-icon">menu</i>';
+	// mobile activation icon (css hidden on desktop)
+	$nav .= '<i class="material-icons emtheme-mobile-icon emtheme-mobile">menu</i>';
 
-	// to hide entire menu for mobile
-	// if ($mobile)
-	// 	$nav .= '<div class="nav-mobile-top"><i class="material-icons">menu</i></div>';
-
-	// menu items container
+	// flexbox for nav items and structured data
 	$nav .= '<nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
 
-	// parameters for page search in database
+	// page info database retrieval 
 	$args = [
 		'sort_order' => 'desc',
 		'sort_column' => 'menu_order',
@@ -162,33 +160,58 @@ if (! get_option('emtheme_shownav')) {
 		$is_parent = false;
 		$parent_icon = '';
 
+
+		// $plink = get_permalink();
+
+		// css class for top menu item (either .em-nav-parent-container or .em-nav-item)
+		$par_link = ' em-nav-flexitem';
+
+		// css class for current page shown.
+		$cur_link = '';
+		if (get_permalink() == $value->link)
+			$cur_link = ' em-nav-current';
+
+		// nav item has child pages (sub menu)
 		if (sizeof($value->children) > 0)
 			$is_parent = true;
 
+		// adding parent container for submenu
 		if  ($is_parent) {
-			$nav .= '<div class="em-nav-parent-container">';
+			$nav .= '<div class="em-nav-parent-container'.$par_link.'">';
 			$parent_icon = ' em-nav-item-parent';
+			$par_link = '';
 		}
 
-		if ($value-> link !== null)
-			$nav .= '<div class="em-nav-item" itemprop="name"><a class="em-nav-lenke'.esc_attr($parent_icon).'" itemprop="url" href="'.esc_url($value->link).'">'.esc_html($value->title).'</a></div>';
+		// adding nav item
+		if ($value->link !== null)
+			$nav .= '<div class="em-nav-item'.$par_link.$cur_link.'" itemprop="name"><a class="em-nav-lenke'.esc_attr($parent_icon).'" itemprop="url" href="'.esc_url($value->link).'">'.esc_html($value->title).'</a></div>';
+		// mobile nav item with children does not have a link attr
 		else
-			$nav .= '<span class="em-nav-item em-nav-lenke'.esc_attr($parent_icon).'">'.esc_html($value->title).'</span>';
+			$nav .= '<span class="em-nav-item em-nav-lenke'.esc_attr($parent_icon).'">'.esc_html($value->title).'</span>'; // mobile only 
 
+		// adding children and their container
 		if ($is_parent) {
 			$nav .= '<div class="em-nav-sub-container">';
-			foreach ($value->children as $k => $v)
-				$nav .= '<div class="em-nav-item em-nav-subitem"><a class="em-nav-lenke em-nav-sublenke" href="'.esc_url($v['link']).'">'.esc_html($v['title']).'</a></div>';
+			foreach ($value->children as $k => $v) {
+				$cur_link = '';
+				if  (get_permalink() == $v['link'])
+					$cur_link = ' em-nav-current';
+
+				$nav .= '<div class="em-nav-item em-nav-subitem'.$cur_link.'"><a class="em-nav-lenke em-nav-sublenke" href="'.esc_url($v['link']).'">'.esc_html($v['title']).'</a></div>';
+			}
 			$nav .= '</div>';
 		}
 
+		// end of .em-nav-parent-container
 		if ($is_parent)
 			$nav .= '</div>';
 	}
 
+	// end of flexbox
 	$nav .= '</nav>';
 
-	$nav .= '</div>'; // end of nav-container
+	// end of .nav-container
+	$nav .= '</div>';
 
 	// printing html
 	echo $nav;

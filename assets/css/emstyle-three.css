@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto');
+
+/*
+	INDEX
+	#####
+
+	- html
+	- wordpress fixes
+	
+	1.0 HEADER
+		1.1 SITE LOGO, TITLE, TAGLINE
+		1.2 NAVBAR
+	2.0 PAGE CONTENT
+		2.1 PAGE TITLE
+		2.2 PAGE CONTENT
+		2.3 IMAGE SHORTCODE FOR WORDPRESS
+	3.0 FOOTER
+		3.1 SOCIAL/ABOUTUS INFORMATION
+
+*/
+
+/* default setup */
+html {
+	font-size: 62.5%;
+	font-family: "Roboto", sans-serif;
+	box-sizing: border-box;
+}
+
+/* wordpress fixes */
+p:empty {
+	display: none;
+}
+
+body {
+	margin: 0 !important;
+}
+
+.widget {
+	list-style: none;
+}
+
+
+/*	
+	1.0 SECTION
+ 	HEADER 
+*/
+
+/* 	
+	1.1 SECTION
+	SITE LOGO, TITLE, TAGLINE
+
+	mobile elements to hide 
+	mobile title, logo and menu icon */
+.emtheme-mobile {
+	display: none !important;
+}
+
+
+/* 	container for site logo, title and tagline
+	vertical navbar */
+.emtop {
+	display: inline-block;
+	margin: 2rem 0 0 10rem;
+	width: 20rem;
+	text-align: right;
+	padding-right: 1rem;
+}
+
+/* container for site logo, title, tagline */
+.emtheme-site-identity {
+	margin-bottom: 2rem;
+}
+
+/* div element for site title */
+.emtheme-title {
+	font-size: 2rem;
+}
+
+/* div element for site tagline */
+.emtheme-tagline {
+	font-size: 1.4rem;
+}
+
+/* anchor element (home link) for emtop elementes */
+.emtheme-top-link {
+	color: hsl(0, 0%, 8%);
+	text-decoration: none;
+}
+.emtheme-top-link:visited {
+	color: hsl(0, 0%, 8%);
+	text-decoration: none;
+}
+
+
+/*
+	1.2 SECTION
+	VERITCAL NAV SIDE BAR
+*/
+
+/* element container nav item + submenu */
+.em-nav-parent-container {
+	position: relative; /* for submenu */
+	z-index: 11;
+}
+
+/* div element representing one nav item */
+.em-nav-item {
+	white-space: nowrap;
+	pointer-events: cursor;
+	margin-bottom: 1rem;
+	z-index: 11;
+}
+
+/* <a> element in nav item that has submenu */
+.em-nav-item-parent:after {
+	content: ' \25b6';
+	font-size: 1.4rem;
+}
+
+/* container for submenu items */
+.em-nav-sub-container {
+	display: none;
+	position: absolute;
+	right: -19.7rem;
+	top: -0.5rem;
+	padding-left: 0.5rem;
+	text-align: left;
+	background-color: hsl(0, 0%, 100%);
+	overflow: hidden;
+	z-index: 10;
+}
+
+/* showing submenu */
+.em-nav-parent-container:hover > .em-nav-sub-container {
+	display: block;
+}
+
+/* keeps submenu open */
+.em-nav-sub-container:hover {
+	display: block;
+}
+
+/* nav items in submenu */
+.em-nav-subitem {
+	width: 19rem;
+	margin: 0;
+	border: solid 1px hsl(222, 50%, 85%);
+	background-color: hsl(222, 40%, 90%);
+	border-bottom: none;
+}
+.em-nav-subitem:last-child {
+	border-bottom: solid 1px hsl(222, 50%, 80%);
+}
+.em-nav-subitem:hover {
+	background-color: hsl(222, 40%, 85%);
+}
+
+/* to make link cover nav item */
+.em-nav-subitem a {
+	display: block;
+}
+
+/* anchor element in nav items */
+.em-nav-lenke {
+	text-decoration: none;
+	font-size: 1.6rem;
+	padding: 0.5rem;
+	color: black;
+}
+.em-nav-lenke:visited {
+	color: black;
+}
+.em-nav-lenke:hover {
+	font-weight: 600;
+}
+
+/* current page */
+.em-nav-current a {
+	 background-color: hsl(222, 50%, 95%);
+}
+
+
+/*
+	2.0 SECTION
+	PAGE CONTENT
+*/
+
+/* container for page content and title */
+.main {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 2rem;
+	width: 96rem;
+	min-height: 90vh;
+	background-color: hsl(222, 50%, 98%);
+}
+
+/*
+	2.1 SECTION
+	PAGE TITLE
+*/
+/* <h1> element with page title */
+.content-title-text {
+	margin: 1rem;
+	font-size: 3.6rem;
+	border-bottom: solid 2px hsl(222, 50%, 80%);
+}
+
+
+/*
+	2.2 SECTION
+	PAGE CONTENT
+*/
+
+/* container for page content */
+.content {
+	font-size: 1.4rem;
+	margin: 1rem;
+}
+
+/* flexbox for page content */
+.content-3 {
+	display: flex;
+}
+
+/* settings rules for images in flexbox side-columns */
+.em-left img,
+.em-right img {
+	max-width: 20rem;
+}
+
+/* flexbox rules */
+.em-left {
+	order: 0;
+}
+.em-center {
+	margin: 0 1rem;
+	order: 1;
+}
+.em-right {
+	order: 2;
+}
+
+
+/* 
+	2.3 SECTION
+	IMAGE SHORTCODE FOR WORDPRESS
+*/
+
+/* Floats image right */
+.alignright {
+	float: right;
+	padding-left: 1.5rem;
+}
+
+/* Floats image left */
+.alignleft {
+	float: left;
+	padding-right: 1.5rem;
+}
+
+/* centers image */
+.aligncenter {
+	margin: auto;
+}
+
+/* removes margin from image caption in <p> */
+.wp-caption-text {
+	margin: 0;
+	margin-bottom: 2rem;
+}
+
+
+/*
+	3.0 SECTION
+	FOOTER
+*/
+
+/*
+	3.1 SOCIAL/ABOUTUS INFORMATION
+*/
+
+/* footer container */
+.em-footer {
+	min-width: 40%;
+	width: 96rem;
+	margin: 2rem 0;
+	margin-left: 31rem;
+}
+
+/* footer flexbox */
+.em-inner-footer {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.2rem;
+
+	background-color: hsl(260, 50%, 95%);
+	padding: 0.5rem;
+}
+
+/* flexbox rules */
+.em-socialmedia-container,
+.em-contact-container,
+.em-aboutus-container {
+	flex-basis: 30%;
+}
+
+/* css content */
+.em-socialmedia-container:before,
+.em-contact-container:before,
+.em-aboutus-container:before {
+	font-size: 2rem;
+	display: block;
+}
+.em-contact-container:before {
+	content: 'Kontakt';
+}
+.em-socialmedia-container:before {
+	content: 'Sosiale Medier';
+}
+.em-aboutus-container:before {
+	content: 'Om Oss';
+}
+
+/* list fixes */
+.em-footer-ul {
+	margin: 0;
+	padding: 0;
+}
+.em-footer-listitem {
+	list-style: none;
+	margin-bottom: .5rem;
+}
+
+/* special rule for postal info */
+.em-footer-post {
+	display: inline-block;
+}
