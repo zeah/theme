@@ -33,10 +33,8 @@ final class Emtheme_Logger {
 
 	/* hooks for wordpress to accept ajax */
 	private function public_wp_hooks() {
+	}
 
-		add_action('wp_ajax_emmail_action', array($this, 'emmail_action'));
-		add_action('wp_ajax_nopriv_emmail_action', array($this, 'emmail_action'));
-	}	
 
 	/* to be run when themem is activated/admin page is visited */
 	private function init_db() {
@@ -106,6 +104,7 @@ final class Emtheme_Logger {
 
 			$wpdb->flush();
 
+
 			// enqueue the javascript
 			$this->ajaxpopup();
 		}
@@ -149,26 +148,6 @@ final class Emtheme_Logger {
 
 		// javascript object from php
 	}
-
-	public function emmail_action() {
-		global $wpdb;
-
-		check_ajax_referer( 'em_ajax_post_validation', 'security' );
-
-		// validates email
-		if (! is_email($_POST['emmail']))
-			return;
-
-		$wpdb->update($wpdb->prefix.$this->table_name, array( 
-			'email' => $_POST['emmail'],
-			'emailsrc' => $_POST['emmailsrc'],
-			'name' => $_POST['emname']
-		), array('uniqueid' => $_COOKIE['user']));
-
-		$wpdb->flush();
-		wp_die();
-	}
-
 
 	/* creating the popup/logger submenu on admin page */
 	public function options_hooks() {

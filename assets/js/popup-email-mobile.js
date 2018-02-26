@@ -103,7 +103,7 @@ jQuery(document).ready(function($) {
 			url : emmail.ajax_url,
 			type : 'post',
 			data : {
-				action : 'emmail_action',
+				action : 'emmailAction',
 				emmail : emailInput.value,
 				emmailsrc: 'mobile_bottom',
 				emname: nameInput.value,

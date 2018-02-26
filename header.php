@@ -65,19 +65,20 @@ if (get_theme_mod('emtheme_logo'))
 	// $top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></div>';
 	$top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></a></div>';
 
+$emtheme_logo_mobile = esc_url(get_theme_mod('emtheme_logo_mobile'));
+$emtheme_title_mobile = esc_html(get_theme_mod('emtheme_title_mobile'));
 
-if (get_theme_mod('emtheme_logo_mobile'))
-	$top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><img class="emtheme-logo-mobile" src="'.esc_url(get_theme_mod('emtheme_logo_mobile')).'"></div>';
+if ($emtheme_logo_mobile)
+	$top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'"><img class="emtheme-logo-mobile" src="'.$emtheme_logo_mobile.'"></a></div>';
 
-if (get_theme_mod('emtheme_title_mobile'))
-	$top .= '<div class="emtheme-mobile-title emtheme-mobile">'.esc_html(get_theme_mod('emtheme_title_mobile')).'</div>';
-
+if  ($emtheme_title_mobile)
+	$top .= '<div class="emtheme-mobile-title emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'">'.$emtheme_title_mobile.'</a></div>';
 
 
 $emtheme_name = esc_html(get_bloginfo('name'));
 $emtheme_tagline = esc_html(get_bloginfo('description'));
 
-if ($emtheme_name || $emtheme_tagline)
+if ($emtheme_name || $emtheme_tagline) {
 	$top .= '<div class="emtheme-toptext-container"><a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
 
 if ($emtheme_name)
@@ -86,9 +87,8 @@ if ($emtheme_name)
 if ($emtheme_tagline)
 	$top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
 
-if ($emtheme_name || $emtheme_tagline)
 	$top .= '</a></div>';
-
+}
 
 echo $top;
 

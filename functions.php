@@ -53,7 +53,8 @@ final class Emtheme_function {
 
     private function public_wp_hooks() {
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
-        // add_filter('the_content', array($this, 'helper_float_image'));
+        add_action('wp_ajax_nopriv_emmailAction', array($this, 'emmail_action'));
+        add_action('wp_ajax_emmailAction', array($this, 'emmail_action'));  
     }
 
     private function wp_hooks() {
@@ -73,6 +74,32 @@ final class Emtheme_function {
             wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 961px)');
 
         wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), '1.0.0', '(max-width: 960px)');
+    }
+
+    public function emmail_action() {
+        global $wpdb;
+
+        if (! isset($_COOKIE['user'])) {
+            echo 'no cookie found';
+            return;
+        }
+
+        echo 'heya';
+
+        check_ajax_referer( 'em_ajax_post_validation', 'security' );
+
+        // validates email
+        if (! is_email($_POST['emmail']))
+            return;
+
+        $wpdb->update($wpdb->prefix.'em_logger', array( 
+            'email' => $_POST['emmail'],
+            'emailsrc' => $_POST['emmailsrc'],
+            'name' => $_POST['emname']
+        ), array('uniqueid' => $_COOKIE['user']));
+
+        $wpdb->flush();
+        wp_die();
     }
 
     public function add_sitemap() {

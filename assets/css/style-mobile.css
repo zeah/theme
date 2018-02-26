@@ -1,19 +1,47 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Roboto');
 
-p:empty {
-	display: none;
-}
 
+/*
+	INDEX
+	#####
+	-default settings
+	-wordpress fixes
+
+	1.0 HEADER
+		1.1 SITE IDENTITY
+		1.2 MOBILE NAVBAR
+	2.0 CONTENT
+		2.1 PAGE CONTENT
+		2.2 RULES FOR WORDPRESS EMBEDDED IMAGES
+	3.0 FOOTER
+		3.1 CONTACT/ABOUT INFORMATIOn
+*/
+
+
+
+/* default settings */
 html {
 	font-size: 62.5%;
-}
-
-body {
-	margin: 0 !important;
+	box-sizing: border-box;
 	font-family: "Roboto", sans-serif;
 }
 
-/* TOP STUFF */
+/* wordpress fixes */
+body {
+	margin: 0 !important;
+}
+p:empty {
+	display: none;
+}
+.widget {
+	list-style: none;
+}
+
+
+/*
+	1.0 SECTION
+	HEADER
+*/
 .emtop {
 	display: flex;
 	justify-content: space-between;
@@ -23,76 +51,110 @@ body {
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
 	line-height: 1.6;
-	
 }
 
-.topstuff {
+
+/* 
+	1.1 SECTION
+	SITE IDENTITY - logo, title, tagline
+*/
+
+/* flexbox for site title and logo */
+.emtheme-site-identity {
 	display: flex;
+	max-width: 70%;
 }
 
+/*  div for logo image for desktop 
+	HIDDEN ON MOBILE */
 .emtheme-logo-container {
 	display: none;
 }
 
+.emtheme-top-link {
+	display: none;
+}
+
+/* 	site title and tagline for desktop
+	HIDDEN ON MOBILE */
 .emtheme-toptext-container {
 	display: none;
 }
 
+/* div for logo */
 .emtheme-logo-mobile {
 	height: 4.6rem;
 }
 
+/* div for site title */
 .emtheme-mobile-title {
-	/*line-height: 4.6rem;*/
 	padding-left: 1rem;
 
 	font-size: 3rem;
 	color: hsl(0, 0%, 90%);
+	white-space: nowrap;
+	overflow: hidden;
+}
+.emtheme-top-link-mobile {
+	color: white;
+	text-decoration: none !important;
+}
+.emtheme-top-link-mobile:visited {
+	color: white;
 }
 
+/*
+	1.2 SECTION
+	MOBILE NAVBAR
+*/
 
-/* NAVIGATION */
+/* container for nav bar - only activation icon visible */
 .nav-container {
 	position: relative; /* for aboslute positioned children */
-	z-index: 900;
 	background-color: inherit;
 	font-size: 2rem;
+	z-index: 900;
 }
 
+/*	google material icon 
+	navbar activation icon */
 .material-icons {
 	font-size: 4.6rem !important;
 	color: hsl(0, 0%, 90%) !important;
 	padding-right: 1rem;
 }
 
-.nav {
-	z-index: 999;
-	position: absolute;
-	top: 4rem;
-	right: 0;
-	background-color: inherit;
-}
-
+/* effect for activated activation icon */
 .nav-active {
 	text-shadow: 0 0 10px white;
 }
 
-.nav-mobile-top {
-	height: 32px;
+/* mobile top level dropdown */
+.nav {
+	display: none;
+	position: absolute;
+	top: 4rem;
+	right: 0;
+	background-color: inherit;
+	z-index: 999;
 }
 
+/*.nav-mobile-top {*/
+	/*height: 32px;*/
+/*}*/
+
+/* element containing nav item */
 .em-nav-item {
 	background-color: inherit;
 	white-space: nowrap;
 	border-bottom: solid 1px hsl(0, 0%, 20%);
 	padding: 1.5rem 1rem;
 }
-
-
 .em-nav-item:last-child {
 	border-bottom: none;
 }
 
+/* anchor element of nav item*/
 .em-nav-lenke {
 	display: block;
 	text-decoration: none;
@@ -100,45 +162,71 @@ body {
 	color: hsl(0, 50%, 99%);
 }
 
+/* special rule for nav items (<a>) in submenus */
 .em-nav-sublenke {
 	font-size: 1.6rem;
 }
 
+/* nav item with submenu icon */
 .em-nav-item-parent:after {
 	content: ' \25bc';
 }
 
-.nav,
+/* start value for submenus */
 .em-nav-sub-container {
 	display: none;
 }
 
+/* special rule for nav items in submenus*/
 .em-nav-subitem {
 	border: none;
 	background-color: hsl(0, 0%, 20%);
 }
+
+/* showing hidden submenu*/
 .nav-show {
 	display: block;
 }
 
+/* visual marker for current page */
+.em-nav-current {
+	background-color: hsl(22, 40%, 20%);
+}
 
-/* MAIN */
+
+/*
+	2.0 SECTION
+	CONTENT
+*/
+
+/* 
+	2.1 SECTION
+	PAGE CONTENT
+*/
+
+/* container for page content */
 .main {
 	padding: 0.5rem;
 	font-size: 1.6rem;
 	min-height: 70vh;
 }
 
+/*
+	2.2 SECTION
+	RULES FOR WORDPRESS EMBEDDED IMAGES
+*/
+
+/* class of <p> of caption text to image */
 .wp-caption-text {
 	padding: 0;
 	margin: 0;
 }
 
+/* different floats */
 .aligncenter {
 	text-align: center;
 	margin: auto;
 }
-
 .alignleft {
 	text-align: center;
 	float: left;
@@ -148,6 +236,7 @@ body {
 	float: right;
 }
 
+/* forcing images to be 100% of width */
 .alignnone img,
 .aligncenter img,
 .alignright img,
@@ -155,7 +244,17 @@ body {
 	max-width: 100%;
 }
 
-/* FOOTER */
+/*
+	3.0 SECTION
+	FOOTER
+*/
+
+/*
+	3.1 SECTION
+	CONTACT/ABOUT INFORMATIOn
+*/
+
+/* flexbox for footer */
 .em-inner-footer {
 	color: white;
 	background-color: hsl(0, 0%, 5%);
@@ -165,34 +264,33 @@ body {
 	font-size: 1.6rem;
 }
 
-
+/* changing default list css */
 .em-footer-ul {
 	padding: 0;
 }
-
 .em-footer-listitem {
 	list-style: none;
 }
 
+/* special rule for postal info */
 .em-footer-post {
 	display: inline;
 	padding-right: 0.5rem;
 }
 
-.em-socialmedia-container:before {
-	content: 'Sosiale medier';
-}
+/* flex rules */
+.em-contact-container,
 .em-socialmedia-container {
 	flex-basis: 40%;
 }
 
+/* css content */
+.em-socialmedia-container:before {
+	content: 'Sosiale medier';
+}
 .em-contact-container:before {
 	content: 'Kontakt';
 }
-.em-contact-container {
-	flex-basis: 40%;
-}
-
 .em-aboutus-container:before {
 	content: 'Om Oss';
 	display: block;

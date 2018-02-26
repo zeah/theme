@@ -170,22 +170,21 @@ jQuery( document ).ready(function() {
 			});
 		}
 	}
-	// console.dir(emmail);
+	// console.dir(emmail.ajax_url);
 
 	function sendAjax(email, emailsrc, name) {
 		jQuery.ajax({
-			url : emmail.ajax_url,
-			type : 'post',
-			data : {
-				action : 'emmail_action',
-				emmail : email,
+			url: emmail.ajax_url,
+			type: 'post',
+			data: {
+				action: 'emmailAction',
+				emmail: email,
 				emmailsrc: emailsrc,
 				emname: name,
 				security: emmail['nonce']
-			},
-			success : function( response ) {
-				// console.dir(response);
 			}
+		}).done(function(response) {
+			console.log('hi '+response);
 		});
 	}
 });
