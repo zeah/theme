@@ -6,7 +6,6 @@ echo $emsoc->get_footer();
 
 final class Emtheme_footer {
 	private static $instance = null;
-	private $data = null;
 
 	public static function get_instance($active = true) {
 
@@ -20,60 +19,108 @@ final class Emtheme_footer {
 		if (! $active)
 			return;
 
-		$this->data = get_option('em_contact_data');
-
 	}
 
 	public function get_footer() {
-		$html = '<div class="em-footer"><div class="em-inner-footer">';
-		
-		if (get_option('em_social_active'))
-			$html .= $this->get_footer_social();
+		$html = '';
+		$social = get_option('emtheme_footer_social_active');
+		$contact = get_option('emtheme_footer_contact_active');
+		$aboutus = get_option('emtheme_footer_aboutus_active');
 
-		if (get_option('em_contact_active'))
-			$html .= $this->get_footer_contact();
 
-		if (get_option('em_omoss_active'))
-			$html .= $this->get_footer_about();
+		if ($social || $contact || $aboutus) {
+	 		$html = '<div class="em-footer"><div class="em-inner-footer">';
+	
+			if ($social)		
+				$html .= $this->get_footer_social();
 
-		$html .= '</div></div>';
+			if ($contact)
+				$html .= $this->get_footer_contact();
+
+			if ($aboutus)
+				$html .= $this->get_footer_about();
+
+			$html .= '</div></div>';
+		}
+
 		return $html;
 	}
 
 	private function get_footer_social() {
-		if (! isset($this->data['social']))
-			return;
+		$html = '';
+		$twitter = get_option('emtheme_footer_twitter');
+		$facebook = get_option('emtheme_footer_facebook');
+		$google = get_option('emtheme_footer_google');
+		$youtube = get_option('emtheme_footer_youtube');
 
+		if ($twitter || $facebook || $google || $youtube) {
+			$html .= '<div class="em-socialmedia-container"><ul class="em-footer-ul">';
 
-		$html = '<div class="em-socialmedia-container"><ul class="em-footer-ul">';
+			if ($twitter)
+				$html .= '<li class="em-footer-listitem"><a class="em-footer-link" href="'.esc_url($twitter).'">Twitter</a></li>';
 
-		$soc = $this->data['social'];
-		foreach ($soc as $key => $s)
-			$html .= '<li class="em-footer-listitem"><a class="em-footer-link" href="'.esc_url($s).'">'.esc_html($key).'</a></li>';
+			if ($facebook)
+				$html .= '<li class="em-footer-listitem"><a class="em-footer-link" href="'.esc_url($facebook).'">Facebook</a></li>';
 
-		$html .= '</ul></div>';
+			if ($google)
+				$html .= '<li class="em-footer-listitem"><a class="em-footer-link" href="'.esc_url($google).'">Google+</a></li>';
+
+			if ($youtube)
+				$html .= '<li class="em-footer-listitem"><a class="em-footer-link" href="'.esc_url($youtube).'">Youtube</a></li>';
+
+			$html .= '</ul></div>';
+		}
+
 		return $html;
 	}
 
 	private function get_footer_contact() {
-		if (! isset($this->data['contact']))
-			return;
+		$html = '';
+		$email = get_option('emtheme_footer_email');
+		$avdeling = get_option('emtheme_footer_avdeling');
+		$selskap = get_option('emtheme_footer_selskap');
+		$poststed = get_option('emtheme_footer_poststed');
+		$postnr = get_option('emtheme_footer_postnr');
+		$veiadr = get_option('emtheme_footer_veiadr');
+		$land = get_option('emtheme_footer_land');
 
-		$html = '<div class="em-contact-container"><ul class="em-footer-ul">';
 
-		$con = $this->data['contact'];
-		foreach ($con as $key => $c)
-			$html .= '<li class="em-footer-listitem'.(($key == 'epost') ? ' em-footer-epost' : '').(($key == 'poststed' || $key == 'postnr') ? ' em-footer-post': '').'">'.esc_html($c).'</li>';
+		if ($email || $avdeling || $selskap || $poststed || $postnr || $veiadr || $land) {
+			$html .= '<div class="em-contact-container"><ul class="em-footer-ul">';
 
-		$html .= '</ul></div>';
+			if ($email)
+				$html .= '<li class="em-footer-listitem em-footer-epost">'.esc_html($email).'</li>';
+
+			if ($avdeling)
+				$html .= '<li class="em-footer-listitem">'.esc_html($avdeling).'</li>';
+
+			if ($selskap)
+				$html .= '<li class="em-footer-listitem">'.esc_html($selskap).'</li>';
+
+			if ($poststed)
+				$html .= '<li class="em-footer-listitem em-footer-post">'.esc_html($poststed).'</li>';
+
+			if ($postnr)
+				$html .= '<li class="em-footer-listitem em-footer-post">'.esc_html($postnr).'</li>';
+
+			if ($veiadr)
+				$html .= '<li class="em-footer-listitem">'.esc_html($veiadr).'</li>';
+
+			if ($land)
+				$html .= '<li class="em-footer-listitem">'.esc_html($land).'</li>';
+
+			$html .= '</ul></div>';
+		}
+
 		return $html;
 	}
 
 	private function get_footer_about() {
-		if (! isset($this->data['omoss']))
-			return;
+		$aboutus = get_option('emtheme_footer_about');
+		if ($aboutus)
+			return '<div class="em-aboutus-container">'.preg_replace('/\[p\]/', '<p>', esc_html($aboutus)).'</div>';
 
-		return '<div class="em-aboutus-container">'.preg_replace('/\[p\]/', '<p>', esc_html($this->data['omoss'])).'</div>';
+		return '';
 	}
 }
 

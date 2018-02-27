@@ -59,7 +59,7 @@ final class Emtheme_Contact {
 		add_settings_field( 'em-twitter', 'Twitter', array($this, 'twitter_callback'), 'em-contact-page', 'em_social_settings' );
 		add_settings_field( 'em-facebook', 'Facebook', array($this, 'facebook_callback'), 'em-contact-page', 'em_social_settings' );
 		add_settings_field( 'em-google', 'Google+', array($this, 'google_callback'), 'em-contact-page', 'em_social_settings' );
-		add_settings_field( 'em-youtbue', 'Youtube', array($this, 'Youtube_callback'), 'em-contact-page', 'em_social_settings' );
+		add_settings_field( 'em-youtbue', 'Youtube', array($this, 'youtube_callback'), 'em-contact-page', 'em_social_settings' );
 		
 		add_settings_section( 'em_omoss_settings', 'Om Oss', array($this, 'omoss_callback'), 'em-contact-page' );
 		add_settings_field( 'em-omoss-active', 'Om Oss Aktivert', array($this, 'omact_callback'), 'em-contact-page', 'em_omoss_settings' );

@@ -190,6 +190,7 @@ body {
 	display: inline-block;
 	vertical-align: top;
 	margin-top: 2rem;
+	margin-bottom: 2rem;
 	width: 96rem;
 	min-height: 90vh;
 	background-color: hsl(222, 50%, 98%);

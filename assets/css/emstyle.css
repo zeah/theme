@@ -1,17 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto');
 
 /*
-	HEADER
-	NAVIGATION
-	CONTENT
-		FLEXBOX SHORTCODE
-		WORDPRESS IMAGE SHORTCODE 
-	FOOTER 
+	INDEX
+	#####
+	- default settings
+	- wordpress fixes
+
+	1.0 HEADER
+		1.1 SITE IDENTITY
+		1.2 NAVBAR
+	2.0 CONTENT
+		2.1 PAGE CONTENT
+		2.2 FLEXBOX SHORTCODE
+		2.3 WORDPRESS IMAGE SHORTCODE
+	3.0 FOOTER 
+		3.1 soc.media/contact/about us
 */
 
-/* 
-	General stuff and fixes for wordpress
-*/
+/* default settings */
 html {
 	background-color: hsl(10, 10%, 90%);
 	font-size: 62.5%;
@@ -19,32 +25,31 @@ html {
 	box-sizing: border-box;
 }
 
-/* wordpress fix */
+/* wordpress fixes */
 body {
 	margin: 0 !important;
 }
-
-/* to fix wordpress content filter */
 p:empty {
 	display: none;
 }
-
-/* wordpress widgets get output in <li>s */
 .widget {
 	list-style: none;
 }
 
 
 /* 
+	1.0 SECTION
 	HEADER 
-	Logo-Widget, Site Title, Site Tagline
-	Navigation
+	Site logo, title and tagline
+*/
+	
+/*
+	1.1 SECTION
+	SITE IDENTITY
 */
 
-
-/* container for logo, title, tagline */
+/* flexbox for logo, title, tagline */
 .emtheme-site-identity {
-/*.topstuff {*/
 	display: flex;
 
 	width: 112rem;
@@ -58,82 +63,62 @@ p:empty {
 .emtheme-mobile-icon {
 	display: none !important;
 }
-
-/* hiding mobile only */
 .emtheme-logo-mobile-container {
 	display: none;
 }
-
-/* hiding mobile only */
 .emtheme-mobile-title {
 	display: none;
 }
 
+/* div for site logo */
 .emtheme-logo {
 	margin-right: 4rem;
 }
 
+/* home anchor surrounding logo and title/tagline */
 .emtheme-top-link {
 	color: black;
 	text-decoration: none;
 }
-
 .emtheme-top-link:visited {
 	color: black;
 }
 
+/* div for site title */
 .emtheme-title {
 	font-size: 4.6rem;
 	font-weight: 700;
 	font-family: "Open Sans Condensed", sans-serif;
 }
 
+/* div for site tagline */
 .emtheme-tagline {
 	margin-left: 4rem;
 
 	font-size: 1.6rem;
 }
 
-/* container for site name and tagline */
-/*.topstuff-text {
-	line-height: 1;
-}*/
-
-/* sitename div element */
-/*.sitename {
-	font-size: 4rem;
-	font-weight: 700;
-	letter-spacing: 0.1em;
-	font-family: "Open Sans Condensed", sans-serif;
-}*/
-
-/* tagline div element */
-/*.tagline {
-	font-size: 2rem;
-	text-indent: 4rem;
-	white-space: nowrap;
-}*/
-
 
 /* 
+	1.2 SECTION
 	NAVIGATION 
 	Top Menu
 */
 
 /* container for top menu */
 .nav-container {
+	margin-bottom: 1rem;
+	border-bottom: 2px solid hsl(25, 100%, 60%);
+
 	background-image: linear-gradient(
 			0deg, 
 			hsl(0, 0%, 15%), 
 			hsl(0, 0%, 10%) 50%, 
 			hsl(0, 0%, 15%) 90%
 			);
-	margin-bottom: 1rem;
-	border-bottom: 2px solid hsl(25, 100%, 60%);
-
 }
 
-/* inner container for top menu */
+/* flexbox for navbar */
 .nav {
 	display: flex;
 	flex-wrap: wrap;
@@ -150,14 +135,13 @@ p:empty {
 	background-image: inherit;
 }
 
-/* container for menu anchor element */
+/* div for nav part */
 .em-nav-item {
 	border-right: solid 1px hsl(0, 0%, 40%);
 	display: block;
 	min-width: 13rem;
 	white-space: nowrap;
 }
-
 .em-nav-item:last-child {
 	border-right: none;
 }
@@ -168,7 +152,7 @@ p:empty {
 	font-size: 1.4rem;
 }
 
-/* hover effect on menu items */
+/* hover effect on nav items */
 .em-nav-item:hover {
 	background-image: linear-gradient(0deg, 
 		hsl(0, 0%, 25%), 
@@ -177,8 +161,7 @@ p:empty {
 		);
 }
 
-
-/* anchor element in menu */
+/* anchor element in nav items */
 .em-nav-lenke {
 	display: block;
 	
@@ -227,7 +210,7 @@ p:empty {
 	color: hsl(0, 0%, 20%);
 }
 
-
+/* visual marker for current page */
 .em-nav-current {
 		background-image: linear-gradient(0deg, 
 		hsl(22, 90%, 35%), 
@@ -235,7 +218,6 @@ p:empty {
 		hsl(22, 90%, 35%) 90%
 		);
 }
-
 .em-nav-current:hover {
 		background-image: linear-gradient(0deg, 
 		hsl(22, 70%, 35%), 
@@ -244,19 +226,23 @@ p:empty {
 		);
 }
 
+
 /*
-	CONTENT SECTION 
+	2.0 SECTION
+	CONTENT
+*/
+
+/*
+	2.1 SECTION
+	PAGE CONTENT
 */
 
 /* element of which is centered, has width and background-color of white */
 .main {
-	margin: 0 auto;
+	margin: 2rem auto;
 	width: 112rem;
 	max-width: 100%;
 	min-height: 100vh;
-	/*padding-bottom: 10%;*/
-	/*position: relative;
-	z-index: 999999;*/
 	background-color: hsl(0, 0%, 100%);
 	box-shadow: 0 0 5px black;
 }
@@ -304,17 +290,17 @@ p:empty {
 	padding-bottom: 10vh;
 }
 
+/* flexbox for page content */
+.content-3 {
+	display: inline-flex; /* uncollapsing margin-top */
+	position: relative; /*???*/
+}
 
 /* 
+	2.2 SECTION
 	SHORTCODE FLEXBOX SECTION
 	flexbox shortcode from wordpress content 
 */
-
-/* flexbox */
-.content-3 {
-	display: inline-flex;
-	position: relative;
-}
 
 /* left and right elements */
 .em-left,
@@ -325,30 +311,26 @@ p:empty {
 	align-self: flex-start; /* for sticky to work in flexbox */
 }
 
-/* limits image width to 200px */
+/* limits width of left/right column images */
 .em-right img,
 .em-left img {
 	max-width: 20rem;
 }
 
-/* left column element to be forced first */
+/* flexbox rules */
 .em-left {
 	order: 1;
 }
-
-/* center column element to be forced after .left */
 .em-center {
 	margin: 0 2rem;
  	order: 2;
 }
-
-/* left column element to be forced after .center */
 .em-right {
 	order: 3;
 }
 
 /* 
-	SECTION
+	2.3 SECTION
 	IMAGE SHORTCODE FOR WORDPRESS
 */
 
@@ -376,8 +358,13 @@ p:empty {
 
 
 /*
-	SECTION
+	3.0 SECTION
 	FOOTER
+*/
+
+/*
+	3.1 SECTION
+	Social media/Contact/about us information
 */
 
 /* container element for footer */
@@ -402,8 +389,6 @@ p:empty {
 	width: 112rem;
 	margin: 2rem 0;
 	justify-content: space-evenly;
-
-	/*border: solid white 1px;*/
 }
 
 /* fix for list elements */

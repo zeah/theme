@@ -61,12 +61,12 @@ echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head
 // top container 
 $top = '<div class="emtop"><div class="emtheme-site-identity">';
 
-if (get_theme_mod('emtheme_logo'))
-	// $top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></div>';
-	$top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_theme_mod('emtheme_logo')).'"></a></div>';
+if (get_option('emtheme_logo'))
+	// $top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></div>';
+	$top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></a></div>';
 
-$emtheme_logo_mobile = esc_url(get_theme_mod('emtheme_logo_mobile'));
-$emtheme_title_mobile = esc_html(get_theme_mod('emtheme_title_mobile'));
+$emtheme_logo_mobile = esc_url(get_option('emtheme_logo_mobile'));
+$emtheme_title_mobile = esc_html(get_option('emtheme_title_mobile'));
 
 if ($emtheme_logo_mobile)
 	$top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'"><img class="emtheme-logo-mobile" src="'.$emtheme_logo_mobile.'"></a></div>';

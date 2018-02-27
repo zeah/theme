@@ -26,12 +26,13 @@ final class Emtheme_Page {
 		add_action('save_post', array($this, 'save_meta'));
 
 		add_action('add_meta_boxes', array($this, 'add_nav'));
-		add_action('add_meta_boxes', array($this, 'add_description'));
 		add_action('add_meta_boxes', array($this, 'add_title'));
+		add_action('add_meta_boxes', array($this, 'add_description'));
 		add_action('add_meta_boxes', array($this, 'add_strucdata'));
 		add_action('add_meta_boxes', array($this, 'add_redirect'));
 
-		add_action('do_meta_boxes', array($this, 'remove_thumbnail'));
+		// add_action('do_meta_boxes', array($this, 'remove_thumbnail'));
+		
 	}
 
 	private function public_wp_hooks() {
@@ -83,7 +84,6 @@ final class Emtheme_Page {
 		add_meta_box('navgation-opt', 'Navigation', array($this, 'nav_callback'), 'page', 'side');
 	}
 	public function nav_callback() {
-		wp_nonce_field( basename(__FILE__), 'em_nonce' );
 
 		$inputs = ['Navigation' => 'showinnav'];
 		// $inputs = ['Navigation' => 'showinnav', 'Mobile Navigation' => 'showinmob'];
@@ -96,7 +96,7 @@ final class Emtheme_Page {
 
 	/* <META> DESCRIPTION META BOX */
 	public function add_description() {
-		add_meta_box( 'meta-description-opt', 'Meta Description', array($this, 'description_callback'), array('page'), 'advanced', 'high');
+		add_meta_box( 'meta-description-opt', 'Meta Description', array($this, 'description_callback'), array('page', 'post'), 'advanced', 'high');
 	}
 	public function description_callback() {
 		echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.esc_html($this->getmeta('emtext')).'</textarea>';
@@ -104,15 +104,16 @@ final class Emtheme_Page {
 
 	/* <TITLE> META BOX */
 	public function add_title() {
-		 add_meta_box( 'title-opt', 'Page Title', array($this, 'title_callback'), array('page'), 'advanced', 'high');
+		 add_meta_box( 'title-opt', 'Page Title', array($this, 'title_callback'), array('page', 'post'), 'advanced', 'high');
 	}
 	public function title_callback() {
+		wp_nonce_field( basename(__FILE__), 'em_nonce' );
 		echo '<input type="text" name="emtitle" style="width: 100%" value="'.esc_attr($this->getmeta('emtitle')).'">';
 	}
 
 	/* STRUCTURED DATA META BOX */
 	public function add_strucdata() {
-		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array($this, 'strucdata_callback'), array('page'), 'advanced', 'high');
+		add_meta_box('strucdata', 'Structured data (JSON-LD format)', array($this, 'strucdata_callback'), array('page', 'post'), 'advanced', 'high');
 	}
 	public function strucdata_callback() {
 		if (json_decode($this->getmeta('emstrucdata')))
@@ -145,7 +146,7 @@ final class Emtheme_Page {
 
 	/* PERMANENT MOVE META BOX */
 	public function add_redirect() {
-		add_meta_box( 'meta-description-opt', 'Permanent Redirect URL (301)', array($this, 'redirect_callback'), array('page', 'post'), 'advanced');
+		add_meta_box( 'meta-redirect-opt', 'Permanent Redirect URL (301)', array($this, 'redirect_callback'), array('page', 'post'), 'advanced');
 	}
 
 	public function redirect_callback() {

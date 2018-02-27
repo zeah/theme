@@ -2,13 +2,14 @@
 require_once 'inc/functions-admin.php';
 require_once 'inc/functions-page.php';
 require_once 'inc/functions-shortcode.php';
-// require_once 'inc/functions-widget.php';
 require_once 'inc/options/emtheme_customizer.php';
 
 add_action('after_setup_theme', 'emtheme_setup');
 
 if ( ! isset( $content_width ) )
     $content_width = 1920; /* pixels */
+
+add_theme_support('post-thumbnails');
 
 if (! function_exists('emtheme_setup')) {
     function emtheme_setup() {
@@ -17,9 +18,6 @@ if (! function_exists('emtheme_setup')) {
         /* page-edit page stuff (meta boxes and saving) */
         Emtheme_Page::get_instance();
 
-        /* widgets (top logo/top logo mobile) */
-        // EmWidget::get_instance();
-
         /* shortcodes ([col]) */
         Emtheme_ShortCode::get_instance();
 
@@ -27,6 +25,7 @@ if (! function_exists('emtheme_setup')) {
         Emtheme_function::get_instance();
 
         Emtheme_customizer::get_instance();
+
     }
 }
 
@@ -133,7 +132,6 @@ final class Emtheme_function {
         fclose( $fp );
     }
 
-
     public function helper_float_image($content) {
         $content = preg_replace('/\[caption.*alignright.*?\]/', '<span class="emtheme-right-image editor-image">', $content);
         $content = preg_replace('/\[caption.*alignleft.*?\]/', '<span class="emtheme-left-image editor-image">', $content);
@@ -163,3 +161,9 @@ final class Emtheme_Help {
     }
 
 }
+
+function remove_thumbnail() {
+    remove_meta_box('postimagediv', 'page', 'side');
+}
+
+add_action('do_meta_boxes', 'remove_thumbnail');

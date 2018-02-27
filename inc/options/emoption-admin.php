@@ -26,7 +26,7 @@ final class Emtheme_Options {
 		add_action( 'admin_init', array($this, 'registerSettings') );
 	
 		Emtheme_Frontpage::get_instance();
-		Emtheme_Contact::get_instance();
+		// Emtheme_Contact::get_instance();
 		Emtheme_Logger::get_instance();
 	}
 
