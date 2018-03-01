@@ -45,7 +45,7 @@ final class Emtheme_function {
             return;
         $this->public_wp_hooks();
 
-        if ( (! current_user_can('edit')) || (! is_admin()) )
+        if (! is_admin())
             return;
         $this->wp_hooks();
     }
