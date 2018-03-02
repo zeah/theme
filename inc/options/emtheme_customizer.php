@@ -286,5 +286,106 @@ final class Emtheme_Customizer {
 			)
 		);
 
+		/* EMTHEME CSS */
+		$wp_customize->add_panel('emtheme_css_panel', array(
+			'title' => 'Emtheme CSS'
+		));
+
+		$wp_customize->add_section('emtheme_css_section', array(
+			'title' => 'Colors',
+			'panel' => 'emtheme_css_panel'
+		));
+
+
+		$wp_customize->add_setting('emtheme_css_emtop', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_emtop_c', array(
+			'label' => 'Logo/Title/Tagline Background Color',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_emtop',
+			'section' => 'emtheme_css_section'
+		));
+
+		$wp_customize->add_setting('emtheme_css_emtop_font', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_emtop_font_c', array(
+			'label' => 'Logo/Title/Tagline Font Color',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_emtop_font',
+			'section' => 'emtheme_css_section'
+		));
+		
+		$wp_customize->add_setting('emtheme_css_navfont', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_navfont_c', array(
+			'label' => 'Navbar Font Color',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_navfont',
+			'section' => 'emtheme_css_section'
+		));
+
+		$wp_customize->add_setting('emtheme_css_navbg', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_navbg_c', array(
+			'label' => 'Navbar background',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_navbg',
+			'section' => 'emtheme_css_section'
+		));
+
+		$wp_customize->add_setting('emtheme_css_navbg_hover', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_navbg_c_hover', array(
+			'label' => 'Navbar HOVER background',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_navbg_hover',
+			'section' => 'emtheme_css_section'
+		));
+
+		$wp_customize->add_setting('emtheme_css_navsub_font', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_navsub_font_c', array(
+			'label' => 'Navbar submenu font color',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_navsub_font',
+			'section' => 'emtheme_css_section'
+		));
+
+		$wp_customize->add_setting('emtheme_css_navsub_bg', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_navsub_bg_c', array(
+			'label' => 'Navbar submenu background color',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_navsub_bg',
+			'section' => 'emtheme_css_section'
+		));
+
+		$wp_customize->add_setting('emtheme_css_navsub_bg_hover', array(
+			'type' => 'option',
+			'sanitize_callback' => 'sanitize_hex_color'
+		));
+		$wp_customize->add_control('emtheme_css_navsub_bg_hover_c', array(
+			'label' => 'Navbar submenu HOVER background color',
+			'description' => 'Hexcode',
+			'settings' => 'emtheme_css_navsub_bg_hover',
+			'section' => 'emtheme_css_section'
+		));
+	
+	
+
 	}
 }

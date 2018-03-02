@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto:400,500,700');
 
 /*
 	INDEX
@@ -19,9 +19,11 @@
 
 /* default settings */
 html {
-	background-color: hsl(10, 10%, 90%);
+	background-color: hsl(10, 10%, 96%);
+	/*background-color: hsl(10, 10%, 90%);*/
 	font-size: 62.5%;
 	font-family: "Roboto", sans-serif;
+	font-weight: 300;
 	box-sizing: border-box;
 }
 
@@ -47,6 +49,7 @@ p:empty {
 	1.1 SECTION
 	SITE IDENTITY
 */
+
 
 /* flexbox for logo, title, tagline */
 .emtheme-site-identity {
@@ -102,37 +105,47 @@ p:empty {
 /* 
 	1.2 SECTION
 	NAVIGATION 
-	Top Menu
+	NAVBAR
 */
 
 /* container for top menu */
 .nav-container {
 	margin-bottom: 1rem;
-	border-bottom: 2px solid hsl(25, 100%, 60%);
+	background-color: hsl(240, 100%, 20%);
+	/*border-bottom: 2px solid hsl(25, 100%, 60%);*/
 
-	background-image: linear-gradient(
+	/*background-image: linear-gradient(
+			0deg, 
+			hsl(240, 100%, 30%), 
+			hsl(240, 100%, 20%) 10%, 
+			hsl(240, 100%, 30%) 80%
+			);*/
+	/*background-image: linear-gradient(
 			0deg, 
 			hsl(0, 0%, 15%), 
 			hsl(0, 0%, 10%) 50%, 
 			hsl(0, 0%, 15%) 90%
-			);
+			);*/
 }
 
 /* flexbox for navbar */
 .nav {
 	display: flex;
-	flex-wrap: wrap;
+	/*flex-wrap: wrap;*/
 	width: 112rem;
 	margin: auto;
 
-	font-family: 'Open Sans Condensed', sans-serif;
+	font-family: 'Roboto', sans-serif;
+	/*font-family: 'Open Sans Condensed', sans-serif;*/
 	font-size: 2rem;
-	font-weight: 700;
+	font-weight: 500;
+	/*font-weight: 700;*/
 	text-transform: capitalize;
 	text-align: center;
 	white-space: nowrap;
+	/*background-color: hsl(240, 100%, 20%);*/
 
-	background-image: inherit;
+	/*background-image: inherit;*/
 }
 
 /* div for nav part */
@@ -141,6 +154,7 @@ p:empty {
 	display: block;
 	min-width: 13rem;
 	white-space: nowrap;
+	overflow: hidden;
 }
 .em-nav-item:last-child {
 	border-right: none;
@@ -154,11 +168,18 @@ p:empty {
 
 /* hover effect on nav items */
 .em-nav-item:hover {
-	background-image: linear-gradient(0deg, 
+	background-color: hsl(240, 80%, 30%);
+	/*background-image: linear-gradient(
+			0deg, 
+			hsl(240, 100%, 40%), 
+			hsl(240, 100%, 30%) 10%, 
+			hsl(240, 100%, 40%) 80%
+			);*/
+	/*background-image: linear-gradient(0deg, 
 		hsl(0, 0%, 25%), 
 		hsl(0, 0%, 20%) 50%, 
 		hsl(0, 0%, 25%) 90%
-		);
+		);*/
 }
 
 /* anchor element in nav items */
@@ -169,6 +190,8 @@ p:empty {
 	line-height: 3.5rem;
 
 	text-decoration: none;
+	/*text-shadow: 0 0 1px white;*/
+	/*color: hsl(0, 50%, 00%);*/
 	color: hsl(0, 50%, 99%);
 }
 
@@ -187,6 +210,7 @@ p:empty {
 
 /* container for anchor element in submenus */
 .em-nav-subitem {
+	text-align: left;
 	margin-bottom: 1rem;
 	border-right: none; /* removing inherited border */
 	
@@ -212,18 +236,18 @@ p:empty {
 
 /* visual marker for current page */
 .em-nav-current {
-		background-image: linear-gradient(0deg, 
+		/*background-image: linear-gradient(0deg, 
 		hsl(22, 90%, 35%), 
 		hsl(22, 90%, 30%) 50%, 
 		hsl(22, 90%, 35%) 90%
-		);
+		);*/
 }
 .em-nav-current:hover {
-		background-image: linear-gradient(0deg, 
+		/*background-image: linear-gradient(0deg, 
 		hsl(22, 70%, 35%), 
 		hsl(22, 70%, 30%) 50%, 
 		hsl(22, 70%, 35%) 90%
-		);
+		);*/
 }
 
 
