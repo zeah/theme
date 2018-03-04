@@ -3,6 +3,7 @@ require_once 'inc/functions-admin.php';
 require_once 'inc/functions-page.php';
 require_once 'inc/functions-shortcode.php';
 require_once 'inc/options/emtheme_customizer.php';
+require_once 'inc/style_version.php';
 
 add_action('after_setup_theme', 'emtheme_setup');
 
@@ -32,6 +33,9 @@ if (! function_exists('emtheme_setup')) {
 final class Emtheme_function {
     private static $instance = null;
 
+    // DEFAULT STYLE VERSION 
+    // private static $style_default = '1.1.1';
+
     public static function get_instance($activate = true) {
 
         if (self::$instance === null)
@@ -51,7 +55,10 @@ final class Emtheme_function {
     }
 
     private function public_wp_hooks() {
+
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
+        add_action('wp_head', array($this, 'add_head'));
+
         add_action('wp_ajax_nopriv_emmailAction', array($this, 'emmail_action'));
         add_action('wp_ajax_emmailAction', array($this, 'emmail_action'));  
     }
@@ -65,42 +72,69 @@ final class Emtheme_function {
         $style = get_option('emtheme_styling');
 
         if ($style == 'two')
-            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), '0.0.1', '(min-width: 961px)');
+            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), Emtheme_style::$style_two, '(min-width: 961px)');
         else if ($style == 'three')
-            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), '0.0.1', '(min-width: 961px)');
+            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), Emtheme_style::$style_one, '(min-width: 961px)');
         // default style (style one)
         else {
-            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), '1.1.1', '(min-width: 961px)');
-            
-            $data = '';
-            if (get_option('emtheme_css_emtop'))
-                $data .= '.emtop { background-color: '.get_option('emtheme_css_emtop').' !important;}';
-
-            if (get_option('emtheme_css_emtop_font'))
-                $data .=  '.emtheme-top-link { color: '.get_option('emtheme_css_emtop_font').' !important;}';
-
-            if (get_option('emtheme_css_navbg'))
-                $data .= '.nav-container { background-color: '.get_option('emtheme_css_navbg').' !important;}';
-
-            if (get_option('emtheme_css_navfont'))
-                $data .= '.em-nav-lenke { color: '.get_option('emtheme_css_navfont').' !important;}';
-
-            if (get_option('emtheme_css_navbg_hover'))
-                $data .= '.em-nav-item:hover { background-color: '.get_option('emtheme_css_navbg_hover').' !important;}';
-
-            if (get_option('emtheme_css_navsub_bg'))
-                $data .= '.em-nav-sub-container { background-color: '.get_option('emtheme_css_navsub_bg').' !important;}';
-
-            if (get_option('emtheme_css_navsub_bg_hover'))
-                $data .= '.em-nav-subitem:hover { background-color: '.get_option('emtheme_css_navsub_bg_hover').' !important;}';
-
-            if (get_option('emtheme_css_navsub_font'))
-                $data .= '.em-nav-sublenke { color: '.get_option('emtheme_css_navsub_font').' !important;}';
-
-            wp_add_inline_style( 'style', $data );
+            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), Emtheme_style::$style_default, '(min-width: 961px)');
         }
 
-        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), '1.0.0', '(max-width: 960px)');
+        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), Emtheme_style::$style_mobile, '(max-width: 960px)');
+          
+        $mobile = wp_is_mobile();
+          
+        $data = '';
+        // desktop logo/title/tagline area
+        if (get_option('emtheme_css_emtop'))
+            $data .= '.emtop { background-color: '.get_option('emtheme_css_emtop').';}';
+
+        // font color of title/tagline
+        if (get_option('emtheme_css_emtop_font'))
+            $data .=  '.emtheme-top-link { color: '.get_option('emtheme_css_emtop_font').';}';
+
+        // title/tagline container element is in navbar on mobile
+        // if (get_option('emtheme_css_navbg'))
+        //     $data .= '.nav-container, .emtop-mobile { background-color: '.get_option('emtheme_css_navbg').';}';
+
+        // desktop navbar
+        if (get_option('emtheme_css_navbg')) {
+            $data .= '.nav-container { 
+                    background-color: '.get_option('emtheme_css_navbg').';
+                }
+                @media (max-width: 961px) {
+                    .emtop {
+                        background-color: '.get_option('emtheme_css_navbg').';
+                    }
+                }';
+        }
+
+        if (get_option('emtheme_css_navfont'))
+            $data .= '.em-nav-lenke { color: '.get_option('emtheme_css_navfont').';}';
+
+        if (get_option('emtheme_css_navbg_hover'))
+            $data .= '.em-nav-item:hover { background-color: '.get_option('emtheme_css_navbg_hover').';}';
+
+        if (get_option('emtheme_css_navsub_bg'))
+            $data .= '.em-nav-sub-container, .em-nav-subitem { background-color: '.get_option('emtheme_css_navsub_bg').';}';
+
+        if (get_option('emtheme_css_navsub_bg_hover'))
+            $data .= '.em-nav-subitem:hover { background-color: '.get_option('emtheme_css_navsub_bg_hover').';}';
+
+        if (get_option('emtheme_css_navsub_font'))
+            $data .= '.em-nav-sublenke { color: '.get_option('emtheme_css_navsub_font').';}';
+
+        if (get_option('emtheme_css_active'))
+            $data .= '.em-nav-current { background-color: '.get_option('emtheme_css_active').';}';
+
+        if (get_option('emtheme_css_active_hover'))
+            $data .= '.em-nav-current:hover { background-color: '.get_option('emtheme_css_active_hover').';}';
+
+        wp_add_inline_style( 'style', $data );
+    }
+
+    public function add_head() {
+        // echo '<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700|Roboto:100,300,400,700" rel="stylesheet">';
     }
 
     public function emmail_action() {
@@ -188,7 +222,10 @@ final class Emtheme_Help {
         return $array;
     }
 
+
 }
+
+
 
 function remove_thumbnail() {
     remove_meta_box('postimagediv', 'page', 'side');

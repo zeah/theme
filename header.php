@@ -21,7 +21,7 @@ $logger->welcome_user();
 
 $mobile = wp_is_mobile();
 
-if ($mobile) {
+if ($mobile || is_customize_preview()) {
 	if (! get_option('emtheme_shownav'))
 		add_filter('wp_footer', array('Emtheme_Head', 'add_footer'));
 }
@@ -57,9 +57,12 @@ final class Emtheme_Head {
 echo '<!DOCTYPE html><html lang="no"><head>';
 wp_head();
 echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
+echo get_option('emtheme_font_standard').' ### '.get_option('emtheme_font_test');
 
 // top container 
 $top = '<div class="emtop"><div class="emtheme-site-identity">';
+// $top = '<div class="emtop"><div class="emtheme-site-identity">';
+
 
 if (get_option('emtheme_logo'))
 	// $top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></div>';

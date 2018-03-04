@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto:400,500,700');
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700|Roboto:400,500,700');*/
 
 /*
 	INDEX
@@ -50,7 +50,6 @@ p:empty {
 	SITE IDENTITY
 */
 
-
 /* flexbox for logo, title, tagline */
 .emtheme-site-identity {
 	display: flex;
@@ -80,7 +79,7 @@ p:empty {
 
 /* home anchor surrounding logo and title/tagline */
 .emtheme-top-link {
-	color: black;
+	color: #000000;
 	text-decoration: none;
 }
 .emtheme-top-link:visited {
@@ -111,7 +110,7 @@ p:empty {
 /* container for top menu */
 .nav-container {
 	margin-bottom: 1rem;
-	background-color: hsl(240, 100%, 20%);
+	background-color: #073ab2;
 	/*border-bottom: 2px solid hsl(25, 100%, 60%);*/
 
 	/*background-image: linear-gradient(
@@ -168,18 +167,7 @@ p:empty {
 
 /* hover effect on nav items */
 .em-nav-item:hover {
-	background-color: hsl(240, 80%, 30%);
-	/*background-image: linear-gradient(
-			0deg, 
-			hsl(240, 100%, 40%), 
-			hsl(240, 100%, 30%) 10%, 
-			hsl(240, 100%, 40%) 80%
-			);*/
-	/*background-image: linear-gradient(0deg, 
-		hsl(0, 0%, 25%), 
-		hsl(0, 0%, 20%) 50%, 
-		hsl(0, 0%, 25%) 90%
-		);*/
+	background-color: #1a5cb2;
 }
 
 /* anchor element in nav items */
@@ -190,9 +178,7 @@ p:empty {
 	line-height: 3.5rem;
 
 	text-decoration: none;
-	/*text-shadow: 0 0 1px white;*/
-	/*color: hsl(0, 50%, 00%);*/
-	color: hsl(0, 50%, 99%);
+	color: #ffffff;
 }
 
 /* show sub-menus on hover */
@@ -204,7 +190,7 @@ p:empty {
 .em-nav-sub-container {
 	display: none;
 	position: absolute;
-	background-color: hsl(120, 10%, 90%);
+	background-color: #e8e8e8;
 	z-index: 9999; /* to be above content in .main element */
 }
 
@@ -220,7 +206,7 @@ p:empty {
 /* container for anchor element in submenus */
 .em-nav-subitem:hover {
 	background-image: none; /* removing inherited bg-image */
-	background-color: hsl(120, 5%, 80%);
+	background-color: #bfbfbf;
 }
 
 /* adds border-bottom equal to of .nav */
@@ -231,11 +217,12 @@ p:empty {
 
 /* menu anchor font color */
 .em-nav-sublenke {
-	color: hsl(0, 0%, 20%);
+	color: #000000;
 }
 
 /* visual marker for current page */
 .em-nav-current {
+	background-color: #222222;
 		/*background-image: linear-gradient(0deg, 
 		hsl(22, 90%, 35%), 
 		hsl(22, 90%, 30%) 50%, 
@@ -243,6 +230,8 @@ p:empty {
 		);*/
 }
 .em-nav-current:hover {
+	background-color: #555555;
+
 		/*background-image: linear-gradient(0deg, 
 		hsl(22, 70%, 35%), 
 		hsl(22, 70%, 30%) 50%, 

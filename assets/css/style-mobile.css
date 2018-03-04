@@ -47,12 +47,10 @@ p:empty {
 	justify-content: space-between;
 	margin-top: 1rem;
 	height: 4.6rem;
-	background-color: hsl(0, 0%, 15%);
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
 	line-height: 1.6;
 }
-
 
 /* 
 	1.1 SECTION
@@ -180,7 +178,8 @@ p:empty {
 /* special rule for nav items in submenus*/
 .em-nav-subitem {
 	border: none;
-	background-color: hsl(0, 0%, 20%);
+	background-color: #e8e8e8;
+	/*background-color: hsl(0, 0%, 20%);*/
 }
 
 /* showing hidden submenu*/
