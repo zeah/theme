@@ -1,6 +1,14 @@
 (function ($) {
 	wp.customize.bind('ready', function(){
 
+	wp.customize.control.add(
+		new wp.customize.Control('emtheme_logo_c', {
+			type: 'image',
+			label: 'Upload logo',
+			section: 'title_tagline',
+			settings: 'emtheme_logo'
+		})
+	);
 
 	//	create control from added data in gfont (gfont[current] = get_option('emtheme_font_weight'))
 
@@ -48,6 +56,9 @@
 
 	wp.customize('emtheme_font_standard', function(std) {
 		std.bind(function(value) {
+
+			// $('head').append('<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">');
+			// $('html').css('font-family', '"Roboto", sans-serif');
 
 			wp.customize.control.remove('emtheme_font_test_c');
 			$('#customize-control-emtheme_font_test_c').remove();

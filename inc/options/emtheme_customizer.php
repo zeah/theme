@@ -51,36 +51,40 @@ final class Emtheme_Customizer {
 	    wp_localize_script('cd_customizer_pane', 'gfont', $content->items);
 	}
 
+	private function add_settings($wp_customize, $array, $args) {
+		if ( (!is_array($array)) || (!is_array($args)) )
+			return;
+
+		foreach($array as $value)
+			$wp_customize->add_setting($value, $args);
+	}
+
 	public function site_identity($wp_customize) {
 
 		$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
 
+		$array_text = [
+			'type' => 'option',
+			'transport' => 'postMessage',
+			'sanitize_callback' => 'sanitize_text_field'
+		];
 
+		$settings = ['emtheme_logo', 'emtheme_logo_mobile', 'emtheme_title_mobile'];
+
+		$this->add_settings($wp_customize, $settings, $array_text);
 		// add a setting for the site logo
-		$wp_customize->add_setting('emtheme_logo', array(
-			'type' => 'option',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_setting('emtheme_logo_mobile', array(
-			'type' => 'option',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_setting('emtheme_title_mobile', array(
-			'type' => 'option',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
+		// $wp_customize->add_setting('emtheme_logo', $array_text);
+		// $wp_customize->add_setting('emtheme_logo_mobile', $array_text);
+		// $wp_customize->add_setting('emtheme_title_mobile', $array_text);
 
 		// desktop logo
-		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo',
-			array(
-				'label' => 'Upload Logo',
-				'section' => 'title_tagline',
-				'settings' => 'emtheme_logo',
-		) ) );
+		// $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo',
+		// 	array(
+		// 		'label' => 'Upload Logo',
+		// 		'section' => 'title_tagline',
+		// 		'settings' => 'emtheme_logo',
+		// ) ) );
 
 		// mobile logo
 		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo_mobile',

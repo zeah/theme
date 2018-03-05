@@ -146,6 +146,15 @@
 		});
 	});
 
+
+	wp.customize('emtheme_font_standard', function(std) {
+		std.bind(function(newvalue) {
+			// console.log('hi '+newvalue);
+			$('head').append('<link href="https://fonts.googleapis.com/css?family='+newvalue+'" rel="stylesheet">');
+			$('html').css('font-family', newvalue);
+
+		});
+	});
 	// wp.customize( 'emtheme_footer_', function( value ) {
 	// 	value.bind( function( newval ) {
 	// 		$('').html(newval);

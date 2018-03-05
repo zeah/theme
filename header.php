@@ -63,31 +63,32 @@ echo get_option('emtheme_font_standard').' ### '.get_option('emtheme_font_test')
 $top = '<div class="emtop"><div class="emtheme-site-identity">';
 // $top = '<div class="emtop"><div class="emtheme-site-identity">';
 
+$customize = is_customize_preview();
 
-if (get_option('emtheme_logo'))
+if (get_option('emtheme_logo') || $customize)
 	// $top .= '<div class="emtheme-logo-container"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></div>';
 	$top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></a></div>';
 
 $emtheme_logo_mobile = esc_url(get_option('emtheme_logo_mobile'));
 $emtheme_title_mobile = esc_html(get_option('emtheme_title_mobile'));
 
-if ($emtheme_logo_mobile)
+if ($emtheme_logo_mobile || $customize)
 	$top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'"><img class="emtheme-logo-mobile" src="'.$emtheme_logo_mobile.'"></a></div>';
 
-if  ($emtheme_title_mobile)
+if  ($emtheme_title_mobile || $customize)
 	$top .= '<div class="emtheme-mobile-title emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'">'.$emtheme_title_mobile.'</a></div>';
 
 
 $emtheme_name = esc_html(get_bloginfo('name'));
 $emtheme_tagline = esc_html(get_bloginfo('description'));
 
-if ($emtheme_name || $emtheme_tagline) {
+if ($emtheme_name || $emtheme_tagline || $customize) {
 	$top .= '<div class="emtheme-toptext-container"><a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
 
-if ($emtheme_name)
+if ($emtheme_name || $customize)
 	$top .= '<div class="emtheme-title">'.$emtheme_name.'</div>';
 
-if ($emtheme_tagline)
+if ($emtheme_tagline || $customize)
 	$top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
 
 	$top .= '</a></div>';
