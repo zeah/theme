@@ -174,8 +174,8 @@ p:empty {
 .em-nav-lenke {
 	display: block;
 	
-	padding: 0 1rem;
-	line-height: 3.5rem;
+	padding: 0.5rem 1rem;
+	line-height: calc(1rem + 1);
 
 	text-decoration: none;
 	color: #ffffff;

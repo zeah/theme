@@ -57,11 +57,14 @@ final class Emtheme_Head {
 echo '<!DOCTYPE html><html lang="no"><head>';
 wp_head();
 echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
-echo get_option('emtheme_font_standard').' ### '.get_option('emtheme_font_test');
 
 // top container 
 $top = '<div class="emtop"><div class="emtheme-site-identity">';
 // $top = '<div class="emtop"><div class="emtheme-site-identity">';
+
+// print_r(get_option('emtheme_color'));
+// echo '<br><br>';
+// print_r(get_option('emtheme_font'));
 
 $customize = is_customize_preview();
 
@@ -85,11 +88,11 @@ $emtheme_tagline = esc_html(get_bloginfo('description'));
 if ($emtheme_name || $emtheme_tagline || $customize) {
 	$top .= '<div class="emtheme-toptext-container"><a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
 
-if ($emtheme_name || $customize)
-	$top .= '<div class="emtheme-title">'.$emtheme_name.'</div>';
+	if ($emtheme_name || $customize)
+		$top .= '<div class="emtheme-title">'.$emtheme_name.'</div>';
 
-if ($emtheme_tagline || $customize)
-	$top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
+	if ($emtheme_tagline || $customize)
+		$top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
 
 	$top .= '</a></div>';
 }

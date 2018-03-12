@@ -1,0 +1,8 @@
+.emtheme-customizer-sep {
+	background-color: hsla(0, 0%, 100%, 0.4);
+	height: 20vh;
+}
+
+a {
+	cursor: pointer;
+}

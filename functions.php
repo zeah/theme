@@ -32,6 +32,7 @@ if (! function_exists('emtheme_setup')) {
 
 final class Emtheme_function {
     private static $instance = null;
+    private $google_string = 'Open+Sans:600|Roboto:100,300,400,700';
 
     // DEFAULT STYLE VERSION 
     // private static $style_default = '1.1.1';
@@ -82,59 +83,121 @@ final class Emtheme_function {
 
         wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), Emtheme_style::$style_mobile, '(max-width: 960px)');
           
-        $mobile = wp_is_mobile();
+        // $mobile = wp_is_mobile();
           
         $data = '';
-        // desktop logo/title/tagline area
-        if (get_option('emtheme_css_emtop'))
-            $data .= '.emtop { background-color: '.get_option('emtheme_css_emtop').';}';
 
-        // font color of title/tagline
-        if (get_option('emtheme_css_emtop_font'))
-            $data .=  '.emtheme-top-link { color: '.get_option('emtheme_css_emtop_font').';}';
+        $colors = get_option('emtheme_color');
+        // COLOR TOP BACKGROUND
+        if (isset($colors['emtop_bg']))
+            $data .= '@media (min-width: 961px) { .emtop { background-color: '.esc_html($colors['emtop_bg']).'; } }';
+        
+        // COLOR TOP FONT
+        if (isset($colors['emtop_font']))
+            $data .= '.emtop { color: '.esc_html($colors['emtop_font']).'; }';
 
-        // title/tagline container element is in navbar on mobile
-        // if (get_option('emtheme_css_navbg'))
-        //     $data .= '.nav-container, .emtop-mobile { background-color: '.get_option('emtheme_css_navbg').';}';
+        // COLOR NAVBAR FONT
+        if (isset($colors['nav_font']))
+            $data .= '.em-nav-lenke { color: '.esc_html($colors['nav_font']).'; }';
 
-        // desktop navbar
-        if (get_option('emtheme_css_navbg')) {
-            $data .= '.nav-container { 
-                    background-color: '.get_option('emtheme_css_navbg').';
-                }
-                @media (max-width: 961px) {
-                    .emtop {
-                        background-color: '.get_option('emtheme_css_navbg').';
-                    }
-                }';
+        // COLOR NAVBAR BACKGROUND
+        if (isset($colors['nav_bg'])) {
+            $data .= '.nav-container { background-color: '.esc_html($colors['nav_bg']).'; }';
+            $data .= '@media (max-width: 960px) { .emtop { background-color: '.esc_html($colors['nav_bg']).'; } }';
         }
+       
+        // COLOR NAVBAR BACKGROUND HOVER
+        if (isset($colors['nav_bg_hover']))
+            $data .= '.em-nav-item:hover { background-color: '.esc_html($colors['nav_bg_hover']).'; }';
 
-        if (get_option('emtheme_css_navfont'))
-            $data .= '.em-nav-lenke { color: '.get_option('emtheme_css_navfont').';}';
+        // COLOR SUBMENU BACKGROUND
+        if (isset($colors['navsub_bg']))
+            $data .= '.em-nav-sub-container, .em-nav-subitem { background-color: '.esc_html($colors['navsub_bg']).'; }';
 
-        if (get_option('emtheme_css_navbg_hover'))
-            $data .= '.em-nav-item:hover { background-color: '.get_option('emtheme_css_navbg_hover').';}';
+        // COLOR SUBMENU BACKGROUND HOVER
+        if (isset($colors['navsub_bg_hover']))
+            $data .= '.em-nav-subitem:hover { background-color: '.esc_html($colors['navsub_bg_hover']).'; }';
 
-        if (get_option('emtheme_css_navsub_bg'))
-            $data .= '.em-nav-sub-container, .em-nav-subitem { background-color: '.get_option('emtheme_css_navsub_bg').';}';
+        // COLOR SUBMENU FONT
+        if (isset($colors['navsub_font']))
+            $data .= '.em-nav-sublenke { color: '.esc_html($colors['navsub_font']).'; }';
 
-        if (get_option('emtheme_css_navsub_bg_hover'))
-            $data .= '.em-nav-subitem:hover { background-color: '.get_option('emtheme_css_navsub_bg_hover').';}';
+        // COLOR ACTIVE PAGE MARKER ON NAVBAR
+        if (isset($colors['active']))
+            $data .= '.em-nav-current { background-color: '.esc_html($colors['active']).'; }';
 
-        if (get_option('emtheme_css_navsub_font'))
-            $data .= '.em-nav-sublenke { color: '.get_option('emtheme_css_navsub_font').';}';
+        // COLOR ACTIVE PAGE MARKER HOVER ON NAVBAR
+        if (isset($colors['active_hover']))
+            $data .= '.em-nav-current:hover { background-color: '.esc_html($colors['active_hover']).'; }';
+        
+        // adding fonts
+        $fonts = get_option('emtheme_font');
 
-        if (get_option('emtheme_css_active'))
-            $data .= '.em-nav-current { background-color: '.get_option('emtheme_css_active').';}';
+        if (isset($fonts['title']))
+            $data .= '.emtheme-title { font-family: '.esc_html($fonts['title']).'; }';
+        if (isset($fonts['title_weight']) && $fonts['title_weight'] != 'regular')
+            $data .= '.emtheme-title { font-weight: '.esc_html(str_replace('italic', '', $fonts['title_weight'])).'; }';
+        if (isset($fonts['title_size']))
+            $data .= '.emtheme-title { font-size: '.esc_html($fonts['title_size']).'rem; }';
+        
 
-        if (get_option('emtheme_css_active_hover'))
-            $data .= '.em-nav-current:hover { background-color: '.get_option('emtheme_css_active_hover').';}';
+        if (isset($fonts['nav']))
+            $data .= '.nav { font-family: '.esc_html($fonts['nav']).'; }';
+        if (isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular')
+            $data .= '.nav { font-weight: '.esc_html(str_replace('italic', '', $fonts['nav_weight'])).'; }';
+        if (isset($fonts['nav_size']))
+            $data .= '.nav { font-size: '.esc_html($fonts['nav_size']).'rem; }';
+                        
+
+        if (isset($fonts['standard']))
+            $data .= '.content, .emtheme-tagline { font-family: '.esc_html($fonts['standard']).'; }';
+        if (isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular')
+            $data .= '.content, .emtheme-tagline { font-weight: '.esc_html(str_replace('italic', '', $fonts['standard_weight'])).'; }';
+        if (isset($fonts['standard_size']))
+            $data .= '.content, .emtheme-tagline { font-size: '.esc_html($fonts['standard_size']).'rem; }';
+        if (isset($fonts['standard_lineheight']))
+            $data .= '.content > p { line-height: '.esc_html($fonts['standard_lineheight']).'; }';
+        
 
         wp_add_inline_style( 'style', $data );
+
+        $font_set = [];
+
+        $ff = ['standard', 'nav', 'title'];
+        foreach ($ff as $value) {
+            if (isset($fonts[$value])) {
+
+                $found = false;
+
+                foreach($font_set as $v) 
+                    if ($v->font == $fonts[$value]) {
+                        $found = true;
+                        if (isset($fonts[$value.'_weight']))
+                            $v->addWeight($fonts[$value.'_weight']);
+                    }
+                
+                if (! $found) {
+                    if (isset($fonts[$value.'_weight']))
+                        array_push($font_set, new Fset($fonts[$value], $fonts[$value.'_weight']));
+                    else
+                        array_push($font_set, new Fset($fonts[$value]));
+                }
+
+            }
+        }
+
+        $font_str = '';
+        foreach ($font_set as $o)
+            $font_str .= $o.'|';
+
+        $font_str = rtrim($font_str, '|');
+
+        $this->google_string = $font_str;
+
     }
 
     public function add_head() {
-        // echo '<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700|Roboto:100,300,400,700" rel="stylesheet">';
+        echo '<link href="https://fonts.googleapis.com/css?family='.esc_html($this->google_string).'" rel="stylesheet">';
     }
 
     public function emmail_action() {
@@ -232,3 +295,45 @@ function remove_thumbnail() {
 }
 
 add_action('do_meta_boxes', 'remove_thumbnail');
+
+
+class Fset {
+    public $font;
+    public $weight = [];
+
+    public function __construct($font = null, $weight = null) {
+        if ($font)
+            $this->setFont($font);
+
+        if ($weight)
+            $this->addWeight($weight);
+    }
+
+    public function setFont($font) {
+        $this->font = $font;
+    }
+
+    public function addWeight($weight) {
+        $weight = str_replace('italic', 'i', $weight);
+
+        if ($weight == 'regular')
+            return true;
+
+        if (! in_array($weight, $this->weight)) {
+            array_push($this->weight, $weight);
+            return true;
+        }
+
+        return false;
+    }
+
+    public function __toString() {
+        $str = str_replace(' ', '+', $this->font);
+
+        if (sizeof($this->weight) > 0)
+            $str .= ':'.implode(',', $this->weight);
+
+        return $str;
+    }
+
+}

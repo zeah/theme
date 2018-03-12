@@ -24,39 +24,42 @@ final class Emtheme_Customizer {
 		add_action('customize_register', array($this, 'site_identity'));
 		add_action('customize_register', array($this, 'footer_info'));
 		add_action('customize_register', array($this, 'emtheme_css'));
+		add_action('customize_register', array($this, 'emtheme_css_font'));
 
-		add_action('customize_preview_init', array($this, 'cd_customizer'));
+		add_action('customize_preview_init', array($this, 'cd_customizer'), 9999);
 
 		add_action('customize_controls_enqueue_scripts', array($this, 'cd_customizer_pane'));
 	}
 
 	public function cd_customizer() {
+		$fontFile = get_stylesheet_directory() . '/assets/cache/google-web-fonts.txt';
+        $content = json_decode(file_get_contents($fontFile));
 
-
-		// $data = [
-		// 	'emtheme_css_navbg_hover' => get_option('emtheme_css_navbg_hover'),
-		// 	'emtheme_css_navsub_bg_hover' => get_option('emtheme_css_navsub_bg_hover'),
-		// 	'emtheme_css_active_hover' => get_option('emtheme_css_active_hover')
-		// ];
 		wp_enqueue_script('cd_customizer', get_theme_file_uri() . '/assets/js/emtheme-customizer.js', array( 'jquery','customize-preview' ), '', true);
-		// wp_localize_script( 'cd_customizer', 'emthemeCust', $data );
+	    wp_localize_script('cd_customizer', 'gfont', $content->items);
+
+	    wp_enqueue_style( 'emtheme-customizer-css', get_theme_file_uri() . '/assets/css/emtheme-customizer.css', false );
 	}
 
 	public function cd_customizer_pane() {
 		$fontFile = get_stylesheet_directory() . '/assets/cache/google-web-fonts.txt';
         $content = json_decode(file_get_contents($fontFile));
-        // print_r($content);
-		// $content = 'hello';
+
 		wp_enqueue_script('cd_customizer_pane', get_theme_file_uri() . '/assets/js/emtheme-customizer-pane.js', array( 'jquery','customize-preview' ), '', true);
 	    wp_localize_script('cd_customizer_pane', 'gfont', $content->items);
+	
+	    wp_enqueue_style( 'emtheme-customizer-pane-css', get_theme_file_uri() . '/assets/css/emtheme-customizer-pane.css', false );
 	}
 
-	private function add_settings($wp_customize, $array, $args) {
+	private function add_settings($wp_customize, $array, $args, $name = null) {
 		if ( (!is_array($array)) || (!is_array($args)) )
 			return;
 
 		foreach($array as $value)
-			$wp_customize->add_setting($value, $args);
+			if ($name !== null)
+				$wp_customize->add_setting($name.'['.$value.']', $args);
+			else
+				$wp_customize->add_setting($value, $args);
 	}
 
 	public function site_identity($wp_customize) {
@@ -79,12 +82,12 @@ final class Emtheme_Customizer {
 		// $wp_customize->add_setting('emtheme_title_mobile', $array_text);
 
 		// desktop logo
-		// $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo',
-		// 	array(
-		// 		'label' => 'Upload Logo',
-		// 		'section' => 'title_tagline',
-		// 		'settings' => 'emtheme_logo',
-		// ) ) );
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo',
+			array(
+				'label' => 'Upload Logo',
+				'section' => 'title_tagline',
+				'settings' => 'emtheme_logo',
+		) ) );
 
 		// mobile logo
 		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo_mobile',
@@ -95,13 +98,13 @@ final class Emtheme_Customizer {
 		) ) );
 
 		// mobile site title
-		$wp_customize->add_control('emtheme_title_mobile', 
-			array(
-				'label' => 'Mobile Title',
-				'section' => 'title_tagline',
-				'settings' => 'emtheme_title_mobile'
-			)
-		);
+		// $wp_customize->add_control('emtheme_title_mobile', 
+		// 	array(
+		// 		'label' => 'Mobile Title',
+		// 		'section' => 'title_tagline',
+		// 		'settings' => 'emtheme_title_mobile'
+		// 	)
+		// );
 	}
 
 	public function footer_info($wp_customize) {
@@ -113,96 +116,110 @@ final class Emtheme_Customizer {
 			)
 		);
 
+		$args = [
+			'type' => 'option',
+			'transport' => 'postMessage',
+			'sanitize_callback' => 'sanitize_text_field'
+		];
+
+		$settings = [
+			'contact_active', 'email', 'avdeling', 'selskap', 'poststed', 'postnr', 'veiadr', 'land',
+			'social_active', 'twitter', 'facebook', 'google', 'youtube',
+			'aboutus_active', 'aboutus'
+		];
+
+		$this->add_settings($wp_customize, $settings, $args, 'emtheme_footer');
+
 		$wp_customize->add_section('emtheme_footer_contact', array(
 			'title' => 'Contact Info',
 			'panel' => 'emtheme_footer_panel'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_contact_active', array(
-			'type' => 'option'
-		));
-		$wp_customize->add_control('emtheme_control_contact_active', array(
+		// $wp_customize->add_setting('emtheme_footer_contact_active', array(
+		// 	'type' => 'option'
+		// ));
+		$wp_customize->add_control('emtheme_footer[contact_active]_c', array(
 			'label' => 'Aktiver',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_contact_active',
+			'settings' => 'emtheme_footer[contact_active]',
 			'type' => 'checkbox'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_email', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_email',array(
+		// $wp_customize->add_setting('emtheme_footer_email', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[contact]_c',array(
 			'label' => 'Email',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_email'
+			'settings' => 'emtheme_footer[email]'
 		));
 		
-		$wp_customize->add_setting('emtheme_footer_avdeling', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_avdeling', array(
+		// $wp_customize->add_setting('emtheme_footer_avdeling', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[avdeling]_c', array(
 			'label' => 'Avdeling',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_avdeling'
+			'settings' => 'emtheme_footer[avdeling]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_selskap', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_selskap', array(
+		// $wp_customize->add_setting('emtheme_footer_selskap', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[selskap]_c', array(
 			'label' => 'Selskap',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_selskap'
+			'settings' => 'emtheme_footer[selskap]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_poststed', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_poststed', array(
+		// $wp_customize->add_setting('emtheme_footer_poststed', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[poststed]_c', array(
 			'label' => 'Poststed',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_poststed'
+			'settings' => 'emtheme_footer[poststed]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_postnr', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_postnr', array(
+		// $wp_customize->add_setting('emtheme_footer_postnr', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[postnr]_c', array(
 			'label' => 'Post Nr',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_postnr'
+			'settings' => 'emtheme_footer[postnr]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_veiadr', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_veiadr', array(
+		// $wp_customize->add_setting('emtheme_footer_veiadr', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[veiadr]_c', array(
 			'label' => 'Vei Addresse',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_veiadr'
+			'settings' => 'emtheme_footer[veiadr]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_land', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_land', array(
+		// $wp_customize->add_setting('emtheme_footer_land', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[land]_c', array(
 			'label' => 'Land',
 			'section' => 'emtheme_footer_contact',
-			'settings' => 'emtheme_footer_land'
+			'settings' => 'emtheme_footer[land]'
 		));
 
 
@@ -213,58 +230,58 @@ final class Emtheme_Customizer {
 			'panel' => 'emtheme_footer_panel'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_social_active', array(
-			'type' => 'option'
-		));
-		$wp_customize->add_control('emtheme_control_social_active', array(
+		// $wp_customize->add_setting('emtheme_footer_social_active', array(
+		// 	'type' => 'option'
+		// ));
+		$wp_customize->add_control('emtheme_footer[social_active]_c', array(
 			'label' => 'Aktiver',
 			'section' => 'emtheme_footer_social',
-			'settings' => 'emtheme_footer_social_active',
+			'settings' => 'emtheme_footer[social_active]',
 			'type' => 'checkbox'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_twitter', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_twitter', array(
+		// $wp_customize->add_setting('emtheme_footer_twitter', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[twitter]_c', array(
 			'label' => 'Twitter',
 			'section' => 'emtheme_footer_social',
-			'settings' => 'emtheme_footer_twitter'
+			'settings' => 'emtheme_footer[twitter]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_facebook', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_facebook', array(
+		// $wp_customize->add_setting('emtheme_footer_facebook', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[facebook]_c', array(
 			'label' => 'Facebook',
 			'section' => 'emtheme_footer_social',
-			'settings' => 'emtheme_footer_facebook'
+			'settings' => 'emtheme_footer[facebook]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_google', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_google', array(
+		// $wp_customize->add_setting('emtheme_footer_google', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[google]_c', array(
 			'label' => 'Google+',
 			'section' => 'emtheme_footer_social',
-			'settings' => 'emtheme_footer_google'
+			'settings' => 'emtheme_footer[google]'
 		));
 
-		$wp_customize->add_setting('emtheme_footer_youtube', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_youtube', array(
+		// $wp_customize->add_setting('emtheme_footer_youtube', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[youtube]_c', array(
 			'label' => 'Youtube',
 			'section' => 'emtheme_footer_social',
-			'settings' => 'emtheme_footer_youtube'
+			'settings' => 'emtheme_footer[youtube]'
 		));
 
 
@@ -275,35 +292,42 @@ final class Emtheme_Customizer {
 		));
 
 		// ACTIVATE
-		$wp_customize->add_setting('emtheme_footer_aboutus_active', array(
-			'type' => 'option'
-		));
-		$wp_customize->add_control('emtheme_control_aboutus_active', array(
+		// $wp_customize->add_setting('emtheme_footer_aboutus_active', array(
+		// 	'type' => 'option'
+		// ));
+		$wp_customize->add_control('emtheme_footer[aboutus_active]_c', array(
 			'label' => 'Aktiver',
 			'section' => 'emtheme_footer_aboutus',
-			'settings' => 'emtheme_footer_aboutus_active',
+			'settings' => 'emtheme_footer[aboutus_active]',
 			'type' => 'checkbox'
 		));
 
 		// ABOUT US TEXTAREA
-		$wp_customize->add_setting('emtheme_footer_about', array(
-			'type' => 'option',
-			// 'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field'
-		));
-		$wp_customize->add_control('emtheme_control_about', array(
+		// $wp_customize->add_setting('emtheme_footer_about', array(
+		// 	'type' => 'option',
+		// 	// 'transport' => 'postMessage',
+		// 	'sanitize_callback' => 'sanitize_text_field'
+		// ));
+		$wp_customize->add_control('emtheme_footer[aboutus]_c', array(
 			'label' => 'Om Oss',
 			'section' => 'emtheme_footer_aboutus',
-			'settings' => 'emtheme_footer_about',
+			'settings' => 'emtheme_footer[aboutus]',
 			'type' => 'textarea'
 		));
-
-	
-	
-
 	}
 
 	public function emtheme_css($wp_customize) {
+
+
+		
+
+		
+
+		$args = array(
+			'type' => 'option',
+			'transport' => 'postMessage',
+			'sanitize_callback' => 'sanitize_hex_color'
+		);
 
 		/* PANEL */
 		$wp_customize->add_panel('emtheme_css_panel', array(
@@ -314,220 +338,342 @@ final class Emtheme_Customizer {
 		/* COLORS SECTION */
 		$wp_customize->add_section('emtheme_css_color', array(
 			'title' => 'Colors',
-			'description' => '<p><strong>Top</strong><br>..font color<br>..background color</p><p><strong>Navbar</strong><br>..top menu font color<br>..top menu background color<br>...top menu hover background color<p>..sub menu font color<br>..sub menu background color<br>...sub menu hover background color<p>..active page background color<br>...active page hover background color',
+			'description' => '<ul><strong>Top</strong>
+								<li><a class="emtop-font-color" style="cursor:pointer;">font</a></li>
+								<li><a class="emtop-bg-color" style="cursor:pointer;">background</a></li>
+							  </ul><br>
+							  
+							  <ul><strong>Navbar</strong>
+							  <li><a class="navbar-mfont-color" style="cursor:pointer;">top menu font</a></li>
+							  <li><a class="navbar-mbg-color" style="cursor:pointer;">top menu background</a></li>
+							  <li><a class="navbar-mbgh-color" style="cursor:pointer;">top menu background hover</a></li><br>
+							  <li><a class="navbar-sfont-color" style="cursor:pointer;">sub menu font</a></li>
+							  <li><a class="navbar-sbg-color" style="cursor:pointer;">sub menu background</a></li>
+							  <li><a class="navbar-sbgh-color" style="cursor:pointer;">sub menu background hover</a></li><br>
+							  <li><a class="navbar-active-color" style="cursor:pointer;">active page background</a></li>
+							  <li><a class="navbar-activeh-color" style="cursor:pointer;">active page background hover</a></li>
+							  </ul>',
 			'panel' => 'emtheme_css_panel'
 		));
 
+		// $settings = ['emtheme_css_emtop_font', 'emtheme_css_emtop_bg', 'emtheme_css_nav_font', 'emtheme_css_nav_bg', 'emtheme_css_nav_bg_hover', 
+		// 			 'emtheme_css_navsub_font', 'emtheme_css_navsub_bg', 'emtheme_css_navsub_bg_hover', 'emtheme_css_active', 'emtheme_css_active_hover'];
+
+
+		$settings = ['emtop_font', 'emtop_bg', 'nav_font', 'nav_bg', 'nav_bg_hover', 
+					 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
+
+		// $settings = ['emtheme_css_emtop_font'];
+		$this->add_settings($wp_customize, $settings, $args, 'emtheme_color');
+
+
 		/* FONT COLOR TOP (LOGO, TITLE, TAGLINE )*/
-		$wp_customize->add_setting('emtheme_css_emtop_font', array(
-			'type' => 'option',
-			'default' => '#000000',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_emtop_font_c', array(
+			$wp_customize, 'emtheme_color[emtop_font]_c', array(
 				'label' => 'Header Font-color',
 				'description' => 'Site title and tagline.',
-				'settings' => 'emtheme_css_emtop_font',
+				'settings' => 'emtheme_color[emtop_font]',
 				'section' => 'emtheme_css_color'
 		)));
 
 		/* BACKGROUND COLOR TOP (LOGO, TITLE, TAGLINE )*/
-		$wp_customize->add_setting('emtheme_css_emtop', array(
-			'type' => 'option',
-			'default' => '#ffffff',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		$wp_customize->get_setting('emtheme_color[emtop_bg]')->default = '#ffffff'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_emtop_c', array(
+			$wp_customize, 'emtheme_color[emtop_bg]_c', array(
 				'label' => 'Header Background-color',
 				'description' => 'Container for site logo, title and tagline.',
-				'settings' => 'emtheme_css_emtop',
+				'settings' => 'emtheme_color[emtop_bg]',
 				'section' => 'emtheme_css_color'
 		)));
 
 		/* NAVBAR FONT COLOR */
-		$wp_customize->add_setting('emtheme_css_navfont', array(
-			'type' => 'option',
-			'default' => '#ffffff',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		$wp_customize->get_setting('emtheme_color[nav_font]')->default = '#ffffff'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_navfont_c', array(
+			$wp_customize, 'emtheme_color[nav_font]_c', array(
 				'label' => 'Navbar Font-color',
-				'settings' => 'emtheme_css_navfont',
+				'settings' => 'emtheme_color[nav_font]',
 				'section' => 'emtheme_css_color'
 		)));
 
 		/* NAVBAR BACKGROUND COLOR */
-		$wp_customize->add_setting('emtheme_css_navbg', array(
-			'type' => 'option',
-			'default' => '#000000',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		$wp_customize->get_setting('emtheme_color[nav_bg]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_navbg_c', array(
+			$wp_customize, 'emtheme_color[nav_bg]_c', array(
 				'label' => 'Navbar Background-color',
-				'settings' => 'emtheme_css_navbg',
+				'settings' => 'emtheme_color[nav_bg]',
 				'section' => 'emtheme_css_color'
 		)));
 
-		/* NAVBAR BACKGROUND _HOVER_ COLOR */
-		$wp_customize->add_setting('emtheme_css_navbg_hover', array(
-			'type' => 'option',
-			'default' => '#444444',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		/* NAVBAR BACKGROUND COLOR HOVER */
+		$wp_customize->get_setting('emtheme_color[nav_bg_hover]')->default = '#444444'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_navbg_c_hover', array(
+			$wp_customize, 'emtheme_color[nav_bg_hover]_c', array(
 				'label' => 'Navbar Hover Background-color',
-				'settings' => 'emtheme_css_navbg_hover',
+				'settings' => 'emtheme_color[nav_bg_hover]',
 				'section' => 'emtheme_css_color'
 		)));
 
-
-		/* _SUB_ NAVBAR FONT COLOR*/
-		$wp_customize->add_setting('emtheme_css_navsub_font', array(
-			'type' => 'option',
-			'default' => '#000000',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		/* SUBMENU FONT COLOR */
+		$wp_customize->get_setting('emtheme_color[navsub_font]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_navsub_font_c', array(
+			$wp_customize, 'emtheme_color[navsub_font]_c', array(
 				'label' => 'Submenu Font-color',
-				'settings' => 'emtheme_css_navsub_font',
+				'settings' => 'emtheme_color[navsub_font]',
 				'section' => 'emtheme_css_color'
 		)));
 
-		/* _SUB_ NAVBAR BACKGROUND COLOR*/
-		$wp_customize->add_setting('emtheme_css_navsub_bg', array(
-			'type' => 'option',
-			'default' => '#e8e8e8',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		/* SUBMENU BACKGROUND COLOR */
+		$wp_customize->get_setting('emtheme_color[navsub_bg]')->default = '#e8e8e8'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_navsub_bg_c', array(
+			$wp_customize, 'emtheme_color[navsub_bg]_c', array(
 				'label' => 'Submenu Background-color',
-				'settings' => 'emtheme_css_navsub_bg',
+				'settings' => 'emtheme_color[navsub_bg]',
 				'section' => 'emtheme_css_color'
 		)));
 		
-		/* _SUB NAVBAR BACKGROUND _HOVER_ COLOR */
-		$wp_customize->add_setting('emtheme_css_navsub_bg_hover', array(
-			'type' => 'option',
-			'default' => '#bfbfbf',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color'
-		));
+		/* SUBMENU BACKGROUND COLOR HOVER */
+		$wp_customize->get_setting('emtheme_color[navsub_bg_hover]')->default = '#bfbfbf'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_navsub_bg_hover_c', array(
+			$wp_customize, 'emtheme_color[navsub_bg_hover]_c', array(
 				'label' => 'Submenu Hover Background-color',
-				'settings' => 'emtheme_css_navsub_bg_hover',
+				'settings' => 'emtheme_color[navsub_bg_hover]',
 				'section' => 'emtheme_css_color'
 		)));
 
-		/* ACTIVE PAGE COLOR MARKER */
-		$wp_customize->add_setting('emtheme_css_active', array(
-			'type' => 'option',
-			'default' => '#222222',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color' 
-		));
+		/* ACTIVE PAGE MARKER - BACKGROUND COLOR */
+		$wp_customize->get_setting('emtheme_color[active]')->default = '#552222'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_active_c', array(
+			$wp_customize, 'emtheme_color[active]_c', array(
 				'label' => 'Background-color Marker',
 				'description' => 'Shows which page you currently are on.',
-				'settings' => 'emtheme_css_active',
+				'settings' => 'emtheme_color[active]',
 				'section' => 'emtheme_css_color' 
 		)));
 
-		$wp_customize->add_setting('emtheme_css_active_hover', array(
-			'type' => 'option',
-			'default' => '#555555',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_hex_color' 
-		));
+		/* ACTIVE PAGE MARKER - BACKGROUND COLOR HOVER */
+		$wp_customize->get_setting('emtheme_color[active_hover]')->default = '#772222'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_css_active_hover_c', array(
+			$wp_customize, 'emtheme_color[active_hover]_c', array(
 				'label' => 'Background-color Hover Marker',
 				'description' => 'Shows which page you currently are on.',
-				'settings' => 'emtheme_css_active_hover',
+				'settings' => 'emtheme_color[active_hover]',
 				'section' => 'emtheme_css_color' 
 		)));
-		
-		
+	}
 
-		// PANEL
+	public function emtheme_css_font($wp_customize) {	
+
+		/* EMTHEME FONT SECTION */
 		$wp_customize->add_section('emtheme_css_font', array(
 			'title' => 'Fonts',
+			'description' => '<ul><strong>Default Font</strong>
+								<li><a class="emtheme-font-d-fam">Font Family</a></li>
+								<li><a class="emtheme-font-d-weight">Font Weight</a></li>
+								<li><a class="emtheme-font-d-size">Font Size</a></li>
+								<li><a class="emtheme-font-d-lheight">Line-height</a></li>
+							  </ul>
+							  <ul><strong>Title Font</strong>
+ 							 	<li><a class="emtheme-font-t-fam">Font Family</a></li>
+								<li><a class="emtheme-font-t-weight">Font Weight</a></li>
+								<li><a class="emtheme-font-t-size">Font Size</a></li>
+							  </ul>
+							  <ul><strong>Navbar Font</strong>
+ 							 	<li><a class="emtheme-font-n-fam">Font Family</a></li>
+								<li><a class="emtheme-font-n-weight">Font Weight</a></li>
+								<li><a class="emtheme-font-n-size">Font Size</a></li>
+							  </ul>
+							  ',
 			'panel' => 'emtheme_css_panel'
 		));
 
-		$wp_customize->add_setting('emtheme_font_standard', array(
+		$args = [
 			'type' => 'option',
 			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field' 
+			'sanitize_callback' => 'sanitize_text_field'
+		];
+
+		// $settings = ['emtheme_font[standard]', 'emtheme_font_standard_weight', 'emtheme_font_standard_size', 'emtheme_font_standard_lineheight',
+		//              'emtheme_font_title', 'emtheme_font_title_weight', 'emtheme_font_title_size',
+		//              'emtheme_font_nav'
+
+		$settings = ['standard', 'standard_weight', 'standard_size', 'standard_lineheight',
+		             'title', 'title_weight', 'title_size',
+		             'nav', 'nav_weight', 'nav_size'];
+
+		$this->add_settings($wp_customize, $settings, $args, 'emtheme_font');
+
+
+		/*
+			DEFAULT FONT SETTINGS
+		*/
+
+		/*
+			text control
+			header for default font "section"
+		*/
+		$wp_customize->add_control(
+			new Text_Control($wp_customize, 'default_font_control', array(
+				'label' => 'Default Font',
+				'text' => '<p><p>test text for header',
+				'priority' => 100,
+				'section' => 'emtheme_css_font',
+				'settings' => array(),
+			))
+		);
+
+		// control for font family is made by javascript
+
+		// control for font weight is made by javascript
+
+		// font size
+		$wp_customize->get_setting('emtheme_font[standard_size]')->default = 1.6;
+		$wp_customize->add_control('emtheme_font[standard_size]_c', array(
+			'type' => 'number',
+			'label' => 'Font size',
+			'description' => 'Font size is given in rem. 1rem is 10px, 1.6rem is 16px.<br>(Lower than 16px gets bad seo on mobile.)',
+			'section' => 'emtheme_css_font',
+			'settings' => 'emtheme_font[standard_size]',
+			'priority' => 103,
+			'input_attrs' => array(
+			    'min' => 0.8,
+				'step' => 0.2,
+			),
 		));
-		// $wp_customize->add_control(new Google_Font_Dropdown_Custom_Control(
-		// 	$wp_customize, 'emtheme_google_test', array(
-		// 		'label' => 'google test',
-		// 		'settings' => 'emtheme_font_standard',
-		// 		'section' => 'emtheme_css_font'
-		// 	)));
 
-		$wp_customize->add_setting('emtheme_font_test', array(
-			'type' => 'option',
-			'transport' => 'postMessage',
-			'sanitize_callback' => 'sanitize_text_field' 
+		// line height
+		$wp_customize->get_setting('emtheme_font[standard_lineheight]')->default = 1.6;
+		$wp_customize->add_control('emtheme_font[standard_lineheight]_c', array(
+			'type' => 'number',
+			'label' => 'Line Height for Post Content',
+			'description' => 'Raw number. Multiplier of font-size.<br>Example: font size is 1.6 (16px) and line-height is 1.5 then one line has the height of 16px*1.5 = 24px',
+			'section' => 'emtheme_css_font',
+			'settings' => 'emtheme_font[standard_lineheight]',
+			'priority' => 104,
+			'input_attrs' => array(
+			    'min' => 0.5,
+				'step' => 0.1,
+			),
 		));
 
-		// if (get_option('emtheme_font_test'))
-		// $wp_customize->add_control('emtheme_font_test_c', array(
-		// 		'label' => 'Test',
-		// 		// 'active_callback' => true,
-		// 		'settings' => 'emtheme_font_test',
-		// 		'type'    => 'select',
-		// 	 //    'choices' => array(
-		// 	 //        'default' => 'Default',
-		// 	 //        'cerulean' => 'Cerulean',
-		// 	 //        'cosmo' => 'Cosmo',
-		// 	 //        'cyborg' => 'cyborg',
-		// 	 //        'test' => null,
-  //   // 			),
-		// 		'section' => 'emtheme_css_font'
-		// ));
-		
-		// $control = $wp_customize->get_control('emtheme_font_test');
-		
-
-		// $control->active_callback = function($control) {
-		// 	$setting = $control->manager->get_setting('emtheme_font_standard');
-			
-		// 	// $test = $control->manager->post_value('emtheme_font_standard');
-		// 	// print_r($setting);
-
-		// 	// $control->choices = array('test' => '1'.$wp_customize->post_value('emtheme_font_standard').'2', 'test2' => get_option('emtheme_font_standard'));
-		// 	// $control->choices = array('test' => '1'.$setting->value().'2', 'test2' => get_option('emtheme_font_standard'));
-
-		// 	// if (! $setting) {
-		// 	// 	true;
-		// 	// }
+		// seperator
+		$wp_customize->add_control(
+			new Sep_Control($wp_customize, 'emtheme-stdfont-sep', array(
+				'section' => 'emtheme_css_font',
+				'priority' => 109,
+				'settings' => array()
+			))
+		);
 
 
-		// 	return '' != $setting->value();
-		// };
-		
+		// TITLE
 
+		/*
+		text control
+		header for default font "section"
+		*/
+		$wp_customize->add_control(
+			new Text_Control($wp_customize, 'title_font_control', array(
+				'label' => 'Title Font',
+				'text' => '<p><p>test text for header',
+				'priority' => 110,
+				'section' => 'emtheme_css_font',
+				'settings' => array(),
+			))
+		);
+
+
+		// font family from javascript
+
+		// font weight from javascript
+
+		// font size
+		$wp_customize->get_setting('emtheme_font[title_size]')->default = 4.6;
+		$wp_customize->add_control('emtheme_font[title_size]_c', array(
+			'type' => 'number',
+			'label' => 'Font size',
+			'description' => 'Font size is given in rem. 1rem is 10px, 1.6rem is 16px.',
+			'section' => 'emtheme_css_font',
+			'settings' => 'emtheme_font[title_size]',
+			'priority' => 113,
+			'input_attrs' => array(
+			    'min' => 0.8,
+				'step' => 0.2,
+			),
+		));
+
+
+		// seperator
+		$wp_customize->add_control(
+			new Sep_Control($wp_customize, 'emtheme-titlefont-sep', array(
+				'section' => 'emtheme_css_font',
+				'priority' => 119,
+				'settings' => array()
+			))
+		);
+
+
+
+		// NAV FONT
+		$wp_customize->add_control(
+			new Text_Control($wp_customize, 'nav_font_control', array(
+				'label' => 'Navbar Font',
+				'text' => '<p><p>test text for header',
+				'priority' => 120,
+				'section' => 'emtheme_css_font',
+				'settings' => array(),
+			))
+		);
+
+		// font family from javascript
+
+		// font weight from javascript
+
+		$wp_customize->get_setting('emtheme_font[nav_size]')->default = 2;
+		$wp_customize->add_control('emtheme_font[nav_size]_c', array(
+			'type' => 'number',
+			'label' => 'Font size',
+			'description' => 'Font size is given in rem. 1rem is 10px, 1.6rem is 16px.',
+			'section' => 'emtheme_css_font',
+			'settings' => 'emtheme_font[nav_size]',
+			'priority' => 123,
+			'input_attrs' => array(
+			    'min' => 0.8,
+				'step' => 0.2,
+			),
+		));
+
+		// seperator
+		$wp_customize->add_control(
+			new Sep_Control($wp_customize, 'emtheme-navfont-sep', array(
+				'section' => 'emtheme_css_font',
+				'priority' => 129,
+				'settings' => array()
+			))
+		);
 	}
 }
 
+
+if (class_exists('WP_Customize_Control')) {
+	class Text_Control extends WP_Customize_Control {
+		public $type = 'customtext';
+		public $text = '';
+
+		public function render_content() {
+			echo '<h2>'.esc_html($this->label).'</h2><div>'
+			.wp_kses($this->text, array('a' => array(), 'br' => array(), 'p' => array(), 'ul' => array(), 'li' => array(), 'strong' => array())).'</div>';
+		}
+	}
+
+	class Sep_Control extends WP_Customize_Control {
+		public $type = 'seperator';
+
+		public function render_content() {
+			echo '<div class="emtheme-customizer-sep"></div>';
+		}
+	}
+}
 
 /**
  * A class to create a dropdown for all google fonts
