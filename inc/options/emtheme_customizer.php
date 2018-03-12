@@ -135,9 +135,6 @@ final class Emtheme_Customizer {
 			'panel' => 'emtheme_footer_panel'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_contact_active', array(
-		// 	'type' => 'option'
-		// ));
 		$wp_customize->add_control('emtheme_footer[contact_active]_c', array(
 			'label' => 'Aktiver',
 			'section' => 'emtheme_footer_contact',
@@ -145,77 +142,42 @@ final class Emtheme_Customizer {
 			'type' => 'checkbox'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_email', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[contact]_c',array(
 			'label' => 'Email',
 			'section' => 'emtheme_footer_contact',
 			'settings' => 'emtheme_footer[email]'
 		));
 		
-		// $wp_customize->add_setting('emtheme_footer_avdeling', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[avdeling]_c', array(
 			'label' => 'Avdeling',
 			'section' => 'emtheme_footer_contact',
 			'settings' => 'emtheme_footer[avdeling]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_selskap', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[selskap]_c', array(
 			'label' => 'Selskap',
 			'section' => 'emtheme_footer_contact',
 			'settings' => 'emtheme_footer[selskap]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_poststed', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[poststed]_c', array(
 			'label' => 'Poststed',
 			'section' => 'emtheme_footer_contact',
 			'settings' => 'emtheme_footer[poststed]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_postnr', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[postnr]_c', array(
 			'label' => 'Post Nr',
 			'section' => 'emtheme_footer_contact',
 			'settings' => 'emtheme_footer[postnr]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_veiadr', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[veiadr]_c', array(
 			'label' => 'Vei Addresse',
 			'section' => 'emtheme_footer_contact',
 			'settings' => 'emtheme_footer[veiadr]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_land', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[land]_c', array(
 			'label' => 'Land',
 			'section' => 'emtheme_footer_contact',
@@ -230,9 +192,6 @@ final class Emtheme_Customizer {
 			'panel' => 'emtheme_footer_panel'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_social_active', array(
-		// 	'type' => 'option'
-		// ));
 		$wp_customize->add_control('emtheme_footer[social_active]_c', array(
 			'label' => 'Aktiver',
 			'section' => 'emtheme_footer_social',
@@ -240,44 +199,24 @@ final class Emtheme_Customizer {
 			'type' => 'checkbox'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_twitter', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[twitter]_c', array(
 			'label' => 'Twitter',
 			'section' => 'emtheme_footer_social',
 			'settings' => 'emtheme_footer[twitter]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_facebook', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[facebook]_c', array(
 			'label' => 'Facebook',
 			'section' => 'emtheme_footer_social',
 			'settings' => 'emtheme_footer[facebook]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_google', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[google]_c', array(
 			'label' => 'Google+',
 			'section' => 'emtheme_footer_social',
 			'settings' => 'emtheme_footer[google]'
 		));
 
-		// $wp_customize->add_setting('emtheme_footer_youtube', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[youtube]_c', array(
 			'label' => 'Youtube',
 			'section' => 'emtheme_footer_social',
@@ -292,9 +231,6 @@ final class Emtheme_Customizer {
 		));
 
 		// ACTIVATE
-		// $wp_customize->add_setting('emtheme_footer_aboutus_active', array(
-		// 	'type' => 'option'
-		// ));
 		$wp_customize->add_control('emtheme_footer[aboutus_active]_c', array(
 			'label' => 'Aktiver',
 			'section' => 'emtheme_footer_aboutus',
@@ -303,13 +239,9 @@ final class Emtheme_Customizer {
 		));
 
 		// ABOUT US TEXTAREA
-		// $wp_customize->add_setting('emtheme_footer_about', array(
-		// 	'type' => 'option',
-		// 	// 'transport' => 'postMessage',
-		// 	'sanitize_callback' => 'sanitize_text_field'
-		// ));
 		$wp_customize->add_control('emtheme_footer[aboutus]_c', array(
 			'label' => 'Om Oss',
+			'description' => '[p] is new paragraph.',
 			'section' => 'emtheme_footer_aboutus',
 			'settings' => 'emtheme_footer[aboutus]',
 			'type' => 'textarea'
@@ -317,11 +249,6 @@ final class Emtheme_Customizer {
 	}
 
 	public function emtheme_css($wp_customize) {
-
-
-		
-
-		
 
 		$args = array(
 			'type' => 'option',
@@ -356,14 +283,10 @@ final class Emtheme_Customizer {
 			'panel' => 'emtheme_css_panel'
 		));
 
-		// $settings = ['emtheme_css_emtop_font', 'emtheme_css_emtop_bg', 'emtheme_css_nav_font', 'emtheme_css_nav_bg', 'emtheme_css_nav_bg_hover', 
-		// 			 'emtheme_css_navsub_font', 'emtheme_css_navsub_bg', 'emtheme_css_navsub_bg_hover', 'emtheme_css_active', 'emtheme_css_active_hover'];
-
 
 		$settings = ['emtop_font', 'emtop_bg', 'nav_font', 'nav_bg', 'nav_bg_hover', 
 					 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
 
-		// $settings = ['emtheme_css_emtop_font'];
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_color');
 
 
@@ -492,10 +415,6 @@ final class Emtheme_Customizer {
 			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_text_field'
 		];
-
-		// $settings = ['emtheme_font[standard]', 'emtheme_font_standard_weight', 'emtheme_font_standard_size', 'emtheme_font_standard_lineheight',
-		//              'emtheme_font_title', 'emtheme_font_title_weight', 'emtheme_font_title_size',
-		//              'emtheme_font_nav'
 
 		$settings = ['standard', 'standard_weight', 'standard_size', 'standard_lineheight',
 		             'title', 'title_weight', 'title_size',

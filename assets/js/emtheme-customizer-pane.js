@@ -1,6 +1,6 @@
 ((api, $) => {
 	wp.customize.bind('ready', () => {
-		console.log('hiyua');
+		// console.log('hiyua');
 		let addSC = (setting, section, choices, label, priority) => {
 			api.control.add(
 				new api.Control(setting+'_c', {
@@ -67,8 +67,7 @@
 
 		for (let [key, value] of map)
 			$(key).click(() => api.control(value).focus());
-		
-
+		// $('.emtop-font-color').click(() => $('#customize-control-emtheme_color-emtop_font_c button').focus());
 
 		/*
 			Emtheme CSS

@@ -388,7 +388,6 @@ $(() => {
 			$('.em-footer').show();
 			window.scrollTo(0,document.body.scrollHeight);
 		}
-
 		else {
 			let soc = api('emtheme_footer[social_active]').get();
 			let con = api('emtheme_footer[contact_active]').get();
@@ -402,13 +401,23 @@ $(() => {
 	// check on init whether to show footer or not
 	fshow(false);
 
+	if (!api('emtheme_footer[social_active]').get())
+		$('.em-socialmedia-container').hide();
+
+	if (!api('emtheme_footer[contact_active]').get())
+		$('.em-contact-container').hide();
+
+	if (!api('emtheme_footer[aboutus_active]').get())
+		$('.em-aboutus-container').hide();
+
 	api('emtheme_footer[social_active]', (value) => {
 		value.bind((newvalue) => {
 			fshow(newvalue);
-			// if (newvalue === true)
-			// 	$('.em-footer').show();
-			// else
-			// 	$('.em-footer').hide();
+
+			if (newvalue) 
+				$('.em-socialmedia-container').show();
+			else
+				$('.em-socialmedia-container').hide();
 			// console.log(newvalue);
 		});
 	});
@@ -416,30 +425,56 @@ $(() => {
 	api('emtheme_footer[contact_active]', (value) => {
 		value.bind((newvalue) => {
 			fshow(newvalue);
-			// console.log(newvalue);
-			// if (newvalue === true)
-			// 	$('.em-footer').show();
-			// else
-			// 	$('.em-footer').hide();
+
+			if (newvalue) 
+				$('.em-contact-container').show();
+			else
+				$('.em-contact-container').hide();
 		});
 	});
 	
 	api('emtheme_footer[aboutus_active]', (value) => {
 		value.bind((newvalue) => {
 			fshow(newvalue);
-			// console.log(newvalue);
-			// if (newvalue === true)
-			// 	$('.em-footer').show();
-			// else
-			// 	$('.em-footer').hide();
+
+			if (newvalue) 
+				$('.em-aboutus-container').show();
+			else
+				$('.em-aboutus-container').hide();
 		});
 	});
-	// wp.customize.bind('ready', () => {
-	// console.log(api.instance('emtheme_footer[twitter]').get());
-		// console.log('hi '+api.control('emtheme_footer[social_active]_c').get());
-	// });
-	// $('.em-footer').hide();
+	api('emtheme_footer[aboutus]', (value) => {
+		value.bind((newvalue) => {
+			$('.em-aboutus-container').html(newvalue.replace(/\[p\]/, '<p>'));
+		});
+	});
+
+
+	let socList = ['twitter', 'facebook', 'google', 'youtube'];
+	let colist = ['email', 'avdeling', 'selskap', 'poststed', 'postnr', 'veiadr', 'land'];
+	let sclist = socList.concat(colist);
+
+	for (let v of sclist) {
+		if (api('emtheme_footer['+v+']').get() == '')
+			$('.em-footer-'+v).hide(); 
+	
+		api('emtheme_footer['+v+']', (value) => {
+			value.bind((newvalue) => {
+				console.log(newvalue);
+
+				if (socList.includes(v))
+					$('.em-footer-'+v+' > a').attr('href', newvalue);
+				else
+					$('.em-footer-'+v).text(newvalue);
+
+				if (newvalue.length == 0)
+					$('.em-footer-'+v).hide();
+				else if (newvalue.length == 1)
+					$('.em-footer-'+v).show();
+			});
+		});
+	}
+
 
 })(jQuery, wp.customize);
 });
-// }))(jQuery, wp.customize);
