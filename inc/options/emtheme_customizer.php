@@ -98,13 +98,13 @@ final class Emtheme_Customizer {
 		) ) );
 
 		// mobile site title
-		// $wp_customize->add_control('emtheme_title_mobile', 
-		// 	array(
-		// 		'label' => 'Mobile Title',
-		// 		'section' => 'title_tagline',
-		// 		'settings' => 'emtheme_title_mobile'
-		// 	)
-		// );
+		$wp_customize->add_control('emtheme_title_mobile', 
+			array(
+				'label' => 'Mobile Title',
+				'section' => 'title_tagline',
+				'settings' => 'emtheme_title_mobile'
+			)
+		);
 	}
 
 	public function footer_info($wp_customize) {
@@ -434,7 +434,7 @@ final class Emtheme_Customizer {
 		$wp_customize->add_control(
 			new Text_Control($wp_customize, 'default_font_control', array(
 				'label' => 'Default Font',
-				'text' => '<p><p>test text for header',
+				// 'text' => '<p><p>test text for header',
 				'priority' => 100,
 				'section' => 'emtheme_css_font',
 				'settings' => array(),
@@ -494,7 +494,7 @@ final class Emtheme_Customizer {
 		$wp_customize->add_control(
 			new Text_Control($wp_customize, 'title_font_control', array(
 				'label' => 'Title Font',
-				'text' => '<p><p>test text for header',
+				// 'text' => '<p><p>test text for header',
 				'priority' => 110,
 				'section' => 'emtheme_css_font',
 				'settings' => array(),
@@ -537,7 +537,7 @@ final class Emtheme_Customizer {
 		$wp_customize->add_control(
 			new Text_Control($wp_customize, 'nav_font_control', array(
 				'label' => 'Navbar Font',
-				'text' => '<p><p>test text for header',
+				// 'text' => '<p><p>test text for header',
 				'priority' => 120,
 				'section' => 'emtheme_css_font',
 				'settings' => array(),

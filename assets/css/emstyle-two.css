@@ -40,6 +40,7 @@ p:empty {
 }
 
 body {
+	opacity: 1 !important;
 	margin: 0 !important;
 }
 

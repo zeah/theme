@@ -150,7 +150,7 @@ final class Emtheme_function {
                         
 
         if (isset($fonts['standard']))
-            $data .= '.content, .emtheme-tagline { font-family: '.esc_html($fonts['standard']).'; }';
+            $data .= '.content, .emtheme-tagline, .content-title-text { font-family: '.esc_html($fonts['standard']).'; }';
         if (isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular')
             $data .= '.content, .emtheme-tagline { font-weight: '.esc_html(str_replace('italic', '', $fonts['standard_weight'])).'; }';
         if (isset($fonts['standard_size']))
@@ -160,6 +160,7 @@ final class Emtheme_function {
         
 
         wp_add_inline_style( 'style', $data );
+        wp_add_inline_style( 'style-mobile', $data );
 
         $font_set = [];
 
@@ -197,7 +198,12 @@ final class Emtheme_function {
     }
 
     public function add_head() {
-        echo '<link href="https://fonts.googleapis.com/css?family='.esc_html($this->google_string).'" rel="stylesheet">';
+        $font = $this->google_string;
+
+        if ($font == ':' || $font == '')
+            $font = 'Roboto|Open+Sans+Condensed:700';
+
+        echo '<link href="https://fonts.googleapis.com/css?family='.esc_html($font).'" rel="stylesheet">';
     }
 
     public function emmail_action() {

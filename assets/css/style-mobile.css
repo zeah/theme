@@ -29,6 +29,7 @@ html {
 /* wordpress fixes */
 body {
 	margin: 0 !important;
+	opacity: 1 !important;
 }
 p:empty {
 	display: none;
@@ -163,6 +164,7 @@ p:empty {
 /* special rule for nav items (<a>) in submenus */
 .em-nav-sublenke {
 	font-size: 1.6rem;
+	color: hsl(0, 0%, 69%);
 }
 
 /* nav item with submenu icon */
