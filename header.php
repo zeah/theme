@@ -55,9 +55,10 @@ final class Emtheme_Head {
 
 // printing head
 echo '<!DOCTYPE html><html lang="no"><head>';
+echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 wp_head();
 // echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
-echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="opacity: 0">';
+echo '</head><body style="opacity: 0">';
 
 // top container 
 $top = '<div class="emtop"><div class="emtheme-site-identity">';
