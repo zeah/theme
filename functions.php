@@ -89,46 +89,70 @@ final class Emtheme_function {
 
         $colors = get_option('emtheme_color');
         // COLOR TOP BACKGROUND
-        if (isset($colors['emtop_bg']))
-            $data .= '@media (min-width: 961px) { .emtop { background-color: '.esc_html($colors['emtop_bg']).'; } }';
+        // if (isset($colors['emtop_bg']))
+            $data .= '@media (min-width: 961px) { 
+                        .emtop { 
+                            background-color: '.(isset($colors['emtop_bg']) ? esc_html($colors['emtop_bg']) : Emtheme_style::$colors['top']['bg']).'; 
+                        } 
+                      }';
         
         // COLOR TOP FONT
-        if (isset($colors['emtop_font']))
-            $data .= '.emtop { color: '.esc_html($colors['emtop_font']).'; }';
+        // if (isset($colors['emtop_font']))
+            $data .= '.emtop { 
+                        color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; 
+                    }';
 
         // COLOR NAVBAR FONT
-        if (isset($colors['nav_font']))
-            $data .= '.em-nav-lenke { color: '.esc_html($colors['nav_font']).'; }';
+        // if (isset($colors['nav_font']))
+            $data .= '.em-nav-lenke { 
+                        color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; 
+                    }';
 
         // COLOR NAVBAR BACKGROUND
-        if (isset($colors['nav_bg'])) {
-            $data .= '.nav-container { background-color: '.esc_html($colors['nav_bg']).'; }';
-            $data .= '@media (max-width: 960px) { .emtop { background-color: '.esc_html($colors['nav_bg']).'; } }';
-        }
+        // if (isset($colors['nav_bg'])) {
+            $data .= '.nav-container { 
+                        background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; 
+                      }';
+            $data .= '@media (max-width: 960px) { 
+                        .emtop { background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; } 
+                      }';
+        // }
        
         // COLOR NAVBAR BACKGROUND HOVER
-        if (isset($colors['nav_bg_hover']))
-            $data .= '.em-nav-item:hover { background-color: '.esc_html($colors['nav_bg_hover']).'; }';
+        // if (isset($colors['nav_bg_hover']))
+            $data .= '.em-nav-item:hover { 
+                        background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; 
+                      }';
 
         // COLOR SUBMENU BACKGROUND
-        if (isset($colors['navsub_bg']))
-            $data .= '.em-nav-sub-container, .em-nav-subitem { background-color: '.esc_html($colors['navsub_bg']).'; }';
+        // if (isset($colors['navsub_bg']))
+            $data .= '.em-nav-sub-container, .em-nav-subitem { 
+                            background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
+                       }';
 
         // COLOR SUBMENU BACKGROUND HOVER
-        if (isset($colors['navsub_bg_hover']))
-            $data .= '.em-nav-subitem:hover { background-color: '.esc_html($colors['navsub_bg_hover']).'; }';
+        // if (isset($colors['navsub_bg_hover']))
+            $data .= '.em-nav-subitem:hover { 
+                        background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
+                      }';
 
         // COLOR SUBMENU FONT
-        if (isset($colors['navsub_font']))
-            $data .= '.em-nav-sublenke { color: '.esc_html($colors['navsub_font']).'; }';
+        // if (isset($colors['navsub_font']))
+            $data .= '.em-nav-sublenke { 
+                        color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; 
+                      }';
 
         // COLOR ACTIVE PAGE MARKER ON NAVBAR
-        if (isset($colors['active']))
-            $data .= '.em-nav-current { background-color: '.esc_html($colors['active']).'; }';
+        // if (isset($colors['active']))
+            $data .= '.em-nav-current { 
+                        background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
+                      }';
 
         // COLOR ACTIVE PAGE MARKER HOVER ON NAVBAR
-        if (isset($colors['active_hover']))
-            $data .= '.em-nav-current:hover { background-color: '.esc_html($colors['active_hover']).'; }';
+        // if (isset($colors['active_hover']))
+            $data .= '.em-nav-current:hover { 
+                        background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).'; 
+                      }';
         
         // adding fonts
         $fonts = get_option('emtheme_font');
@@ -189,7 +213,8 @@ final class Emtheme_function {
 
         $font_str = '';
         foreach ($font_set as $o)
-            $font_str .= $o.'|';
+            if ($o != '')
+                $font_str .= $o.'|';
 
         $font_str = rtrim($font_str, '|');
 
@@ -334,6 +359,9 @@ class Fset {
     }
 
     public function __toString() {
+        if ($this->font == '')
+            return '';
+
         $str = str_replace(' ', '+', $this->font);
 
         if (sizeof($this->weight) > 0)

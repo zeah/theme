@@ -40,4 +40,27 @@ final class Emtheme_style {
 		STYLE MOBILE
 	*/
 	public static $style_mobile = '1.0.0';
+
+
+	public static $colors = [
+		'top' => [
+			'bg' => '#ffffff',
+			'font' => '#000000'
+		],
+		'nav' => [
+			'bg' => '#000000',
+			'hover' => '#444444',
+			'font' => '#ffffff'
+		],
+		'sub' => [
+			'bg' => '#aaaaaa',
+			'hover' => '#777777',
+			'font' => '#000000'
+		],
+		'active' => [
+			'bg' => '#aa7777',
+			'hover' => '#aa4444'
+		]
+
+	];
 }

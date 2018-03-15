@@ -291,7 +291,7 @@ final class Emtheme_Customizer {
 
 
 		/* FONT COLOR TOP (LOGO, TITLE, TAGLINE )*/
-		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = '#000000'; 
+		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = Emtheme_style::$colors['top']['font']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[emtop_font]_c', array(
 				'label' => 'Header Font-color',
@@ -301,7 +301,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* BACKGROUND COLOR TOP (LOGO, TITLE, TAGLINE )*/
-		$wp_customize->get_setting('emtheme_color[emtop_bg]')->default = '#ffffff'; 
+		$wp_customize->get_setting('emtheme_color[emtop_bg]')->default = Emtheme_style::$colors['top']['bg']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[emtop_bg]_c', array(
 				'label' => 'Header Background-color',
@@ -311,7 +311,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* NAVBAR FONT COLOR */
-		$wp_customize->get_setting('emtheme_color[nav_font]')->default = '#ffffff'; 
+		$wp_customize->get_setting('emtheme_color[nav_font]')->default = Emtheme_style::$colors['nav']['font']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_font]_c', array(
 				'label' => 'Navbar Font-color',
@@ -320,7 +320,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* NAVBAR BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[nav_bg]')->default = '#000000'; 
+		$wp_customize->get_setting('emtheme_color[nav_bg]')->default = Emtheme_style::$colors['nav']['bg']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg]_c', array(
 				'label' => 'Navbar Background-color',
@@ -329,7 +329,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* NAVBAR BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[nav_bg_hover]')->default = '#444444'; 
+		$wp_customize->get_setting('emtheme_color[nav_bg_hover]')->default = Emtheme_style::$colors['nav']['hover']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_hover]_c', array(
 				'label' => 'Navbar Hover Background-color',
@@ -338,7 +338,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* SUBMENU FONT COLOR */
-		$wp_customize->get_setting('emtheme_color[navsub_font]')->default = '#000000'; 
+		$wp_customize->get_setting('emtheme_color[navsub_font]')->default = Emtheme_style::$colors['sub']['font']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[navsub_font]_c', array(
 				'label' => 'Submenu Font-color',
@@ -347,7 +347,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* SUBMENU BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[navsub_bg]')->default = '#e8e8e8'; 
+		$wp_customize->get_setting('emtheme_color[navsub_bg]')->default = Emtheme_style::$colors['sub']['bg']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[navsub_bg]_c', array(
 				'label' => 'Submenu Background-color',
@@ -356,7 +356,7 @@ final class Emtheme_Customizer {
 		)));
 		
 		/* SUBMENU BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[navsub_bg_hover]')->default = '#bfbfbf'; 
+		$wp_customize->get_setting('emtheme_color[navsub_bg_hover]')->default = Emtheme_style::$colors['sub']['hover']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[navsub_bg_hover]_c', array(
 				'label' => 'Submenu Hover Background-color',
@@ -365,7 +365,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* ACTIVE PAGE MARKER - BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[active]')->default = '#552222'; 
+		$wp_customize->get_setting('emtheme_color[active]')->default = Emtheme_style::$colors['active']['bg']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[active]_c', array(
 				'label' => 'Background-color Marker',
@@ -375,7 +375,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* ACTIVE PAGE MARKER - BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[active_hover]')->default = '#772222'; 
+		$wp_customize->get_setting('emtheme_color[active_hover]')->default = Emtheme_style::$colors['active']['hover']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[active_hover]_c', array(
 				'label' => 'Background-color Hover Marker',
