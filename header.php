@@ -56,6 +56,7 @@ final class Emtheme_Head {
 // printing head
 echo '<!DOCTYPE html><html lang="no"><head>';
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+echo '<meta name="theme-color" content="#317EFB"/>';
 wp_head();
 // echo '<meta name="viewport" content="width=device-width, initial-scale=1"></head><body>';
 echo '</head><body style="opacity: 0">';
