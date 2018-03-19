@@ -87,6 +87,10 @@ p:empty {
 	color: black;
 }
 
+.emtheme-toptext-container {
+	margin-right: auto;
+}
+
 /* div for site title */
 .emtheme-title {
 	font-size: 4.6rem;
@@ -99,6 +103,17 @@ p:empty {
 	margin-left: 4rem;
 
 	font-size: 1.6rem;
+}
+
+.emtheme-search-box {
+	align-self: flex-end;
+}
+
+.emtheme-search-input {
+	font-size: 2rem;
+}
+.emtheme-search-icon {
+	/*font-size: 3.6rem;*/
 }
 
 

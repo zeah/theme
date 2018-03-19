@@ -1,12 +1,5 @@
 $(() => {
 (function($, api) {
-	// wp.customize.previewer.bind('ready', () => {
-	// 	console.log('hiya');
-	// });
-	// 	console.log('hiya');
-	// $().ready(() => {
-	// 	console.log(api('emtheme_footer[social_active]').get());
-	// });
 
 	let setItalic = (weight, element) => {
 		if (weight.includes('italic'))
@@ -131,7 +124,7 @@ $(() => {
 	api( 'emtheme_color[nav_bg_hover]', function( value ) {
 		value.bind( function( newval ) {
 			// special hover case
-			$('.em-nav-item').hover(
+			$('.em-nav-item-top').hover(
 				function() {
   					$(this).css('background-color', newval);
 				},

@@ -11,6 +11,7 @@ if ( ! isset( $content_width ) )
     $content_width = 1920; /* pixels */
 
 add_theme_support('post-thumbnails');
+// add_theme_support( 'html5', array( 'search-form' ) );
 
 if (! function_exists('emtheme_setup')) {
     function emtheme_setup() {

@@ -3,14 +3,16 @@
 
 // IF PAGE IS MOVED
 global $post;
-$meta = get_post_meta($post->ID, 'emredirect');
-if (isset($meta[0])) {
-	$url = esc_url($meta[0]);
+if ($post) {
+	$meta = get_post_meta($post->ID, 'emredirect');
+	if (isset($meta[0])) {
+		$url = esc_url($meta[0]);
 
-	if ($url) {
-		header("HTTP/1.1 301 Moved Permanently");
-		header("Location: $url");
-		exit();
+		if ($url) {
+			header("HTTP/1.1 301 Moved Permanently");
+			header("Location: $url");
+			exit();
+		}
 	}
 }
 // echo $meta[0];
@@ -102,7 +104,9 @@ if ($emtheme_name || $emtheme_tagline || $customize) {
 
 echo $top;
 
-echo '</div>'; // end of emtheme-site-identitity (logo, title, tagline)
+echo '<div class="emtheme-search-box">';
+get_search_form();
+echo '</div></div>'; // end of emtheme-site-identitity (logo, title, tagline)
 
 // menu
 // hide if option active and user not logged in.
@@ -194,7 +198,7 @@ if ( (!get_option('emtheme_shownav')) || current_user_can( 'read' )) {
 
 		// adding nav item
 		if ($value->link !== null)
-			$nav .= '<div class="em-nav-item'.$par_link.$cur_link.'" itemprop="name"><a class="em-nav-lenke'.esc_attr($parent_icon).'" itemprop="url" href="'.esc_url($value->link).'">'.esc_html($value->title).'</a></div>';
+			$nav .= '<div class="em-nav-item'.$par_link.$cur_link.' em-nav-item-top" itemprop="name"><a class="em-nav-lenke'.esc_attr($parent_icon).'" itemprop="url" href="'.esc_url($value->link).'">'.esc_html($value->title).'</a></div>';
 		// mobile nav item with children does not have a link attr
 		else
 			$nav .= '<span class="em-nav-item em-nav-lenke'.esc_attr($parent_icon).'">'.esc_html($value->title).'</span>'; // mobile only 
