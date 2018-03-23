@@ -71,6 +71,8 @@ final class Emtheme_function {
     }
 
     public function add_style() {
+        wp_enqueue_script('emscript', get_theme_file_uri().'/assets/js/emscript.js', array(), false, true);
+
         $style = get_option('emtheme_styling');
 
         if ($style == 'two')

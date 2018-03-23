@@ -106,14 +106,46 @@ p:empty {
 }
 
 .emtheme-search-box {
-	align-self: flex-end;
+	align-self: flex-start;
 }
 
 .emtheme-search-input {
-	font-size: 2rem;
+	font-size: 2.2rem;
+	width: 20rem;
+	border: none;
+	border-bottom: solid 2px #ccc;
+	opacity: 0;
+	/*height: 2.4rem;*/
 }
+.emtheme-search-input-active {
+	opacity: 1;
+}
+
+.emtheme-search-input:focus {
+	outline: none;
+}
+
+.emtheme-search-button {
+	position: relative;
+	top: 0.3rem;
+	background: inherit;
+	border: none;
+	cursor: pointer;
+}
+.emtheme-search-button:hover {
+	background-color: rgba(0, 0, 0, .1);
+}
+
+.emtheme-search-button:focus {
+	outline: none;
+}
+
 .emtheme-search-icon {
-	/*font-size: 3.6rem;*/
+	position: relative;
+	top: 0.2rem;
+	/*height: 100px !important;*/
+	font-size: 2.3rem !important;
+
 }
 
 

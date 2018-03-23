@@ -146,6 +146,7 @@ class Emtheme_footer_customize extends Emtheme_footer {
 	}
 }
 
+
 wp_footer(); 
 ?>
 </body></html>

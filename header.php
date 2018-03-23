@@ -105,7 +105,7 @@ if ($emtheme_name || $emtheme_tagline || $customize) {
 echo $top;
 
 echo '<div class="emtheme-search-box">';
-get_search_form();
+// get_search_form();
 echo '</div></div>'; // end of emtheme-site-identitity (logo, title, tagline)
 
 // menu
