@@ -4,17 +4,14 @@
 final class Emtheme_Options {
 	private static $instance = null;
 
-	public static function get_instance($active = true) {
-
-		if (self::$instance === null)
-			self::$instance = new self($active);
+	public static function get_instance() {
+		if (self::$instance === null) self::$instance = new self();
 
 		return self::$instance;
 	}
 
-	private function __construct($active = true) {
-		if ( (! $active) || (! is_admin()) )
-			return;
+	private function __construct() {
+		if (! is_admin()) return;
 
 		$this->wp_hooks();
 	}
@@ -54,6 +51,7 @@ final class Emtheme_Options {
 		register_setting('em_options_admin', 'em_admin_maint', $args);
 		register_setting('em_options_admin', 'emtheme_shownav', $args);
 		register_setting('em_options_admin', 'emtheme_styling', $args);
+		register_setting('em_options_admin', 'emtheme_css', $args);
 	}
 
 	public function initAdminside() {
@@ -69,6 +67,8 @@ final class Emtheme_Options {
 		add_settings_field( 'emtheme-styling-three', 'Styling three', array($this, 'styling_three_callback'), 'em-admin-page', 'em_settings_styling' );
 		add_settings_field( 'emtheme-styling-four', 'Styling four', array($this, 'styling_four_callback'), 'em-admin-page', 'em_settings_styling' );
 
+		add_settings_section('em_external_resources', 'External Resources', array($this, 'external_callback'), 'em-admin-page');
+		add_settings_field('emtheme-ext-css', 'Desktop CSS', array($this, 'ext_css_callback'), 'em-admin-page', 'em_external_resources');
 
 	}
 
@@ -108,13 +108,16 @@ final class Emtheme_Options {
 		echo '<input type="radio" name="emtheme_styling" value="four"'.$this->styling_help('four').'>';
 	}
 
+	public function external_callback() {
+		echo 'Set external resources to use instead of internal resources.';
+	}
 
+	public function ext_css_callback() {
+		echo '<input type="url" name="emtheme_css" value="'.(get_option('emtheme_css') ? esc_attr(get_option('emtheme_css')) : '').'">';
+	}
 
 	private function styling_help($v) {
-		if (get_option('emtheme_styling') == $v)
-			return ' checked';
-
-		else
-			return '';
+		if (get_option('emtheme_styling') == $v) 	return ' checked';
+		else 										return '';
 	}
 }

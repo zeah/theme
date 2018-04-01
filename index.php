@@ -9,14 +9,12 @@ get_header();
 
 $html = '<div class="main">';
 
-if ( ! is_front_page())
-	$html .= '<div class="content-title"><h1 class="content-title-text">'.get_the_title().'</h1></div>';
+if (! is_front_page()) $html .= '<div class="content-title"><h1 class="content-title-text">'.get_the_title().'</h1></div>';
 
 $content = get_the_content();
 
 $html .= '<div class="content';
-if (!(strpos($content, '[col') === false))
-	$html .= ' content-3';
+if (!(strpos($content, '[col') === false)) $html .= ' content-3';
 $html .= '">'.apply_filters('the_content', do_shortcode(get_the_content())).'</div>';
 
 

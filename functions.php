@@ -1,8 +1,8 @@
 <?php 
-require_once 'inc/functions-admin.php';
-require_once 'inc/functions-page.php';
-require_once 'inc/functions-shortcode.php';
-require_once 'inc/options/emtheme_customizer.php';
+require_once 'inc/admin.php';
+require_once 'inc/page.php';
+require_once 'inc/shortcode.php';
+require_once 'inc/settings/customizer.php';
 require_once 'inc/style_version.php';
 
 add_action('after_setup_theme', 'emtheme_setup');
@@ -38,55 +38,65 @@ final class Emtheme_function {
     // DEFAULT STYLE VERSION 
     // private static $style_default = '1.1.1';
 
-    public static function get_instance($activate = true) {
-
-        if (self::$instance === null)
-            self::$instance = new self($activate);
+    public static function get_instance() {
+        if (self::$instance === null) self::$instance = new self();
 
         return self::$instance;
     }
 
-    private function __construct($activate = true) {
-        if (! $activate)
-            return;
+    private function __construct() {
         $this->public_wp_hooks();
+       
+        if (! is_admin()) return;
 
-        if (! is_admin())
-            return;
         $this->wp_hooks();
     }
 
     private function public_wp_hooks() {
 
+        add_action('init', array($this, 'disable_emoji'));
+
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
         add_action('wp_head', array($this, 'add_head'));
 
         add_action('wp_ajax_nopriv_emmailAction', array($this, 'emmail_action'));
-        add_action('wp_ajax_emmailAction', array($this, 'emmail_action'));  
+        add_action('wp_ajax_emmailAction', array($this, 'emmail_action'));
+
+        add_filter('pre_get_posts', array($this, 'set_search'));
     }
 
     private function wp_hooks() {
         add_action('publish_page', array($this, 'add_sitemap'));
         add_action('publish_article', array($this, 'add_sitemap'));
+   
+        // add_post_type_support( 'page', 'excerpt' );
+
+        add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
+    }
+
+    public function set_search($query) {
+        if ($query->is_search) $query->set('post_type', array('page', 'article', 'emkort'));
+    }
+
+    public function admin_scripts() {
+        wp_enqueue_style('em-admin-style', get_theme_file_uri().'/assets/css/emstyle-admin.css', array(), null);
     }
 
     public function add_style() {
+        // adding js
+        // search box, mobile nav menu
         wp_enqueue_script('emscript', get_theme_file_uri().'/assets/js/emscript.js', array(), false, true);
 
         $style = get_option('emtheme_styling');
 
-        if ($style == 'two')
-            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), Emtheme_style::$style_two, '(min-width: 961px)');
-        else if ($style == 'three')
-            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), Emtheme_style::$style_one, '(min-width: 961px)');
-        // default style (style one)
-        else {
-            wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), Emtheme_style::$style_default, '(min-width: 961px)');
-        }
-
-        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), Emtheme_style::$style_mobile, '(max-width: 960px)');
+        // desktop style
+        if ($style == 'two')        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), Emtheme_style::$style_two, '(min-width: 1024px)');
+        elseif ($style == 'three')  wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), Emtheme_style::$style_one, '(min-width: 1024px)');
+        else                        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), Emtheme_style::$style_default, '(min-width: 1024px)');
+        
+        // mobile style
+        wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), Emtheme_style::$style_mobile, '(max-width: 1023px)');
           
-        // $mobile = wp_is_mobile();
           
         $data = '';
 
@@ -101,7 +111,7 @@ final class Emtheme_function {
         
         // COLOR TOP FONT
         // if (isset($colors['emtop_font']))
-            $data .= '.emtop { 
+            $data .= '.emtheme-top-link, .emtheme-top-link:visited { 
                         color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; 
                     }';
 
@@ -298,6 +308,28 @@ final class Emtheme_function {
         $content = preg_replace('/\[\/caption\]/', '</span>', $content);
 
         return $content;
+    }
+
+    public function disable_emoji() {
+        remove_action( 'admin_print_styles', 'print_emoji_styles' );
+        remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+        remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+        remove_action( 'wp_print_styles', 'print_emoji_styles' );
+        remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+        remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+        remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+
+        add_filter( 'tiny_mce_plugins', array($this, 'disable_emojicons_tinymce') );
+
+        add_filter( 'emoji_svg_url', '__return_false' );
+    }
+
+    function disable_emojicons_tinymce( $plugins ) {
+        if ( is_array( $plugins ) ) 
+            return array_diff( $plugins, array( 'wpemoji' ) );
+        
+        else 
+            return array();
     }
 }
 

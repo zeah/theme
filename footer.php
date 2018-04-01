@@ -20,9 +20,7 @@ class Emtheme_footer {
 	protected $contact = ['email', 'avdeling', 'selskap', 'postnr', 'poststed', 'veiadr', 'land'];
 
 	public static function get_instance() {
-
-		if (self::$instance === null)
-			self::$instance = new self();
+		if (self::$instance === null) self::$instance = new self();
 
 		return self::$instance;
 	}

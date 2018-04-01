@@ -15,6 +15,7 @@
 		2.3 WORDPRESS IMAGE SHORTCODE
 	3.0 FOOTER 
 		3.1 soc.media/contact/about us
+	4.0 SEARCH
 */
 
 /* default settings */
@@ -94,7 +95,7 @@ p:empty {
 /* div for site title */
 .emtheme-title {
 	font-size: 4.6rem;
-	font-weight: 700;
+	/*font-weight: 700;*/
 	font-family: "Open Sans Condensed", sans-serif;
 }
 
@@ -115,10 +116,12 @@ p:empty {
 	border: none;
 	border-bottom: solid 2px #ccc;
 	opacity: 0;
+	cursor: default;
 	/*height: 2.4rem;*/
 }
 .emtheme-search-input-active {
 	opacity: 1;
+	cursor: text;
 }
 
 .emtheme-search-input:focus {
@@ -516,4 +519,62 @@ p:empty {
 .em-footer-post {
 	display: inline;
 	padding-right: 0.5rem;
+}
+
+
+/*
+	4.0 SECTION
+	SEARCH
+*/
+
+.emtheme-search-ul {
+	padding: 3rem 0;
+	margin: 0 auto;
+	width: 100%;
+
+	font-family: arial;
+}
+
+.emtheme-search-li {
+	margin: 3rem 0;
+	list-style: none;
+	/*background-color: #f2e6ff;*/
+	padding: 1rem;
+	/*font-size: 2.6rem;*/
+
+	line-height: 1;
+}
+
+.emtheme-search-li:nth-child(odd) {
+	/*background-color: #e6eeff;*/
+}
+
+.emtheme-search-link {
+	color: black;
+	text-decoration: none;
+	display: block;
+	text-transform: capitalize;
+}
+
+.emtheme-search-title {
+	margin: 0;
+	font-size: 1.8rem;
+	color: #1a0dab;
+}
+
+.emtheme-search-link:hover {
+	text-decoration: underline;
+}
+
+.emtheme-search-url {
+	display: block;
+	font-size: 1.3rem;
+	text-transform: lowercase;
+	margin: 0.3rem 0;
+	color: #00aa00;
+}
+
+.emtheme-search-description {
+	margin: 0;
+	font-size: 1.3rem;
 }
