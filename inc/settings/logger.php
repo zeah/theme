@@ -6,23 +6,17 @@ final class Emtheme_Logger {
 	private $table_name = 'em_logger';
 	private $data = null;
 
-	public static function get_instance($activate = true) {
-
-		if (self::$instance === null)
-			self::$instance = new self($activate);
+	public static function get_instance() {
+		if (self::$instance === null) self::$instance = new self();
 
 		return self::$instance;
 	}
 
-	private function __construct($activate = true) {
-		if ( (! $activate) )
-			return;
-	
+	private function __construct() {
 		/* hooks for wordpress to accept ajax */
 		$this->public_wp_hooks();
 
-		if ( (! current_user_can('publish_pages')) || (! is_admin()) )
-			return;
+		if ( (! current_user_can('publish_pages')) || (! is_admin()) ) return;
 
 		// creating the table
 		$this->init_db();
@@ -44,8 +38,7 @@ final class Emtheme_Logger {
 		$table = $wpdb->prefix . $this->table_name;
 
 		// stop if table exists
-		if ($this->table_exists($table))
-			return;
+		if ($this->table_exists($table)) return;
 
 		$sql = 'CREATE TABLE '.$table.'(
 		id INTEGER(10) UNSIGNED AUTO_INCREMENT,
@@ -68,8 +61,7 @@ final class Emtheme_Logger {
 		$table = esc_sql($table);
 		global $wpdb;
 		// if ($wpdb->get_var('show tables like "'.$table.'"') != $table)
-		if ($wpdb->get_var("show tables like '$table'") != $table)
-			return false;
+		if ($wpdb->get_var("show tables like '$table'") != $table) return false;
 
 		return true;
 	}
@@ -81,8 +73,7 @@ final class Emtheme_Logger {
 		$id = uniqid();
 
 		// do nothing if not activated from options page
-		if (! get_option('em_popup_activate'))
-			return; 
+		if (! get_option('em_popup_activate')) return; 
 
 		// creates cookie and database entry.
 		if (! isset($_COOKIE['user'])) {
@@ -106,8 +97,7 @@ final class Emtheme_Logger {
 			$table = esc_sql($wpdb->prefix.$this->table_name);
 			$user = esc_sql($_COOKIE['user']);
 
-			if ($wpdb->get_var("select email from $table where uniqueid = '$user'") === null) 
-				$this->ajaxpopup();
+			if ($wpdb->get_var("select email from $table where uniqueid = '$user'") === null) $this->ajaxpopup();
 			$wpdb->flush();
 		}
 	}
@@ -123,8 +113,7 @@ final class Emtheme_Logger {
 		);
 
 		// validates and escapes the url
-		if (isset($args['data']['logo'])) 
-			$args['data']['logo'] = esc_url($args['data']['logo']);
+		if (isset($args['data']['logo'])) $args['data']['logo'] = esc_url($args['data']['logo']);
 
 		if (wp_is_mobile()) {
 			wp_enqueue_script('em-email-mobile', get_template_directory_uri().'/assets/js/popup-email-mobile.js', array('jquery'), '1.0.0', true);
@@ -210,17 +199,14 @@ final class Emtheme_Logger {
 
 	/* sanitizing data to be saved in database */
 	public function san_callback($input) {
-		if (! is_array($input))
-			return sanitize_text_field($input);
+		if (! is_array($input)) return sanitize_text_field($input);
 
 		$array = [];
 
 		// recurvise for multidimensional arrays
 		foreach($input as $key => $value) {
-			if (is_array($value))
-				$array[$key] = $this->san_callback($value);
-			else if ($value != '')
-				$array[$key] = sanitize_text_field($value);
+			if (is_array($value)) $array[$key] = $this->san_callback($value);
+			elseif ($value != '') $array[$key] = sanitize_text_field($value);
 		}
 
 		return $array;
@@ -229,14 +215,12 @@ final class Emtheme_Logger {
 	/* helper function for retrieving option values */
 	private function g_opt($input, $input2 = null) {
 		// $data is the array to be retrieved - array gets retrived only once from database
-		if ($this->data === null)
-			$this->data = get_option('em_popup_data');
+		if ($this->data === null) $this->data = get_option('em_popup_data');
 
 		$d = $this->data;
 
 		// double dimensional array
-		if ($input2 !== null)
-			return isset($d[$input][$input2]) ? esc_attr($d[$input][$input2]) : '';
+		if ($input2 !== null) return isset($d[$input][$input2]) ? esc_attr($d[$input][$input2]) : '';
 			
 		return isset($d[$input]) ? esc_attr($d[$input]) : '';
 	}
@@ -252,7 +236,6 @@ final class Emtheme_Logger {
 
 	public function em_logger_callback() {
 		echo 'Customize text and picture of popup window';
-
 
 		echo '<div class="em-popup" style="margin: 0; left: auto; right: 60px;">
 		<div class="em-popup-top" style="opacity: 1;">

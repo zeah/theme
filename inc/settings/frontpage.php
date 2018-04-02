@@ -141,15 +141,4 @@ final class Emtheme_Frontpage {
 		return $html;
 	}
 
-	// private function get_time_dropdown($id) {
-	// 	$time = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '00'];
-	// 	$html = '<select name="'.$id.'">';
-
-	// 	$set = get_option($id);
-	// 	foreach($time as $t) 
-	// 		$html .= '<option value="'.$t.'"'.(($t == $set) ? 'selected' : '').'>'.$t.':00</option>';
-		
-	// 	$html .= '</select>';
-	// 	return $html;
-	// }
 }

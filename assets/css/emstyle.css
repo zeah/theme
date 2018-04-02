@@ -114,9 +114,10 @@ p:empty {
 	font-size: 2.2rem;
 	width: 20rem;
 	border: none;
-	border-bottom: solid 2px #ccc;
+	border-bottom: solid 2px #333;
 	opacity: 0;
 	cursor: default;
+	background-color: inherit;
 	/*height: 2.4rem;*/
 }
 .emtheme-search-input-active {
