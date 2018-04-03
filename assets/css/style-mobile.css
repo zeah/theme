@@ -102,6 +102,11 @@ p:empty {
 	color: white;
 }
 
+/* hiding search from mobile */
+.emtheme-search-box {
+	display: none;
+}
+
 /*
 	1.2 SECTION
 	MOBILE NAVBAR

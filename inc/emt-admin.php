@@ -7,6 +7,8 @@ require_once 'settings/frontpage.php';
 require_once 'settings/contact.php';
 require_once 'settings/logger.php';
 require_once 'settings/admin.php';
+require_once 'settings/external.php';
+require_once 'settings/google.php';
 
 final class Emtheme_Admin {
 	/* SINGLETON */

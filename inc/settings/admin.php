@@ -25,6 +25,10 @@ final class Emtheme_Options {
 		Emtheme_Frontpage::get_instance();
 		// Emtheme_Contact::get_instance();
 		Emtheme_Logger::get_instance();
+
+		Emtheme_External::get_instance();
+
+		Emtheme_Google::get_instance();
 	}
 
 	public function add_emtheme_menu() {

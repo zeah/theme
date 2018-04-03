@@ -1,9 +1,10 @@
 <?php 
-require_once 'inc/admin.php';
-require_once 'inc/page.php';
-require_once 'inc/shortcode.php';
+require_once 'inc/emt-admin.php';
+require_once 'inc/emt-page.php';
+require_once 'inc/emt-shortcode.php';
 require_once 'inc/settings/customizer.php';
 require_once 'inc/style_version.php';
+require_once 'inc/emt-redirect.php';
 
 add_action('after_setup_theme', 'emtheme_setup');
 
@@ -20,6 +21,9 @@ if (! function_exists('emtheme_setup')) {
         /* page-edit page stuff (meta boxes and saving) */
         Emtheme_Page::get_instance();
 
+        /* redirecting pages */
+        Emtheme_redirect::get_instance();
+
         /* shortcodes ([col]) */
         Emtheme_ShortCode::get_instance();
 
@@ -27,6 +31,7 @@ if (! function_exists('emtheme_setup')) {
         Emtheme_function::get_instance();
 
         Emtheme_customizer::get_instance();
+
 
     }
 }
