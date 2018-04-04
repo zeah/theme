@@ -13,7 +13,7 @@
 
 	var i = document.createElement('input');
 	i.classList.add('emtheme-search-input');
-	i.setAttribute('value', location.search.substring(3));
+	if (location.search && !location.search.includes('=')) i.setAttribute('value', location.search.substring(3));
 	i.setAttribute('type', 'search');
 	i.setAttribute('autocomplete', 'on');
 
@@ -58,20 +58,47 @@
 (function() {
 
 	var o = document.querySelector(".emtheme-mobile-icon");
-	var n = document.querySelector(".nav");
+	var n = document.querySelector(".menu");
 	o.addEventListener("click", function() {
 		n.classList.toggle("nav-show");
-		this.classList.toggle("nav-active");
+		// this.classList.toggle("nav-active");
 
-		var x = document.querySelectorAll(".em-nav-parent-container > .nav-show");
+		var x = document.querySelectorAll(".menu .nav-show");
 		for (xx of x)
 			xx.classList.remove("nav-show");
 	});
 
-	var m = document.querySelectorAll("span.em-nav-item");
-	for (var mm of m) 
-		mm.addEventListener("click", function() {
-			this.nextSibling.classList.toggle("nav-show");
+	var m = document.querySelectorAll('.page_item_has_children > a, .menu-item-has-children > a');
+
+	for (var mm of m)
+		mm.addEventListener("click", function(e) {
+			e.preventDefault();
+
+			// need to iterate through childnodes as number of nodes in "page menu" differs from custom menu
+			for (var c of this.parentNode.childNodes) {
+				if (c.className.includes('sub-menu') || c.className.includes('children')) 
+					c.classList.toggle("nav-show");
+			}
 		});
-		
+
+	if (window.innerWidth < 1024) {
+		var v = document.querySelectorAll('.page_item_has_children, .menu-item-has-children');
+		for (var vv of v) {
+			var a = null;
+			var ul = null;
+
+			for (var cv of vv.childNodes) {
+				if (cv.tagName == 'A') a = cv.cloneNode(true);
+				else if (cv.tagName == 'UL') ul = cv
+			}
+
+			var li = document.createElement('li');
+			li.classList.add('menu-item');
+			li.classList.add('page_item');
+			li.appendChild(a);
+
+			ul.insertBefore(li, ul.firstChild);
+		}
+	}
+
 })();

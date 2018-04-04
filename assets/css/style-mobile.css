@@ -113,42 +113,42 @@ p:empty {
 */
 
 /* container for nav bar - only activation icon visible */
-.nav-container {
-	position: relative; /* for aboslute positioned children */
+/*.nav-container {
+	position: relative; 
 	background-color: inherit;
 	font-size: 2rem;
 	z-index: 900;
-}
+}*/
 
 /*	google material icon 
 	navbar activation icon */
-.material-icons {
+/*.material-icons {
 	font-size: 4.6rem !important;
 	color: hsl(0, 0%, 90%) !important;
 	padding-right: 1rem;
-}
+}*/
 
 /* effect for activated activation icon */
-.nav-active {
+/*.nav-active {
 	text-shadow: 0 0 10px white;
-}
+}*/
 
 /* mobile top level dropdown */
-.nav {
+/*.nav {
 	display: none;
 	position: absolute;
 	top: 4rem;
 	right: 0;
 	background-color: inherit;
 	z-index: 999;
-}
+}*/
 
 /*.nav-mobile-top {*/
 	/*height: 32px;*/
 /*}*/
 
 /* element containing nav item */
-.em-nav-item {
+/*.em-nav-item {
 	background-color: inherit;
 	white-space: nowrap;
 	border-bottom: solid 1px hsl(0, 0%, 20%);
@@ -156,48 +156,48 @@ p:empty {
 }
 .em-nav-item:last-child {
 	border-bottom: none;
-}
+}*/
 
 /* anchor element of nav item*/
-.em-nav-lenke {
+/*.em-nav-lenke {
 	display: block;
 	text-decoration: none;
 	text-transform: capitalize;
 	color: hsl(0, 50%, 99%);
-}
+}*/
 
 /* special rule for nav items (<a>) in submenus */
-.em-nav-sublenke {
+/*.em-nav-sublenke {
 	font-size: 1.6rem;
 	color: hsl(0, 0%, 69%);
-}
+}*/
 
 /* nav item with submenu icon */
-.em-nav-item-parent:after {
+/*.em-nav-item-parent:after {
 	content: ' \25bc';
-}
+}*/
 
 /* start value for submenus */
-.em-nav-sub-container {
+/*.em-nav-sub-container {
 	display: none;
-}
+}*/
 
 /* special rule for nav items in submenus*/
-.em-nav-subitem {
+/*.em-nav-subitem {
 	border: none;
-	background-color: #e8e8e8;
+	background-color: #e8e8e8;*/
 	/*background-color: hsl(0, 0%, 20%);*/
-}
+/*}*/
 
 /* showing hidden submenu*/
-.nav-show {
+/*.nav-show {
 	display: block;
-}
+}*/
 
 /* visual marker for current page */
-.em-nav-current {
+/*.em-nav-current {
 	background-color: hsl(22, 40%, 20%);
-}
+}*/
 
 
 /*

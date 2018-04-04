@@ -31,6 +31,288 @@ echo '<link rel="preconnect" href="https://fonts.googleapis.com/">';
 echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
 echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';
 
+$colors = get_option('emtheme_color');
+$fonts = get_option('emtheme_font');
+
+$style = '<style>';
+$style .= '
+			.emtheme-title {
+				font-family: '.(isset($fonts['title']) ? $fonts['title'] : 'arial').';
+				font-weight: '.((isset($fonts['title_weight']) && $fonts['title_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['title_weight']))) : '400').';
+				font-size: '.(isset($fonts['title_size']) ? $fonts['title_size'].'rem' : '2.4rem').';
+			}
+
+			.emtheme-top-link, .emtheme-top-link:visited { 
+                color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; 
+            }
+
+			.emtheme-tagline,
+			.main {
+				font-family: '.(isset($fonts['standard']) ? $fonts['standard'] : 'arial').';
+				font-weight: '.((isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['standard_weight']))) : '400').';
+				font-size: '.(isset($fonts['standard_size']) ? $fonts['standard_size'].'rem' : '1.6rem').';
+			}
+
+			.content > p {
+				line-height: '.(isset($fonts['standard_lineheight']) ? esc_html($fonts['standard_lineheight']) : '1.6').';
+			}
+	
+			.menu-container {
+				font-family: '.(isset($fonts['nav']) ? $fonts['nav'] : 'arial').';
+				font-weight: '.((isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['nav_weight']))) : '400').';
+				font-size: '.(isset($fonts['nav_size']) ? $fonts['nav_size'].'rem' : '1.8rem').';
+			}
+	
+			.menu ul, ul.menu {
+				padding: 0;
+				margin: 0 auto;
+			}
+			.menu li {
+				list-style: none;
+			}
+
+			@media screen and (min-width: 1024px) {
+				.emtop {
+					background-color: '.(isset($colors['emtop_bg']) ? esc_html($colors['emtop_bg']) : Emtheme_style::$colors['nav']['bg']).';
+				}
+
+				.menu-container { 
+					background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).';
+				}
+				.menu {
+					width: 112rem;
+					margin: auto;
+				}
+				.emtheme-mobile-icon {
+					display: none;
+				}
+
+			}
+			@media screen and (max-width: 1023px) {
+				.emtop {
+					background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).';
+				}
+
+				.emtheme-mobile-icon {
+					color: white;
+					font-size: 4.6rem !important;
+				}
+
+				.menu-container {
+					position: relative;
+				}
+				.menu {
+					display: none;
+					position: absolute;
+					top: 4.6rem;
+					right: 0;
+					background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).';
+				}
+				.nav-show {
+					display: block !important;
+				}
+			}
+			';
+
+if (!has_nav_menu('header-menu')) {
+	$style .= '@media screen and (min-width: 1024px) {
+					.menu > ul {
+						display: flex;
+					}
+					.page_item > a { 
+						min-width: 12rem;
+						line-height: 1.5;
+						color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
+						text-decoration: none;
+						display: block;
+						border-right: solid 1px rgba(255,255,255,.5);
+						text-align: center;
+						padding: 0 1rem;
+						white-space: nowrap; 
+					}
+					.page_item:last-child > a {
+						border-right: none;
+					}
+
+					.page_item > a:hover {
+	                    background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; 
+					}
+
+					.children {
+						display: none;
+						position: absolute;
+						background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
+					}
+
+
+					.page_item_has_children > a:after {
+						content: " \25bc";
+						font-size: 1.4rem;
+					}
+					.page_item_has_children:hover > .children {
+						display: block;
+					}
+					.children > .page_item > a {
+		                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
+		                padding: 0.5rem 1rem; 
+					}
+
+					.children > .page_item > a:hover {
+	                    background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
+					}
+
+					.current_page_item > a {
+	                    background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
+					}
+
+					.current_page_item > a:hover {
+						background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
+					}
+				}
+				@media screen and (max-width: 1023px) {
+					.page_item > a {
+						display: block;
+						min-width: 12rem;
+						padding: 1rem;
+						line-height: 1.5;
+						border-right: solid 1px rgba(255,255,255,.5);
+						color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
+						text-decoration: none;
+						text-align: left;
+						white-space: nowrap;
+						font-size: 1.8rem; 
+					}
+
+					.page_item_has_children > a:after {
+						content: " \25bc";
+						font-size: 1.4rem;
+					}
+
+					.children {
+						display: none;
+						background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
+					}
+					.children > .page_item > a {
+		                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
+		                padding: 0.5rem 1rem; 
+					}
+
+					.children > .page_item > a:hover {
+	                    background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
+					}
+
+					.current_page_item > a {
+	                    background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
+					}
+
+					.current_page_item > a:hover {
+						background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
+					}
+
+				}
+				';
+}
+else {
+	$style .= '@media screen and (min-width: 1024px) {
+				.menu {
+					display: flex;
+					padding: 0;
+				}
+				.menu-item > a { 
+					min-width: 12rem;
+					line-height: 1.5;
+					color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
+					text-decoration: none;
+					display: block;
+					border-right: solid 1px rgba(255,255,255,.5);
+					text-align: center;
+					padding: 0 1rem;
+					white-space: nowrap; 
+				}
+				.menu-item:last-child > a {
+					border-right: none;
+				}
+				.menu-item > a:hover {
+	                background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; 
+				}
+				.sub-menu {
+					display: none;
+					position: absolute;
+					background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
+				}
+
+				.menu-item-has-children > a:after {
+					content: " \25bc";
+					font-size: 1.4rem;
+				}
+				.menu-item-has-children:hover > .sub-menu {
+					display: block;
+				}
+				.sub-menu > .menu-item > a {
+	                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
+	                padding: 0.5rem 1rem; 
+				}
+
+				.sub-menu > .menu-item > a:hover {
+	                background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
+				}
+
+				.current-menu-item > a {
+	                background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
+				}
+
+				.current-menu-item > a:hover {
+					background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
+				}
+			}
+			@media screen and (max-width: 1023px) {
+					.menu-item > a {
+						display: block;
+						min-width: 12rem;
+						padding: 1rem;
+						line-height: 1.5;
+						border-right: solid 1px rgba(255,255,255,.5);
+						color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
+						text-decoration: none;
+						text-align: left;
+						white-space: nowrap;
+						font-size: 1.8rem; 
+					}
+
+					.menu-item-has-children > a:after {
+						content: " \25bc";
+						font-size: 1.4rem;
+					}
+
+					.sub-menu {
+						display: none;
+						background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
+					}
+					.sub-menu > .menu-item > a {
+		                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
+		                padding: 0.5rem 1rem; 
+					}
+
+					.sub-menu > .menu-item > a:hover {
+	                    background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
+					}
+
+					.current-menu-item > a {
+	                    background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
+					}
+
+					.current-menu-item > a:hover {
+						background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
+					}
+
+				}
+			';
+}
+
+$style .= '</style>';
+echo $style;
+
+
 wp_head();
 echo '</head><body style="opacity: 0">';
 
@@ -63,123 +345,19 @@ if (! $mobile) echo '<div class="emtheme-search-box"></div>';
 
 echo '</div>'; // end of emtheme-site-identitity (logo, title, tagline)
 
-// menu
-// hide if option active and user not logged in.
-if ( (!get_option('emtheme_shownav')) || current_user_can( 'read' )) {
-	$nav = '<div class="nav-container">';
 
-	// mobile activation icon (css hidden on desktop)
-	$nav .= '<i class="material-icons emtheme-mobile-icon emtheme-mobile">menu</i>';
-
-	// flexbox for nav items and structured data
-	$nav .= '<nav class="nav" itemscope itemtype="http://schema.org/SiteNavigationElement">';
-
-	// page info database retrieval 
-	$args = [
-		'sort_order' => 'desc',
-		'sort_column' => 'menu_order',
-		'post_status' => 'publish'
-	];
-
-	// helper class for menu layout
-	class Nav {
-		public $title;
-		public $link;
-		public $children = array();
-	}
-
-	// sorting pages into iterator with correct layout
-	$titles = array();
-	foreach (get_pages($args) as $key => $value) {
-
-		// checking if to include page in nav menu
-		$meta = get_post_meta($value->ID, 'showinnav');
-		if (isset($meta[0]) && $meta[0] == 'on')
-			continue;
-
-		// adding to top menu layer to layout
-		if ($value->post_parent == 0) {
-			$mobile_added = false;
-			$item = new Nav();
-			$item->title = $value->post_title;
-			$item->link = get_page_link($value->ID);
-
-			$titles[$value->ID] = $item;
-		}
-
-		// adding as child to top layer
-		elseif (isset($titles[$value->post_parent])) {
-			$item = $titles[$value->post_parent];
-
-			// if mobile then top child is same as top menu item (as on mobile hover is impossible)
-			// (this adds top menu item as a child on mobile devices)
-			if ($mobile && !$mobile_added) {
-				$mobile_added = true;
-				$item->link = null;
-				array_push($item->children, ['title' => 'Alle '.$item->title, 'link' => get_page_link($value->post_parent)]);
-			}
-
-			// adding child to layout
-			array_push($item->children, ['title' => $value->post_title, 'link' => get_page_link($value->ID)]);
-		}
-	}
-
-	$link = is_search() ? '' : get_permalink();
-
-	// adding menu items to html
-	foreach ($titles as $key => $value) {
-		$is_parent = false;
-		$parent_icon = '';
-
-		// css class for top menu item (either .em-nav-parent-container or .em-nav-item)
-		$par_link = ' em-nav-flexitem';
-
-		// css class for current page shown.
-		$cur_link = '';
-
-		// if (get_permalink() == $value->link)
-		if ($link == $value->link) $cur_link = ' em-nav-current';
-
-		// nav item has child pages (sub menu)
-		if (sizeof($value->children) > 0) $is_parent = true;
-
-		// adding parent container for submenu
-		if  ($is_parent) {
-			$nav .= '<div class="em-nav-parent-container'.$par_link.'">';
-			$parent_icon = ' em-nav-item-parent';
-			$par_link = '';
-		}
-
-		// adding nav item
-		if ($value->link !== null) 	$nav .= '<div class="em-nav-item'.$par_link.$cur_link.' em-nav-item-top" itemprop="name"><a class="em-nav-lenke'.esc_attr($parent_icon).'" itemprop="url" href="'.esc_url($value->link).'">'.esc_html($value->title).'</a></div>';
-		
-		// mobile nav item with children does not have a link attr
-		else 						$nav .= '<span class="em-nav-item em-nav-lenke'.esc_attr($parent_icon).'">'.esc_html($value->title).'</span>'; // mobile only 
-
-		// adding children and their container
-		if ($is_parent) {
-			$nav .= '<div class="em-nav-sub-container">';
-			foreach ($value->children as $k => $v) {
-				$cur_link = '';
-
-				if  ($link == $v['link']) $cur_link = ' em-nav-current';
-
-				$nav .= '<div class="em-nav-item em-nav-subitem'.$cur_link.'"><a class="em-nav-lenke em-nav-sublenke" href="'.esc_url($v['link']).'">'.esc_html($v['title']).'</a></div>';
-			}
-			$nav .= '</div>';
-		}
-
-		// end of .em-nav-parent-container
-		if ($is_parent) $nav .= '</div>';
-	}
-
-	// end of flexbox
-	$nav .= '</nav>';
-
-	// end of .nav-container
-	$nav .= '</div>';
-
-	// printing html
-	echo $nav;
-}
+// nav menu or a default nav menu of pages
+echo '<div class="menu-container"><i class="material-icons emtheme-mobile-icon">menu</i>'.wp_nav_menu( array( 'theme_location' => 'header-menu', 'fallback_cb' => 'default_menu','depth' => 2, 'echo' => false) ).'</div>';
 echo '</div>'; // end of emtop
+
+
+function default_menu() {
+	// getting pages to ignore
+	$list = get_pages(['meta_key' => 'showinnav', 'meta_value' => 'on']);
+	$ignore = [];
+	foreach($list as $li)
+		array_push($ignore, $li->ID);	
+
+	// returning pages as menu 
+	return wp_page_menu(['exclude' => implode(',', $ignore), 'echo' => false, 'depth' => 2]);
+}

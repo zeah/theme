@@ -81,11 +81,11 @@ p:empty {
 
 /* home anchor surrounding logo and title/tagline */
 .emtheme-top-link {
-	color: #000000;
+	/*color: #000000;*/
 	text-decoration: none;
 }
 .emtheme-top-link:visited {
-	color: black;
+	/*color: black;*/
 }
 
 .emtheme-toptext-container {
@@ -94,7 +94,7 @@ p:empty {
 
 /* div for site title */
 .emtheme-title {
-	font-size: 4.6rem;
+	/*font-size: 4.6rem;*/
 	/*font-weight: 700;*/
 	font-family: "Open Sans Condensed", sans-serif;
 }
@@ -103,7 +103,7 @@ p:empty {
 .emtheme-tagline {
 	margin-left: 4rem;
 
-	font-size: 1.6rem;
+	/*font-size: 1.6rem;*/
 }
 
 .emtheme-search-box {
@@ -160,9 +160,9 @@ p:empty {
 */
 
 /* container for top menu */
-.nav-container {
+/*.nav-container {
 	margin-bottom: 1rem;
-	background-color: #000000;
+	background-color: #000000;*/
 	/*border-bottom: 2px solid hsl(25, 100%, 60%);*/
 
 	/*background-image: linear-gradient(
@@ -177,30 +177,24 @@ p:empty {
 			hsl(0, 0%, 10%) 50%, 
 			hsl(0, 0%, 15%) 90%
 			);*/
-}
+/*}*/
 
 /* flexbox for navbar */
-.nav {
+/*.nav {
 	display: flex;
-	/*flex-wrap: wrap;*/
 	width: 112rem;
 	margin: auto;
 
 	font-family: 'Roboto', sans-serif;
-	/*font-family: 'Open Sans Condensed', sans-serif;*/
 	font-size: 2rem;
 	font-weight: 500;
-	/*font-weight: 700;*/
 	text-transform: capitalize;
 	text-align: center;
 	white-space: nowrap;
-	/*background-color: hsl(240, 100%, 20%);*/
-
-	/*background-image: inherit;*/
-}
+}*/
 
 /* div for nav part */
-.em-nav-item {
+/*.em-nav-item {
 	border-right: solid 1px hsl(0, 0%, 40%);
 	display: block;
 	min-width: 13rem;
@@ -209,21 +203,21 @@ p:empty {
 }
 .em-nav-item:last-child {
 	border-right: none;
-}
+}*/
 
 /* adding down arrow to menu parents */
-.em-nav-item-parent:after {
+/*.em-nav-item-parent:after {
 	content: ' \25bc';
 	font-size: 1.4rem;
-}
+}*/
 
 /* hover effect on nav items */
-.em-nav-item:hover {
+/*.em-nav-item:hover {
 	background-color: #444444;
-}
+}*/
 
 /* anchor element in nav items */
-.em-nav-lenke {
+/*.em-nav-lenke {
 	display: block;
 	
 	padding: 0.5rem 1rem;
@@ -231,65 +225,65 @@ p:empty {
 
 	text-decoration: none;
 	color: #ffffff;
-}
+}*/
 
 /* show sub-menus on hover */
-.em-nav-parent-container:hover .em-nav-sub-container {
+/*.em-nav-parent-container:hover .em-nav-sub-container {
 	display: block;
-}
+}*/
 
 /* submenu default css */ 
-.em-nav-sub-container {
+/*.em-nav-sub-container {
 	display: none;
 	position: absolute;
 	background-color: #e8e8e8;
-	z-index: 9999; /* to be above content in .main element */
-}
+	z-index: 9999; 
+}*/
 
 /* container for anchor element in submenus */
-.em-nav-subitem {
+/*.em-nav-subitem {
 	text-align: left;
 	margin-bottom: 1rem;
-	border-right: none; /* removing inherited border */
+	border-right: none; 
 	
-	background-image: none; /* removing inherited bg-image */
-}
+	background-image: none; 
+}*/
 
 /* container for anchor element in submenus */
-.em-nav-subitem:hover {
-	background-image: none; /* removing inherited bg-image */
+/*.em-nav-subitem:hover {
+	background-image: none; 
 	background-color: #bfbfbf;
-}
+}*/
 
 /* adds border-bottom equal to of .nav */
-.em-nav-subitem:last-child {
+/*.em-nav-subitem:last-child {
 	border-bottom: 2px solid hsl(25, 100%, 60%);
 	margin-bottom: 0;
-}
+}*/
 
 /* menu anchor font color */
-.em-nav-sublenke {
+/*.em-nav-sublenke {
 	color: #000000;
-}
+}*/
 
 /* visual marker for current page */
-.em-nav-current {
-	background-color: #222222;
+/*.em-nav-current {
+	background-color: #222222;*/
 		/*background-image: linear-gradient(0deg, 
 		hsl(22, 90%, 35%), 
 		hsl(22, 90%, 30%) 50%, 
 		hsl(22, 90%, 35%) 90%
 		);*/
-}
-.em-nav-current:hover {
-	background-color: #555555;
+/*}*/
+/*.em-nav-current:hover {
+	background-color: #555555;*/
 
 		/*background-image: linear-gradient(0deg, 
 		hsl(22, 70%, 35%), 
 		hsl(22, 70%, 30%) 50%, 
 		hsl(22, 70%, 35%) 90%
 		);*/
-}
+/*}*/
 
 
 /*
@@ -349,8 +343,8 @@ p:empty {
 	width: 100%;
 	padding: 1rem 3rem;
 	/*margin: 3rem;*/
-	font-size: 1.6rem;
-	line-height: 1.6;
+	/*font-size: 1.6rem;*/
+	/*line-height: 1.6;*/
 
 	padding-bottom: 10vh;
 }

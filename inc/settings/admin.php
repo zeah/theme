@@ -53,7 +53,7 @@ final class Emtheme_Options {
 		$args = [ 'sanitize_callback' => array($this, 'san_callback') ];
 
 		register_setting('em_options_admin', 'em_admin_maint', $args);
-		register_setting('em_options_admin', 'emtheme_shownav', $args);
+		// register_setting('em_options_admin', 'emtheme_shownav', $args);
 		register_setting('em_options_admin', 'emtheme_styling', $args);
 		register_setting('em_options_admin', 'emtheme_css', $args);
 	}
@@ -62,8 +62,8 @@ final class Emtheme_Options {
 		add_settings_section( 'em_settings_maint', 'Maintenance mode', array($this, 'maint_text_callback'), 'em-admin-page' );
 		add_settings_field( 'em-admin-active', 'Maintenance Aktiv', array($this, 'maint_callback'), 'em-admin-page', 'em_settings_maint' );
 
-		add_settings_section( 'em_settings_disnav', 'Automatic Menu', array($this, 'disnav_text_callback'), 'em-admin-page' );
-		add_settings_field( 'emtheme-shownav', 'Disable Automatic Menu', array($this, 'shownav_callback'), 'em-admin-page', 'em_settings_disnav' );
+		// add_settings_section( 'em_settings_disnav', 'Automatic Menu', array($this, 'disnav_text_callback'), 'em-admin-page' );
+		// add_settings_field( 'emtheme-shownav', 'Disable Automatic Menu', array($this, 'shownav_callback'), 'em-admin-page', 'em_settings_disnav' );
 	
 		add_settings_section( 'em_settings_styling', 'Styling', array($this, 'styling_text_callback'), 'em-admin-page' );
 		add_settings_field( 'emtheme-styling-one', 'Styling one', array($this, 'styling_one_callback'), 'em-admin-page', 'em_settings_styling' );
