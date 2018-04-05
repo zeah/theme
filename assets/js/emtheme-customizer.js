@@ -94,37 +94,45 @@ $(() => {
 	// emtheme colors
 	var activeHover = $('.em-nav-item').css('background-color');;
 
-	api( 'emtheme_color[emtop_bg]', function( value ) {
-		value.bind( function( newval ) {
-			$('.emtop').css( 'background-color', newval );
-		});
-	});
+	api('emtheme_color[emtop_bg]', (value) => value.bind((newval) => $('.emtop').css('color', newval)));
+	// api( 'emtheme_color[emtop_bg]', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$('.emtop').css( 'background-color', newval );
+	// 	});
+	// });
 
+	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-top-link').css('color', newval)));
+	// api( 'emtheme_color[emtop_font]', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$('.emtheme-top-link').css( 'color', newval );
+	// 	});
+	// });
 
-	api( 'emtheme_color[emtop_font]', function( value ) {
-		value.bind( function( newval ) {
-			$('.emtheme-top-link').css( 'color', newval );
-		});
-	});
+	// navbar colors
+	api('emtheme_color[nav_font]', (value) => value.bind((newval) => $('.page_item > a, .menu-item > a').css('color', newval)));
 
-	api( 'emtheme_color[nav_font]', function( value ) {
-		value.bind( function( newval ) {
-			$('.em-nav-lenke').css( 'color', newval );
-		});
-	});
-	
-	api( 'emtheme_color[nav_bg]', function( value ) {
-		value.bind( function( newval ) {
-			$('.nav-container').css( 'background-color', newval );
-			if (screen.width < 961)
-				$('.emtop').css('background-color', newval);
-		});
-	});
+	// api( 'emtheme_color[nav_font]', function( value ) {
+	// 	value.bind((newval) => $('.page_item > a, .menu-item > a').css('color', newval));
+	// 	// value.bind( function( newval ) {
+	// 	// 	$('.page_item > a, .menu-item > a').css( 'color', newval );
+	// 	// });
+	// });
+
+	api('emtheme_color[nav_bg]', (value) => value.bind((newval) => {
+		$('.menu-container').css('background-color', newval)
+		if (screen.width < 1024) $('.emtop').css('background-color', newval);
+	}));	
+	// api( 'emtheme_color[nav_bg]', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$('.menu-container').css( 'background-color', newval );
+	// 		if (screen.width < 1024) $('.emtop').css('background-color', newval);
+	// 	});
+	// });
+
 
 	api( 'emtheme_color[nav_bg_hover]', function( value ) {
 		value.bind( function( newval ) {
-			// special hover case
-			$('.em-nav-item-top').hover(
+			$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a').hover(
 				function() {
   					$(this).css('background-color', newval);
 				},
