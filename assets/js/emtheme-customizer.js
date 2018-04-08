@@ -56,139 +56,91 @@ $(() => {
 	// 		);
 
 	// site identity
-	api( 'blogname', function( value ) {
-		value.bind( function( newval ) {
+	api('blogname', (value) => value.bind((newval) => $('.emtheme-title').html(newval)));
+	// api( 'blogname', function( value ) {
+	// 	value.bind( function( newval ) {
 
-			// api.setting('blogdescription').value(newval);
-			// console.log(api('blogdescription').set('test'));
+	// 		$( '.emtheme-title' ).html( newval );
+	// 	} );
+	// } );
 
-			$( '.emtheme-title' ).html( newval );
-		} );
-	} );
 
-	api( 'blogdescription', function( value ) {
-		value.bind( function( newval ) {
-			$( '.emtheme-tagline' ).html( newval );
-		} );
-	} );
+	api('blogdescription', (value) => value.bind((newval) => $('.emtheme-tagline').html(newval)));
+	// api( 'blogdescription', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$( '.emtheme-tagline' ).html( newval );
+	// 	} );
+	// } );
 
-	api( 'emtheme_title_mobile', function( value ) {
-		value.bind( function( newval ) {
-			$( '.emtheme-mobile-title > a' ).html( newval );
-		} );
-	} );
+	api('emtheme_title_mobile', (value) => value.bind((newval) => $('.emtheme-mobile-title > a').html(newval)));
+	// api( 'emtheme_title_mobile', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$( '.emtheme-mobile-title > a' ).html( newval );
+	// 	} );
+	// } );
 
-	api( 'emtheme_logo', function( value ) {
-		value.bind( function( newval ) {
-			$( '.emtheme-logo' ).attr('src', newval );
-		} );
-	} );
+	api('emtheme_logo', (value) => value.bind((newval) => $('.emtheme-logo').attr('src', newval)));
+	// api( 'emtheme_logo', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$( '.emtheme-logo' ).attr('src', newval );
+	// 	} );
+	// } );
 
-	api( 'emtheme_logo_mobile', function( value ) {
-		value.bind( function( newval ) {
-			$( '.emtheme-logo-mobile' ).attr('src', newval );
-		} );
-	} );
+	api('emtheme_logo_mobile', (value) => value.bind((newval) => $('.emtheme-logo-mobile').attr('src', newval)));
+	// api( 'emtheme_logo_mobile', function( value ) {
+	// 	value.bind( function( newval ) {
+	// 		$( '.emtheme-logo-mobile' ).attr('src', newval );
+	// 	} );
+	// } );
 
 
 	// emtheme colors
-	var activeHover = $('.em-nav-item').css('background-color');;
+	var activeHover = $('.current_page_item > a').css('background-color') || $('.current-menu-item > a').css('background-color');
 
-	api('emtheme_color[emtop_bg]', (value) => value.bind((newval) => $('.emtop').css('color', newval)));
-	// api( 'emtheme_color[emtop_bg]', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$('.emtop').css( 'background-color', newval );
-	// 	});
-	// });
+	api('emtheme_color[emtop_bg]', (value) => value.bind((newval) => $('.emtop').css('background-color', newval)));
 
 	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-top-link').css('color', newval)));
-	// api( 'emtheme_color[emtop_font]', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$('.emtheme-top-link').css( 'color', newval );
-	// 	});
-	// });
 
 	// navbar colors
-	api('emtheme_color[nav_font]', (value) => value.bind((newval) => $('.page_item > a, .menu-item > a').css('color', newval)));
-
-	// api( 'emtheme_color[nav_font]', function( value ) {
-	// 	value.bind((newval) => $('.page_item > a, .menu-item > a').css('color', newval));
-	// 	// value.bind( function( newval ) {
-	// 	// 	$('.page_item > a, .menu-item > a').css( 'color', newval );
-	// 	// });
-	// });
+	api('emtheme_color[nav_font]', (value) => value.bind((newval) => $('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a').css('color', newval)));
 
 	api('emtheme_color[nav_bg]', (value) => value.bind((newval) => {
 		$('.menu-container').css('background-color', newval)
 		if (screen.width < 1024) $('.emtop').css('background-color', newval);
 	}));	
-	// api( 'emtheme_color[nav_bg]', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$('.menu-container').css( 'background-color', newval );
-	// 		if (screen.width < 1024) $('.emtop').css('background-color', newval);
-	// 	});
-	// });
 
-
-	api( 'emtheme_color[nav_bg_hover]', function( value ) {
-		value.bind( function( newval ) {
-			$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a').hover(
-				function() {
-  					$(this).css('background-color', newval);
-				},
-				function() {
-					$(this).css('background-color', 'transparent');
-				}
+	api('emtheme_color[nav_bg_hover]', (value) => value.bind((newval) => {
+			$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a, .current_page_item > a, .current-menu-item > a').hover(
+				function() { $(this).css('background-color', newval); },
+				function() { $(this).css('background-color', 'transparent'); }
 			);
-		});
-	});
+	}));
 
-	api( 'emtheme_color[navsub_font]', function( value ) {
-		value.bind( function( newval ) {
-			$('.em-nav-sublenke').css( 'color', newval );
-		});
-	});
+	api('emtheme_color[navsub_font]', (value) => value.bind((newval) => $('.children > li > a, .sub-menu > li > a').css('color', newval)));
 
-	api( 'emtheme_color[navsub_bg]', function( value ) {
-		value.bind( function( newval ) {
-			console.log('test');
-			$('.em-nav-sub-container').css( 'background-color', newval );
-			$('.em-nav-subitem').css( 'background-color', newval );
-		});
-	});
 
-	api( 'emtheme_color[navsub_bg_hover]', function( value ) {
-		value.bind( function( newval ) {
-			$('.em-nav-subitem').hover(
-				function() {
-  					$(this).css('background-color', newval);
-				},
-				function() {
-					$(this).css('background-color', 'transparent');
-				}
+	api('emtheme_color[navsub_bg]', (value) => value.bind((newval) => $('.children, .sub-menu').css('background-color', newval)));
+
+
+	api('emtheme_color[navsub_bg_hover]', (value) => value.bind((newval) => {
+			$('.children > li > a, .sub-menu > li > a').hover(
+				function() { $(this).css('background-color', newval); },
+				function() { $(this).css('background-color', 'transparent'); }
 			);
-		});
-	});
+		}));
 
-	api( 'emtheme_color[active]', function( value ) {
-		value.bind( function( newval ) {
-			activeHover = newval;
-			$('.em-nav-current').css( 'background-color', newval );
-		});
-	});
+	api('emtheme_color[active]', (value) => value.bind((newval) => {
+		activeHover = newval;
+		$('.current_page_item > a, .current-menu-item > a').css( 'background-color', newval );
+	}));
 
-	api( 'emtheme_color[active_hover]', function( value ) {
-		value.bind( function( newval ) {
-			$('.em-nav-current').hover(
-				function() {
-  					$(this).css('background-color', newval);
-				},
-				function() {
-					$(this).css('background-color', activeHover);
-				}
-			);
-		});
-	});
+	api('emtheme_color[active_hover]', (value) => value.bind((newval) => {
+		console.log(newval);
+		$('.current_page_item > a, .current-menu-item > a').hover(
+			function() { $(this).css('background-color', newval); },
+			function() { $(this).css('background-color', activeHover); }
+		);
+	}));
 
 
 	/*
