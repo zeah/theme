@@ -34,299 +34,59 @@ echo '<link rel="preconnect" href="https://fonts.googleapis.com/">';
 echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
 echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';
 
+
+$links = apply_filters('add_emtheme_links', []);
+
+/* NAVBAR CSS as inline css */
 echo $css->get_css();
 
-// $colors = get_option('emtheme_color');
-// $fonts = get_option('emtheme_font');
+$out_link = '<link href="https://fonts.googleapis.com/css?family=';
+foreach($links as $link => $weights) {
+	$out = str_replace(' ', '+', $link);
+	// $out .= 'link href="https://fonts.googleapis.com/css?family='.str_replace(' ', '+', $link);
 
-// $style = '<style>';
-// $style .= '
-// 			.emtheme-title {
-// 				font-family: '.(isset($fonts['title']) ? $fonts['title'] : 'verdana').';
-// 				font-weight: '.((isset($fonts['title_weight']) && $fonts['title_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['title_weight']))) : '400').';
-// 				font-size: '.(isset($fonts['title_size']) ? $fonts['title_size'].'rem' : '4.6rem').';
-// 			}
+	if (sizeof($weights) > 0) $out .= ':';
 
-// 			.emtheme-top-link, .emtheme-top-link:visited { 
-//                 color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; 
-//             }
+	foreach($weights as $weight)
+		if ($weight) $out.= $weight.',';
 
-// 			.emtheme-tagline,
-// 			.main {
-// 				font-family: '.(isset($fonts['standard']) ? $fonts['standard'] : 'arial').';
-// 				font-weight: '.((isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['standard_weight']))) : '400').';
-// 				font-size: '.(isset($fonts['standard_size']) ? $fonts['standard_size'].'rem' : '1.6rem').';
-// 			}
+	$out = rtrim($out, ',');
+	$out = ltrim($out, '|:');
 
-// 			.content > p {
-// 				line-height: '.(isset($fonts['standard_lineheight']) ? esc_html($fonts['standard_lineheight']) : '1.6').';
-// 			}
-	
-// 			.menu-container {
-// 				font-family: '.(isset($fonts['nav']) ? $fonts['nav'] : 'arial').';
-// 				font-weight: '.((isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['nav_weight']))) : '400').';
-// 				font-size: '.(isset($fonts['nav_size']) ? $fonts['nav_size'].'rem' : '1.8rem').';
-// 			}
-	
-// 			.menu ul, ul.menu {
-// 				padding: 0;
-// 				margin: 0 auto;
-// 			}
-// 			.menu li {
-// 				list-style: none;
-// 			}
-
-// 			@media screen and (min-width: 1024px) {
-// 				.emtop {
-// 					background-color: '.(isset($colors['emtop_bg']) ? esc_html($colors['emtop_bg']) : Emtheme_style::$colors['nav']['bg']).';
-// 				}
-
-// 				.menu-container { 
-// 					background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).';
-// 				}
-// 				.menu {
-// 					width: 112rem;
-// 					margin: auto;
-// 				}
-// 				.emtheme-mobile-icon {
-// 					display: none;
-// 				}
-
-// 			}
-// 			@media screen and (max-width: 1023px) {
-// 				.emtop {
-// 					background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).';
-// 				}
-
-// 				.emtheme-mobile-icon {
-// 					color: white;
-// 					font-size: 4.6rem !important;
-// 				}
-
-// 				.menu-container {
-// 					position: relative;
-// 				}
-// 				.menu {
-// 					display: none;
-// 					position: absolute;
-// 					width: 100vw;
-// 					top: 4.6rem;
-// 					right: 0;
-// 					background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).';
-// 				}
-// 				.nav-show {
-// 					display: block !important;
-// 				}
-// 				.emtheme-mob-arrow {
-// 					float: right;
-// 					display: inline;
-// 					color: white;
-// 					margin-right: 3rem;
-// 				}
-// 				.emtheme-mob-arrow:after {
-// 					content: " \25bc";
-// 				}
-// 			}
-// 			';
-
-// if (!has_nav_menu('header-menu')) {
-// 	$style .= '@media screen and (min-width: 1024px) {
-// 					.menu > ul {
-// 						display: flex;
-// 					}
-// 					.page_item > a { 
-// 						display: block;
-// 						min-width: 12rem;
-// 						padding: 0.5rem 1rem;
-// 						border-right: solid 1px rgba(255,255,255,.5);
-// 						color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
-// 						text-align: center;
-// 						text-decoration: none;
-// 						white-space: nowrap; 
-// 					}
-// 					.page_item:last-child > a {
-// 						border-right: none;
-// 					}
-
-// 					.page_item > a:hover {
-// 	                    background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; 
-// 					}
-
-// 					.children {
-// 						display: none;
-// 						position: absolute;
-// 						background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
-// 					}
+	$out .= '|';
 
 
-// 					.page_item_has_children > a:after {
-// 						content: " \25bc";
-// 						font-size: 1.4rem;
-// 					}
-// 					.page_item_has_children:hover > .children {
-// 						display: block;
-// 					}
-// 					.children > .page_item > a {
-// 		                padding: 0.5rem 1rem; 
-// 		                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
-// 					}
+	$out_link .= $out;
+}
 
-// 					.children > .page_item > a:hover {
-// 	                    background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
-// 					}
-
-// 					.current_page_item > a {
-// 	                    background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
-// 					}
-
-// 					.current_page_item > a:hover {
-// 						background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
-// 					}
-// 				}
-// 				@media screen and (max-width: 1023px) {
-// 					.page_item {
-// 						display: inline-block;
-// 						width: 100%;
-// 						margin: 2rem 0;
-// 					}
-// 					.page_item > a {
-// 						min-width: 12rem;
-// 						padding: 0.5rem 3rem;
-// 						color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
-// 						text-decoration: none;
-// 						text-align: left;
-// 						white-space: nowrap;
-// 					}
-
-// 					/*.page_item_has_children > a:after {
-// 						content: " \25bc";
-// 						font-size: 1.4rem;
-// 					}*/
-
-// 					.children {
-// 						display: none;
-// 						background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
-// 					}
-// 					.children > .page_item > a {
-// 		                padding: 0.5rem 1rem; 
-// 		                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
-// 					}
-
-// 					.children > .page_item > a:hover {
-// 	                    background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
-// 					}
-
-// 					.current_page_item > a {
-// 	                    background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
-// 					}
-
-// 					.current_page_item > a:hover {
-// 						background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
-// 					}
-
-// 				}
-// 				';
-// }
-// else {
-// 	$style .= '@media screen and (min-width: 1024px) {
-// 				.menu {
-// 					display: flex;
-// 					padding: 0;
-// 				}
-// 				.menu-item > a { 
-// 					display: block;
-// 					min-width: 12rem;
-// 					padding: 0.5rem 1rem;
-// 					border-right: solid 1px rgba(255,255,255,.5);
-// 					color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
-// 					text-decoration: none;
-// 					text-align: center;
-// 					white-space: nowrap; 
-// 				}
-// 				.menu-item:last-child > a {
-// 					border-right: none;
-// 				}
-// 				.menu-item > a:hover {
-// 	                background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; 
-// 				}
-// 				.sub-menu {
-// 					display: none;
-// 					position: absolute;
-// 					background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
-// 				}
-
-// 				.menu-item-has-children > a:after {
-// 					content: " \25bc";
-// 					font-size: 1.4rem;
-// 				}
-// 				.menu-item-has-children:hover > .sub-menu {
-// 					display: block;
-// 				}
-// 				.sub-menu > .menu-item > a {
-// 	                padding: 0.5rem 1rem; 
-// 	                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
-// 				}
-
-// 				.sub-menu > .menu-item > a:hover {
-// 	                background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
-// 				}
-
-// 				.current-menu-item > a {
-// 	                background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
-// 				}
-
-// 				.current-menu-item > a:hover {
-// 					background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
-// 				}
-// 			}
-// 			@media screen and (max-width: 1023px) {
-// 					.menu-item > a {
-// 						display: block;
-// 						min-width: 12rem;
-// 						padding: 1rem;
-// 						border-right: solid 1px rgba(255,255,255,.5);
-// 						color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).';
-// 						text-decoration: none;
-// 						text-align: left;
-// 						white-space: nowrap;
-// 					}
-
-// 					.menu-item-has-children > a:after {
-// 						content: " \25bc";
-// 						font-size: 1.4rem;
-// 					}
-
-// 					.sub-menu {
-// 						display: none;
-// 						background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
-// 					}
-// 					.sub-menu > .menu-item > a {
-// 		                padding: 1rem; 
-// 		                color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).';
-// 					}
-
-// 					.sub-menu > .menu-item > a:hover {
-// 	                    background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
-// 					}
-
-// 					.current-menu-item > a {
-// 	                    background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
-// 					}
-
-// 					.current-menu-item > a:hover {
-// 						background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; 
-// 					}
-
-// 				}
-// 			';
-// }
-
-// $style .= '</style>';
-// echo $style;
+$out_link = rtrim($out_link, '|');
+$out_link .= '" rel="stylesheet">';
+echo $out_link;
 
 
 wp_head();
 echo '</head><body style="opacity: 0">';
+
+// $out_link = 'link href="https://fonts.googleapis.com/css?family=';
+// foreach($links as $link => $weights) {
+// 	$out_link .= str_replace(' ', '+', $link);
+// 	// $out_link .= 'link href="https://fonts.googleapis.com/css?family='.str_replace(' ', '+', $link);
+
+// 	if (sizeof($weights) > 0) $out_link .= ':';
+
+// 	foreach($weights as $weight)
+// 		if ($weight) $out_link.= $weight.',';
+
+// 	$out_link = rtrim($out_link, ',');
+
+// 	$out_link .= '|';
+// }
+
+// $out_link = rtrim($out_link, '|');
+// $out_link .= '" rel="stylesheet"<br>';
+// echo $out_link;
+
+// print_r($links);
 
 // top container 
 $top = '<div class="emtop"><div class="emtheme-site-identity">';

@@ -5,6 +5,7 @@ require_once 'inc/emt-shortcode.php';
 require_once 'inc/settings/customizer.php';
 require_once 'inc/style_version.php';
 require_once 'inc/emt-redirect.php';
+require_once 'inc/emt-link.php';
 
 add_action('after_setup_theme', 'emtheme_setup');
 
@@ -32,7 +33,7 @@ if (! function_exists('emtheme_setup')) {
 
         Emtheme_customizer::get_instance();
 
-
+        Emtheme_link::get_instance();
     }
 }
 
@@ -62,7 +63,7 @@ final class Emtheme_function {
         add_action('init', array($this, 'disable_emoji'));
 
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
-        add_action('wp_head', array($this, 'add_head'));
+        // add_action('wp_head', array($this, 'add_head'));
 
         add_action('wp_ajax_nopriv_emmailAction', array($this, 'emmail_action'));
         add_action('wp_ajax_emmailAction', array($this, 'emmail_action'));
@@ -80,7 +81,10 @@ final class Emtheme_function {
     }
 
     public function set_search($query) {
-        if ($query->is_search) $query->set('post_type', array('page', 'article', 'emkort'));
+        if ($query->is_search) {
+            if (!$query->get('post_type')) $query->set('post_type', array('page'));
+            else $query->set('post_type', array_merge(array('page'), $query->get('post_type')));
+        }
     }
 
     public function admin_scripts() {
@@ -96,161 +100,18 @@ final class Emtheme_function {
         // search box, mobile nav menu
         wp_enqueue_script('emscript', get_theme_file_uri().'/assets/js/emscript.js', array(), false, true);
 
-        $style = get_option('emtheme_styling');
-
+        // $style = get_option('emtheme_styling');
         // desktop style
-        if ($style == 'two')        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), Emtheme_style::$style_two, '(min-width: 1024px)');
-        elseif ($style == 'three')  wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), Emtheme_style::$style_one, '(min-width: 1024px)');
-        else                        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), Emtheme_style::$style_default, '(min-width: 1024px)');
+        // if ($style == 'two')        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-two.css', array(), Emtheme_style::$style_two, '(min-width: 1024px)');
+        // elseif ($style == 'three')  wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle-three.css', array(), Emtheme_style::$style_one, '(min-width: 1024px)');
+        // else                        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), Emtheme_style::$style_default, '(min-width: 1024px)');
+        
+        // desktop
+        wp_enqueue_style('style', get_theme_file_uri().'/assets/css/emstyle.css', array(), Emtheme_style::$style_default, '(min-width: 1024px)');
         
         // mobile style
         wp_enqueue_style('style-mobile', get_theme_file_uri().'/assets/css/style-mobile.css', array(), Emtheme_style::$style_mobile, '(max-width: 1023px)');
-          
-          
-        $data = '';
 
-        $colors = get_option('emtheme_color');
-        // COLOR TOP BACKGROUND
-        // if (isset($colors['emtop_bg']))
-            // $data .= '@media (min-width: 961px) { 
-            //             .emtop { 
-            //                 background-color: '.(isset($colors['emtop_bg']) ? esc_html($colors['emtop_bg']) : Emtheme_style::$colors['top']['bg']).'; 
-            //             } 
-            //           }';
-        
-        // COLOR TOP FONT
-        // if (isset($colors['emtop_font']))
-            // $data .= '.emtheme-top-link, .emtheme-top-link:visited { 
-            //             color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; 
-            //         }';
-
-        // COLOR NAVBAR FONT
-        // if (isset($colors['nav_font']))
-            // $data .= '.em-nav-lenke { 
-            //             color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; 
-            //         }';
-
-        // COLOR NAVBAR BACKGROUND
-        // if (isset($colors['nav_bg'])) {
-            // $data .= '.nav-container { 
-            //             background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; 
-            //           }';
-            // $data .= '@media (max-width: 960px) { 
-            //             .emtop { background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; } 
-            //           }';
-        // }
-       
-        // COLOR NAVBAR BACKGROUND HOVER
-        // if (isset($colors['nav_bg_hover']))
-            // $data .= '.em-nav-item:hover { 
-            //             background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; 
-            //           }';
-
-        // COLOR SUBMENU BACKGROUND
-        // if (isset($colors['navsub_bg']))
-            // $data .= '.em-nav-sub-container, .em-nav-subitem { 
-            //                 background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; 
-            //            }';
-
-        // COLOR SUBMENU BACKGROUND HOVER
-        // if (isset($colors['navsub_bg_hover']))
-            // $data .= '.em-nav-subitem:hover { 
-            //             background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; 
-            //           }';
-
-        // COLOR SUBMENU FONT
-        // if (isset($colors['navsub_font']))
-            // $data .= '.em-nav-sublenke { 
-            //             color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; 
-            //           }';
-
-        // COLOR ACTIVE PAGE MARKER ON NAVBAR
-        // if (isset($colors['active']))
-            // $data .= '.em-nav-current { 
-            //             background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; 
-            //           }';
-
-        // COLOR ACTIVE PAGE MARKER HOVER ON NAVBAR
-        // if (isset($colors['active_hover']))
-            // $data .= '.em-nav-current:hover { 
-            //             background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).'; 
-            //           }';
-        
-        // adding fonts
-        $fonts = get_option('emtheme_font');
-
-        // if (isset($fonts['title']))
-        //     $data .= '.emtheme-title { font-family: '.esc_html($fonts['title']).'; }';
-        // if (isset($fonts['title_weight']) && $fonts['title_weight'] != 'regular')
-        //     $data .= '.emtheme-title { font-weight: '.esc_html(str_replace('italic', '', $fonts['title_weight'])).'; }';
-        // if (isset($fonts['title_size']))
-        //     $data .= '.emtheme-title { font-size: '.esc_html($fonts['title_size']).'rem; }';
-        
-
-        // if (isset($fonts['nav']))
-        //     $data .= '.nav { font-family: '.esc_html($fonts['nav']).'; }';
-        // if (isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular')
-        //     $data .= '.nav { font-weight: '.esc_html(str_replace('italic', '', $fonts['nav_weight'])).'; }';
-        // if (isset($fonts['nav_size']))
-        //     $data .= '.nav { font-size: '.esc_html($fonts['nav_size']).'rem; }';
-                        
-
-        // if (isset($fonts['standard']))
-        //     $data .= '.content, .emtheme-tagline, .content-title-text { font-family: '.esc_html($fonts['standard']).'; }';
-        // if (isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular')
-        //     $data .= '.content, .emtheme-tagline { font-weight: '.esc_html(str_replace('italic', '', $fonts['standard_weight'])).'; }';
-        // if (isset($fonts['standard_size']))
-        //     $data .= '.content, .emtheme-tagline { font-size: '.esc_html($fonts['standard_size']).'rem; }';
-        // if (isset($fonts['standard_lineheight']))
-        //     $data .= '.content > p { line-height: '.esc_html($fonts['standard_lineheight']).'; }';
-        
-
-        // wp_add_inline_style( 'style', $data );
-        // wp_add_inline_style( 'style-mobile', $data );
-
-        $font_set = [];
-
-        $ff = ['standard', 'nav', 'title'];
-        foreach ($ff as $value) {
-            if (isset($fonts[$value])) {
-
-                $found = false;
-
-                foreach($font_set as $v) 
-                    if ($v->font == $fonts[$value]) {
-                        $found = true;
-                        if (isset($fonts[$value.'_weight']))
-                            $v->addWeight($fonts[$value.'_weight']);
-                    }
-                
-                if (! $found) {
-                    if (isset($fonts[$value.'_weight']))
-                        array_push($font_set, new Fset($fonts[$value], $fonts[$value.'_weight']));
-                    else
-                        array_push($font_set, new Fset($fonts[$value]));
-                }
-
-            }
-        }
-
-        $font_str = '';
-        foreach ($font_set as $o)
-            if ($o != '')
-                $font_str .= $o.'|';
-
-        $font_str = rtrim($font_str, '|');
-
-        $this->google_string = $font_str;
-
-    }
-
-    public function add_head() {
-        $font = $this->google_string;
-
-        if ($font == ':' || $font == '')
-            $font = 'Roboto|Open+Sans+Condensed:700';
-
-        echo '<link href="https://fonts.googleapis.com/css?family='.esc_html($font).'" rel="stylesheet">';
     }
 
     public function emmail_action() {

@@ -66,7 +66,7 @@ final class Emtheme_Styler {
 	}
 
 	private function general_desktop() {
-		$fonts = $this->fonts;
+		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
 		$style = '
@@ -81,7 +81,7 @@ final class Emtheme_Styler {
 	}
 
 	private function general_mobile() {
-		$fonts = $this->fonts;
+		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
 		$style = '
@@ -100,7 +100,7 @@ final class Emtheme_Styler {
 
 
 	private function page_desktop() {
-		$fonts = $this->fonts;
+		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
 		$style = '
@@ -109,7 +109,7 @@ final class Emtheme_Styler {
 	.page_item > a { display: block; min-width: 12rem; padding: 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-align: center; text-decoration: none; white-space: nowrap; }
 	.page_item:last-child > a { border-right: none; }
 	.page_item > a:hover { background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; }
-	.children { display: none; position: absolute; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
+	.children { display: none; position: absolute; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.page_item_has_children > a:after { content: " \25bc"; font-size: 1.4rem; }
 	.page_item_has_children:hover > .children { display: block; }
 	.children > .page_item > a { padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
@@ -122,14 +122,14 @@ final class Emtheme_Styler {
 	}
 	
 	private function page_mobile() {
-		$fonts = $this->fonts;
+		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
 		$style = '
 @media screen and (max-width: 1023px) {
 	.page_item { display: inline-block; width: 100%; margin: 2rem 0; }
 	.page_item > a { min-width: 12rem; padding: 0.5rem 3rem; color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: left; white-space: nowrap; }
-	.children { display: none; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
+	.children { display: none; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.children > .page_item > a { padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.children > .page_item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
 	.current_page_item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }
@@ -140,7 +140,7 @@ final class Emtheme_Styler {
 	}
 
 	private function custom_desktop() {
-		$fonts = $this->fonts;
+		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
 		$style = '
@@ -149,7 +149,7 @@ final class Emtheme_Styler {
 	.menu-item > a { display: block; min-width: 12rem; padding: 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: center; white-space: nowrap; }
 	.menu-item:last-child > a { border-right: none; }
 	.menu-item > a:hover { background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; }
-	.sub-menu { display: none; position: absolute; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
+	.sub-menu { display: none; position: absolute; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.menu-item-has-children > a:after { content: " \25bc"; font-size: 1.4rem; }
 	.menu-item-has-children:hover > .sub-menu { display: block; }
 	.sub-menu > .menu-item > a { padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
@@ -162,14 +162,14 @@ final class Emtheme_Styler {
 	}
 	
 	private function custom_mobile() {
-		$fonts = $this->fonts;
+		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
 		$style = '
 @media screen and (max-width: 1023px) {
 	.menu-item > a { display: block; min-width: 12rem; padding: 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: left; white-space: nowrap; }
 	.menu-item-has-children > a:after { content: " \25bc"; font-size: 1.4rem; }
-	.sub-menu { display: none; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
+	.sub-menu { display: none; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.sub-menu > .menu-item > a { padding: 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.sub-menu > .menu-item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
 	.current-menu-item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }

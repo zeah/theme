@@ -16,6 +16,9 @@ if (have_posts()) {
 
 		if ($post->post_type == 'emkort')
 			echo $search->emkort($post);
+
+		elseif ($post->post_type == 'emlan')
+			echo $search->emlan($post);
 	}
 }
 
@@ -52,6 +55,10 @@ final class Emkk_search {
 
 	private function __construct() {
 
+	}
+
+	public function emlan($post) {
+		do_action('emlan_shortcode', $post->ID);
 	}
 
 	public function emkort($post) {

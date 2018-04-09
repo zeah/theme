@@ -34,64 +34,17 @@ $(() => {
 		return false;
 	}
 
-	// api.state.bind( function( newDevice ) {
-	// });
-	// api.previewedDevice.bind(function(new_device) {
- //    	console.log('Reponsive view has been changed to: ' + new_device);
-	// });
-
-	// api('blogname', 'blogdescription', function(blog, desc) {
-	// 	blog.bind(function(value){
-	// 		desc.set(value);
-	// 	});
-	// });
-
-	// api.control.add(
-	// 			new api.Control('emtheme_font_test_c', {
-	// 				setting: 'emtheme_font_test',
-	// 				section: 'emtheme_font_css',
-	// 				type: 'checkbox',
-	// 				label: 'tett'
-	// 			})
-	// 		);
 
 	// site identity
 	api('blogname', (value) => value.bind((newval) => $('.emtheme-title').html(newval)));
-	// api( 'blogname', function( value ) {
-	// 	value.bind( function( newval ) {
-
-	// 		$( '.emtheme-title' ).html( newval );
-	// 	} );
-	// } );
-
 
 	api('blogdescription', (value) => value.bind((newval) => $('.emtheme-tagline').html(newval)));
-	// api( 'blogdescription', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$( '.emtheme-tagline' ).html( newval );
-	// 	} );
-	// } );
 
 	api('emtheme_title_mobile', (value) => value.bind((newval) => $('.emtheme-mobile-title > a').html(newval)));
-	// api( 'emtheme_title_mobile', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$( '.emtheme-mobile-title > a' ).html( newval );
-	// 	} );
-	// } );
 
 	api('emtheme_logo', (value) => value.bind((newval) => $('.emtheme-logo').attr('src', newval)));
-	// api( 'emtheme_logo', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$( '.emtheme-logo' ).attr('src', newval );
-	// 	} );
-	// } );
 
 	api('emtheme_logo_mobile', (value) => value.bind((newval) => $('.emtheme-logo-mobile').attr('src', newval)));
-	// api( 'emtheme_logo_mobile', function( value ) {
-	// 	value.bind( function( newval ) {
-	// 		$( '.emtheme-logo-mobile' ).attr('src', newval );
-	// 	} );
-	// } );
 
 
 	// emtheme colors
@@ -269,11 +222,11 @@ $(() => {
 		});
 	});
 
-
+	/* NAV FONTS */
 	api('emtheme_font[nav]', (value) => {
 		value.bind((newvalue) => {
 			let weight = api.instance('emtheme_font[nav_weight]').get();
-			let nav = $('.nav');
+			let nav = $('.menu-container');
 
 			nav.css('font-family', newvalue);
 
@@ -301,7 +254,7 @@ $(() => {
 	api('emtheme_font[nav_weight]', (value) => {
 		value.bind((newvalue) => {
 			let font = api.instance('emtheme_font[nav]').get();
-			let nav = $('.nav');
+			let nav = $('.menu-container');
 
 			// dont do anything if no font is selected
 			if (!font) {
@@ -326,7 +279,7 @@ $(() => {
 
 	api('emtheme_font[nav_size]', (value) => {
 		value.bind((newvalue) => {
-			$('.nav').css('font-size', newvalue+'rem');
+			$('.menu-container').css('font-size', newvalue+'rem');
 		});
 	});
 
