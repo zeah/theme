@@ -106,7 +106,7 @@ final class Emtheme_Styler {
 		$style = '
 @media screen and (min-width: 1024px) {
 	.menu > ul { display: flex; }
-	.page_item > a { display: block; min-width: 12rem; padding: 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-align: center; text-decoration: none; white-space: nowrap; }
+	.page_item > a { display: block; min-width: 12rem; padding: 0.5rem 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-align: center; text-decoration: none; white-space: nowrap; }
 	.page_item:last-child > a { border-right: none; }
 	.page_item > a:hover { background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; }
 	.children { display: none; position: absolute; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
@@ -146,7 +146,7 @@ final class Emtheme_Styler {
 		$style = '
 @media screen and (min-width: 1024px) {
 	.menu { display: flex; padding: 0; }
-	.menu-item > a { display: block; min-width: 12rem; padding: 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: center; white-space: nowrap; }
+	.menu-item > a { display: block; min-width: 12rem; padding: 0.5rem 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: center; white-space: nowrap; }
 	.menu-item:last-child > a { border-right: none; }
 	.menu-item > a:hover { background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; }
 	.sub-menu { display: none; position: absolute; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }

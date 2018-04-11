@@ -17,6 +17,9 @@ add_theme_support('post-thumbnails');
 
 if (! function_exists('emtheme_setup')) {
     function emtheme_setup() {
+
+        add_image_size('mediumlarge', 600);
+
         Emtheme_Admin::get_instance();
 
         /* page-edit page stuff (meta boxes and saving) */
@@ -64,6 +67,7 @@ final class Emtheme_function {
 
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
         // add_action('wp_head', array($this, 'add_head'));
+        add_filter('image_size_names_choose', array($this, 'my_custom_sizes'));
 
         add_action('wp_ajax_nopriv_emmailAction', array($this, 'emmail_action'));
         add_action('wp_ajax_emmailAction', array($this, 'emmail_action'));
@@ -74,10 +78,16 @@ final class Emtheme_function {
     private function wp_hooks() {
         add_action('publish_page', array($this, 'add_sitemap'));
         add_action('publish_article', array($this, 'add_sitemap'));
-   
+
         // add_post_type_support( 'page', 'excerpt' );
 
         add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
+    }
+
+    public function my_custom_sizes( $sizes ) {
+        return array_merge( $sizes, array(
+            'mediumlarge' => __( '600 wide' ),
+        ) );
     }
 
     public function set_search($query) {
@@ -276,3 +286,4 @@ class Fset {
     }
 
 }
+

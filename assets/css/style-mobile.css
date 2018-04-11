@@ -38,7 +38,9 @@ p:empty {
 	list-style: none;
 }
 
-
+img {
+	max-width: 100%;
+}
 /*
 	1.0 SECTION
 	HEADER
@@ -215,6 +217,14 @@ p:empty {
 	padding: 0.5rem;
 	font-size: 1.6rem;
 	min-height: 70vh;
+}
+
+.content-title-text {
+	margin: 0;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	text-transform: uppercase;
+	border-bottom: dashed 1px hsl(0, 0%, 50%);
 }
 
 /*

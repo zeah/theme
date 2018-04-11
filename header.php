@@ -35,7 +35,7 @@ echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
 echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';
 
 
-$links = apply_filters('add_emtheme_links', []);
+$links = apply_filters('add_google_fonts', []);
 
 /* NAVBAR CSS as inline css */
 echo $css->get_css();

@@ -14,10 +14,10 @@ final class Emtheme_Link {
 	}
 
 	private function __construct() {
-		add_filter('add_emtheme_links', array($this, 'add_links'));
+		add_filter('add_google_fonts', array($this, 'add_google_fonts'));
 	}
 
-	public function add_links($value) {
+	public function add_google_fonts($value) {
 
 		$fonts = get_option('emtheme_font');
 		$variants = ['standard', 'nav', 'title'];
@@ -25,7 +25,7 @@ final class Emtheme_Link {
 		foreach($variants as $v)
 			if(isset($fonts[$v]) && isset($fonts[$v.'_weight'])) {
 
-				if ($fonts[$v.'_weight'] == 'regular') $fonts[$v.'_weight'] = ''; 
+				if ($fonts[$v.'_weight'] == 'regular') $fonts[$v.'_weight'] = '400'; 
 
 				if (isset($value[$fonts[$v]])) 	array_push($value[$fonts[$v]], $fonts[$v.'_weight']); 
 				else 							$value[$fonts[$v]] = [$fonts[$v.'_weight']];
