@@ -314,21 +314,19 @@ p:empty {
 
 /* container element for wordpress page title */
 .content-title {
-	display: inline-block;
-	margin: 3em;
-	margin-bottom: 2em;
 }
 
 /* the <h1> inside above element */
 .content-title-text {
-	margin: 0; /* removes default h1 styling */
+	margin: 0 2rem; /* removes default h1 styling */
 	
-	border-bottom: solid 0.2rem black;
+	padding: 5rem 0rem 1rem 0rem;
+	border-bottom: dashed 1px #bbb;
 
-	font-family: "Open Sans Condensed", sans-serif;
-	font-weight: 600;
-	font-size: 4rem;
-	text-transform: uppercase;
+	font-weight: 400; /* overwrites default h1 styling */
+	font-style: italic;
+	font-size: 3.2rem;
+	text-transform: capitalize;
 }
 
 /* custom css for wordpress template: altfrontpage */
