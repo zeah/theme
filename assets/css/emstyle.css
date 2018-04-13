@@ -312,19 +312,14 @@ p:empty {
 	max-width: 90vw;
 }
 
-/* container element for wordpress page title */
-.content-title {
-}
-
 /* the <h1> inside above element */
 .content-title-text {
 	margin: 0 2rem; /* removes default h1 styling */
 	
-	padding: 5rem 0rem 1rem 0rem;
+	padding: 2rem 0rem 1rem 0rem;
 	border-bottom: dashed 1px #bbb;
 
-	font-weight: 400; /* overwrites default h1 styling */
-	font-style: italic;
+	font-weight: 700;
 	font-size: 3.2rem;
 	text-transform: capitalize;
 }
@@ -337,21 +332,15 @@ p:empty {
 
 /* container element for wordpress content for page */
 .content {
-	box-sizing: border-box;
 	display: inline-block;
-	width: 100%;
-	padding: 1rem 3rem;
-	/*margin: 3rem;*/
-	/*font-size: 1.6rem;*/
-	/*line-height: 1.6;*/
-
+	padding: 0 2rem;
 	padding-bottom: 10vh;
 }
 
 /* flexbox for page content */
 .content-3 {
-	display: inline-flex; /* uncollapsing margin-top */
-	position: relative; /*???*/
+	display: inline-flex; 
+	padding: 2rem;
 }
 
 /* 
@@ -369,22 +358,36 @@ p:empty {
 	align-self: flex-start; /* for sticky to work in flexbox */
 }
 
+.em-left ul,
+.em-right ul {
+	padding: 20px;
+}
+
+.em-left > ul > li,
+.em-right > ul > li {
+	margin-bottom: 1rem;
+}
+
 /* limits width of left/right column images */
 .em-right img,
 .em-left img {
-	max-width: 20rem;
+	width: 100%;
 }
 
 /* flexbox rules */
 .em-left {
+	margin-right: 2rem;
 	order: 1;
 }
 .em-center {
-	margin: 0 2rem;
+	/*margin-right: 2rem;*/
  	order: 2;
+ 	flex: 1;
 }
 .em-right {
 	order: 3;
+	margin-left: 2rem;
+	flex-basis: 30rem;
 }
 
 /* 

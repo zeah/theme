@@ -214,15 +214,14 @@ img {
 
 /* container for page content */
 .main {
-	padding: 0.5rem;
+	padding: 1rem;
 	font-size: 1.6rem;
 	min-height: 70vh;
 }
 
 .content-title-text {
-	margin: 0;
-	margin-bottom: 2rem;
-	font-size: 2rem;
+	margin: 2rem;
+	font-size: 3rem;
 	text-transform: uppercase;
 	border-bottom: dashed 1px hsl(0, 0%, 50%);
 }
