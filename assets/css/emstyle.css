@@ -332,9 +332,11 @@ p:empty {
 
 /* container element for wordpress content for page */
 .content {
+	box-sizing: border-box;
 	display: inline-block;
 	padding: 0 2rem;
 	padding-bottom: 10vh;
+	width: 100%;
 }
 
 /* flexbox for page content */
@@ -380,14 +382,13 @@ p:empty {
 	order: 1;
 }
 .em-center {
-	/*margin-right: 2rem;*/
  	order: 2;
  	flex: 1;
 }
 .em-right {
 	order: 3;
 	margin-left: 2rem;
-	flex-basis: 30rem;
+	flex-basis: 25rem;
 }
 
 /* 

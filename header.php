@@ -32,7 +32,7 @@ echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<meta name="theme-color" content="#317EFB"/>';
 echo '<link rel="preconnect" href="https://fonts.googleapis.com/">';
 echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
-echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';
+// echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';
 
 
 $links = apply_filters('add_google_fonts', []);

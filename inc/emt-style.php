@@ -167,10 +167,10 @@ final class Emtheme_Styler {
 
 		$style = '
 @media screen and (max-width: 1023px) {
-	.menu-item > a { display: block; min-width: 12rem; padding: 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: left; white-space: nowrap; }
-	.menu-item-has-children > a:after { content: " \25bc"; font-size: 1.4rem; }
+	.menu-item { padding: 2rem 0; }
+	.menu-item > a { min-width: 12rem; padding: 0.5rem 3rem; color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: left; white-space: nowrap; }
 	.sub-menu { display: none; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
-	.sub-menu > .menu-item > a { padding: 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
+	.sub-menu > .menu-item > a { padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.sub-menu > .menu-item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
 	.current-menu-item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }
 	.current-menu-item > a:hover { background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; }
