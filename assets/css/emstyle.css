@@ -354,7 +354,7 @@ p:empty {
 /* left and right elements */
 .em-left,
 .em-right {
-	margin: 0 2rem;
+	/*margin: 0 2rem;*/
 	position: sticky;
 	top: 8rem; /* position of where element gets stuck to */
 	align-self: flex-start; /* for sticky to work in flexbox */
