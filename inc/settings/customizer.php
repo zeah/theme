@@ -283,7 +283,7 @@ final class Emtheme_Customizer {
 					 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
 
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_color');
-
+		$this->add_settings($wp_customize, ['emtop_bg_image', 'emtop_bg_image_opacity'], ['type' => 'option', 'transport' => 'postMessage', 'sanitize_callback' => 'sanitize_text_field'], 'emtheme_color');
 
 		/* FONT COLOR TOP (LOGO, TITLE, TAGLINE )*/
 		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = Emtheme_style::$colors['top']['font']; 
@@ -295,7 +295,7 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color'
 		)));
 
-		/* BACKGROUND COLOR TOP (LOGO, TITLE, TAGLINE )*/
+		/* BACKGROUND COLOR/IMAGE TOP (LOGO, TITLE, TAGLINE )*/
 		$wp_customize->get_setting('emtheme_color[emtop_bg]')->default = Emtheme_style::$colors['top']['bg']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[emtop_bg]_c', array(
@@ -304,6 +304,28 @@ final class Emtheme_Customizer {
 				'settings' => 'emtheme_color[emtop_bg]',
 				'section' => 'emtheme_css_color'
 		)));
+
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo_mobile',
+			array(
+				'label' => 'Repeating background image for header',
+				'settings' => 'emtheme_color[emtop_bg_image]',
+				'section' => 'emtheme_css_color',
+		) ) );
+
+		$wp_customize->get_setting('emtheme_color[emtop_bg_image_opacity]')->default = 1;
+		$wp_customize->add_control('emtheme_color[emtop_bg_image_opacity]_c', array(
+			'type' => 'number',
+			'label' => 'Background-image opacity',
+			'description' => '',
+			'section' => 'emtheme_css_color',
+			'settings' => 'emtheme_color[emtop_bg_image_opacity]',
+			// 'priority' => 103,
+			'input_attrs' => array(
+			    'min' => 0,
+			    'max' => 1,
+				'step' => 0.05,
+			),
+		));
 
 		/* NAVBAR FONT COLOR */
 		$wp_customize->get_setting('emtheme_color[nav_font]')->default = Emtheme_style::$colors['nav']['font']; 

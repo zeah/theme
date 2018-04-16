@@ -54,6 +54,29 @@ $(() => {
 
 	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-top-link').css('color', newval)));
 
+	api('emtheme_color[emtop_bg_image]', (value) => value.bind((newval) => {
+		if (!newval) 	newval = 'none';
+		else 			newval = 'url("'+newval+'")';
+
+		let opacity = api.instance('emtheme_color[emtop_bg_image_opacity]').get();
+
+		// console.log('hi '+opacity);
+		$('.emtheme-bg-op').remove();
+		$('head').append('<style class="emtheme-bg-op"> .emtop-bg:after { content: ""; background: '+newval+'; opacity: '+opacity+'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 2;} </style>');
+	}));
+
+	api('emtheme_color[emtop_bg_image_opacity]', (value) => value.bind((newval) => {
+
+		let url = api.instance('emtheme_color[emtop_bg_image]').get();
+		if (!url) return;
+
+		url = 'url("'+url+'")';
+
+
+		$('.emtheme-bg-op').remove();
+		$('head').append('<style class="emtheme-bg-op"> .emtop-bg:after { content: ""; background: '+url+'; opacity: '+newval+'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 2;} </style>');
+	}));
+
 	// navbar colors
 	api('emtheme_color[nav_font]', (value) => value.bind((newval) => $('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a').css('color', newval)));
 

@@ -53,14 +53,31 @@ p:empty {
 */
 
 /* flexbox for logo, title, tagline */
+/*.emtop {
+	position: relative;
+}*/
+
+/*.emtheme-background {
+	position: absolute;
+	top: 0;
+	bottom: 20px;
+	left: 0;
+	right: 0;
+	background-color: red;
+	opacity: .9;
+	z-index: 1;
+}*/
+
 .emtheme-site-identity {
 	display: flex;
+	/*position: relative;*/
 
 	width: 112rem;
 	margin: auto;
 	padding: 1.5rem 0;
 
 	align-items: center;
+	z-index: 2;
 }
 
 /* hiding mobile only */
@@ -161,6 +178,11 @@ p:empty {
 */
 
 /* container for top menu */
+/*.nav-container {
+	position: absolute;
+	bottom: 0;
+	z-index: 90;
+}*/
 /*.nav-container {
 	margin-bottom: 1rem;
 	background-color: #000000;*/
@@ -337,6 +359,7 @@ p:empty {
 	padding: 0 2rem;
 	padding-bottom: 10vh;
 	width: 100%;
+/* don't add font-size, it gets set by customizer */
 }
 
 /* flexbox for page content */
@@ -355,6 +378,7 @@ p:empty {
 .em-left,
 .em-right {
 	/*margin: 0 2rem;*/
+	max-width: 25rem;
 	position: sticky;
 	top: 8rem; /* position of where element gets stuck to */
 	align-self: flex-start; /* for sticky to work in flexbox */
@@ -362,18 +386,19 @@ p:empty {
 
 .em-left ul,
 .em-right ul {
-	padding: 20px;
+	padding-left: 2rem;
+	margin: 0;
 }
 
 .em-left > ul > li,
 .em-right > ul > li {
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 }
 
 /* limits width of left/right column images */
 .em-right img,
 .em-left img {
-	width: 100%;
+	/*width: 100%;*/
 }
 
 /* flexbox rules */

@@ -54,13 +54,21 @@ final class Emtheme_Styler {
 		$colors = $this->colors;
 
 		$style = '/* NAVBAR CSS */
+.emtop { position: relative; }
+.emtheme-site-identity { position: relative; z-index: 10; }
 .emtheme-title { font-family: '.(isset($fonts['title']) ? $fonts['title'] : 'verdana').'; font-weight: '.((isset($fonts['title_weight']) && $fonts['title_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['title_weight']))) : '400').'; font-size: '.(isset($fonts['title_size']) ? $fonts['title_size'].'rem' : '4.6rem').'; }
 .emtheme-top-link, .emtheme-top-link:visited { color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; }
 .emtheme-tagline, .main { font-family: '.(isset($fonts['standard']) ? $fonts['standard'] : 'arial').'; font-weight: '.((isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['standard_weight']))) : '400').'; font-size: '.(isset($fonts['standard_size']) ? $fonts['standard_size'].'rem' : '1.6rem').'; }
 .content > p { line-height: '.(isset($fonts['standard_lineheight']) ? esc_html($fonts['standard_lineheight']) : '1.6').'; }
-.menu-container { font-family: '.(isset($fonts['nav']) ? $fonts['nav'] : 'arial').'; font-weight: '.((isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['nav_weight']))) : '400').'; font-size: '.(isset($fonts['nav_size']) ? $fonts['nav_size'].'rem' : '1.8rem').'; }
+.menu-container { z-index: 10; position: relative; font-family: '.(isset($fonts['nav']) ? $fonts['nav'] : 'arial').'; font-weight: '.((isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['nav_weight']))) : '400').'; font-size: '.(isset($fonts['nav_size']) ? $fonts['nav_size'].'rem' : '1.8rem').'; }
 .menu ul, ul.menu { padding: 0; margin: 0 auto; }
 .menu li { list-style: none;}';
+
+		if (isset($colors['emtop_bg_image']) && $colors['emtop_bg_image'] != '') {
+			$opacity = isset($colors['emtop_bg_image_opacity']) ? $colors['emtop_bg_image_opacity'] : '1';
+		 	$style .=  '.emtop-bg:after { content: ""; background: url("'.esc_url($colors['emtop_bg_image']).'"); opacity: '.$opacity.'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 2;}';
+		}
+
 
 		return $style;
 	}

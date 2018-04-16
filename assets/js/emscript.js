@@ -3,8 +3,8 @@
 	var sh = false;
 	var value = '';
 
-
-	var temp = 'http://localhost:8010/wordpress';
+	var temp = '/wordpress';
+	if (!location.href.includes('http://localhost')) temp = '';
 
 	if (!c) return;
 
@@ -23,7 +23,7 @@
 	b.setAttribute('type', 'button');
 	b.classList.add('emtheme-search-button');
 
-	var go = function() { window.location.assign(temp+'?s='+i.value); }
+	var go = function() { location = location.origin+temp+'/?s='+i.value; }
 
 	b.addEventListener('click', function() {
 		if (i.value) go();

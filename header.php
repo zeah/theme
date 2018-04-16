@@ -89,7 +89,7 @@ echo '</head><body style="opacity: 0">';
 // print_r($links);
 
 // top container 
-$top = '<div class="emtop"><div class="emtheme-site-identity">';
+$top = '<div class="emtop"><div class="emtop-bg"></div><div class="emtheme-site-identity">';
 
 $customize = is_customize_preview();
 if (get_option('emtheme_logo') || $customize) $top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></a></div>';
