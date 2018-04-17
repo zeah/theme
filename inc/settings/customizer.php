@@ -101,7 +101,6 @@ final class Emtheme_Customizer {
 			)
 		);
 
-		// $wp_customize->get_setting('emtheme_color[emtop_font]')->default = Emtheme_style::$colors['top']['font'];
 		$this->add_settings($wp_customize, ['emtheme_mobile_color'], ['type' => 'option', 'sanitize' => 'sanitize_hex_color']);
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_mobile_color_c', array(
@@ -289,8 +288,8 @@ final class Emtheme_Customizer {
 		));
 
 
-		$settings = ['emtop_font', 'emtop_bg', 'search', 'nav_font', 'nav_bg', 'nav_bg_hover', 
-					 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
+		$settings = ['emtop_font', 'emtop_bg', 'search', 'nav_font', 'nav_bg_top', 'nav_bg_middle', 'nav_bg_bottom', 'nav_bg_hover_top', 
+					 'nav_bg_hover_middle', 'nav_bg_hover_bottom', 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
 
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_color');
 		$this->add_settings($wp_customize, ['emtop_bg_image', 'emtop_bg_image_opacity'], ['type' => 'option', 'transport' => 'postMessage', 'sanitize_callback' => 'sanitize_text_field'], 'emtheme_color');
@@ -356,20 +355,50 @@ final class Emtheme_Customizer {
 		)));
 
 		/* NAVBAR BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[nav_bg]')->default = Emtheme_style::$colors['nav']['bg']; 
+		$wp_customize->get_setting('emtheme_color[nav_bg_top]')->default = Emtheme_style::$colors['nav']['bg']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_color[nav_bg]_c', array(
-				'label' => 'Navbar Background-color',
-				'settings' => 'emtheme_color[nav_bg]',
+			$wp_customize, 'emtheme_color[nav_bg_top]_c', array(
+				'label' => 'Navbar Background-color TOP/FULL',
+				'description' => 'If this is only <strong>one</strong> set, then background color will only be this one.',
+				'settings' => 'emtheme_color[nav_bg_top]',
+				'section' => 'emtheme_css_color'
+		)));
+		// $wp_customize->get_setting('emtheme_color[nav_bg_middle]')->default = Emtheme_style::$colors['nav']['bg']; 
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[nav_bg_middle]_c', array(
+				'label' => 'Navbar Background-color MIDDLE',
+				'description' => 'A third color placed in the center.<br>Bottom color must be set before this one.',
+				'settings' => 'emtheme_color[nav_bg_middle]',
+				'section' => 'emtheme_css_color'
+		)));
+		// $wp_customize->get_setting('emtheme_color[nav_bg_bottom]')->default = Emtheme_style::$colors['nav']['bg']; 
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[nav_bg_bottom]_c', array(
+				'label' => 'Navbar Background-color BOTTOM',
+				'settings' => 'emtheme_color[nav_bg_bottom]',
 				'section' => 'emtheme_css_color'
 		)));
 
 		/* NAVBAR BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[nav_bg_hover]')->default = Emtheme_style::$colors['nav']['hover']; 
+		$wp_customize->get_setting('emtheme_color[nav_bg_hover_top]')->default = Emtheme_style::$colors['nav']['hover']; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_color[nav_bg_hover]_c', array(
-				'label' => 'Navbar Hover Background-color',
-				'settings' => 'emtheme_color[nav_bg_hover]',
+			$wp_customize, 'emtheme_color[nav_bg_hover_top]_c', array(
+				'label' => 'Navbar Hover Background-color TOP/FULL',
+				'settings' => 'emtheme_color[nav_bg_hover_top]',
+				'section' => 'emtheme_css_color'
+		)));
+
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[nav_bg_hover_middle]_c', array(
+				'label' => 'Navbar Hover Background-color MIDDLE',
+				'settings' => 'emtheme_color[nav_bg_hover_middle]',
+				'section' => 'emtheme_css_color'
+		)));
+
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[nav_bg_hover_bottom]_c', array(
+				'label' => 'Navbar Hover Background-color BOTTOM',
+				'settings' => 'emtheme_color[nav_bg_hover_bottom]',
 				'section' => 'emtheme_css_color'
 		)));
 
@@ -401,24 +430,24 @@ final class Emtheme_Customizer {
 		)));
 
 		/* ACTIVE PAGE MARKER - BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[active]')->default = Emtheme_style::$colors['active']['bg']; 
-		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_color[active]_c', array(
-				'label' => 'Background-color Marker',
-				'description' => 'Shows which page you currently are on.',
-				'settings' => 'emtheme_color[active]',
-				'section' => 'emtheme_css_color' 
-		)));
+		// $wp_customize->get_setting('emtheme_color[active]')->default = Emtheme_style::$colors['active']['bg']; 
+		// $wp_customize->add_control(new WP_Customize_Color_Control( 
+		// 	$wp_customize, 'emtheme_color[active]_c', array(
+		// 		'label' => 'Background-color Marker',
+		// 		'description' => 'Shows which page you currently are on.',
+		// 		'settings' => 'emtheme_color[active]',
+		// 		'section' => 'emtheme_css_color' 
+		// )));
 
 		/* ACTIVE PAGE MARKER - BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[active_hover]')->default = Emtheme_style::$colors['active']['hover']; 
-		$wp_customize->add_control(new WP_Customize_Color_Control( 
-			$wp_customize, 'emtheme_color[active_hover]_c', array(
-				'label' => 'Background-color Hover Marker',
-				'description' => 'Shows which page you currently are on.',
-				'settings' => 'emtheme_color[active_hover]',
-				'section' => 'emtheme_css_color' 
-		)));
+		// $wp_customize->get_setting('emtheme_color[active_hover]')->default = Emtheme_style::$colors['active']['hover']; 
+		// $wp_customize->add_control(new WP_Customize_Color_Control( 
+		// 	$wp_customize, 'emtheme_color[active_hover]_c', array(
+		// 		'label' => 'Background-color Hover Marker',
+		// 		'description' => 'Shows which page you currently are on.',
+		// 		'settings' => 'emtheme_color[active_hover]',
+		// 		'section' => 'emtheme_css_color' 
+		// )));
 	}
 
 	public function emtheme_css_font($wp_customize) {	

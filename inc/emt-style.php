@@ -16,6 +16,8 @@ final class Emtheme_Styler {
 
 	private $colors;
 	private $fonts;
+	private $nav_bg;
+	private $nav_bg_hover;
 
 	public static function get_instance() {
 		if (self::$instance === null) self::$instance = new self();
@@ -26,6 +28,25 @@ final class Emtheme_Styler {
 	private function __construct() {
 		$this->colors = get_option('emtheme_color');
 		$this->fonts = get_option('emtheme_font');
+
+		$this->colors['nav_bg_top'] = isset($this->colors['nav_bg_top']) ? $this->colors['nav_bg_top'] : Emtheme_style::$colors['nav']['bg'];
+		$this->colors['nav_bg_hover_top'] = isset($this->colors['nav_bg_hover_top']) ? $this->colors['nav_bg_hover_top'] : Emtheme_style::$colors['nav']['hover'];
+
+		$this->nav_bg = 'background-color: '.(isset($this->colors['nav_bg_top']) ? $this->colors['nav_bg_top'] : '#000').';';
+
+		if (isset($this->colors['nav_bg_middle']) && isset($this->colors['nav_bg_bottom']) && $this->colors['nav_bg_middle'] != '' && $this->colors['nav_bg_bottom'] != '')
+			$this->nav_bg = 'background: linear-gradient(to top, '.$this->colors['nav_bg_bottom'].' 0%, '.$this->colors['nav_bg_middle'].' 50%, '.$this->colors['nav_bg_top'].' 100%);';
+		elseif (isset($this->colors['nav_bg_bottom']) && $this->colors['nav_bg_bottom'] != '')
+			$this->nav_bg = 'background: linear-gradient(to top, '.$this->colors['nav_bg_bottom'].' 0%, '.$this->colors['nav_bg_top'].' 100%);';
+
+		$this->nav_bg_hover = 'background-color: '.(isset($this->colors['nav_bg_hover_top']) ? $this->colors['nav_bg_hover_top'] : '#000').';';
+
+		if (isset($this->colors['nav_bg_hover_middle']) && isset($this->colors['nav_bg_hover_bottom']) && $this->colors['nav_bg_hover_middle'] != '' && $this->colors['nav_bg_hover_bottom'] != '')
+			$this->nav_bg_hover = 'background: linear-gradient(to top, '.$this->colors['nav_bg_hover_bottom'].' 0%, '.$this->colors['nav_bg_hover_middle'].' 50%, '.$this->colors['nav_bg_hover_top'].' 100%);';
+		elseif (isset($this->colors['nav_bg_hover_bottom']) && $this->colors['nav_bg_hover_bottom'] != '')
+			$this->nav_bg_hover = 'background: linear-gradient(to top, '.$this->colors['nav_bg_hover_bottom'].' 0%, '.$this->colors['nav_bg_hover_top'].' 100%);';
+
+
 	}
 
 	public function get_css() {
@@ -88,11 +109,13 @@ final class Emtheme_Styler {
 		$style = '
 @media screen and (min-width: 1024px) {
 	.emtop { background-color: '.(isset($colors['emtop_bg']) ? esc_html($colors['emtop_bg']) : Emtheme_style::$colors['top']['bg']).'; }
-	.menu-container { background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; }
+	.menu-container {'.esc_html($this->nav_bg).'}
 	.menu { width: 112rem; margin: auto; }
 	.emtheme-mobile-icon { display: none; }
 }';
 
+	// .current-menu-item > a, .current_page_item > a
+	// .current-menu-item > a:hover, .current_page_item > a:hover
 		return $style;
 	}
 
@@ -102,10 +125,10 @@ final class Emtheme_Styler {
 
 		$style = '
 @media screen and (max-width: 1023px) {
-	.emtop { background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; }
+	.emtop { '.esc_html($this->nav_bg).' }
 	.emtheme-mobile-icon { color: white; font-size: 4.6rem !important; }
 	.menu-container { position: relative; }
-	.menu { display: none; position: absolute; width: 100vw; top: 4.6rem; right: 0; z-index: 999; background-color: '.(isset($colors['nav_bg']) ? esc_html($colors['nav_bg']) : Emtheme_style::$colors['nav']['bg']).'; }
+	.menu { display: none; position: absolute; width: 100vw; top: 4.6rem; right: 0; z-index: 999; background-color: '.(isset($colors['nav_bg_top']) ? esc_html($colors['nav_bg_top']) : Emtheme_style::$colors['nav']['bg']).'; }
 	.nav-show { display: block !important; }
 	.emtheme-mob-arrow { float: right; display: inline; color: white; margin-right: 3rem; }
 	.emtheme-mob-arrow:after { content: " \25bc"; }
@@ -124,14 +147,12 @@ final class Emtheme_Styler {
 	.menu > ul { display: flex; }
 	.page_item > a { display: block; min-width: 12rem; padding: 0.5rem 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-align: center; text-decoration: none; white-space: nowrap; }
 	.page_item:last-child > a { border-right: none; }
-	.page_item > a:hover { background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; }
+	.menu > ul > .page_item > a:hover { '.esc_html($this->nav_bg_hover).' }
 	.children { display: none; position: absolute; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.page_item_has_children > a:after { content: " \25bc"; font-size: 1.4rem; }
 	.page_item_has_children:hover > .children { display: block; }
 	.children > .page_item > a { text-align: left; padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.children > .page_item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
-	.current_page_item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }
-	.current_page_item > a:hover { background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).'; }
 }';
 
 		return $style;
@@ -148,8 +169,6 @@ final class Emtheme_Styler {
 	.children { display: none; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.children > .page_item > a { padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.children > .page_item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
-	.current_page_item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }
-	.current_page_item > a:hover { background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; }
 }';
 
 		return $style;
@@ -164,14 +183,12 @@ final class Emtheme_Styler {
 	.menu { display: flex; padding: 0; }
 	.menu-item > a { display: block; min-width: 12rem; padding: 0.5rem 1rem; border-right: solid 1px rgba(255,255,255,.5); color: '.(isset($colors['nav_font']) ? esc_html($colors['nav_font']) : Emtheme_style::$colors['nav']['font']).'; text-decoration: none; text-align: center; white-space: nowrap; }
 	.menu-item:last-child > a { border-right: none; }
-	.menu-item > a:hover { background-color: '.(isset($colors['nav_bg_hover']) ? esc_html($colors['nav_bg_hover']) : Emtheme_style::$colors['nav']['hover']).'; }
+	.menu > .menu-item > a:hover { '.esc_html($this->nav_bg_hover).' }
 	.sub-menu { display: none; position: absolute; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.menu-item-has-children > a:after { content: " \25bc"; font-size: 1.4rem; }
 	.menu-item-has-children:hover > .sub-menu { display: block; }
 	.sub-menu > .menu-item > a { text-align: left; padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.sub-menu > .menu-item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
-	.current-menu-item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }
-	.current-menu-item > a:hover { background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; }
 }';
 
 		return $style;
@@ -188,8 +205,6 @@ final class Emtheme_Styler {
 	.sub-menu { display: none; z-index: 99; background-color: '.(isset($colors['navsub_bg']) ? esc_html($colors['navsub_bg']) : Emtheme_style::$colors['sub']['bg']).'; }
 	.sub-menu > .menu-item > a { padding: 0.5rem 1rem; color: '.(isset($colors['navsub_font']) ? esc_html($colors['navsub_font']) : Emtheme_style::$colors['sub']['font']).'; }
 	.sub-menu > .menu-item > a:hover { background-color: '.(isset($colors['navsub_bg_hover']) ? esc_html($colors['navsub_bg_hover']) : Emtheme_style::$colors['sub']['hover']).'; }
-	.current-menu-item > a { background-color: '.(isset($colors['active']) ? esc_html($colors['active']) : Emtheme_style::$colors['active']['bg']).'; }
-	.current-menu-item > a:hover { background-color: '.(isset($colors['active_hover']) ? esc_html($colors['active_hover']) : Emtheme_style::$colors['active']['hover']).' !important; }
 }';
 
 		return $style;

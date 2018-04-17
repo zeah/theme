@@ -90,40 +90,158 @@ $(() => {
 	api('emtheme_color[nav_bg]', (value) => value.bind((newval) => {
 		$('.menu-container').css('background-color', newval)
 		if (screen.width < 1024) $('.emtop').css('background-color', newval);
-	}));	
-
-	api('emtheme_color[nav_bg_hover]', (value) => value.bind((newval) => {
-			$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a, .current_page_item > a, .current-menu-item > a').hover(
-				function() { $(this).css('background-color', newval); },
-				function() { $(this).css('background-color', 'transparent'); }
-			);
 	}));
+
+
+
+	// api('emtheme_color[nav_bg_hover]', (value) => value.bind((newval) => {
+	// 		$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a, .current_page_item > a, .current-menu-item > a').hover(
+	// 			function() { $(this).css('background-color', newval); },
+	// 			function() { $(this).css('background-color', 'transparent'); }
+	// 		);
+	// }));
 
 	api('emtheme_color[navsub_font]', (value) => value.bind((newval) => $('.children > li > a, .sub-menu > li > a').css('color', newval)));
 
 
 	api('emtheme_color[navsub_bg]', (value) => value.bind((newval) => $('.children, .sub-menu').css('background-color', newval)));
 
+	// api('emtheme_color[nav_bg_top]', (value) => value.bind((newval) => {
+
+	// 	let middle = api.instance('emtheme_color[nav_bg_middle]').get(); 
+	// 	let bottom = api.instance('emtheme_color[nav_bg_bottom]').get(); 
+
+	// 	let css = newval;
+	// 	if (middle && bottom)
+	// 		css = 'linear-gradient(to bottom, '.newval.' 100%, '.middle.' 50%, '.bottom.' 0%)';
+	// 		// $('.menu-container').css('background', 'to bottom, '..' 0%,')
+	// 		// console.log(newval+' -- '+middle+' -- '+bottom);
+
+	// }));
+
+	let top = api.instance('emtheme_color[nav_bg_top]').get(); 
+	let middle = api.instance('emtheme_color[nav_bg_middle]').get(); 
+	let bottom = api.instance('emtheme_color[nav_bg_bottom]').get();
+
+	let navbar = () => {
+
+		let c = $('.menu-container');
+		c.css('background', 'none');
+
+		let linear = null;
+		if (middle && bottom) 	linear = 'linear-gradient(to top, '+bottom+' 0%, '+middle+' 50%, '+top+' 100%)';
+		else if (bottom)		linear = 'linear-gradient(to top, '+bottom+' 0%, '+top+' 100%)';
+
+		if (linear) c.css('background', linear);
+		else 		c.css('background-color', top);
+	}
+
+	
+	api('emtheme_color[nav_bg_top]', (value) => value.bind((newval) => {
+			top = newval;
+			navbar();
+		}
+	));
+	api('emtheme_color[nav_bg_middle]', (value) => value.bind((newval) => {
+			middle = newval;
+			navbar(); 
+		}
+	));
+	api('emtheme_color[nav_bg_bottom]', (value) => value.bind((newval) => {
+			bottom = newval;
+			navbar(); 
+		}
+	));
+
+	// api('emtheme_color[nav_bg_middle]', (value) => value.bind((newval) => {
+
+	// 	let top = api.instance('emtheme_color[nav_bg_top]').get(); 
+	// 	let bottom = api.instance('emtheme_color[nav_bg_bottom]').get(); 
+
+	// 	// console.log(top+' -- '+newval+' -- '+bottom);
+
+	// }));
+
+	// api('emtheme_color[nav_bg_bottom]', (value) => value.bind((newval) => {
+
+	// 	let top = api.instance('emtheme_color[nav_bg_top]').get(); 
+	// 	let middle = api.instance('emtheme_color[nav_bg_middle]').get(); 
+
+	// 	// console.log(top+' -- '+middle+' -- '+newval);
+
+	// }));
+
+
+
+
+
+	let hover_top = api.instance('emtheme_color[nav_bg_hover_top]').get(); 
+	let hover_middle = api.instance('emtheme_color[nav_bg_hover_middle]').get(); 
+	let hover_bottom = api.instance('emtheme_color[nav_bg_hover_bottom]').get();
+
+	let hover_navbar = () => {
+
+		// let c = $('.menu-container');
+		// c.css('background', 'none');
+
+		let linear = null;
+		if (hover_middle && hover_bottom) 	linear = 'linear-gradient(to top, '+hover_bottom+' 0%, '+hover_middle+' 50%, '+hover_top+' 100%)';
+		else if (hover_bottom)				linear = 'linear-gradient(to top, '+hover_bottom+' 0%, '+hover_top+' 100%)';
+
+		if (linear) {
+		$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a, .current_page_item > a, .current-menu-item > a').hover(
+				function() { $(this).css('background', linear); },
+				function() { $(this).css('background', 'none'); }
+			);
+		}
+		else {
+			$('.page_item > a, .menu-item > a').not('.children > li > a, .sub-menu > li > a, .current_page_item > a, .current-menu-item > a').hover(
+				function() { $(this).css('background-color', hover_top); },
+				function() { $(this).css('background-color', 'transparent'); }
+			);
+		}
+	}
 
 	api('emtheme_color[navsub_bg_hover]', (value) => value.bind((newval) => {
 			$('.children > li > a, .sub-menu > li > a').hover(
 				function() { $(this).css('background-color', newval); },
 				function() { $(this).css('background-color', 'transparent'); }
 			);
-		}));
+		}
+	));
+	
+	api('emtheme_color[nav_bg_hover_top]', (value) => value.bind((newval) => {
+			console.log(newval);
+			hover_top = newval;
+			hover_navbar();
+		}
+	));
+	api('emtheme_color[nav_bg_hover_middle]', (value) => value.bind((newval) => {
+			hover_middle = newval;
+			hover_navbar(); 
+		}
+	));
+	api('emtheme_color[nav_bg_hover_bottom]', (value) => value.bind((newval) => {
+			hover_bottom = newval;
+			hover_navbar(); 
+		}
+	));
 
-	api('emtheme_color[active]', (value) => value.bind((newval) => {
-		activeHover = newval;
-		$('.current_page_item > a, .current-menu-item > a').css( 'background-color', newval );
-	}));
 
-	api('emtheme_color[active_hover]', (value) => value.bind((newval) => {
-		console.log(newval);
-		$('.current_page_item > a, .current-menu-item > a').hover(
-			function() { $(this).css('background-color', newval); },
-			function() { $(this).css('background-color', activeHover); }
-		);
-	}));
+
+
+	// api('emtheme_color[active]', (value) => value.bind((newval) => {
+	// 	activeHover = newval;
+	// 	$('.current_page_item > a, .current-menu-item > a').css( 'background-color', newval );
+	// }));
+
+	// api('emtheme_color[active_hover]', (value) => value.bind((newval) => {
+	// 	console.log(newval);
+	// 	$('.current_page_item > a, .current-menu-item > a').hover(
+	// 		function() { $(this).css('background-color', newval); },
+	// 		function() { $(this).css('background-color', activeHover); }
+	// 	);
+	// }));
 
 
 	/*

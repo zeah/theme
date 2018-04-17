@@ -53,14 +53,14 @@ final class Emtheme_style {
 			'font' => '#ffffff'
 		],
 		'sub' => [
-			'bg' => '#aaaaaa',
-			'hover' => '#777777',
+			'bg' => '#e5e5e5',
+			'hover' => '#bababa',
 			'font' => '#000000'
 		],
-		'active' => [
-			'bg' => '#aa7777',
-			'hover' => '#aa4444'
-		],
+		// 'active' => [
+		// 	'bg' => '#aa7777',
+		// 	'hover' => '#aa4444'
+		// ],
 		'search' => [
 			'color' => '#aaaaaa'
 		]
