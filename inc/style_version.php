@@ -60,6 +60,9 @@ final class Emtheme_style {
 		'active' => [
 			'bg' => '#aa7777',
 			'hover' => '#aa4444'
+		],
+		'search' => [
+			'color' => '#aaaaaa'
 		]
 
 	];

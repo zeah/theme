@@ -29,7 +29,7 @@ $mobile = wp_is_mobile();
 // printing head
 echo '<!DOCTYPE html><html lang="no"><head>';
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<meta name="theme-color" content="#317EFB"/>';
+if (get_option('emtheme_mobile_color')) echo '<meta name="theme-color" content="'.sanitize_text_field(get_option('emtheme_mobile_color')).'">';
 echo '<link rel="preconnect" href="https://fonts.googleapis.com/">';
 echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
 // echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';

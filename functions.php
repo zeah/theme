@@ -15,10 +15,11 @@ if ( ! isset( $content_width ) )
 add_theme_support('post-thumbnails');
 // add_theme_support( 'html5', array( 'search-form' ) );
 
+
 if (! function_exists('emtheme_setup')) {
     function emtheme_setup() {
 
-        add_image_size('mediumlarge', 600);
+        add_image_size('Tilpasset', 810);
 
         Emtheme_Admin::get_instance();
 

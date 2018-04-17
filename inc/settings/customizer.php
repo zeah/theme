@@ -100,6 +100,16 @@ final class Emtheme_Customizer {
 				'settings' => 'emtheme_title_mobile'
 			)
 		);
+
+		// $wp_customize->get_setting('emtheme_color[emtop_font]')->default = Emtheme_style::$colors['top']['font'];
+		$this->add_settings($wp_customize, ['emtheme_mobile_color'], ['type' => 'option', 'sanitize' => 'sanitize_hex_color']);
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_mobile_color_c', array(
+				'label' => 'Mobile Theme Color',
+				'description' => 'The color of the web adresse area.<br>Only visible on mobile devices.',
+				'settings' => 'emtheme_mobile_color',
+				'section' => 'title_tagline'
+		)));
 	}
 
 	public function footer_info($wp_customize) {
@@ -279,7 +289,7 @@ final class Emtheme_Customizer {
 		));
 
 
-		$settings = ['emtop_font', 'emtop_bg', 'nav_font', 'nav_bg', 'nav_bg_hover', 
+		$settings = ['emtop_font', 'emtop_bg', 'search', 'nav_font', 'nav_bg', 'nav_bg_hover', 
 					 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
 
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_color');
@@ -305,7 +315,16 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color'
 		)));
 
-		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_logo_mobile',
+		$wp_customize->get_setting('emtheme_color[search]')->default = Emtheme_style::$colors['search']['color']; 
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[search]_c', array(
+				'label' => 'Search box/text',
+				'description' => '',
+				'settings' => 'emtheme_color[search]',
+				'section' => 'emtheme_css_color'
+		)));
+
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_bg_image_c',
 			array(
 				'label' => 'Repeating background image for header',
 				'settings' => 'emtheme_color[emtop_bg_image]',

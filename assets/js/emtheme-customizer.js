@@ -54,6 +54,13 @@ $(() => {
 
 	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-top-link').css('color', newval)));
 
+
+	api('emtheme_color[search]', (value) => value.bind((newval) => {
+		$('.emtheme-search-box, .emtheme-search-input, .emtheme-search-icon').css('color', newval);
+		$('.emtheme-search-input').css('border-bottom', 'solid 2px '+newval);
+
+	}));
+
 	api('emtheme_color[emtop_bg_image]', (value) => value.bind((newval) => {
 		if (!newval) 	newval = 'none';
 		else 			newval = 'url("'+newval+'")';

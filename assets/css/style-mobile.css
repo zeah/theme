@@ -39,8 +39,11 @@ p:empty {
 }
 
 img {
+	width: auto;
 	max-width: 100%;
+	height: auto;
 }
+
 /*
 	1.0 SECTION
 	HEADER
@@ -53,6 +56,10 @@ img {
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
 	line-height: 1.6;
+}
+
+.emtop-bg {
+	display: none;
 }
 
 /* 

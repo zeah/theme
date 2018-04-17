@@ -69,6 +69,14 @@ final class Emtheme_Styler {
 		 	$style .=  '.emtop-bg:after { content: ""; background: url("'.esc_url($colors['emtop_bg_image']).'"); opacity: '.$opacity.'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 2;}';
 		}
 
+		
+		$search_color = isset($colors['search']) ? esc_html($colors['search']) : Emtheme_style::$colors['search']['color'];
+
+		$style .= '
+.emtheme-search-box,
+.emtheme-search-input,
+.emtheme-search-icon { color: '.$search_color.';}
+.emtheme-search-input { border: none; border-bottom: solid 2px '.$search_color.';}';
 
 		return $style;
 	}
