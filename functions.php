@@ -4,7 +4,7 @@ require_once 'inc/emt-page.php';
 require_once 'inc/emt-shortcode.php';
 require_once 'inc/settings/customizer.php';
 require_once 'inc/style_version.php';
-require_once 'inc/emt-redirect.php';
+// require_once 'inc/emt-redirect.php';
 require_once 'inc/emt-link.php';
 
 add_action('after_setup_theme', 'emtheme_setup');
@@ -19,7 +19,7 @@ add_theme_support('post-thumbnails');
 if (! function_exists('emtheme_setup')) {
     function emtheme_setup() {
 
-        add_image_size('Tilpasset', 810);
+        add_image_size('tilpasset', 810);
 
         Emtheme_Admin::get_instance();
 
@@ -27,7 +27,7 @@ if (! function_exists('emtheme_setup')) {
         Emtheme_Page::get_instance();
 
         /* redirecting pages */
-        Emtheme_redirect::get_instance();
+        // Emtheme_redirect::get_instance();
 
         /* shortcodes ([col]) */
         Emtheme_ShortCode::get_instance();
@@ -63,11 +63,10 @@ final class Emtheme_function {
     }
 
     private function public_wp_hooks() {
-        add_action('init', array($this, 'register_nav'));
+        add_action('init', array($this, 'register_nav_cat'));
         add_action('init', array($this, 'disable_emoji'));
 
         add_action('wp_enqueue_scripts', array($this, 'add_style'));
-        // add_action('wp_head', array($this, 'add_head'));
         add_filter('image_size_names_choose', array($this, 'my_custom_sizes'));
 
         add_action('wp_ajax_nopriv_emmailAction', array($this, 'emmail_action'));
@@ -80,20 +79,18 @@ final class Emtheme_function {
         add_action('publish_page', array($this, 'add_sitemap'));
         add_action('publish_article', array($this, 'add_sitemap'));
 
-        // add_post_type_support( 'page', 'excerpt' );
 
         add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
     }
 
     public function my_custom_sizes( $sizes ) {
         return array_merge( $sizes, array(
-            'mediumlarge' => __( '600 wide' ),
+            'tilpasset' => '810 vid (tilpasset)'
         ) );
     }
 
     public function set_search($query) {
         if ($query->is_search) {
-            // wp_die(print_r($query, true));
             if (!$query->get('post_type')) $query->set('post_type', array('page'));
             else $query->set('post_type', array_merge(array('page'), $query->get('post_type')));
         }
@@ -103,7 +100,8 @@ final class Emtheme_function {
         wp_enqueue_style('em-admin-style', get_theme_file_uri().'/assets/css/emstyle-admin.css', array(), null);
     }
 
-    public function register_nav() {
+    public function register_nav_cat() {
+        register_taxonomy_for_object_type('category', 'page'); 
         register_nav_menu('header-menu',__( 'Header Menu' ));
     }
 
@@ -166,6 +164,12 @@ final class Emtheme_function {
         foreach( $postsForSitemap as $post ) {
             setup_postdata( $post );
 
+            $continue = false;
+            foreach(get_the_category($post) as $cat)
+                if ($cat->name == 'redirect') $continue = true;
+
+            if ($continue) continue;
+
             $postdate = explode( " ", $post->post_modified );
 
             $sitemap .= '<url>'.
@@ -173,6 +177,8 @@ final class Emtheme_function {
               '<lastmod>' . $postdate[0] . '</lastmod>' .
               '<changefreq>monthly</changefreq>' .
              '</url>';
+            
+            wp_reset_postdata();
           }
 
         $sitemap .= '</urlset>';

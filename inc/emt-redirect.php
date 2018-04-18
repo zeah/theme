@@ -71,7 +71,7 @@ final class Emtheme_redirect {
 			),
 		);
 
-		register_post_type('redir', $args);
+		// register_post_type('redir', $args);
 	}
 
 
