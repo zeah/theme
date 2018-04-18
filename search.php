@@ -19,6 +19,9 @@ if (have_posts()) {
 
 		elseif ($post->post_type == 'emlan')
 			echo $search->emlan($post);
+
+		// elseif ($post->post_type == 'article')
+		//     echo $search->article($post);
 	}
 }
 
