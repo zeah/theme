@@ -189,9 +189,9 @@ final class Emtheme_Customizer {
 		));
 
 
-		/* SOCIAL SECTION */
+		/* SOCIAL SECTION  AND LINKS */
 		$wp_customize->add_section('emtheme_footer_social', array(
-			'title' => 'Social Media',
+			'title' => 'Social Media & Links',
 			'description' => 'Social Media URLs',
 			'panel' => 'emtheme_footer_panel'
 		));
@@ -225,6 +225,16 @@ final class Emtheme_Customizer {
 			'label' => 'Youtube',
 			'section' => 'emtheme_footer_social',
 			'settings' => 'emtheme_footer[youtube]'
+		));
+
+
+		$this->add_settings($wp_customize, ['custom_links'], ['type' => 'option', 'transport' => 'postMessage', 'sanitize' => 'wp_kses_post'], 'emtheme_footer');
+		$wp_customize->add_control('emtheme_footer[custom_links]_c', array(
+			'label' => 'Custom HTML',
+			'description' => '<strong>Customizer will not show a preview of this box.</strong><br>Use class em-footer-link to style anchor elements and with styling there is no need to add line breaks between anchors.<br>eks.: <xmp><a class="em-footer-link"</xmp><xmp>href="https://www.nrk.no">NRK</a></xmp>',
+			'type' => 'textarea',
+			'section' => 'emtheme_footer_social',
+			'settings' => 'emtheme_footer[custom_links]'
 		));
 
 

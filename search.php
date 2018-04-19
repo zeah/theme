@@ -4,6 +4,7 @@ $found_posts = false;
 
 get_header();
 
+echo '<meta name="robots" content="noindex, follow">';
 echo '<div class="main"><div class="content">';
 echo '<ul class="emtheme-search-ul">';
 
@@ -75,12 +76,17 @@ final class Emkk_search {
 		if (isset($title[0]) && $title[0] != '')	$title = $title[0];
 		else 										$title = $post->post_title;
 
-		$html = '<li class="emtheme-search-li"><a class="emtheme-search-link" href="'.get_permalink($post).'">';
+		$thumbnail = get_the_post_thumbnail_url($post);
+
+		// print_r($thumbnail);
+
+		$html = '<li class="emtheme-search-li'.($thumbnail ? ' emtheme-search-li-flex' : '').'">';
+		if ($thumbnail) $html .= '<div class="emtheme-search-thumbnail"><img class="emtheme-search-thumbnail-image" src="'.esc_url($thumbnail).'"></div><div>';
+		$html .= '<a class="emtheme-search-link" href="'.get_permalink($post).'">';
 		$html .= '<h2 class="emtheme-search-title">'.$title.'</h2></a>';
 		$html .= '<span class="emtheme-search-url">'.get_permalink($post).'</span>';
-
 		if (isset($meta[0]) && $meta[0] != '') $html .= '<p class="emtheme-search-description">'.$meta[0].'</p>';
-
+		if ($thumbnail) $html .= '</div>';
 		$html .= '</li>';
 		return $html;
 	}

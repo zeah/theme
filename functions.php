@@ -108,7 +108,7 @@ final class Emtheme_function {
     public function add_style() {
         // adding js
         // search box, mobile nav menu
-        wp_enqueue_script('emscript', get_theme_file_uri().'/assets/js/emscript.js', array(), false, true);
+        wp_enqueue_script('emscript', get_theme_file_uri().'/assets/js/emscript.js', array(), '1.0.1', true);
 
         // $style = get_option('emtheme_styling');
         // desktop style

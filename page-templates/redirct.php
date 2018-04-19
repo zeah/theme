@@ -20,7 +20,7 @@ if (isset($colors['emtop_font'])) $fc = $colors['emtop_font'];
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta name="robots" content="noindex, follow">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 	.html {

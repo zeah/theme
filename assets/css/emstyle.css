@@ -517,7 +517,7 @@ p:empty {
 
 /* footer section title for social media */
 .em-socialmedia-container:before {
-	content: 'Sosiale Medier';
+	content: 'Lenker';
 }
 
 /* flexbox settings */
@@ -530,6 +530,7 @@ p:empty {
 
 /* anchor element */
 .em-footer-link {
+	display: block;
 	color: hsl(0, 0%, 80%);
 	text-decoration: none;
 }
@@ -568,6 +569,10 @@ p:empty {
 	line-height: 1;
 }
 
+.emtheme-search-li-flex {
+	display: flex;
+}
+
 .emtheme-search-li:nth-child(odd) {
 	/*background-color: #e6eeff;*/
 }
@@ -577,6 +582,12 @@ p:empty {
 	text-decoration: none;
 	display: block;
 	text-transform: capitalize;
+}
+
+.emtheme-search-thumbnail-image {
+	width: 25.6rem;
+	height: auto;
+	padding-right: 1rem;
 }
 
 .emtheme-search-title {
@@ -601,3 +612,4 @@ p:empty {
 	margin: 0;
 	font-size: 1.3rem;
 }
+

@@ -11,7 +11,7 @@ final class Emtheme_style {
 		Content
 		Footer
 	*/
-	public static $style_default = '1.1.5';
+	public static $style_default = '1.1.6';
 
 	/*
 		STYLE TWO

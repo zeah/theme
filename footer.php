@@ -45,7 +45,11 @@ class Emtheme_footer {
 				foreach($this->social as $item)
 					$this->html .= $this->getLink($item);
 
-				$this->html .= '</ul></div>';
+				$this->html .= '</ul>';
+
+				if (isset($this->footer['custom_links'])) $this->html .= wp_kses_post($this->footer['custom_links']);
+
+				$this->html .= '</div>';
 			}
 
 			if ($this->check('contact_active')) {
