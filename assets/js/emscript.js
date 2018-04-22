@@ -13,7 +13,7 @@
 
 	var i = document.createElement('input');
 	i.classList.add('emtheme-search-input');
-	if (location.search && !location.search.includes('=')) i.setAttribute('value', location.search.substring(3));
+	if (location.search && !location.search.includes('customize_changeset')) i.setAttribute('value', location.search.substring(3));
 	i.setAttribute('type', 'search');
 	i.setAttribute('autocomplete', 'on');
 
@@ -23,7 +23,7 @@
 	b.setAttribute('type', 'button');
 	b.classList.add('emtheme-search-button');
 
-	var go = function() { location = location.origin+temp+'/?s='+i.value; }
+	var go = function(val) { location = location.origin+temp+'/?s='+val; }
 
 	b.addEventListener('click', function() {
 		if (i.value) go();
@@ -33,8 +33,7 @@
 	});
 
 	i.addEventListener('keyup', function(e) {
-		i.value = e.target.value;
-		if (e.keyCode == 13) go();
+		if (e.keyCode == 13) go(e.target.value);
 	});
 
 	i.addEventListener('focusout', function() {
