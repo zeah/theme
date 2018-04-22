@@ -1,13 +1,14 @@
 (() => {
 
-	// console.log(em_meta);
+	console.log(em_meta);
 
 	let metadescription = document.querySelector('.em-metadescription');
 	let metatitle = document.querySelector('.em-metatitle');
 	let seocontainer = document.querySelector('.em-seo-container');
 
 	let editor = document.querySelector('#content');
-	let content = editor.value;
+	// let content = editor.value;
+	content = em_meta['content'];
 
 	let newdiv = (...c) => {
 		let div = document.createElement('div');
@@ -49,7 +50,8 @@
 
 		if (node) tab.addEventListener('click', () => { 
 		
-			document.querySelector('.em-seo-tab-active').classList.toggle('em-seo-tab-active');
+			let active = document.querySelector('.em-seo-tab-active')
+			if (active) active.classList.toggle('em-seo-tab-active');
 
 			tab.classList.toggle('em-seo-tab-active');
 
@@ -133,7 +135,6 @@
 	let linktable = () => {
 
 		let headrow = () => {
-
 			let head = (text, ...c) => {
 				let head = document.createElement('th');
 				head.classList.add('em-th');
@@ -155,6 +156,7 @@
 		}
 
 		let links = content.match(/<a.*>/g);
+		if (!links) return null;
 
 		let addrow = (row, input_table) => {
 			let link = row.match(/(?:<a.*?)(?:href=")(.+?)(?:".*?>)(.*?)(?:<\/a>)/);
@@ -193,12 +195,15 @@
 
 		// table.appendChild(infoRow('Internal Links'));
 		internal_table.appendChild(headrow());
-		for (let row of links) if (row.includes(loc)) addrow(row, internal_table);
+		// for (let row of links) if (row.includes(loc)) addrow(row, internal_table);
 
 		// table.appendChild(infoRow('External Links'));
 		external_table.appendChild(headrow());
-		for (let row of links) if (!row.includes(loc)) addrow(row, external_table);
 
+		for (let row of links) { 
+			if (row.includes(loc)) addrow(row, internal_table);
+			else 					addrow(row, external_table);
+		}
 
 		let external_info = newdiv('em-table-info');
 		external_info.appendChild(document.createTextNode('External Links'));
@@ -238,7 +243,7 @@
 
 	// adding tabs
 	top.appendChild(newtab('Text', text));
-	top.appendChild(newtab('Links', links, 'em-seo-tab-active'));
+	if (links) top.appendChild(newtab('Links', links, 'em-seo-tab-active'));
 	top.appendChild(newtab('Images', images));
 
 	// adding to web
@@ -249,7 +254,8 @@
 	let seom = newdiv('em-seo-main');
 
 	// inital state
-	seom.appendChild(links);
+	if (links) seom.appendChild(links);
+	else seom.appendChild(text);
 
 	// adding to web
 	seocontainer.appendChild(seom);

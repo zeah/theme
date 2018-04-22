@@ -100,8 +100,22 @@ final class Emtheme_Page {
 		if ($screen->id == 'page') {
 			global $post;
 
+			// wp_die(print_r(do_shortcode($post->post_content)));
+
 			$meta = get_post_meta($post->ID);
 
+			// $emkk = Emkk_shortcode::get_instance();
+			// $meta['shortcode_links'] = $emkk->emkort_short('[emkort abc]') (change to $meta[sc_links] = do_action('emkort_links', $post->post_content))
+
+			// add_filter
+			// then plugins add to their links to the filter
+			// $data = ['content' => $post->post_content, 'links' => [['name' => 'emkort', 'links' => []]] ]
+
+			// wp_die(print_r($emkk->emkort_short(), true));
+
+			// $meta['content'] = do_shortcode('[emkort]');
+			// $meta['content'] = apply_filters('the_content', do_shortcode($post->post_content));
+			$meta['content'] = $post->post_content;
 			// wp_die(print_r($meta, true));
 
 			wp_enqueue_script('em-page-js', get_theme_file_uri() . '/assets/js/empage.js', array(), false, true);
