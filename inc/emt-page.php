@@ -21,11 +21,15 @@ final class Emtheme_Page {
 	private function wp_hooks() {
 		add_action('save_post', array($this, 'save_meta'));
 
+		add_action('add_meta_boxes', array($this, 'add_seo'));
 		add_action('add_meta_boxes', array($this, 'add_nav'));
 		add_action('add_meta_boxes', array($this, 'add_title'));
 		add_action('add_meta_boxes', array($this, 'add_description'));
 		add_action('add_meta_boxes', array($this, 'add_strucdata'));
 		add_action('add_meta_boxes', array($this, 'add_redirect'));
+
+
+		add_action( 'admin_enqueue_scripts', array($this, 'enqueue_script') );
 
 		// add_action('do_meta_boxes', array($this, 'remove_thumbnail'));
 	}
@@ -88,6 +92,32 @@ final class Emtheme_Page {
 		}
 	}
 
+	public function enqueue_script() {
+		$screen = get_current_screen();
+
+		// wp_die(print_r($screen, true));
+
+		if ($screen->id == 'page') {
+			global $post;
+
+			$meta = get_post_meta($post->ID);
+
+			// wp_die(print_r($meta, true));
+
+			wp_enqueue_script('em-page-js', get_theme_file_uri() . '/assets/js/empage.js', array(), false, true);
+			wp_localize_script( 'em-page-js', 'em_meta', json_decode( json_encode( $meta ), true) );
+			wp_enqueue_style('em-page-css', get_theme_file_uri() . '/assets/css/empage.css', array(), false);
+		}
+	}
+
+	public function add_seo() {
+		add_meta_box('em-seo', 'SEO', array($this, 'seo_callback'), 'page', 'advanced', 'high');
+	}
+
+	public function seo_callback() {
+		echo '<div class="em-seo-container"></div>';
+	}
+
 	/* NAVIGATIONAL OPTIONS META BOX*/
 	public function add_nav() {
 		add_meta_box('navgation-opt', 'Navigation', array($this, 'nav_callback'), 'page', 'side');
@@ -109,7 +139,8 @@ final class Emtheme_Page {
 		add_meta_box( 'meta-description-opt', 'Meta Description', array($this, 'description_callback'), array('page', 'post'), 'advanced', 'high');
 	}
 	public function description_callback() {
-		echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.esc_html($this->getmeta('emtext')).'</textarea>';
+		echo '<div class="em-metadescription"></div>';
+		// echo '<textarea name="emtext" style="width: 100%"; height: 5em">'.esc_html($this->getmeta('emtext')).'</textarea>';
 	}
 
 	/* <TITLE> META BOX */
@@ -118,7 +149,8 @@ final class Emtheme_Page {
 	}
 	public function title_callback() {
 		wp_nonce_field( basename(__FILE__), 'em_nonce' );
-		echo '<input type="text" name="emtitle" style="width: 100%" value="'.esc_attr($this->getmeta('emtitle')).'">';
+		echo '<div class="em-metatitle"></div>';
+		// echo '<input type="text" name="emtitle" style="width: 100%" value="'.esc_attr($this->getmeta('emtitle')).'">';
 	}
 
 	/* STRUCTURED DATA META BOX */

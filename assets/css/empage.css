@@ -1,0 +1,109 @@
+
+/* meta title/description */
+.em-metatitle-input,
+.em-metadesc {
+	width: 100%;
+	font-size: 16px;
+}
+.em-metadesc {
+	height: 100px;
+}
+
+.em-counter {
+	font-size: 14px;
+}
+
+/* seo section */
+.em-seo-main {
+	background-color: #efefef;
+	padding: 5px;
+	border: solid 1px #aaa;
+}
+
+.em-seo-top {
+	display: flex;
+}
+
+.em-seo-tab {
+	position: relative;
+	top: 1px;
+	margin-right: 10px;
+	padding: 5px;
+	font-size: 18px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+
+	border: solid 1px #aaa;
+	border-bottom: none;
+
+	cursor: pointer;
+}
+
+.em-seo-tab:hover {
+	background-color: #efe;
+}
+
+.em-seo-tab-active {
+	background-color: #efefef;
+	cursor: default;
+}
+
+
+.em-seo-tab-active:hover {
+	background-color: #efefef;
+}
+
+/* table */
+.em-table {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+
+	text-align: left;
+}
+
+.em-tr:hover {
+	background-color: #ddd;
+}
+
+.em-th {
+	padding: 10px;
+}
+
+.em-th-100 {
+	/*width: 100px;*/
+}
+
+.em-table-info {
+	font-size: 16px;
+	font-weight: bold;
+	padding-top: 40px;
+}
+
+.em-table-info:first-child {
+	/*padding-top: 0;*/
+}
+
+.em-th:nth-child(3),
+.em-th:first-child {
+	width: 50px;
+}
+
+.em-td {
+	white-space: nowrap;
+	overflow: auto;
+
+	border-top: solid 1px #aaa;
+	padding: 10px;
+}
+
+.em-td-info {
+	width: 100%;
+	border: solid 1px black;
+}
+
+.em-td::-webkit-scrollbar {
+	height: 0px;
+}
+
+ 
