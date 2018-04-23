@@ -1,6 +1,6 @@
 (() => {
 
-	console.log(em_meta);
+	// console.log(em_meta);
 
 	let metadescription = document.querySelector('.em-metadescription');
 	let metatitle = document.querySelector('.em-metatitle');
@@ -138,6 +138,7 @@
 		return '';
 	}
 
+	// link table in tab in seo meta box
 	let linktable = () => {
 
 		let headrow = () => {
@@ -161,7 +162,7 @@
 			return tablehead;
 		}
 
-		let links = content.match(/<a.*>/g);
+		let links = content.match(/<a.*?>.*?<\/a>/g);
 		if (!links) return null;
 
 		let addrow = (row, input_table) => {
@@ -194,9 +195,6 @@
 			return tr;
 		}
 
-
-		console.log(links);
-
 		let container = newdiv();
 
 		let internal_table = document.createElement('table');
@@ -206,35 +204,25 @@
 		external_table.classList.add('em-table');
 
 
-		let loc = 'www.kredittkort.rocks';
-		// let loc = location.hostname;
+		let loc = location.hostname;
 
-		// table.appendChild(infoRow('Internal Links'));
+
 		internal_table.appendChild(headrow());
-		// for (let row of links) if (row.includes(loc)) addrow(row, internal_table);
-
-		// table.appendChild(infoRow('External Links'));
 		external_table.appendChild(headrow());
 
-		for (let row of links) { 
-			if (row.includes(loc)) 	addrow(row, internal_table);
-			else 					addrow(row, external_table);
-		}
+		for (let row of links)
+			addrow(row, row.includes(loc) ? internal_table : external_table)
 
-		for (let row of em_meta['plugin_links']) {
-			if (!'internal' in row || !'name' in row['internal'] || !'url' in row['internal'] || !'link' in row) continue;
-			if (!'external' in row || !'name' in row['external'] || !'url' in row['external'] || !'link' in row) continue;
 
-			// let itable = internal_table;
+		for (let i of em_meta['plugin_links']) {
+			if (!'data' in i) continue;
 
-			// // if (!row)
-			// if (!row['internal']['url'].includes(loc))
-			// 	itable = external_table;
+			let link = i['link'];
+			for (let data in i['data']) {
+				let d = i['data'][data];
 
-			addrow_plugin(row['link'], row['internal']['url'], row['internal']['name'], '', (row['internal']['url'].includes(loc) || row['internal']['url'].charAt(0) == '/') ? internal_table : external_table);
-
-			addrow_plugin(row['link'], row['external']['url'], row['external']['name'], 'new tab', (row['external']['url'].includes(loc) || row['external']['url'].charAt(0) == '/') ? internal_table : external_table);
-
+				addrow_plugin(link, d['url'], d['name'], d['open'], (d['url'].includes(loc) || d['url'].charAt(0) == '/') ? internal_table : external_table);
+			}
 		}
 
 		let external_info = newdiv('em-table-info');
@@ -246,6 +234,7 @@
 		internal_info.appendChild(document.createTextNode('Internal Links'));
 		container.appendChild(internal_info);
 		container.appendChild(internal_table);
+
 		return container;
 	}
 
