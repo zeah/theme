@@ -107,6 +107,11 @@ final class Emtheme_Page {
 			// $emkk = Emkk_shortcode::get_instance();
 			// $meta['shortcode_links'] = $emkk->emkort_short('[emkort abc]') (change to $meta[sc_links] = do_action('emkort_links', $post->post_content))
 
+
+			$meta['plugin_links'] = apply_filters('emtheme_plugin_links', []);
+
+			// wp_die(print_r($plugin_links, true));
+
 			// add_filter
 			// then plugins add to their links to the filter
 			// $data = ['content' => $post->post_content, 'links' => [['name' => 'emkort', 'links' => []]] ]

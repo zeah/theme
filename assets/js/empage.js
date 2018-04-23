@@ -120,6 +120,12 @@
 		return container;
 	}
 
+	let plugin_button = (link) => {
+		let button = newbutton('Go to');
+
+		return button;
+	}
+
 	let getTarget = (link) => {
 		let lo = link.match(/(?:target=")(.+?)(?:")/i);
 		
@@ -147,7 +153,7 @@
 			}
 
 			let tablehead = document.createElement('tr');
-			tablehead.appendChild(head('Go To', 'em-th-100'));
+			tablehead.appendChild(head('Go to', 'em-th-100'));
 			tablehead.appendChild(head('URL'));
 			tablehead.appendChild(head('Opens', 'em-th-100'));
 			tablehead.appendChild(head('Anchor Text'));
@@ -161,6 +167,16 @@
 		let addrow = (row, input_table) => {
 			let link = row.match(/(?:<a.*?)(?:href=")(.+?)(?:".*?>)(.*?)(?:<\/a>)/);
 			input_table.appendChild(newrow(findbutton(link[0]), link[1], getTarget(link[0]), link[2]));
+		}
+
+		let addrow_plugin = (button, url, name, open, input_table) => {
+			let b = newbutton('Go to');
+
+			b.addEventListener('click', () => {
+				window.open(button);
+			});
+
+			input_table.appendChild(newrow(b, url, open, name));
 		}
 
 		let infoRow = (text) => {
@@ -201,8 +217,24 @@
 		external_table.appendChild(headrow());
 
 		for (let row of links) { 
-			if (row.includes(loc)) addrow(row, internal_table);
+			if (row.includes(loc)) 	addrow(row, internal_table);
 			else 					addrow(row, external_table);
+		}
+
+		for (let row of em_meta['plugin_links']) {
+			if (!'internal' in row || !'name' in row['internal'] || !'url' in row['internal'] || !'link' in row) continue;
+			if (!'external' in row || !'name' in row['external'] || !'url' in row['external'] || !'link' in row) continue;
+
+			// let itable = internal_table;
+
+			// // if (!row)
+			// if (!row['internal']['url'].includes(loc))
+			// 	itable = external_table;
+
+			addrow_plugin(row['link'], row['internal']['url'], row['internal']['name'], '', (row['internal']['url'].includes(loc) || row['internal']['url'].charAt(0) == '/') ? internal_table : external_table);
+
+			addrow_plugin(row['link'], row['external']['url'], row['external']['name'], 'new tab', (row['external']['url'].includes(loc) || row['external']['url'].charAt(0) == '/') ? internal_table : external_table);
+
 		}
 
 		let external_info = newdiv('em-table-info');

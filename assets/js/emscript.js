@@ -26,7 +26,7 @@
 	var go = function(val) { location = location.origin+temp+'/?s='+val; }
 
 	b.addEventListener('click', function() {
-		if (i.value) go();
+		if (i.value) go(i.value);
 
 		i.classList.add('emtheme-search-input-active');
 		i.focus();
