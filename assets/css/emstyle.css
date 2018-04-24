@@ -321,6 +321,7 @@ p:empty {
 
 /* element of which is centered, has width and background-color of white */
 .main {
+	position: relative;
 	margin: 2rem auto;
 	width: 112rem;
 	max-width: 100%;
@@ -613,3 +614,23 @@ p:empty {
 	font-size: 1.3rem;
 }
 
+.page-not-found {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	/*border: solid 1px black;*/
+	text-align: center;
+	margin-top: 10rem;
+	font-size: 2.2rem;
+	text-shadow: 0 0 1px #faa;
+}
+
+.page-not-found-link {
+}
+
+.page-not-found-sidebar {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	/*float: right;*/
+}

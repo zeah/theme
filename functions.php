@@ -4,6 +4,7 @@ require_once 'inc/emt-page.php';
 require_once 'inc/emt-shortcode.php';
 require_once 'inc/settings/customizer.php';
 require_once 'inc/style_version.php';
+require_once 'inc/emt-widget.php';
 // require_once 'inc/emt-redirect.php';
 require_once 'inc/emt-link.php';
 
@@ -38,6 +39,8 @@ if (! function_exists('emtheme_setup')) {
         Emtheme_customizer::get_instance();
 
         Emtheme_link::get_instance();
+
+        Emtheme_Widget::get_instance();
     }
 }
 
