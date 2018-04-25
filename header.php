@@ -34,6 +34,8 @@ echo '<link rel="preconnect" href="https://fonts.googleapis.com/">';
 echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
 // echo '<link rel="preconnect" href="http://static.kredittkort.rocks/">';
 
+// wp_die(print_r(get_page_template_slug($post->ID), true));
+
 
 $links = apply_filters('add_google_fonts', []);
 

@@ -3,10 +3,10 @@
 	var sh = false;
 	var value = '';
 
-	let temp = '';
+	var temp = '';
 	if (location.hostname.includes('localhost')) temp = '/wordpress';
 
-	let url = location.protocol+'//'+location.host+temp;
+	var url = location.protocol+'//'+location.host+temp;
 
 	// console.log(location.protocol + '//' + location.hostname);
 
@@ -40,6 +40,7 @@
 
 	var go = function(val) { location = location.origin+temp+'/?s='+val; }
 
+	// redo for IE
 	let click = (e) => {
 		if (i.value == '' || !i.value) e.preventDefault();
 	

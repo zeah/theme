@@ -32,6 +32,10 @@ if (have_posts()) {
 
 		global $post;
 
+		$terms = wp_get_post_terms($post->ID);
+		// $terms = wp_get_post_terms($post->ID, 'emlantype');
+
+
 		// if ($post->post_type == 'page' || $post->post_type == 'nyheter')
 		if ($post->post_type != 'emkort' || $post->post_type != 'emlan')
 			echo $search->page($post);
