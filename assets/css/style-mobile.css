@@ -9,12 +9,12 @@
 
 	1.0 HEADER
 		1.1 SITE IDENTITY
-		1.2 MOBILE NAVBAR
 	2.0 CONTENT
 		2.1 PAGE CONTENT
 		2.2 RULES FOR WORDPRESS EMBEDDED IMAGES
 	3.0 FOOTER
-		3.1 CONTACT/ABOUT INFORMATIOn
+		3.1 CONTACT/ABOUT INFORMATION
+	4.0 SEARCH RESULTS
 */
 
 
@@ -115,98 +115,6 @@ img {
 .emtheme-search-box {
 	display: none;
 }
-
-/*
-	1.2 SECTION
-	MOBILE NAVBAR
-*/
-
-/* container for nav bar - only activation icon visible */
-/*.nav-container {
-	position: relative; 
-	background-color: inherit;
-	font-size: 2rem;
-	z-index: 900;
-}*/
-
-/*	google material icon 
-	navbar activation icon */
-/*.material-icons {
-	font-size: 4.6rem !important;
-	color: hsl(0, 0%, 90%) !important;
-	padding-right: 1rem;
-}*/
-
-/* effect for activated activation icon */
-/*.nav-active {
-	text-shadow: 0 0 10px white;
-}*/
-
-/* mobile top level dropdown */
-/*.nav {
-	display: none;
-	position: absolute;
-	top: 4rem;
-	right: 0;
-	background-color: inherit;
-	z-index: 999;
-}*/
-
-/*.nav-mobile-top {*/
-	/*height: 32px;*/
-/*}*/
-
-/* element containing nav item */
-/*.em-nav-item {
-	background-color: inherit;
-	white-space: nowrap;
-	border-bottom: solid 1px hsl(0, 0%, 20%);
-	padding: 1.5rem 1rem;
-}
-.em-nav-item:last-child {
-	border-bottom: none;
-}*/
-
-/* anchor element of nav item*/
-/*.em-nav-lenke {
-	display: block;
-	text-decoration: none;
-	text-transform: capitalize;
-	color: hsl(0, 50%, 99%);
-}*/
-
-/* special rule for nav items (<a>) in submenus */
-/*.em-nav-sublenke {
-	font-size: 1.6rem;
-	color: hsl(0, 0%, 69%);
-}*/
-
-/* nav item with submenu icon */
-/*.em-nav-item-parent:after {
-	content: ' \25bc';
-}*/
-
-/* start value for submenus */
-/*.em-nav-sub-container {
-	display: none;
-}*/
-
-/* special rule for nav items in submenus*/
-/*.em-nav-subitem {
-	border: none;
-	background-color: #e8e8e8;*/
-	/*background-color: hsl(0, 0%, 20%);*/
-/*}*/
-
-/* showing hidden submenu*/
-/*.nav-show {
-	display: block;
-}*/
-
-/* visual marker for current page */
-/*.em-nav-current {
-	background-color: hsl(22, 40%, 20%);
-}*/
 
 
 /*
@@ -335,4 +243,32 @@ img {
 }
 
 .page-not-found-link {
+}
+
+/*
+	4.0 SECTION
+	SEARCH SERP
+*/
+
+.emtheme-search-ul {
+	padding: 0;
+}
+
+.emtheme-search-li {
+	margin: 3rem 0;
+	line-height: 1;
+	list-style: none;
+}
+
+.emtheme-search-title {
+	margin: 0;
+	font-size: 1.8rem;
+	color: #1a0dab;
+}
+
+.emtheme-search-url {
+	word-break: break-all;
+
+	font-size: 1rem;
+	color: #00aa00;
 }

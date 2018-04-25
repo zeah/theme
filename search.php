@@ -15,11 +15,9 @@ if (have_posts()) {
 	
 		global $post;
 
-		if ($post->post_type == 'emkort')
-			echo $search->emkort($post);
+		if ($post->post_type == 'emkort') echo $search->emkort($post);
 
-		elseif ($post->post_type == 'emlan')
-			echo $search->emlan($post);
+		elseif ($post->post_type == 'emlan') echo $search->emlan($post);
 
 		// elseif ($post->post_type == 'article')
 		//     echo $search->article($post);
@@ -34,7 +32,8 @@ if (have_posts()) {
 
 		global $post;
 
-		if ($post->post_type == 'page' || $post->post_type == 'article')
+		// if ($post->post_type == 'page' || $post->post_type == 'nyheter')
+		if ($post->post_type != 'emkort' || $post->post_type != 'emlan')
 			echo $search->page($post);
 	}
 }

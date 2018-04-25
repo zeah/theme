@@ -48,7 +48,7 @@ foreach($links as $link => $weights) {
 	if (sizeof($weights) > 0) $out .= ':';
 
 	foreach($weights as $weight)
-		if ($weight) $out.= $weight.',';
+		if ($weight && !strpos($out, $weight)) $out.= $weight.',';
 
 	$out = rtrim($out, ',');
 	$out = ltrim($out, '|:');

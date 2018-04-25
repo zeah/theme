@@ -3,38 +3,62 @@
 	var sh = false;
 	var value = '';
 
-	var temp = '/wordpress';
-	if (!location.href.includes('http://localhost')) temp = '';
+	let temp = '';
+	if (location.hostname.includes('localhost')) temp = '/wordpress';
+
+	let url = location.protocol+'//'+location.host+temp;
+
+	// console.log(location.protocol + '//' + location.hostname);
+
+	// var temp = '/wordpress';
+	// if (!location.href.includes('http://localhost')) temp = '';
 
 	if (!c) return;
 
 	var f = document.createElement('form');
+	f.setAttribute('method', 'get');
+	f.setAttribute('role', 'search');
+	f.setAttribute('action', url);
+
+
 	f.setAttribute('autocomplete', 'on');
 
 	var i = document.createElement('input');
 	i.classList.add('emtheme-search-input');
-	if (location.search && !location.search.includes('customize_changeset')) i.setAttribute('value', location.search.substring(3));
 	i.setAttribute('type', 'search');
-	i.setAttribute('autocomplete', 'on');
+	i.setAttribute('name', 's');
+	// i.setAttribute('required', '');
+
+	if (location.search && !location.search.includes('customize_changeset')) i.setAttribute('value', location.search.substring(3));
+	// i.setAttribute('autocomplete', 'on');
 
 	if (location.search) i.classList.add('emtheme-search-input-active');
 
 	var b = document.createElement('button');
-	b.setAttribute('type', 'button');
+	b.setAttribute('type', 'submit');
 	b.classList.add('emtheme-search-button');
 
 	var go = function(val) { location = location.origin+temp+'/?s='+val; }
 
-	b.addEventListener('click', function() {
-		if (i.value) go(i.value);
+	let click = (e) => {
+		if (i.value == '' || !i.value) e.preventDefault();
+	
+	 	i.classList.add('emtheme-search-input-active');
+		i.focus()
+	}
 
-		i.classList.add('emtheme-search-input-active');
-		i.focus();
-	});
+	b.addEventListener('click', click);
 
-	i.addEventListener('keyup', function(e) {
-		if (e.keyCode == 13) go(e.target.value);
-	});
+	// b.addEventListener('click', function() {
+	// 	if (i.value) go(i.value);
+
+	// 	i.classList.add('emtheme-search-input-active');
+	// 	i.focus();
+	// });
+
+	// i.addEventListener('keyup', function(e) {
+	// 	if (e.keyCode == 13) go(e.target.value);
+	// });
 
 	i.addEventListener('focusout', function() {
 		if (!i.value) i.classList.remove('emtheme-search-input-active');
