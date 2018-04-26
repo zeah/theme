@@ -39,20 +39,33 @@ final class Emtheme_Shortcode {
 	}
 
 	public function redirect_callback($atts, $content = null) {
-		if (!isset($atts['name']) || !isset($atts['url'])) return 'need both a name and url set in redirect shortcode';
+		// if (!isset($atts['name']) || !isset($atts['url'])) return 'need both a name and url set in redirect shortcode';
 		
-		$time = 2;
+		$time = 120;
 		if (isset($atts['time'])) $time = $atts['time'];
 
-		$html = '<div class="emtheme-redirect-container">';
+		$bgc = '#fff';
+		$fc = '#000';
 
-		if (get_option('emtheme_logo')) $html .= '<img src="'.esc_url(get_option('emtheme_logo')).'"><br>';
+		$colors = get_option('emtheme_color');
 
-		$html .= 'Du vil nå bli videresendt til '.esc_html($atts['name']).'<br><a style="font-size: 1.6rem" href="'.esc_url($atts['url']).'">Link</a>';
+		if (isset($atts['background-color'])) 	$bgc = sanitize_hex_color($atts['background-color']);
+		elseif (isset($colors['emtop_bg'])) 	$bgc = sanitize_hex_color($colors['emtop_bg']);
+ 
+		if (isset($atts['font-color']))	$fc = sanitize_hex_color($atts['font-color']);
+		elseif (isset($colors['emtop_font']))	$fc = sanitize_hex_color($colors['emtop_font']);
+
+
+		$html = '<div class="emtheme-redirect-container" style="background-color: '.$bgc.'; color: '.$fc.';">';
+		// $html = '<div class="emtheme-redirect-container" style="background-color: '.$bgc.'; color: '.$fc.';"><i class="material-icons emtheme-lock">lock_outline</i>';
+
+		if ($content) $html .= do_shortcode($content).'<br>';
+
+		if (isset($atts['url'])) $html .= '<p><a style="font-size: 1.6rem" href="'.esc_url($atts['url']).'">Gå videre med en gang</a></p>';
 
 		$html .= '</div>';
 
-		$html .= '<script>(function() { var e = document.createElement("meta"); e.setAttribute("http-equiv", "refresh"); e.setAttribute("content", "'.$time.'; url=\"'.esc_url($atts['url']).'\""); document.querySelector("head").appendChild(e) } )();</script>';
+		if (isset($atts['url'])) $html .= '<script>(function() { var e = document.createElement("meta"); e.setAttribute("http-equiv", "refresh"); e.setAttribute("content", "'.$time.'; url=\"'.esc_url($atts['url']).'\""); document.querySelector("head").appendChild(e) } )();</script>';
 		
 		return $html;
 	}

@@ -154,10 +154,11 @@ final class Emtheme_function {
     }
 
     public function add_sitemap() {
+        //TODO ADD FILTER FOR POST_TYPE (emtheme-sitemap)
         $postsForSitemap = get_posts(array(
             'numberposts' => -1,
             'orderby' => 'modified',
-            'post_type'  => array( 'page', 'article' ),
+            'post_type'  => array( 'page', 'nyheter' ),
             'order'    => 'DESC'
         ));
 
@@ -167,9 +168,13 @@ final class Emtheme_function {
         foreach( $postsForSitemap as $post ) {
             setup_postdata( $post );
 
+            if (strpos(get_page_template_slug($post->ID), 'redirect') !== false) continue;
+
             $continue = false;
-            foreach(get_the_category($post) as $cat)
+            foreach(get_the_category($post) as $cat) {
                 if ($cat->name == 'redirect') $continue = true;
+
+            }
 
             if ($continue) continue;
 

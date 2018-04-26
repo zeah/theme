@@ -36,8 +36,8 @@ if (have_posts()) {
 		// $terms = wp_get_post_terms($post->ID, 'emlantype');
 
 
-		// if ($post->post_type == 'page' || $post->post_type == 'nyheter')
-		if ($post->post_type != 'emkort' || $post->post_type != 'emlan')
+		if ($post->post_type == 'page' || $post->post_type == 'nyheter')
+		// if ($post->post_type != 'emkort' || $post->post_type != 'emlan')
 			echo $search->page($post);
 	}
 }
@@ -73,6 +73,13 @@ final class Emkk_search {
 	}
 
 	public function page($post) {
+		if (strpos(get_page_template_slug($post->ID), 'redirect') !== false) return;
+
+		$continue = false;
+        foreach(get_the_category($post) as $cat)
+        	if ($cat->name == 'redirect') $continue = true;
+        if ($continue) return;
+
 		$meta = get_post_meta($post->ID, 'emtext');
 		$title = get_post_meta($post->ID, 'emtitle');
 
@@ -80,8 +87,6 @@ final class Emkk_search {
 		else 										$title = $post->post_title;
 
 		$thumbnail = get_the_post_thumbnail_url($post);
-
-		// print_r($thumbnail);
 
 		$html = '<li class="emtheme-search-li'.($thumbnail ? ' emtheme-search-li-flex' : '').'">';
 		if ($thumbnail) $html .= '<div class="emtheme-search-thumbnail"><img class="emtheme-search-thumbnail-image" src="'.esc_url($thumbnail).'"></div><div>';
