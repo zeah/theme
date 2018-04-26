@@ -32,37 +32,59 @@ final class Emtheme_Styler {
 		$this->colors['nav_bg_top'] = isset($this->colors['nav_bg_top']) ? $this->colors['nav_bg_top'] : Emtheme_style::$colors['nav']['bg'];
 		$this->colors['nav_bg_hover_top'] = isset($this->colors['nav_bg_hover_top']) ? $this->colors['nav_bg_hover_top'] : Emtheme_style::$colors['nav']['hover'];
 
+		// sets background color to what background color TOP from customizer or black as default
 		$this->nav_bg = 'background-color: '.(isset($this->colors['nav_bg_top']) ? $this->colors['nav_bg_top'] : '#000').';';
 
+		// 2 color linear-gradient
 		if (isset($this->colors['nav_bg_middle']) && isset($this->colors['nav_bg_bottom']) && $this->colors['nav_bg_middle'] != '' && $this->colors['nav_bg_bottom'] != '')
 			$this->nav_bg = 'background: linear-gradient(to top, '.$this->colors['nav_bg_bottom'].' 0%, '.$this->colors['nav_bg_middle'].' 50%, '.$this->colors['nav_bg_top'].' 100%);';
+		
+		// 3 color linear gradient
 		elseif (isset($this->colors['nav_bg_bottom']) && $this->colors['nav_bg_bottom'] != '')
 			$this->nav_bg = 'background: linear-gradient(to top, '.$this->colors['nav_bg_bottom'].' 0%, '.$this->colors['nav_bg_top'].' 100%);';
 
+		// hover background background color from customizer or black as default
 		$this->nav_bg_hover = 'background-color: '.(isset($this->colors['nav_bg_hover_top']) ? $this->colors['nav_bg_hover_top'] : '#000').';';
 
+		// 2 color hover linear-background
 		if (isset($this->colors['nav_bg_hover_middle']) && isset($this->colors['nav_bg_hover_bottom']) && $this->colors['nav_bg_hover_middle'] != '' && $this->colors['nav_bg_hover_bottom'] != '')
 			$this->nav_bg_hover = 'background: linear-gradient(to top, '.$this->colors['nav_bg_hover_bottom'].' 0%, '.$this->colors['nav_bg_hover_middle'].' 50%, '.$this->colors['nav_bg_hover_top'].' 100%);';
+		
+		// 3 color hover linear-background
 		elseif (isset($this->colors['nav_bg_hover_bottom']) && $this->colors['nav_bg_hover_bottom'] != '')
 			$this->nav_bg_hover = 'background: linear-gradient(to top, '.$this->colors['nav_bg_hover_bottom'].' 0%, '.$this->colors['nav_bg_hover_top'].' 100%);';
-
-
 	}
 
+	/*
+		the function that is called from head.php
+	*/
 	public function get_css() {
+
+		$option = get_option('emtheme_styling');
+
 		$style = '<style>';
 
-		$style .= $this->general();
-		$style .= $this->general_desktop();
-		$style .= $this->general_mobile();
 
-		if (!has_nav_menu('header-menu')) {
-			$style .= $this->page_desktop();
-			$style .= $this->page_mobile();
+		// wp_die(print_r($option, true));
+		
+
+		if ($option == 'two') {
+
 		}
+
 		else {
-			$style .= $this->custom_desktop();
-			$style .= $this->custom_mobile();
+			$style .= $this->def_general();
+			$style .= $this->def_general_desktop();
+			$style .= $this->def_general_mobile();
+
+			if (!has_nav_menu('header-menu')) {
+				$style .= $this->def_page_desktop();
+				$style .= $this->def_page_mobile();
+			}
+			else {
+				$style .= $this->def_custom_desktop();
+				$style .= $this->def_custom_mobile();
+			}
 		}
 
 		$style .= '</style>';
@@ -70,7 +92,7 @@ final class Emtheme_Styler {
 		return $style;
 	}
 
-	private function general() {
+	private function def_general() {
 		$fonts = $this->fonts;
 		$colors = $this->colors;
 
@@ -102,7 +124,7 @@ final class Emtheme_Styler {
 		return $style;
 	}
 
-	private function general_desktop() {
+	private function def_general_desktop() {
 		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
@@ -119,7 +141,7 @@ final class Emtheme_Styler {
 		return $style;
 	}
 
-	private function general_mobile() {
+	private function def_general_mobile() {
 		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
@@ -138,7 +160,7 @@ final class Emtheme_Styler {
 	}
 
 
-	private function page_desktop() {
+	private function def_page_desktop() {
 		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
@@ -158,7 +180,7 @@ final class Emtheme_Styler {
 		return $style;
 	}
 	
-	private function page_mobile() {
+	private function def_page_mobile() {
 		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
@@ -174,7 +196,7 @@ final class Emtheme_Styler {
 		return $style;
 	}
 
-	private function custom_desktop() {
+	private function def_custom_desktop() {
 		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
@@ -194,7 +216,7 @@ final class Emtheme_Styler {
 		return $style;
 	}
 	
-	private function custom_mobile() {
+	private function def_custom_mobile() {
 		// $fonts = $this->fonts;
 		$colors = $this->colors;
 
