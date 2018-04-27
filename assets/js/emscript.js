@@ -4,7 +4,8 @@
 	var value = '';
 
 	var temp = '';
-	if (location.hostname.includes('localhost')) temp = '/wordpress';
+	// if (location.hostname.includes('localhost')) temp = '/wordpress';
+	if (location.hostname.indexOf('localhost') != -1) temp = '/wordpress';
 
 	var url = location.protocol+'//'+location.host+temp;
 
@@ -29,7 +30,8 @@
 	i.setAttribute('name', 's');
 	// i.setAttribute('required', '');
 
-	if (location.search && !location.search.includes('customize_changeset')) i.setAttribute('value', location.search.substring(3));
+	if (location.search && location.search.indexOf('customize_changeset') == -1) i.setAttribute('value', location.search.substring(3));
+	// if (location.search && !location.search.includes('customize_changeset')) i.setAttribute('value', location.search.substring(3));
 	// i.setAttribute('autocomplete', 'on');
 
 	if (location.search) i.classList.add('emtheme-search-input-active');
@@ -41,7 +43,8 @@
 	var go = function(val) { location = location.origin+temp+'/?s='+val; }
 
 	// redo for IE
-	let click = (e) => {
+	// let click = (e) => {
+	var click = function(e) {
 		if (i.value == '' || !i.value) e.preventDefault();
 	
 	 	i.classList.add('emtheme-search-input-active');
@@ -87,34 +90,35 @@
 		n.classList.toggle("nav-show");
 
 		var x = document.querySelectorAll(".menu .nav-show");
-		for (xx of x)
-			xx.classList.remove("nav-show");
+		for (var xx = 0; xx < x.length; xx++)
+			x[xx].classList.remove("nav-show");
 	});
 
 
 	var p = document.querySelectorAll('.page_item_has_children, .menu-item-has-children');
 
 	// finding where to put it (complicated because of custom menu adds invisible text child after every child)
-	for (var pp of p) {
+	for (var i = 0; i < p.length; i++) {
 		var a = null;
 
-		for (var nn of pp.childNodes)
-			if (nn.tagName == 'A') {
-				a = nn;
+		for (var j = 0; j < p[i].childNodes.length; j++)
+			if (p[i].childNodes[j].tagName == 'A') {
+				a = p[i].childNodes[j];
 				break;
 			}
 
-		var o = document.createElement('div');
-		o.classList.add('emtheme-mob-arrow');
+		var arrow = document.createElement('div');
+		arrow.classList.add('emtheme-mob-arrow');
 
-		o.addEventListener('click', function() {
-			for (var c of this.parentNode.childNodes) {
-				if (c.className && (c.className.includes('sub-menu') || c.className.includes('children'))) 
-					c.classList.toggle("nav-show");
+		arrow.addEventListener('click', function() {
+			for (var k = 0; k < this.parentNode.childNodes.length; k++) {
+				var c = this.parentNode.childNodes[k];
+				if (c.className && (c.className.indexOf('sub-menu') != -1 || c.className.indexOf('children') != -1)) 
+					c.classList.toggle("nav-show")
 			}
 		});
 
-		pp.insertBefore(o, a.nextSibling);
+		p[i].insertBefore(arrow, a.nextSibling);
 	}
 
 })();

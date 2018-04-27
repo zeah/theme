@@ -60,7 +60,7 @@ final class Emtheme_Styler {
 	*/
 	public function get_css() {
 
-		$option = get_option('emtheme_styling');
+		// $option = get_option('emtheme_styling');
 
 		$style = '<style>';
 
@@ -68,24 +68,24 @@ final class Emtheme_Styler {
 		// wp_die(print_r($option, true));
 		
 
-		if ($option == 'two') {
+		// if ($option == 'two') {
 
+		// }
+
+		// else {
+		$style .= $this->def_general();
+		$style .= $this->def_general_desktop();
+		$style .= $this->def_general_mobile();
+
+		if (!has_nav_menu('header-menu')) {
+			$style .= $this->def_page_desktop();
+			$style .= $this->def_page_mobile();
 		}
-
 		else {
-			$style .= $this->def_general();
-			$style .= $this->def_general_desktop();
-			$style .= $this->def_general_mobile();
-
-			if (!has_nav_menu('header-menu')) {
-				$style .= $this->def_page_desktop();
-				$style .= $this->def_page_mobile();
-			}
-			else {
-				$style .= $this->def_custom_desktop();
-				$style .= $this->def_custom_mobile();
-			}
+			$style .= $this->def_custom_desktop();
+			$style .= $this->def_custom_mobile();
 		}
+		// }
 
 		$style .= '</style>';
 

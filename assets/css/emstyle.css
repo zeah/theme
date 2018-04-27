@@ -134,7 +134,8 @@ p:empty {
 	/*border-bottom: solid 2px inherit;*/
 	opacity: 0;
 	cursor: default;
-	background-color: inherit;
+	background-color: rgba(0, 0, 0, 0);
+	/*background-color: inherit;*/
 	/*height: 2.4rem;*/
 }
 .emtheme-search-input-active {
@@ -149,7 +150,7 @@ p:empty {
 .emtheme-search-button {
 	position: relative;
 	top: 0.3rem;
-	background: inherit;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	cursor: pointer;
 }

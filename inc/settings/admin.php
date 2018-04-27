@@ -65,9 +65,9 @@ final class Emtheme_Options {
 		// add_settings_section( 'em_settings_disnav', 'Automatic Menu', array($this, 'disnav_text_callback'), 'em-admin-page' );
 		// add_settings_field( 'emtheme-shownav', 'Disable Automatic Menu', array($this, 'shownav_callback'), 'em-admin-page', 'em_settings_disnav' );
 	
-		add_settings_section( 'em_settings_styling', 'Styling', array($this, 'styling_text_callback'), 'em-admin-page' );
-		add_settings_field( 'emtheme-styling-one', 'Styling default', array($this, 'styling_one_callback'), 'em-admin-page', 'em_settings_styling' );
-		add_settings_field( 'emtheme-styling-two', 'Styling two', array($this, 'styling_two_callback'), 'em-admin-page', 'em_settings_styling' );
+		// add_settings_section( 'em_settings_styling', 'Styling', array($this, 'styling_text_callback'), 'em-admin-page' );
+		// add_settings_field( 'emtheme-styling-one', 'Styling default', array($this, 'styling_one_callback'), 'em-admin-page', 'em_settings_styling' );
+		// add_settings_field( 'emtheme-styling-two', 'Styling two', array($this, 'styling_two_callback'), 'em-admin-page', 'em_settings_styling' );
 		// add_settings_field( 'emtheme-styling-three', 'Styling three', array($this, 'styling_three_callback'), 'em-admin-page', 'em_settings_styling' );
 		// add_settings_field( 'emtheme-styling-four', 'Styling four', array($this, 'styling_four_callback'), 'em-admin-page', 'em_settings_styling' );
 
