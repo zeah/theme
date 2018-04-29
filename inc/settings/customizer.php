@@ -20,6 +20,7 @@ final class Emtheme_Customizer {
 		add_action('customize_register', array($this, 'footer_info'));
 		add_action('customize_register', array($this, 'emtheme_css'));
 		add_action('customize_register', array($this, 'emtheme_css_font'));
+		add_action('customize_register', array($this, 'add_nav_layout'));
 
 		add_action('customize_preview_init', array($this, 'cd_customizer'), 9999);
 
@@ -646,7 +647,75 @@ final class Emtheme_Customizer {
 			))
 		);
 	}
+
+
+
+
+	public function add_nav_layout($wp_customize) {
+		$array_text = [
+			'type' => 'option',
+			'transport' => 'refresh',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default' => 'default'
+		];
+
+		$settings = ['emtheme_nav_layout'];
+
+		$this->add_settings($wp_customize, $settings, $array_text);
+
+
+		// $wp_customize->add_setting('emtheme_nav_layout_setting')
+		// $wp_customize->add_panel('emtheme_nav_layout_panel',
+		// 	array(
+		// 		'title' => 'Nav layout',
+		// 		'priority' => 23
+		// 	)
+		// );
+
+
+		$wp_customize->add_section('emtheme_nav_layout_section', [
+			'title' => 'Nav Layout',
+			'priority' => 23,
+			'capability' => 'edit_theme_options'
+		]);
+
+		$wp_customize->add_control('emtheme_nav_layout_c', [
+			'type' => 'select',
+			'label' => 'nav layout',
+			'section' => 'emtheme_nav_layout_section',
+			'settings' => 'emtheme_nav_layout',
+			'choices' => [
+				'default' => 'Default',
+				'one' => 'One'
+			]
+
+		]);
+
+
+
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if (class_exists('WP_Customize_Control')) {

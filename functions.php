@@ -252,11 +252,11 @@ final class Emtheme_Help {
 
 
 
-function remove_thumbnail() {
-    remove_meta_box('postimagediv', 'page', 'side');
-}
+// function remove_thumbnail() {
+    // remove_meta_box('postimagediv', 'page', 'side');
+// }
 
-add_action('do_meta_boxes', 'remove_thumbnail');
+// add_action('do_meta_boxes', 'remove_thumbnail');
 
 
 class Fset {

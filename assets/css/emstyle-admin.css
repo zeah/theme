@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans');
+
+a.menu-icon-nyheter > div.wp-menu-image:before,
+a.toplevel_page_em-options-page > div.wp-menu-image:before,
+a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
+	content: 'EM';
+	position: relative;
+	top: 4px;
+	font-family: 'Black Han Sans', sans-serif;
+	font-size: 14px;
+}
+
+a.menu-icon-nyheter > div.wp-menu-image:before {
+	color: #faa !important;
+}
+
+a.menu-icon-emkort > div.wp-menu-image:before {
+	color: #aaf !important;
+}
+
+
+a.toplevel_page_em-options-page > div.wp-menu-image:before {
+	color: #ffa !important;
+}
+
+
+a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
+	color: #afa !important;
+}
+
+.emtheme-doc-container {
+	margin: 30px;
+	margin-bottom: 500px;
+	max-width: 900px;
+}
+
+.emtheme-doc-container > h3 {
+	padding: 0;
+	margin: 0;
+	margin-top: 20px;
+}
+
+.emtheme-doc-container ul {
+	margin-left: 30px;
+}
+
+.emtheme-doc-container > ul {
+	margin: 0;
+	margin-bottom: 100px;
+}
+
+.emtheme-doc-container li {
+	list-style: disc;
+	font-size: 16px;
+	font-weight: normal;
+	margin-top: 10px;
+}
+
+
+.emtheme-doc-container > ul > li {
+	list-style: decimal;
+	font-size: 20px;
+	font-weight: bold;
+}

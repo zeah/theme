@@ -15,7 +15,7 @@ $html = '<div class="main">';
 
 $content = get_the_content();
 // removing flexbox shortcode
-$content = preg_replace('/\[\/*col.*?\]/', '', $content);
+// $content = preg_replace('/\[\/*col.*?\]/', '', $content);
 
 $html .= '<div class="content">'.apply_filters('the_content', $content).'</div>';
 

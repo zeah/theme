@@ -48,7 +48,7 @@ img {
 	1.0 SECTION
 	HEADER
 */
-.emtop {
+/*.emtop {
 	display: flex;
 	justify-content: space-between;
 	margin-top: 1rem;
@@ -60,7 +60,7 @@ img {
 
 .emtop-bg {
 	display: none;
-}
+}*/
 
 /* 
 	1.1 SECTION
@@ -68,48 +68,48 @@ img {
 */
 
 /* flexbox for site title and logo */
-.emtheme-site-identity {
+/*.emtheme-site-identity {
 	display: flex;
 	max-width: 70%;
-}
+}*/
 
 /*  div for logo image for desktop 
 	HIDDEN ON MOBILE */
-.emtheme-logo-container {
+/*.emtheme-logo-container {
 	display: none;
-}
+}*/
 
-.emtheme-top-link {
-	display: none;
-}
+/*.emtheme-top-link {*/
+	/*display: none;*/
+/*}*/
 
 /* 	site title and tagline for desktop
 	HIDDEN ON MOBILE */
-.emtheme-toptext-container {
+/*.emtheme-toptext-container {
 	display: none;
-}
+}*/
 
 /* div for logo */
-.emtheme-logo-mobile {
+/*.emtheme-logo-mobile {
 	height: 4.6rem;
-}
+}*/
 
 /* div for site title */
-.emtheme-mobile-title {
+/*.emtheme-mobile-title {
 	padding-left: 1rem;
 
 	font-size: 3rem;
 	color: hsl(0, 0%, 90%);
 	white-space: nowrap;
 	overflow: hidden;
-}
-.emtheme-top-link-mobile {
+}*/
+/*.emtheme-top-link-mobile {
 	color: white;
 	text-decoration: none !important;
-}
-.emtheme-top-link-mobile:visited {
+}*/
+/*.emtheme-top-link-mobile:visited {
 	color: white;
-}
+}*/
 
 /* hiding search from mobile */
 .emtheme-search-box {

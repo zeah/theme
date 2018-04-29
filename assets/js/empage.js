@@ -1,6 +1,6 @@
 (() => {
 
-	// console.log(em_meta);
+	console.log(em_meta);
 
 	let metadescription = document.querySelector('.em-metadescription');
 	let metatitle = document.querySelector('.em-metatitle');
@@ -157,13 +157,13 @@
 			tablehead.appendChild(head('Go to', 'em-th-100'));
 			tablehead.appendChild(head('URL'));
 			tablehead.appendChild(head('Opens', 'em-th-100'));
-			tablehead.appendChild(head('Anchor Text'));
+			tablehead.appendChild(head('(Plugin Post) Anchor Text'));
 
 			return tablehead;
 		}
 
 		let links = content.match(/<a.*?>.*?<\/a>/g);
-		if (!links) return null;
+		// if (!links) return null;
 
 		let addrow = (row, input_table) => {
 			let link = row.match(/(?:<a.*?)(?:href=")(.+?)(?:".*?>)(.*?)(?:<\/a>)/);
@@ -210,8 +210,8 @@
 		internal_table.appendChild(headrow());
 		external_table.appendChild(headrow());
 
-		for (let row of links)
-			addrow(row, row.includes(loc) ? internal_table : external_table)
+		if (links) for (let row of links)
+						addrow(row, row.includes(loc) ? internal_table : external_table)
 
 
 		for (let i of em_meta['plugin_links']) {

@@ -94,45 +94,62 @@ echo '</head><body style="opacity: 0">';
 
 // $option = get_option('emtheme_styling');
 
+$nav_layout = get_option('emtheme_nav_layout');
+
 // if ($option == 'two') {
-	// echo get_menu();
-// }
+if ($nav_layout == 'one') {
+	echo '<div class="emtheme-top-container"><div class="emtop">';
 
-// else {
-$top = '<div class="emtop"><div class="emtop-bg"></div><div class="emtheme-site-identity">';
+	echo '<a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
+	
+	echo '<div class="emtheme-logo-mobile"><img class="emtheme-logo-image-fixedheight" src="'.esc_url(get_option('emtheme_logo_mobile')).'"></div>';
 
-$customize = is_customize_preview();
-if (get_option('emtheme_logo') || $customize) $top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></a></div>';
+	echo '<div class="emtheme-title">'.esc_html(get_bloginfo('name')).'</div>';
 
-$emtheme_logo_mobile = esc_url(get_option('emtheme_logo_mobile'));
-$emtheme_title_mobile = esc_html(get_option('emtheme_title_mobile'));
+	echo '<div class="emtheme-logo"><img class="emtheme-logo-image-fixedheight" src="'.esc_url(get_option('emtheme_logo')).'"></div>';
 
-if ($emtheme_logo_mobile || $customize) $top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'"><img class="emtheme-logo-mobile" src="'.$emtheme_logo_mobile.'"></a></div>';
-if ($emtheme_title_mobile || $customize) $top .= '<div class="emtheme-mobile-title emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'">'.$emtheme_title_mobile.'</a></div>';
+	echo '</a>';
 
-$emtheme_name = esc_html(get_bloginfo('name'));
-$emtheme_tagline = esc_html(get_bloginfo('description'));
+	echo get_em_menu();
 
-if ($emtheme_name || $emtheme_tagline || $customize) {
-	$top .= '<div class="emtheme-toptext-container"><a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
-
-	if ($emtheme_name || $customize) $top .= '<div class="emtheme-title">'.$emtheme_name.'</div>';
-	if ($emtheme_tagline || $customize) $top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
-
-	$top .= '</a></div>';
+	echo '</div></div>';
 }
-echo $top;
 
-if (! $mobile) echo '<div class="emtheme-search-box"></div>';
+else {
+	$top = '<div class="emtop"><div class="emtop-bg"></div><div class="emtheme-site-identity">';
 
-echo '</div>'; // end of emtheme-site-identitity (logo, title, tagline)
+	$customize = is_customize_preview();
+	if (get_option('emtheme_logo') || $customize) $top .= '<div class="emtheme-logo-container"><a href="'.esc_url( home_url( '/' ) ).'"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></a></div>';
+
+	$emtheme_logo_mobile = esc_url(get_option('emtheme_logo_mobile'));
+	$emtheme_title_mobile = esc_html(get_option('emtheme_title_mobile'));
+
+	if ($emtheme_logo_mobile || $customize) $top .= '<div class="emtheme-logo-mobile-container emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'"><img class="emtheme-logo-mobile" src="'.$emtheme_logo_mobile.'"></a></div>';
+	if ($emtheme_title_mobile || $customize) $top .= '<div class="emtheme-mobile-title emtheme-mobile"><a class="emtheme-top-link-mobile" href="'.esc_url(home_url('/')).'">'.$emtheme_title_mobile.'</a></div>';
+
+	$emtheme_name = esc_html(get_bloginfo('name'));
+	$emtheme_tagline = esc_html(get_bloginfo('description'));
+
+	if ($emtheme_name || $emtheme_tagline || $customize) {
+		$top .= '<div class="emtheme-toptext-container"><a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
+
+		if ($emtheme_name || $customize) $top .= '<div class="emtheme-title">'.$emtheme_name.'</div>';
+		if ($emtheme_tagline || $customize) $top .= '<div class="emtheme-tagline">'.$emtheme_tagline.'</div>';
+
+		$top .= '</a></div>';
+	}
+	echo $top;
+
+	if (! $mobile) echo '<div class="emtheme-search-box"></div>';
+
+	echo '</div>'; // end of emtheme-site-identitity (logo, title, tagline)
 
 
-// nav menu or a default nav menu of pages
-// echo '<div class="menu-container"><i class="material-icons emtheme-mobile-icon">menu</i>'.wp_nav_menu( array( 'theme_location' => 'header-menu', 'fallback_cb' => 'default_menu','depth' => 2, 'echo' => false) ).'</div>';
-echo get_em_menu();
-echo '</div>'; // end of emtop
-// }
+	// nav menu or a default nav menu of pages
+	// echo '<div class="menu-container"><i class="material-icons emtheme-mobile-icon">menu</i>'.wp_nav_menu( array( 'theme_location' => 'header-menu', 'fallback_cb' => 'default_menu','depth' => 2, 'echo' => false) ).'</div>';
+	echo get_em_menu();
+	echo '</div>'; // end of emtop
+}
 
 function get_em_menu() {
 	return '<div class="menu-container"><i class="material-icons emtheme-mobile-icon">menu</i>'.wp_nav_menu( array( 'theme_location' => 'header-menu', 'fallback_cb' => 'default_menu','depth' => 2, 'echo' => false) ).'</div>';

@@ -10,6 +10,8 @@ require_once 'settings/admin.php';
 require_once 'settings/external.php';
 require_once 'settings/google.php';
 
+require_once 'emt-doc.php';
+
 final class Emtheme_Admin {
 	/* SINGLETON */
 	private static $instance = null;
@@ -41,6 +43,8 @@ final class Emtheme_Admin {
 		/* makes custom column sortable */
 		add_filter( 'manage_edit-page_sortable_columns', array($this, 'sorting_column') );
 
+		Emtheme_Doc::get_instance();
+
 		/* adds theme page to admin menu */
 		Emtheme_Options::get_instance();
 	}
@@ -51,7 +55,7 @@ final class Emtheme_Admin {
 		remove_menu_page('edit-comments.php');
 
 		// removes Posts from admin menu
-		// remove_menu_page('edit.php');
+		remove_menu_page('edit.php');
 	}
 
 	/* add "order" column to page list page */

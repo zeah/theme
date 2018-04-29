@@ -32,7 +32,7 @@ final class Emtheme_Options {
 	}
 
 	public function add_emtheme_menu() {
-		add_menu_page('EmTheme Options', 'EM Theme', 'manage_options', 'em-options-page', array($this, 'emtheme_callback'), '', 61);
+		add_menu_page('EmTheme Options', 'Settings', 'manage_options', 'em-options-page', array($this, 'emtheme_callback'), 'none', 159);
 	}
 
 	public function emtheme_callback() {

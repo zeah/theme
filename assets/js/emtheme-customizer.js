@@ -288,6 +288,7 @@ $(() => {
 
 			// sets boldness and italic
 			setWeight(newvalue, content);
+			setWeight(newvalue, $('.emtheme-tagline'));
 
 			// creates string for google
 			font += ':'+newvalue.replace('italic', 'i'); 
@@ -302,6 +303,7 @@ $(() => {
 	api('emtheme_font[standard_size]', (value) => {
 		value.bind((newvalue) => {
 			$('.content').css('font-size', newvalue+'rem');
+			$('.emtheme-tagline').css('font-size', newvalue+'rem');
 		});
 	})
 
@@ -367,6 +369,7 @@ $(() => {
 	api('emtheme_font[title_size]', (value) => {
 		value.bind((newvalue) => {
 			$('.emtheme-title').css('font-size', newvalue+'rem');
+			$('.emtheme-logo-image-fixedheight').css('height', newvalue+'rem');
 		});
 	});
 
@@ -428,6 +431,7 @@ $(() => {
 	api('emtheme_font[nav_size]', (value) => {
 		value.bind((newvalue) => {
 			$('.menu-container').css('font-size', newvalue+'rem');
+			// $('.emtheme-logo-image-fixedheight').css('height', newvalue+'rem');
 		});
 	});
 
