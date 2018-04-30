@@ -23,8 +23,8 @@ html {
 	background-color: hsl(10, 10%, 96%);
 	/*background-color: hsl(10, 10%, 90%);*/
 	font-size: 62.5%;
-	font-family: "Roboto", sans-serif;
-	font-weight: 300;
+	/*font-family: "Roboto", sans-serif;*/
+	/*font-weight: 300;*/
 	box-sizing: border-box;
 }
 
@@ -635,6 +635,7 @@ p:empty {
 }
 
 .emtheme-boxes {
+	margin-top: 2rem;
 	width: 25rem;
 }
 
