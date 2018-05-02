@@ -154,7 +154,7 @@ if (! get_option('em_google_disable')) {
 	$nr = get_option('em_google_tagmanager');
 	if (isset($nr) && $nr != '') {
 		echo '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id='.sanitize_text_field($nr).'" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>';
-		echo '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script", "dataLayer", "'.sanitize_text_field($nr).')";</script>';
+		echo '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script", "dataLayer", "'.sanitize_text_field($nr).'");</script>';
 	}
 
 
