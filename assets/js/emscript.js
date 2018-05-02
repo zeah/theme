@@ -30,7 +30,7 @@
 	i.setAttribute('name', 's');
 	// i.setAttribute('required', '');
 
-	if (location.search && location.search.indexOf('customize_changeset') == -1) i.setAttribute('value', location.search.substring(3));
+	// if (location.search && location.search.indexOf('customize_changeset') == -1) i.setAttribute('value', location.search.substring(3));
 	// if (location.search && !location.search.includes('customize_changeset')) i.setAttribute('value', location.search.substring(3));
 	// i.setAttribute('autocomplete', 'on');
 
