@@ -32,16 +32,21 @@ final class Emtheme_Doc {
 		echo '<div class="emtheme-doc-container">';
 
 		echo '<ul>';
+
 		foreach($text as $t) {
-			echo $t['index'];
+			if (isset($t['index'])) echo $t['index'];
 		}
+
 		echo '</ul>';
 
 		foreach($text as $t) {
-			echo '<h1>'.$t['title'].'</h1>';
-			echo $t['title_text'];
-			foreach($t['text'] as $te)
-				echo '<p>'.$te.'</p>';
+			if (isset($t['title'])) {
+				echo '<h1>'.$t['title'].'</h1>';
+				echo $t['title_text'];
+			}
+			if (isset($t['text']))
+				foreach($t['text'] as $te)
+					echo '<p>'.$te.'</p>';
 		}
 
 		echo '</div>';

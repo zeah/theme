@@ -15,7 +15,10 @@ a.menu-icon-nyheter > div.wp-menu-image:before {
 }
 
 a.menu-icon-emkort > div.wp-menu-image:before {
-	color: #aaf !important;
+	color: #55f !important;
+}
+a.menu-icon-emcasino > div.wp-menu-image:before {
+	color: #f55 !important;
 }
 
 
