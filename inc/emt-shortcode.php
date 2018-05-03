@@ -44,7 +44,7 @@ final class Emtheme_Shortcode {
 	public function redirect_callback($atts, $content = null) {
 		// if (!isset($atts['name']) || !isset($atts['url'])) return 'need both a name and url set in redirect shortcode';
 		
-		$time = 120;
+		$time = 2;
 		if (isset($atts['time'])) $time = $atts['time'];
 
 		$bgc = '#fff';
