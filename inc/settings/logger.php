@@ -144,13 +144,14 @@ final class Emtheme_Logger {
 		$screen = get_current_screen();
 		
 		// popup settings
-		if ($screen->id == 'em-theme_page_em-logger-page') {
+		if ($screen->id == 'settings_page_em-logger-page') {
+			
 			wp_enqueue_style('em-email-style', get_template_directory_uri().'/assets/css/popup-email.css', array(), '0.1', '(min-width: 60em)');
 			wp_enqueue_script('em-admin-email', get_template_directory_uri().'/assets/js/em-admin-email.js', array('jquery'), '0.1', true);
 			wp_enqueue_media();
 		}
 		// email collection stats
-		else if ($screen->id == 'em-theme_page_em-emailstats-page') {
+		else if ($screen->id == 'settings_page_em-emailstats-page') {
 
 			global $wpdb;
 			$table = esc_sql($wpdb->prefix . $this->table_name);

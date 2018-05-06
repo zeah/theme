@@ -636,7 +636,6 @@ p:empty {
 
 .emtheme-boxes {
 	margin-top: 2rem;
-	width: 25rem;
 }
 
 .emtheme-boxes-center {
@@ -646,26 +645,35 @@ p:empty {
 	/*justify-content: space-around;	*/
 }
 
+.emtheme-boxes-right {
+	float: right;
+}
+
+.emtheme-boxes-left {
+	float: left;
+}
+
 /* php sets width to this, setting the number of columns in flexbox */
 .emtheme-box-inner {
-	margin-bottom: 2rem;
+	display: block;
+	/*margin-bottom: 2rem;*/
 }
 
 
 .emtheme-box {
 	position: relative;
+	display: block;
 	/*height: 25rem;*/
 	/*width: 25rem;*/
 	margin: auto;
 	background-size: cover;
 
 	cursor: pointer;
-	text-shadow: 0 0 2px black;
-
+	text-shadow: -1px 0 2px black, 0 1px 2px black, 1px 0 2px black, 0 -1px 2px black;
 }
 
 .emtheme-box:hover {
-	box-shadow: 0 0 5px black;
+	/*box-shadow: 0 0 5px black;*/
 }
 
 .emtheme-box-text,
@@ -681,12 +689,12 @@ p:empty {
 .emtheme-box-title {
 	top: 0;
 	padding-left: 1rem;
-	background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .9) 100%);
+	/*background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .9) 100%);*/
 }
 
 .emtheme-box-text {
 	bottom: 0;
-	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .9) 100%);
+	/*background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .9) 100%);*/
 }
 
 .emtheme-box-text-bottom {

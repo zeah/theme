@@ -117,7 +117,7 @@ final class Emtheme_Customizer {
 		$wp_customize->add_panel('emtheme_footer_panel',
 			array(
 				'title' => 'Footer Info',
-				'priority' => 22
+				'priority' => 600
 			)
 		);
 
@@ -272,10 +272,10 @@ final class Emtheme_Customizer {
 		);
 
 		/* PANEL */
-		$wp_customize->add_panel('emtheme_css_panel', array(
-			'title' => 'Emtheme CSS',
-			'priority' => 21
-		));
+		// $wp_customize->add_panel('emtheme_css_panel', array(
+		// 	'title' => 'Emtheme CSS',
+		// 	'priority' => 21
+		// ));
 
 		/* COLORS SECTION */
 		$wp_customize->add_section('emtheme_css_color', array(
@@ -295,7 +295,8 @@ final class Emtheme_Customizer {
 							  <li><a class="navbar-active-color" style="cursor:pointer;">active page background</a></li>
 							  <li><a class="navbar-activeh-color" style="cursor:pointer;">active page background hover</a></li>
 							  </ul>',
-			'panel' => 'emtheme_css_panel'
+			'priority' => 500
+			// 'panel' => 'emtheme_css_panel'
 		));
 
 
@@ -483,7 +484,8 @@ final class Emtheme_Customizer {
 								<li><a class="emtheme-font-n-size">Font Size</a></li>
 							  </ul>
 							  ',
-			'panel' => 'emtheme_css_panel'
+			'priority' => 501
+			// 'panel' => 'emtheme_css_panel'
 		));
 
 		$args = [
@@ -675,8 +677,8 @@ final class Emtheme_Customizer {
 
 		$wp_customize->add_section('emtheme_nav_layout_section', [
 			'title' => 'Nav Layout',
-			'priority' => 23,
-			'capability' => 'edit_theme_options'
+			'capability' => 'edit_theme_options',
+			'priority' => 510
 		]);
 
 		$wp_customize->add_control('emtheme_nav_layout_c', [

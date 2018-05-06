@@ -78,6 +78,8 @@ final class Emtheme_Options {
 
 	public function maint_text_callback() {
 		echo 'Aktiver og forside vil vise maintenance mode';
+		// wp_die(print_r(get_site_url(), true));
+		
 	}
 
 	public function maint_callback() {

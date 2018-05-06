@@ -37,6 +37,10 @@ a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
 	max-width: 900px;
 }
 
+.emtheme-doc-container > h1 {
+	margin-top: 150px;
+}
+
 .emtheme-doc-container > h3 {
 	padding: 0;
 	margin: 0;
@@ -59,9 +63,30 @@ a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
 	margin-top: 10px;
 }
 
+.emtheme-doc-container > ul > li > ul {
+	margin-bottom: 50px;
+}
+
+.emtheme-doc-container > ul > li > ul > li > ul {
+	margin-bottom: 30px !important;
+}
+
+.emtheme-doc-container > ul > li > ul > li {
+	list-style-type: lower-alpha;
+}
+
+.emtheme-doc-container > ul > li > ul > li > ul > li {
+	list-style-type: lower-roman;
+}
 
 .emtheme-doc-container > ul > li {
 	list-style: decimal;
 	font-size: 20px;
 	font-weight: bold;
+}
+
+
+#accordion-section-custom_css,
+#accordion-panel-emtheme_footer_panel {
+	margin-bottom: 1rem !important;
 }

@@ -236,7 +236,7 @@ final class Emtheme_Styler_Def {
 .emtheme-site-identity { position: relative; z-index: 10; }
 .emtheme-title { font-family: '.(isset($fonts['title']) ? esc_html($fonts['title']) : 'verdana').'; font-weight: '.((isset($fonts['title_weight']) && $fonts['title_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['title_weight']))) : '400').'; font-size: '.(isset($fonts['title_size']) ? $fonts['title_size'].'rem' : '4.6rem').'; }
 .emtheme-top-link, .emtheme-top-link:visited { color: '.(isset($colors['emtop_font']) ? esc_html($colors['emtop_font']) : Emtheme_style::$colors['top']['font']).'; }
-.emtheme-tagline, .main { font-family: '.(isset($fonts['standard']) ? $fonts['standard'] : 'arial').'; font-weight: '.((isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['standard_weight']))) : '400').'; font-size: '.(isset($fonts['standard_size']) ? $fonts['standard_size'].'rem' : '1.6rem').'; }
+.emtheme-tagline, .em-footer, .main { font-family: '.(isset($fonts['standard']) ? $fonts['standard'] : 'arial').'; font-weight: '.((isset($fonts['standard_weight']) && $fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['standard_weight']))) : '400').'; font-size: '.(isset($fonts['standard_size']) ? $fonts['standard_size'].'rem' : '1.6rem').'; }
 .content > p { line-height: '.(isset($fonts['standard_lineheight']) ? esc_html($fonts['standard_lineheight']) : '1.6').'; }
 .menu-container { z-index: 10; position: relative; font-family: '.(isset($fonts['nav']) ? $fonts['nav'] : 'arial').'; font-weight: '.((isset($fonts['nav_weight']) && $fonts['nav_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $fonts['nav_weight']))) : '400').'; font-size: '.(isset($fonts['nav_size']) ? $fonts['nav_size'].'rem' : '1.8rem').'; }
 .menu ul, ul.menu { padding: 0; margin: 0 auto; }
@@ -271,7 +271,7 @@ final class Emtheme_Styler_Def {
 	.menu { width: 112rem; margin: auto; }
 	.emtheme-mobile-icon { display: none !important; }
 	.emtheme-mobile { display: none; }
-	.emtheme-logo { height: 10rem; width: auto;}
+	.emtheme-logo { max-height: 10rem; width: auto; margin-right: 2rem; }
 }';
 
 	// .current-menu-item > a, .current_page_item > a
@@ -414,7 +414,7 @@ final class Emtheme_Styler_One {
 	.emtheme-logo { margin-right: 2rem; }
 	.emtheme-logo-image-fixedheight { position: relative; top: 0.1rem; height: '.esc_html($this->fonts['title_size']).'rem; width: auto; }
 	.menu, .emtheme-box { font-family: '.esc_html($this->fonts['nav']).' }
-	.main { font-family: '.(isset($this->fonts['standard']) ? esc_html($this->fonts['standard']) : 'verdana').'; font-weight: '.((isset($this->fonts['standard_weight']) && $this->fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $this->fonts['standard_weight']))) : '400').'; font-size: '.(isset($this->fonts['standard_size']) ? esc_html($this->fonts['standard_size']).'rem' : '1.6rem').'; }
+	.main, .em-footer { font-family: '.(isset($this->fonts['standard']) ? esc_html($this->fonts['standard']) : 'verdana').'; font-weight: '.((isset($this->fonts['standard_weight']) && $this->fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $this->fonts['standard_weight']))) : '400').'; font-size: '.(isset($this->fonts['standard_size']) ? esc_html($this->fonts['standard_size']).'rem' : '1.6rem').'; }
 	.content > p { line-height: '.(isset($this->fonts['standard_lineheight']) ? esc_html($this->fonts['standard_lineheight']) : '1.6').'; }
 	.emtop { display: flex; justify-content: flex-end;  margin: 0 auto; padding: 0.3rem 0; font-size: '.esc_html($this->fonts['nav_size']).'rem; }
 }';

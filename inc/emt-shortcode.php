@@ -19,6 +19,8 @@ final class Emtheme_Shortcode {
 		if (!shortcode_exists('redirect')) add_shortcode('redirect', array($this, 'redirect_callback'));
 
 		if (!shortcode_exists('box')) add_shortcode('box', array($this, 'box_shortcode'));
+
+		if (!shortcode_exists('widget')) add_shortcode('widget', array($this, 'widget_shortcode'));
 	}
 
 	public function col_callback($atts, $content = null) {
@@ -79,41 +81,44 @@ final class Emtheme_Shortcode {
 
 		$type = 'page';
 		$text = 'Les mer >>>';
+		$title = false;
+		$havetitle = true;
 		$color = '#ffffff';
-		$float = false;
-		$boxsize = '25';
+		// $boxsize = '25';
+		$height = '25';
+		$width = '25';
 		$fontsize = '3.2';
 		$columns = 2;
+		$margin = 2;
+		$float = false;
 
 		if (isset($atts['type'])) $type = explode(',', preg_replace('/ /', '', sanitize_text_field($atts['type'])));  
 		if (isset($atts['text'])) $text = esc_html($atts['text']);
+		if (isset($atts['title'])) $title = esc_html($atts['title']);
+		if (isset($atts['title']) && $atts['title'] == '') $havetitle = false;
 		if (isset($atts['color'])) $color = sanitize_hex_color($atts['color']);
+		if (isset($atts['height'])) $height = intval($atts['height']) / 10;
+		if (isset($atts['width'])) $width = intval($atts['width']) / 10;
+		if (isset($atts['fontsize'])) $fontsize = intval($atts['fontsize']) / 10; 
+		if (isset($atts['margin'])) $margin = intval($atts['margin']) / 10;
 		if (isset($atts['float'])) {
-			if ($atts['float'] == 'left') $float = 'left';
-			if ($atts['float'] == 'right') $float = 'right';
-		}
-		if (isset($atts['fontsize'])) {
-			$tempsize = floatval($atts['fontsize']);
-			
-			if ($tempsize > 6) $size = ($tempsize / 10);
-			else $fontsize = $tempsize;
-		}
-
-		if (isset($atts['boxsize'])) {
-			$tempsize = floatval($atts['boxsize']);
-			
-			if ($tempsize > 60) $boxsize = ($tempsize / 10);
-			else $boxsize = $tempsize;
+			switch ($atts['float']) {
+				case 'left': $float = 'left'; break;
+				case 'right': $float = 'right'; break;
+			}
 		}
 
 		if (isset($atts['columns']) && intval($atts['columns'] < 5)) $columns = intval($atts['columns']);
 
+		if (!$float)
 		switch ($columns) {
 			case (4): $columns = '25%'; break;
 			case (3): $columns = '33%'; break;
 			case (2): $columns = '50%'; break;
 			case (1): $columns = '100%'; break;
 		}
+
+		if ($float) $columns = '100%';
 
 
 		$args = [
@@ -124,25 +129,77 @@ final class Emtheme_Shortcode {
 		];
 
 		$posts = get_posts($args);
-
-		$html = '<div class="emtheme-boxes'.($float ? '' : ' emtheme-boxes-center').'" style="color: '
-				.$color.'; font-size: '.esc_html($fontsize).'rem;'.($float ? ' float: '.esc_html($float).';' : '').'">';
+		$html = '<div class="emtheme-boxes'.($float ? ' emtheme-boxes-'.$float : ' emtheme-boxes-center').'"
+					style="color: '.$color.'; font-size: '.esc_html($fontsize).'rem;">';
 		
 		foreach($posts as $post) {
 
+			if (!$title) $title_text = esc_html($post->post_title);
+			else $title_text = $title;
+
 			$thumbnail = 'url(\''.esc_url(get_the_post_thumbnail_url($post,'full')).'\')';
 
-			$html .= '<div class="emtheme-box-inner" style="width: '.esc_html($columns).'"><div class="emtheme-box" onclick="location.assign(\''.esc_url(get_permalink($post)).'\')" style="background-image: '.$thumbnail.'; width: '.esc_html($boxsize).'rem; height: '.esc_html($boxsize).'rem;">';
+			$html .= '<span class="emtheme-box-inner'.($columns != '100%' ? ' emtheme-box-inner-mobile' : '').'" style="width: '.esc_html($columns).'; margin-bottom: '.$margin.'rem;">';
 
-			$html .= '<div class="emtheme-box-title">'.esc_html($post->post_title).'</div>';
+			$html .= '<a href="'.get_permalink($post).'" class="emtheme-box" style="color: '.$color.'; background-image: '.$thumbnail.'; width: '.$width.'rem; height: '.$height.'rem;">';
 
-			$html .= '<div class="emtheme-box-text"><div class="emtheme-box-text-bottom">'.esc_html($text).'</div></div>';
+			if ($havetitle) $html .= '<span class="emtheme-box-title">'.$title_text.'</span>';
 
-			$html .= '</div></div>';
+			if ($text) $html .= '<span class="emtheme-box-text"><span class="emtheme-box-text-bottom">'.esc_html($text).'</span></span>';
+
+			$html .= '</a>'; // emtheme-box
+
+			$html .= '</span>'; // emtheme-box-inner
 
 		}
 		$html .= '</div>';
 
 		return $html;
 	}
+
+	/**
+	*	
+	*/
+	public function widget_shortcode($atts, $content = null) {
+		$widget = 'shortcode-widget-01';
+		if (isset($atts['number']) && intval($atts['number']) < 5) 	
+			switch (intval($atts['number'])) {
+				case '1': $widget = 'shortcode-widget-01'; break;
+				case '2': $widget = 'shortcode-widget-02'; break;
+				case '3': $widget = 'shortcode-widget-03'; break;
+				case '4': $widget = 'shortcode-widget-04'; break;
+			}
+		
+
+		$pos = '';
+		if (isset($atts['pos'])) switch ($atts['pos']) {
+									case 'left': $pos = ' style="float: left;"'; break;
+									case 'right': $pos = ' style="float: right;"'; break;
+									case 'center': $pos = ' style="text-align: center"'; break;
+								 }
+
+		if (is_active_sidebar($widget)) {
+			$sidebar = '';
+			ob_start();
+			dynamic_sidebar($widget);
+			$sidebar = ob_get_clean();
+
+			return '<div class="emtheme-widget"'.$pos.'>'.$sidebar.'</div>';
+		}
+		return;
+	}
+
+	private function get_widget($name) {
+		if (is_active_sidebar($name)) {
+			$sidebar = '';
+			ob_start();
+			dynamic_sidebar($name);
+			$sidebar = ob_get_clean();
+
+			return $sidebar;
+		}
+
+		return;
+	}
+
 }

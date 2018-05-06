@@ -11,7 +11,7 @@ final class Emtheme_style {
 		Content
 		Footer
 	*/
-	public static $style_default = '1.1.6';
+	public static $style_default = '1.1.6.1';
 
 	/*
 		STYLE TWO
@@ -39,7 +39,7 @@ final class Emtheme_style {
 	/*
 		STYLE MOBILE
 	*/
-	public static $style_mobile = '1.0.1';
+	public static $style_mobile = '1.0.1.1';
 
 
 	public static $colors = [

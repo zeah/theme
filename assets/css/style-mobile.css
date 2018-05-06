@@ -1,20 +1,19 @@
-/*@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Roboto');*/
-
-
 /*
 	INDEX
 	#####
 	-default settings
 	-wordpress fixes
 
-	1.0 HEADER
+	1.0 HEADER (moved to inline css from inc/emt-style.php)
 		1.1 SITE IDENTITY
 	2.0 CONTENT
 		2.1 PAGE CONTENT
 		2.2 RULES FOR WORDPRESS EMBEDDED IMAGES
 	3.0 FOOTER
 		3.1 CONTACT/ABOUT INFORMATION
-	4.0 SEARCH RESULTS
+	4.0 SEARCH 
+		4.1 RESULTS
+	5.0 BOX SHORTCODE
 */
 
 
@@ -44,78 +43,10 @@ img {
 	height: auto;
 }
 
-/*
-	1.0 SECTION
-	HEADER
-*/
-/*.emtop {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 1rem;
-	height: 4.6rem;
-	font-family: "Open Sans Condensed", sans-serif;
-	font-weight: 700;
-	line-height: 1.6;
-}
-
-.emtop-bg {
-	display: none;
-}*/
-
-/* 
-	1.1 SECTION
-	SITE IDENTITY - logo, title, tagline
-*/
-
-/* flexbox for site title and logo */
-/*.emtheme-site-identity {
-	display: flex;
-	max-width: 70%;
-}*/
-
-/*  div for logo image for desktop 
-	HIDDEN ON MOBILE */
-/*.emtheme-logo-container {
-	display: none;
-}*/
-
-/*.emtheme-top-link {*/
-	/*display: none;*/
-/*}*/
-
-/* 	site title and tagline for desktop
-	HIDDEN ON MOBILE */
-/*.emtheme-toptext-container {
-	display: none;
-}*/
-
-/* div for logo */
-/*.emtheme-logo-mobile {
-	height: 4.6rem;
-}*/
-
-/* div for site title */
-/*.emtheme-mobile-title {
-	padding-left: 1rem;
-
-	font-size: 3rem;
-	color: hsl(0, 0%, 90%);
-	white-space: nowrap;
-	overflow: hidden;
-}*/
-/*.emtheme-top-link-mobile {
-	color: white;
-	text-decoration: none !important;
-}*/
-/*.emtheme-top-link-mobile:visited {
-	color: white;
-}*/
-
 /* hiding search from mobile */
 .emtheme-search-box {
 	display: none;
 }
-
 
 /*
 	2.0 SECTION
@@ -166,7 +97,7 @@ img {
 	float: right;
 }
 
-/* forcing images to be 100% of width */
+/* setting max width of inserted images */
 .alignnone img,
 .aligncenter img,
 .alignright img,
@@ -235,7 +166,6 @@ img {
 .page-not-found {
 	display: inline-block;
 	width: 100%;
-	/*border: solid 1px black;*/
 	text-align: center;
 	margin-top: 10rem;
 	font-size: 2.2rem;
@@ -250,6 +180,7 @@ img {
 	SEARCH SERP
 */
 
+/* 4.1 RESULTS */
 .emtheme-search-ul {
 	padding: 0;
 }
@@ -271,4 +202,60 @@ img {
 
 	font-size: 1rem;
 	color: #00aa00;
+}
+
+
+/*
+	5.0 BOX SHORTCODE
+*/
+.emtheme-boxes {
+	display: flex;
+	float: none !important;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.emtheme-box-inner-mobile {
+	width: 45% !important;
+}
+.emtheme-box-inner {
+	margin-bottom: 1.5rem;
+	border: solid 1px black;
+}
+
+.emtheme-box {
+	position: relative;
+	display: block;
+	width: 100% !important;
+	height: auto;
+
+	background-size: cover;
+	font-size: 1.6rem !important;
+}
+
+.emtheme-box-text,
+.emtheme-box-title {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 5rem;
+
+	box-sizing: border-box;
+}
+
+.emtheme-box-title {
+	top: 0;
+	padding-left: 1rem;
+	/*background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .9) 100%);*/
+}
+
+.emtheme-box-text {
+	bottom: 0;
+	/*background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .9) 100%);*/
+}
+
+.emtheme-box-text-bottom {
+	position: absolute;
+	bottom: 0;
+	left: 1rem;
 }

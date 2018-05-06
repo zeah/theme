@@ -62,8 +62,14 @@ class Emtheme_footer {
 			}
 
 
-			if  ($this->check('aboutus_active') && isset($this->footer['aboutus'])) 
-				$this->html .= '<div class="em-aboutus-container">'.esc_html($this->footer['aboutus']).'</div>';
+			if  ($this->check('aboutus_active') && isset($this->footer['aboutus'])) {
+				$about = esc_html($this->footer['aboutus']);
+
+				$about = str_replace('[p]', '<p>', $about);
+				$about = str_replace('[/p]', '</p>', $about);
+
+				$this->html .= '<div class="em-aboutus-container">'.$about.'</div>';
+			}
 		
 			$this->html .= '</div></div>';
 		}
@@ -126,7 +132,7 @@ class Emtheme_footer_customize extends Emtheme_footer {
 
 
 		$v = isset($this->footer['aboutus']) ? $this->footer['aboutus'] : '';
-		$this->html .= '<div class="em-aboutus-container">'.esc_html($v).'</div>';
+		$this->html .= '<div class="em-aboutus-container">'.str_replace('[p]', '<p>', esc_html($v)).'</div>';
 	
 		$this->html .= '</div></div>';
 	}
@@ -153,8 +159,9 @@ if (! get_option('em_google_disable')) {
 
 	$nr = get_option('em_google_tagmanager');
 	if (isset($nr) && $nr != '') {
-		echo '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id='.sanitize_text_field($nr).'" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>';
-		echo '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script", "dataLayer", "'.sanitize_text_field($nr).'");</script>';
+		$nr = sanitize_text_field($nr);
+		echo '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id='.$nr.'" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>';
+		echo '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script", "dataLayer", "'.$nr.'");</script>';
 	}
 
 

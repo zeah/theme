@@ -26,7 +26,7 @@ final class Emtheme_Page {
 		add_action('add_meta_boxes', array($this, 'add_title'));
 		add_action('add_meta_boxes', array($this, 'add_description'));
 		add_action('add_meta_boxes', array($this, 'add_strucdata'));
-		add_action('add_meta_boxes', array($this, 'add_redirect'));
+		// add_action('add_meta_boxes', array($this, 'add_redirect'));
 
 
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue_script') );
