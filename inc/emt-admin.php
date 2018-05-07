@@ -55,7 +55,7 @@ final class Emtheme_Admin {
 		remove_menu_page('edit-comments.php');
 
 		// removes Posts from admin menu
-		remove_menu_page('edit.php');
+		// remove_menu_page('edit.php');
 	}
 
 	/* add "order" column to page list page */
