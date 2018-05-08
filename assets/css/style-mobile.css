@@ -95,6 +95,8 @@ img {
 .alignright {
 	text-align: center;
 	float: right;
+	max-width: 40%;
+	height: auto;
 }
 
 /* setting max width of inserted images */

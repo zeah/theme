@@ -3,7 +3,7 @@
 require_once 'inc/emt-style.php';
 
 // IF PAGE IS MOVED
-// global $post;
+// global $post;	
 // if ($post) {
 // 	$meta = get_post_meta($post->ID, 'emredirect');
 // 	if (isset($meta[0])) {

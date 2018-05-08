@@ -80,7 +80,7 @@ final class Emtheme_Styler {
 		$style .= $style_opt->get_style();
 
 		// mobile 
-		$style .= $this->def_general_mobile();
+		// $style .= $this->def_general_mobile();
 		if (!has_nav_menu('header-menu')) 	$style .= $this->def_page_mobile();
 		else 								$style .= $this->def_custom_mobile();
 
@@ -223,6 +223,35 @@ final class Emtheme_Styler_Def {
 		$style .= $this->general_desktop();
 		if (!has_nav_menu('header-menu'))	$style .= $this->page();
 		else 								$style .= $this->custom();
+
+
+		$style .= $this->def_general_mobile();
+
+		return $style;
+	}
+
+	private function def_general_mobile() {
+		$colors = $this->colors;
+
+		$style = '
+@media screen and (max-width: 1023px) {
+	.emtop { display: flex; height: 4.6rem; '.esc_html($this->nav_bg).'; margin-top: 0.5rem; }
+	.emtheme-site-identity { display: flex; align-items: center; margin-right: auto; }
+	.emtheme-top-link { margin-right: auto; display: flex; align-items: center; text-decoration: none; color: '.$colors['emtop_font'].' }
+	.emtheme-title { margin: 0 1rem; font-size: 2.6rem; }
+	.emtheme-toptext-container, .emtop-bg, .emtheme-logo-container { display: none; }
+	.emtheme-logo-mobile { height: 4.6rem; position: relative; top: 0.3rem; width: auto;}
+	.emtheme-top-link-mobile { font-size: 2.6rem; text-decoration: none; color: '.$colors['emtop_font'].' }
+	.emtheme-mobile-title { margin-left: 1rem; }
+	.emtheme-mobile-icon { color: white; font-size: 4.6rem !important; }
+	.menu-container { position: relative; font-size: 2rem; }
+	.menu { display: none; position: absolute; width: 100vw; top: 4.6rem; right: 0; z-index: 999; background-color: '.(isset($colors['nav_bg_top']) ? esc_html($colors['nav_bg_top']) : Emtheme_style::$colors['nav']['bg']).'; }
+	.nav-show { display: block !important; }
+	.emtheme-mob-arrow { float: right; display: inline; color: white; margin-right: 3rem; }
+	.emtheme-mob-arrow:after { content: " \25bc"; }
+	.current_page_item > a { border: none !important; }
+	ul { padding: 0; margin: 0;}
+}';
 
 		return $style;
 	}
@@ -399,6 +428,32 @@ final class Emtheme_Styler_One {
 		$style .= $this->general_desktop();
 		if (!has_nav_menu('header-menu'))	$style .= $this->page();
 		else 								$style .= $this->custom();
+
+
+		$style .= $this->def_general_mobile();
+
+		return $style;
+	}
+
+	private function def_general_mobile() {
+		$colors = $this->colors;
+
+		$style = '
+@media screen and (max-width: 1023px) {
+	.emtop { display: flex; height: 4.6rem; '.esc_html($this->nav_bg).' }
+	.emtheme-top-link { margin-right: auto; display: flex; align-items: center; text-decoration: none; color: '.$colors['emtop_font'].' }
+	.emtheme-title { margin: 0 1rem; font-size: 2.6rem}
+	.emtheme-logo { display: none; }
+	.emtheme-logo-mobile > img { position: relative; top: 1px; height: 4.6rem; width: auto;}
+	.emtheme-mobile-icon { color: white; font-size: 4.6rem !important; }
+	.menu-container { position: relative; font-size: 2rem; }
+	.menu { display: none; position: absolute; width: 100vw; top: 4.6rem; right: 0; z-index: 999; background-color: '.(isset($colors['nav_bg_top']) ? esc_html($colors['nav_bg_top']) : Emtheme_style::$colors['nav']['bg']).'; }
+	.nav-show { display: block !important; }
+	.emtheme-mob-arrow { float: right; display: inline; color: white; margin-right: 3rem; }
+	.emtheme-mob-arrow:after { content: " \25bc"; }
+	.current_page_item > a { border: none !important; }
+	ul { padding: 0; margin: 0;}
+}';
 
 		return $style;
 	}
