@@ -142,27 +142,30 @@ final class Emtheme_Doc {
 				'<p id="emtheme-doc-maintenance">&nbsp;</p>
 				<h2>Maintenance Mode</h2>
 				<a target="_blank" rel="noopener" href="'.get_site_url().'/wp-admin/admin.php?page=em-options-page">'.get_site_url().'/wp-admin/admin.php?page=em-options-page</a>
+				<p>Hvis aktivert så vil en tom side med teksten: "Site is under maintenace. Try again shortly." vises.</p>
 				',
 
 				'<p id="emtheme-doc-alternative">&nbsp;</p>
 				<h2>Alternative Frontpage</h2>
 				<a target="_blank" rel="noopener" href="'.get_site_url().'/wp-admin/admin.php?page=em-forside-page">'.get_site_url().'/wp-admin/admin.php?page=em-forside-page</a>
+				<p>Hvis aktivert så vil siden med id oppgitt vises istedenfor siden som er valgt som forsiden i wordpress. Alternative siden vil ikke ha logo/title/meny.</p>
 				',
 
 				'<p id="emtheme-doc-emailcol">&nbsp;</p>
 				<h2>Email Collector</h2>
 				<a target="_blank" rel="noopener" href="'.get_site_url().'/wp-admin/admin.php?page=em-logger-page">'.get_site_url().'/wp-admin/admin.php?page=em-logger-page</a>
+				<p>Hvis aktivert vil det komme en modal popup når musen beveger seg opp og ovenfor selve siden. (Leave-popup)</p>
 				',
 
 				'<p id="emtheme-doc-emailstats">&nbsp;</p>
 				<h2>Email Stats</h2>
 				<a target="_blank" rel="noopener" href="'.get_site_url().'/wp-admin/admin.php?page=em-emailstats-page">'.get_site_url().'/wp-admin/admin.php?page=em-emailstats-page</a>
-				',
+				<p>Hvis emails som er lagret via email collector og om det er fra en mobil eller desktop source.</p>',
 
 				'<p id="emtheme-doc-google">&nbsp;</p>
 				<h2>Google Scripts</h2>
 				<a target="_blank" rel="noopener" href="'.get_site_url().'/wp-admin/admin.php?page=em-google">'.get_site_url().'/wp-admin/admin.php?page=em-google</a>
-				',
+				<p>Legg til google tagmanager/analytics ID og scriptet vil bli lagt til i bunnen av siden.</p>',
 
 				'<p id="emtheme-doc-customizer">&nbsp;</p>
 				<h2>Customizer</h2>

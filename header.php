@@ -3,24 +3,36 @@
 require_once 'inc/emt-style.php';
 
 // IF PAGE IS MOVED
-// global $post;	
-// if ($post) {
-// 	$meta = get_post_meta($post->ID, 'emredirect');
-// 	if (isset($meta[0])) {
-// 		$url = esc_url($meta[0]);
+global $post;	
+if ($post) {
+	$meta = get_post_meta($post->ID, 'emredirect');
+	if (isset($meta[0])) {
+		$url = esc_url($meta[0]);
 
-// 		if ($url) {
-// 			header("HTTP/1.1 301 Moved Permanently");
-// 			header("Location: $url");
-// 			exit();
-// 		}
-// 	}
-// }
+		if ($url) {
+			header("HTTP/1.1 301 Moved Permanently");
+			header("Location: $url");
+			exit();
+		}
+	}
+}
+
+if (get_option('em_admin_maint')) {
+	get_header('alt');
+	echo '<h1 style="height: 100vh; padding: 30px;">Site is under maintenace. Try again shortly.</h1>';
+	get_footer();
+	return;
+}
+
+
 // echo $meta[0];
 
 /* setting cookies and inserting ajax for email logging to database if email not yet set */
-$logger = Emtheme_Logger::get_instance();
-$logger->welcome_user();
+
+if (get_option('em_popup_activate')) {
+	$logger = Emtheme_Logger::get_instance();
+	$logger->welcome_user();
+}
 
 $css = Emtheme_styler::get_instance();
 

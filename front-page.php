@@ -1,5 +1,7 @@
 <?php 
-
+/*
+	Front Page Only Stuff
+*/
 
 if (isset($_GET['unsub']) &&  isset($_GET['email'])) {
 	
@@ -14,6 +16,13 @@ if (isset($_GET['unsub']) &&  isset($_GET['email'])) {
 
 	return;
 }
+
+// if (get_option('em_admin_maint')) {
+// 	get_header('alt');
+// 	echo '<h1 style="height: 100vh; padding: 30px;">Site is under maintenace. Try again shortly.</h1>';
+// 	get_footer();
+// 	return;
+// }
 
 final class Emtheme_UnSub {
 	private static $instance = null;
@@ -45,12 +54,6 @@ final class Emtheme_UnSub {
 	}
 }
 
-if (get_option('em_admin_maint')) {
-	get_header('alt');
-	echo '<h1 style="height: 100vh">Site is under maintenace. Try again shortly.</h1>';
-	get_footer();
-	return;
-}
 
 // checking if to use alternate page
 if (time_check()) {
