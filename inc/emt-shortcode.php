@@ -91,6 +91,7 @@ final class Emtheme_Shortcode {
 		$columns = 2;
 		$margin = 2;
 		$float = false;
+		$grid = 'grid-template-columns: 25rem 25rem';
 
 		if (isset($atts['type'])) $type = explode(',', preg_replace('/ /', '', sanitize_text_field($atts['type'])));  
 		if (isset($atts['text'])) $text = esc_html($atts['text']);
@@ -108,18 +109,23 @@ final class Emtheme_Shortcode {
 			}
 		}
 
-		if (isset($atts['columns']) && intval($atts['columns'] < 5)) $columns = intval($atts['columns']);
+		if (isset($atts['columns']) && !$float) {
+			$cols = intval($atts['columns']);
+			$grid = 'grid-template-columns:';
 
-		if (!$float)
-		switch ($columns) {
-			case (4): $columns = '25%'; break;
-			case (3): $columns = '33%'; break;
-			case (2): $columns = '50%'; break;
-			case (1): $columns = '100%'; break;
+			if ($cols < 11 && $cols > 0) {
+
+				for ($i = 0; $i < $cols; $i++) 
+					$grid .= ' '.$width.'rem';
+				
+				$grid .= ';';
+
+			}
+			else
+				$grid .= ' 25rem 25rem;';
 		}
 
-		if ($float) $columns = '100%';
-
+		if ($float) $grid = false;
 
 		$args = [
 			'post_type' => $type,
@@ -128,9 +134,9 @@ final class Emtheme_Shortcode {
 
 		];
 
+
 		$posts = get_posts($args);
-		$html = '<div class="emtheme-boxes'.($float ? ' emtheme-boxes-'.$float : ' emtheme-boxes-center').'"
-					style="color: '.$color.'; font-size: '.esc_html($fontsize).'rem;">';
+		$html = '<div class="emtheme-boxes" style="'.($float ? 'float: '.$float.'; ' : '').'color: '.$color.'; font-size: '.esc_html($fontsize).'rem; '.($grid ? $grid : '').'">';
 		
 		foreach($posts as $post) {
 
@@ -139,17 +145,13 @@ final class Emtheme_Shortcode {
 
 			$thumbnail = 'url(\''.esc_url(get_the_post_thumbnail_url($post,'full')).'\')';
 
-			$html .= '<span class="emtheme-box-inner'.($columns != '100%' ? ' emtheme-box-inner-mobile' : '').'" style="width: '.esc_html($columns).'; margin-bottom: '.$margin.'rem;">';
-
-			$html .= '<a href="'.get_permalink($post).'" class="emtheme-box" style="color: '.$color.'; background-image: '.$thumbnail.'; width: '.$width.'rem; height: '.$height.'rem;">';
+			$html .= '<a href="'.get_permalink($post).'" class="emtheme-box" style="color: '.$color.'; background-image: '.$thumbnail.'; width: '.$width.'rem; height: '.$height.'rem; margin-bottom: '.$margin.'rem;">';
 
 			if ($havetitle) $html .= '<span class="emtheme-box-title">'.$title_text.'</span>';
 
 			if ($text) $html .= '<span class="emtheme-box-text"><span class="emtheme-box-text-bottom">'.esc_html($text).'</span></span>';
 
 			$html .= '</a>'; // emtheme-box
-
-			$html .= '</span>'; // emtheme-box-inner
 
 		}
 		$html .= '</div>';

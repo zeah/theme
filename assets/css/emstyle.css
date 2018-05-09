@@ -635,13 +635,16 @@ p:empty {
 }
 
 .emtheme-boxes {
+	display: grid;
+	/*grid-template-columns: 250px 250px;*/
+	justify-content: space-evenly;
 	margin-top: 2rem;
 }
 
 .emtheme-boxes-center {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
+	/*width: 100%;*/
+	/*display: flex;*/
+	/*flex-wrap: wrap;*/
 	/*justify-content: space-around;	*/
 }
 
@@ -654,10 +657,10 @@ p:empty {
 }
 
 /* php sets width to this, setting the number of columns in flexbox */
-.emtheme-box-inner {
+/*.emtheme-box-inner {
 	display: block;
-	/*margin-bottom: 2rem;*/
-}
+	margin-bottom: 2rem;
+}*/
 
 
 .emtheme-box {
@@ -665,7 +668,7 @@ p:empty {
 	display: block;
 	/*height: 25rem;*/
 	/*width: 25rem;*/
-	margin: auto;
+	/*margin: auto;*/
 	background-size: cover;
 
 	cursor: pointer;
