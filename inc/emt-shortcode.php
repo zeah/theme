@@ -26,6 +26,26 @@ final class Emtheme_Shortcode {
 	public function col_callback($atts, $content = null) {
 		if ($content === null) return;
 
+		if (! isset($atts[0])) return '<div>'.$content.'</div>';
+
+		$width = '25';
+		if (isset($atts['width'])) $width = intval($atts['width']) / 10;
+		$margin = '2';
+		if (isset($atts['margin'])) $margin = intval($atts['margin']) / 10;
+
+		switch ($atts[0]) {
+			case 'right': return '<div class="em-right" style="width: '.$width.'rem; margin-left: '.$margin.'rem;">'.$content.'</div>'; break;
+			case 'center': return '<div class="em-center">'.$content.'</div>'; break;
+			case 'left': return '<div class="em-left" style="width: '.$width.'rem; margin-right: '.$margin.'rem;">'.$content.'</div>'; break;
+			// case 'left': return '<div class="em-left">'.$content.'</div>'; break;
+		}
+
+
+	}
+
+	public function col_callback2($atts, $content = null) {
+		if ($content === null) return;
+
 		if (! isset($atts[0])) {
 			$atts = array();
 			$atts[0] = '';

@@ -72,6 +72,15 @@ img {
 	border-bottom: dashed 1px hsl(0, 0%, 50%);
 }
 
+ul {
+	margin: 1rem 2rem;
+}
+
+.em-left, .em-right {
+	max-width: 100vw;
+	margin: 0 !important;
+}
+
 /*
 	2.2 SECTION
 	RULES FOR WORDPRESS EMBEDDED IMAGES

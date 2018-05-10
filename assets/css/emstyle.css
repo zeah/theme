@@ -13,6 +13,7 @@
 		2.1 PAGE CONTENT
 		2.2 FLEXBOX SHORTCODE
 		2.3 WORDPRESS IMAGE SHORTCODE
+		2.4 FRONTPAGE GRID
 	3.0 FOOTER 
 		3.1 soc.media/contact/about us
 	4.0 SEARCH
@@ -331,6 +332,16 @@ p:empty {
 	box-shadow: 0 0 5px black;
 }
 
+.main-bg {
+	position: relative;
+	margin: 2rem auto;
+	width: 112rem;
+	max-width: 100%;
+	min-height: 100vh;
+	/*background-color: hsl(0, 50%, 50%);*/
+	/*box-shadow: 0 0 5px black;*/
+}
+
 /* custom css for wordpress template: altfrontpage */
 .main-alt {
 	max-width: 90vw;
@@ -359,7 +370,7 @@ p:empty {
 	box-sizing: border-box;
 	display: inline-block;
 	padding: 0 2rem;
-	padding-bottom: 10vh;
+	/*padding-bottom: 10vh;*/
 	width: 100%;
 /* don't add font-size, it gets set by customizer */
 }
@@ -380,7 +391,7 @@ p:empty {
 .em-left,
 .em-right {
 	/*margin: 0 2rem;*/
-	max-width: 25rem;
+	/*width: 25rem;*/
 	position: sticky;
 	top: 8rem; /* position of where element gets stuck to */
 	align-self: flex-start; /* for sticky to work in flexbox */
@@ -405,7 +416,7 @@ p:empty {
 
 /* flexbox rules */
 .em-left {
-	margin-right: 2rem;
+	/*margin-right: 2rem;*/
 	order: 1;
 }
 .em-center {
@@ -414,8 +425,8 @@ p:empty {
 }
 .em-right {
 	order: 3;
-	margin-left: 2rem;
-	flex-basis: 25rem;
+	/*margin-left: 2rem;*/
+	/*flex-basis: 25rem;*/
 }
 
 /* 
@@ -444,6 +455,44 @@ p:empty {
 .wp-caption-text {
 	margin: 0;
 }
+
+/*
+	2.4 SECTION
+	Frontpage grid
+*/
+.frontpage-grid {
+	display: grid;
+
+	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-rows: 20rem auto;
+}
+
+.frontpage-grid > div {
+	/*border: solid 1px black;*/
+}
+
+.frontpage-widget {
+	/*background-color: red;*/
+}
+
+.frontpage-cpt {
+	/*background-color: green;*/
+
+	grid-column: 2 / span 2;
+}
+
+.frontpage-list {
+	/*background-color: blue;*/
+
+	grid-row: 2;
+	grid-column: 1 / span 2;
+}
+
+.frontpage-sidelist {
+	/*background-color: orange;*/
+
+}
+
 
 
 /*
@@ -638,7 +687,7 @@ p:empty {
 	display: grid;
 	/*grid-template-columns: 250px 250px;*/
 	justify-content: space-evenly;
-	margin-top: 2rem;
+	/*margin-top: 2rem;*/
 }
 
 .emtheme-boxes-center {

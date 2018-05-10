@@ -469,7 +469,7 @@ final class Emtheme_Styler_One {
 	.emtheme-logo { margin-right: 2rem; }
 	.emtheme-logo-image-fixedheight { position: relative; top: 0.1rem; height: '.esc_html($this->fonts['title_size']).'rem; width: auto; }
 	.menu, .emtheme-box { font-family: '.(isset($this->fonts['nav']) ? esc_html($this->fonts['nav']) : 'arial').' }
-	.main, .em-footer { font-family: '.(isset($this->fonts['standard']) ? esc_html($this->fonts['standard']) : 'verdana').'; font-weight: '.((isset($this->fonts['standard_weight']) && $this->fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $this->fonts['standard_weight']))) : '400').'; font-size: '.(isset($this->fonts['standard_size']) ? esc_html($this->fonts['standard_size']).'rem' : '1.6rem').'; }
+	.content, .em-footer { font-family: '.(isset($this->fonts['standard']) ? esc_html($this->fonts['standard']) : 'verdana').'; font-weight: '.((isset($this->fonts['standard_weight']) && $this->fonts['standard_weight'] != 'regular') ? (esc_html(str_replace('italic', '', $this->fonts['standard_weight']))) : '400').'; font-size: '.(isset($this->fonts['standard_size']) ? esc_html($this->fonts['standard_size']).'rem' : '1.6rem').'; }
 	.content > p { line-height: '.(isset($this->fonts['standard_lineheight']) ? esc_html($this->fonts['standard_lineheight']) : '1.6').'; }
 	.emtop { display: flex; justify-content: flex-end;  margin: 0 auto; padding: 0.3rem 0; font-size: '.esc_html($this->fonts['nav_size']).'rem; }
 }';

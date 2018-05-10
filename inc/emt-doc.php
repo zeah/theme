@@ -59,7 +59,7 @@ final class Emtheme_Doc {
 							<ul>
 								<li><a href="#emtheme-doc-shortcodes">Shortcodes</a>
 									<ul>
-										<li><a href="#emtheme-doc-col">[col]</a></li>
+										<li><a href="#emtheme-doc-col">[col]</a><br>Adds columns to content.</li>
 										<li><a href="#emtheme-doc-box">[box]</a></li>
 										<li><a href="#emtheme-doc-redirect">[redirect]</a></li>
 										<li><a href="#emtheme-doc-widget-sc">[widget]</a></li>
@@ -95,14 +95,21 @@ final class Emtheme_Doc {
 				 <h2>Shortcodes</h2>
 				 Shortcodes can be inserted into post editor or widgets.
 				 <p id="emtheme-doc-col">&nbsp;</p>
-				 <h3>[col right/center/left]content[/col]</h3>
-				 <span>Important: Remember to close the shortcode with [/col] and don\'t have space between shortcode and content. All post content should be included in a [col] shortcode. If not included then each paragraph will be treatet as a column, check the html (text editor) if any bugs arise.</span>
-				 <p><strong>right/center/left</strong> will position the content as right always after center and left and center always after left in no-wrapping flex columns.</p>
-				 <p>"left" and "right" will have a max width of 250px and have a sticky effect which sticks them to top when scrolling down.</p>
-				 <p>"left" has a 20px right margin. "right" has a 20px left margin. "center" has no margins.
+				 <h3>[col right/center/left width=250 margin=20]content[/col]</h3>
+				 <p><strong>Text before or after [col][/col] will have full width and not be a part of the columns. All content after first [col] and before last [/col] must be inside a [col] shortcode.</strong></p>
+				 <p><strong>left/center/right</strong> Sets the horizontal ordering of the columns. Left will always come before center and right and center will always come before right (on desktop.) On mobile the text will be shown in the order they are written in the text editor.</p>
+				 <p><strong>Width</strong><br>
+				 Center has no width and it can\'t be set. A center column will always just take up rest of the width that is left, or share equally among all center columns.<br>
+				 Right/Left has a default width of 250px.
+				 </p>
+				 <p><strong>Margin</strong><br>
+				 Center Column has no margins and they can\'t be set.<br>
+				 Left only has a margin-right with default value of 20px.<br>
+				 Right only has a margin-left with default value of 20px.</p>
 				 <p><strong>Example:</strong><br>
 				 [col left]Hello[/col][col center]World[/col][col right]![/col] - Will show 3 columns.<br>
-				 [col center]content[/col][col right]info[/col] - Will show 2 columns. 
+				 [col center]content[/col][col right width=300]info[/col] - Will show 2 columns with column right having a width of 300px.<br>
+				 "Full width text [col center]center text[/col][col right]right column text[/col] text below the columns." will have 4 areas of content, first one area with full width, then the 2 columns and another area with full with last.
 				 
 
 				 <p id="emtheme-doc-box">&nbsp;</p>

@@ -49,6 +49,30 @@ final class Emtheme_Widget {
 			'id' => 'shortcode-widget-04',
 			'description' => 'activated by [widget number=4]'
 		]);
+
+		register_sidebar([
+			'name' => 'Grid 1',
+			'id' => 'frontpage-grid-01',
+			'description' => ''
+		]);
+
+		register_sidebar([
+			'name' => 'Grid 2',
+			'id' => 'frontpage-grid-02',
+			'description' => ''
+		]);
+
+		register_sidebar([
+			'name' => 'Grid 3',
+			'id' => 'frontpage-grid-03',
+			'description' => ''
+		]);
+
+		register_sidebar([
+			'name' => 'Grid 4',
+			'id' => 'frontpage-grid-04',
+			'description' => ''
+		]);
 	}
 
 }
