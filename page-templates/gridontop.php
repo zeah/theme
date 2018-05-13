@@ -54,10 +54,10 @@ final class Emtheme_fp_template {
 		$html .= '<div class="frontpage-grid">';
 
 		// $html .= '<div class="frontpage-widget">hi</div>';
-		$html .= '<div class="frontpage-widget">'.$widget.'</div>';
+		$html .= '<div class="frontpage-news">'.$widget.'</div>';
 
 		// $html .= '<div class="frontpage-cpt">ya</div>';
-		$html .= '<div class="frontpage-cpt">'.$cpt.'</div>';
+		$html .= '<div class="frontpage-tip">'.$cpt.'</div>';
 
 		// $html .= '<div class="frontpage-list">bal</div>';
 		$html .= '<div class="frontpage-list">'.$list.'</div>';
@@ -65,6 +65,7 @@ final class Emtheme_fp_template {
 		// $html .= '<div class="frontpage-sidelist">dfdf</div>';
 		$html .= '<div class="frontpage-sidelist">'.$sidelist.'</div>';
 
+		$html .= '</div>';
 		$html .= '</div>';
 
 		// if ($content) {

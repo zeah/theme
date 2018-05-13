@@ -1,6 +1,7 @@
 <?php 
 
 require_once 'inc/emt-style.php';
+require_once 'inc/emt-css.php';
 
 // IF PAGE IS MOVED
 global $post;	
@@ -34,7 +35,8 @@ if (get_option('em_popup_activate')) {
 	$logger->welcome_user();
 }
 
-$css = Emtheme_styler::get_instance();
+// $css = Emtheme_styler::get_instance();
+$css = Emtheme_CSS::get_instance();
 
 $mobile = wp_is_mobile();
 
@@ -110,21 +112,22 @@ $nav_layout = get_option('emtheme_nav_layout');
 
 // if ($option == 'two') {
 if ($nav_layout == 'one') {
-	echo '<div class="emtheme-top-container"><div class="emtop">';
+	echo '<div class="emtheme-header-container"><span class="emtheme-header">';
 
-	echo '<a class="emtheme-top-link" href="'.esc_url( home_url( '/' ) ).'">';
+	echo '<a class="emtheme-header-link" href="'.esc_url( home_url( '/' ) ).'">';
 	
-	echo '<div class="emtheme-logo-mobile"><img class="emtheme-logo-image-fixedheight" src="'.esc_url(get_option('emtheme_logo_mobile')).'"></div>';
+	if ($mobile) echo '<img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo_mobile')).'">';
 
-	echo '<div class="emtheme-title">'.esc_html(get_bloginfo('name')).'</div>';
+	echo '<span class="emtheme-title">'.esc_html(get_bloginfo('name')).($mobile ? esc_html(get_option('emtheme_title_mobile')) : '').'</span>';
 
-	echo '<div class="emtheme-logo"><img class="emtheme-logo-image-fixedheight" src="'.esc_url(get_option('emtheme_logo')).'"></div>';
+	// echo '<span class="emtheme-logo"><img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'"></span>';
+	if (!$mobile) echo '<img class="emtheme-logo" src="'.esc_url(get_option('emtheme_logo')).'">';
 
 	echo '</a>';
 
 	echo get_em_menu();
 
-	echo '</div></div>';
+	echo '</span></div>';
 }
 
 else {
@@ -164,7 +167,11 @@ else {
 }
 
 function get_em_menu() {
-	return '<div class="menu-container"><i class="material-icons emtheme-mobile-icon">menu</i>'.wp_nav_menu( array( 'theme_location' => 'header-menu', 'fallback_cb' => 'default_menu','depth' => 2, 'echo' => false) ).'</div>';
+
+	$mob = '<i class="material-icons emtheme-mobile-icon">menu</i>';
+	if (!wp_is_mobile()) $mob = '';
+
+	return '<div class="menu-container">'.$mob.wp_nav_menu( array( 'theme_location' => 'header-menu', 'fallback_cb' => 'default_menu','depth' => 2, 'echo' => false) ).'</div>';
 
 }
 

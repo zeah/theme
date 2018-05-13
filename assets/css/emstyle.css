@@ -471,11 +471,11 @@ p:empty {
 	/*border: solid 1px black;*/
 }
 
-.frontpage-widget {
+.frontpage-news {
 	/*background-color: red;*/
 }
 
-.frontpage-cpt {
+.frontpage-tip {
 	/*background-color: green;*/
 
 	grid-column: 2 / span 2;
@@ -510,7 +510,7 @@ p:empty {
 	display: flex;
 	
 	min-height: 15rem;
-	margin-top: 5rem;
+	margin-top: 30vh;
 	padding-bottom: 5rem;
 	justify-content: center;
 	

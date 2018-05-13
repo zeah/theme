@@ -96,6 +96,7 @@ final class Emtheme_Shortcode {
 	}
 
 	public function box_shortcode($atts, $content = null) {
+		// wp_die(print_r($atts['name'], true));
 		
 		if (!isset($atts['name'])) return;
 
@@ -112,6 +113,10 @@ final class Emtheme_Shortcode {
 		$margin = 2;
 		$float = false;
 		$grid = 'grid-template-columns: 25rem 25rem';
+
+
+		// wp_die(print_r($atts['name'], true));
+		if (isset($atts['name']) && !is_array($atts['name'])) $grid = '';
 
 		if (isset($atts['type'])) $type = explode(',', preg_replace('/ /', '', sanitize_text_field($atts['type'])));  
 		if (isset($atts['text'])) $text = esc_html($atts['text']);

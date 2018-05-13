@@ -29,6 +29,7 @@ final class Emtheme_Styler {
 		$this->colors = get_option('emtheme_color');
 		$this->fonts = get_option('emtheme_font');
 
+
 		$this->colors['nav_bg_top'] = isset($this->colors['nav_bg_top']) ? $this->colors['nav_bg_top'] : Emtheme_style::$colors['nav']['bg'];
 		$this->colors['nav_bg_hover_top'] = isset($this->colors['nav_bg_hover_top']) ? $this->colors['nav_bg_hover_top'] : Emtheme_style::$colors['nav']['hover'];
 
