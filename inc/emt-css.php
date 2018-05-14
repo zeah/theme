@@ -124,7 +124,7 @@ final class Emtheme_CSS {
 
 		$version = null;
 		switch ($style) {
-			case 'def': $version = Emtheme_CSS_Def::get_instance($this->fonts, $this->colors); break;
+			case 'default': $version = Emtheme_CSS_Def::get_instance($this->fonts, $this->colors); break;
 			case 'one': $version = Emtheme_CSS_One::get_instance($this->fonts, $this->colors); break;
 			// case 'two': $version = Emtheme_CSS_One::get_instance($this->fonts, $this->colors); break;
 			default: return;
@@ -142,14 +142,14 @@ final class Emtheme_CSS {
 		if ($weight) {
 
 			if (strpos($weight, 'italic')) 	$data[$prefix.'_style'] = 'italic';
-			else 							$data[$prefix.'_style'] = false;
+			else 							$data[$prefix.'_style'] = 'normal';
 			
 			$weight = str_replace('regular', 'normal', $weight);
 			$data[$prefix.'_weight'] = str_replace('italic', '', esc_html($weight));
 		}
 		else {
 			$data[$prefix.'_weight'] = 'normal';
-			$data[$prefix.'_style'] = false;
+			$data[$prefix.'_style'] = 'normal';
 		}
 
 		return $data;
@@ -182,39 +182,99 @@ final class Emtheme_CSS_Def {
 	private $colors;
 
 	public static function get_instance($fonts, $colors) {
-		if (self::$instance === null) self::$instance = new self();
+		if (self::$instance === null) self::$instance = new self($fonts, $colors);
 
-		self::$instance->fonts = $fonts;
-		self::$instance->colors = $colors;
+		// self::$instance->fonts = $fonts;
+		// self::$instance->colors = $colors;
 
 		return self::$instance;
 	}
 
-	private function __construct() {
-
+	private function __construct($fonts, $colors) {
+		$this->fonts = $fonts;
+		$this->colors = $colors;
 	}
 
 	public function get_css() {
-		// desktop
-		$css = "<style>\n@media screen and (min-width: 1024px) {";
+		$col = $this->colors;
+		$fon = $this->fonts;
 
-		$css .= "\n.emtop { color: #fff }";
+
+		$css = "<style>";
+		$css .= "\n.content, .emtheme-tagline { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+
+		// desktop
+		$css .= "\n@media screen and (min-width: 1024px) {";
+
+
+		$css .= $this->gen_desktop();
+
+		if (!has_nav_menu('header-menu')) 	$css .= $this->page_desktop();
+		else 								$css .= $this->custom_desktop();
 
 		$css .= "\n}";
 
+
 		// mobile
 		$css .= "\n@media screen and (max-width: 1023px) {";
+
+		$css .= $this->gen_mobile();
+		
+		if (!has_nav_menu('header-menu')) 	$css .= $this->page_mobile();
+		else 								$css .= $this->custom_mobile();
+
 		$css .= "\n}\n</style>";
+
 		return preg_replace('/\h+/', ' ', $css);
 	}
 
 	private function gen_desktop() {
+		$col = $this->colors;
+		$fon = $this->fonts;
+
+		$css  = "\n.emtheme-header-container { background-color: $col[header_background]; }";
+		$css .= "\n.emtheme-header { width: 112rem; margin: auto; display: flex; align-items: center; }";
+		$css .= "\n.emtheme-identity { display: flex; align-items: center; margin-right: auto; color: $col[header_font]; text-decoration: none; }";
+		$css .= "\n.emtheme-logo { max-height: 20rem; }"; 
 		
+		$css .= "\n.emtheme-title-tagline { margin-left: 3rem; }"; 
+		
+		$css .= "\n.emtheme-title { display: block; font-family: $fon[title_family]; font-size: $fon[title_size]rem; font-weight: $fon[title_weight]; font-style: $fon[title_style]; }"; 
+		$css .= "\n.emtheme-search-icon, .emtheme-search-input { color: $col[search]; }"; 
+		$css .= "\n.emtheme-search-input { border-bottom: solid 2px $col[search] !important; }"; 
+		// wp_die('<xmp>'.print_r($fon, true).'</xmp>');		
+
+		$css .= "\n.menu-container { $col[navbar_background];}";
+		$css .= "\n.menu-container ul { padding: 0; margin: 0}";
+		$css .= "\n.menu-container li { list-style: none; }";
+
+		return $css;
 	}
 
 
 	private function page_desktop() {
+		$col = $this->colors;
+		$fon = $this->fonts;
+
+		$css  = "\n.menu { position: relative; right: 2rem; width: 112rem; margin: auto; }";
+		$css .= "\n.menu > ul {  display: flex; flex-wrap: wrap; }"; 
+		$css .= "\n.menu > ul > .page_item > a { padding: 0.5rem 2rem; }"; 
+		  
+		$css .= "\n.page_item_has_children { position: relative; }";
+		$css .= "\n.page_item_has_children > a:after { content: ' \\25bc'}";
+		$css .= "\n.page_item_has_children:hover > .children { display: block; }";
+		$css .= "\n.page_item > a { display: block; font-family: $fon[navbar_family]; font-size: $fon[navbar_size]rem; color: $col[navbar_font]; text-decoration: none; }"; 
+		$css .= "\n.page_item > a:hover { $col[navbar_hover]; }";
 		
+		$css .= "\n.children { display: none; position: absolute; z-index: 100; background-color: $col[submenu_background]; }";
+		$css .= "\n.children > li { white-space: nowrap; }";
+		$css .= "\n.children > li > a { display: block; padding: 1rem; color: $col[submenu_font]; border-bottom: solid rgba(0, 0, 0, .5) 1px; }";
+		$css .= "\n.children > li:last-child > a { border-bottom: none; }";
+		$css .= "\n.children > li > a:hover { background-color: $col[submenu_hover]; }";
+		
+
+
+		return $css; 
 	}
 
 
@@ -222,20 +282,64 @@ final class Emtheme_CSS_Def {
 		
 	}
 
-
 	private function gen_mobile() {
+		$col = $this->colors;
+		$fon = $this->fonts;
+
+		$css  = "\n.emtheme-header-container { display: flex; $col[navbar_background]; height: 4rem;}";
+		$css .= "\n.emtheme-header { margin-right: auto; }";
+		$css .= "\n.emtheme-identity { display: flex; align-items: center; text-decoration: none; }"; 
+		$css .= "\n.emtheme-title { font-size: 3.2rem; margin-left: 2rem; font-family: $fon[title_family]; color: $col[navbar_font]; }"; 
 		
+		$css .= "\n.emtheme-logo-mobile { height: 4rem; }";
+		$css .= "\n.emtheme-mobile-icon { color: white; margin-right: 1rem; font-size: 4rem !important; }";
+		$css .= "\n.emtheme-mob-arrow { color: $col[submenu_font]; font-size: 2.6rem; margin-right: 3rem; }";
+		$css .= "\n.emtheme-mob-arrow:after { content: ' \\25bc'; }";
+		$css .= "\n.nav-show { display: block !important; }";
+
+		return $css;
 	}
 
 
 	private function page_mobile() {
-		
+		$col = $this->colors;
+		$fon = $this->fonts;
+		$css  = "\n.menu-container { position: relative; }";
+		$css .= "\n.menu { display: none; position: absolute; top: 40px; right: -2px; z-index: 99; background-color: $col[submenu_background]; }";
+		$css .= "\n.menu ul { padding: 0; margin: 0; }";
+		$css .= "\n.menu ul > li { list-style: none; }";
+		$css .= "\n.menu > ul > .page_item { border-bottom: solid 1px $col[submenu_font]; }";
+		$css .= "\n.menu > ul > .page_item:last-child { border-bottom: none; }";
+		$css .= "\n.page_item > a { display: block; margin: 2rem 0; margin-right: auto; padding: 0 2rem; color: $col[submenu_font]; font-size: 2.6rem; white-space: nowrap; text-decoration: none; }";
+		$css .= "\n.page_item_has_children { display: flex; align-items: center; }";
+		$css .= "\n.page_item { display: flex; flex-wrap: wrap;}";
+		$css .= "\n.children { display: none; width: 100%; background-color: $col[submenu_font]25; }";
+		$css .= "\n.children > .page_item { padding-left: 2rem; border-bottom: dashed 1px $col[submenu_font]; }";
+		$css .= "\n.children > .page_item:last-child { border: none; }";
+		return $css;
 	}
 
 
 	private function custom_mobile() {
-		
+		$col = $this->colors;
+		$fon = $this->fonts;
+
+		$css  = "\n.menu-container { position: relative; }";
+		$css .= "\n.menu { display: none; position: absolute; top: 40px; right: 0; z-index: 99; background-color: $col[submenu_background]; }";
+		$css .= "\n.menu-container ul { padding: 0; margin: 0; }";
+		$css .= "\n.menu > li { list-style: none; }";
+		$css .= "\n.menu > .menu-item { border-bottom: solid 1px $col[submenu_font]; }";
+		$css .= "\n.menu > .menu-item:last-child { border-bottom: none; }";
+		$css .= "\n.menu-item > a { display: block; margin: 2rem 0; margin-right: auto; padding: 0 2rem; color: $col[submenu_font]; font-size: 2.6rem; white-space: nowrap; text-decoration: none; }";
+		$css .= "\n.menu-item-has-children { display: flex; align-items: center; }";
+		$css .= "\n.menu-item { display: flex; flex-wrap: wrap; min-width: 30rem;}";
+		$css .= "\n.sub-menu { display: none; width: 100%; background-color: $col[submenu_font]25; }";
+		$css .= "\n.sub-menu > .menu-item { padding-left: 2rem; border-bottom: dashed 1px $col[submenu_font]; }";
+		$css .= "\n.sub-menu > .menu-item:last-child { border: none; }";
+	
+		return $css;
 	}
+
 
 
 	// public function get_css() {
@@ -323,8 +427,15 @@ final class Emtheme_CSS_One {
 
 
 	public function get_css() {
+		$col = $this->colors;
+		$fon = $this->fonts;
+
 		// desktop
-		$css = "<style>\n@media screen and (min-width: 1024px) {";
+		$css = "<style>";
+
+		$css .= "\n.content, .tagline { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+
+		$css .= "\n@media screen and (min-width: 1024px) {";
 
 
 		$css .= $this->gen_desktop();
@@ -352,7 +463,7 @@ final class Emtheme_CSS_One {
 		$css  = "\n.emtheme-header-container { bottom-margin: 4rem; $col[navbar_background];}";
 		$css .= "\n.emtheme-header { display: flex; align-items: center; width: 112rem; margin: auto; box-sizing: border-box; font-family: $fon[navbar_family]; font-size: $fon[navbar_size]rem; color: $col[navbar_font]; }";
 		$css .= "\n.emtheme-header-link { display: flex; margin-right: auto; height: 3rem; align-items: center; border: solid black 1px; text-decoration: none; color: $col[navbar_font]; }";
-		$css .= "\n.emtheme-logo { height: 100%; }";
+		$css .= "\n.emtheme-logo { height: 100%; margin-left: 1rem; }";
 
 		$css .= "\n.menu-container { position: relative; left: 1rem; }";
 		$css .= "\n.menu-container ul { padding: 0; margin: 0}";
@@ -370,7 +481,7 @@ final class Emtheme_CSS_One {
 		$css .= "\n.menu > ul > .page_item:last-child { margin-right: 0; }";
 		$css .= "\n.menu > ul > .page_item { height: 3.2rem; line-height: 3.2rem; }";
 		$css .= "\n.page_item > a { display: block; padding: 0 1rem; color: $col[navbar_font]; text-decoration: none; }";
-		$css .= "\n.page_item > a:hover { $col[navbar_hover]; height: 100% }";
+		$css .= "\n.page_item > a:hover { $col[navbar_hover]; }";
 		$css .= "\n.page_item_has_children { position: relative; }";
 		$css .= "\n.page_item_has_children > a:after { content: ' \\25bc'}";
 		$css .= "\n.page_item_has_children:hover > .children { display: block; }";
@@ -411,8 +522,10 @@ final class Emtheme_CSS_One {
 		$fon = $this->fonts;
 
 		$css  = "\n.emtheme-header { display: flex; $col[navbar_background]; height: 4rem; }";
-		$css .= "\n.emtheme-header-link { display: flex; align-items: center; margin-right: auto; }";
+		$css .= "\n.emtheme-header-link { display: flex; align-items: center; margin-right: auto; text-decoration: none; }";
 		$css .= "\n.emtheme-logo { height: 4rem; }";
+		$css .= "\n.emtheme-title { margin-left: 2rem; font-size: 3.2rem; color: $col[navbar_font]; font-family: $fon[navbar_family]; }"; 
+		
 		$css .= "\n.emtheme-mobile-icon { color: white; margin-right: 1rem; font-size: 4rem !important; }";
 		$css .= "\n.emtheme-mob-arrow { color: $col[submenu_font]; font-size: 2.6rem; margin-right: 3rem; }";
 		$css .= "\n.emtheme-mob-arrow:after { content: ' \\25bc'; }";
@@ -453,7 +566,7 @@ final class Emtheme_CSS_One {
 		$css .= "\n.menu > .menu-item:last-child { border-bottom: none; }";
 		$css .= "\n.menu-item > a { display: block; margin: 2rem 0; margin-right: auto; padding: 0 2rem; color: $col[submenu_font]; font-size: 2.6rem; white-space: nowrap; text-decoration: none; }";
 		$css .= "\n.menu-item-has-children { display: flex; align-items: center; }";
-		$css .= "\n.menu-item { display: flex; flex-wrap: wrap;}";
+		$css .= "\n.menu-item { display: flex; flex-wrap: wrap; white-space: nowrap; min-width: 30rem; }";
 		$css .= "\n.sub-menu { display: none; width: 100%; background-color: $col[submenu_font]25; }";
 		$css .= "\n.sub-menu > .menu-item { padding-left: 2rem; border-bottom: dashed 1px $col[submenu_font]; }";
 		$css .= "\n.sub-menu > .menu-item:last-child { border: none; }";

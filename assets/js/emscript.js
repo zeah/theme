@@ -86,7 +86,7 @@
 (function() {
 	var o = document.querySelector(".emtheme-mobile-icon");
 	var n = document.querySelector(".menu");
-	o.addEventListener("click", function() {
+	if (o) o.addEventListener("click", function() {
 		n.classList.toggle("nav-show");
 
 		var x = document.querySelectorAll(".menu .nav-show");
