@@ -5,6 +5,7 @@ require_once 'inc/emt-css.php';
 
 // IF PAGE IS MOVED
 global $post;	
+// wp_die('<xmp>'.print_r($post, true).'</xmp>');
 if ($post) {
 	$meta = get_post_meta($post->ID, 'emredirect');
 	if (isset($meta[0])) {
