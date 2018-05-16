@@ -280,31 +280,61 @@ final class Emtheme_Customizer {
 		/* COLORS SECTION */
 		$wp_customize->add_section('emtheme_css_color', array(
 			'title' => 'Colors',
-			'description' => '<ul><strong>Top</strong>
-								<li><a class="emtop-font-color" style="cursor:pointer;">font</a></li>
-								<li><a class="emtop-bg-color" style="cursor:pointer;">background</a></li>
-							  </ul><br>
+			// 'description' => '<ul><strong>Top</strong>
+			// 					<li><a class="emtop-font-color" style="cursor:pointer;">font</a></li>
+			// 					<li><a class="emtop-bg-color" style="cursor:pointer;">background</a></li>
+			// 				  </ul><br>
 							  
-							  <ul><strong>Navbar</strong>
-							  <li><a class="navbar-mfont-color" style="cursor:pointer;">top menu font</a></li>
-							  <li><a class="navbar-mbg-color" style="cursor:pointer;">top menu background</a></li>
-							  <li><a class="navbar-mbgh-color" style="cursor:pointer;">top menu background hover</a></li><br>
-							  <li><a class="navbar-sfont-color" style="cursor:pointer;">sub menu font</a></li>
-							  <li><a class="navbar-sbg-color" style="cursor:pointer;">sub menu background</a></li>
-							  <li><a class="navbar-sbgh-color" style="cursor:pointer;">sub menu background hover</a></li><br>
-							  <li><a class="navbar-active-color" style="cursor:pointer;">active page background</a></li>
-							  <li><a class="navbar-activeh-color" style="cursor:pointer;">active page background hover</a></li>
-							  </ul>',
+			// 				  <ul><strong>Navbar</strong>
+			// 				  <li><a class="navbar-mfont-color" style="cursor:pointer;">top menu font</a></li>
+			// 				  <li><a class="navbar-mbg-color" style="cursor:pointer;">top menu background</a></li>
+			// 				  <li><a class="navbar-mbgh-color" style="cursor:pointer;">top menu background hover</a></li><br>
+			// 				  <li><a class="navbar-sfont-color" style="cursor:pointer;">sub menu font</a></li>
+			// 				  <li><a class="navbar-sbg-color" style="cursor:pointer;">sub menu background</a></li>
+			// 				  <li><a class="navbar-sbgh-color" style="cursor:pointer;">sub menu background hover</a></li><br>
+			// 				  <li><a class="navbar-active-color" style="cursor:pointer;">active page background</a></li>
+			// 				  <li><a class="navbar-activeh-color" style="cursor:pointer;">active page background hover</a></li>
+			// 				  </ul>',
 			'priority' => 500
 			// 'panel' => 'emtheme_css_panel'
 		));
 
 
-		$settings = ['emtop_font', 'emtop_bg', 'search', 'nav_font', 'nav_bg_top', 'nav_bg_middle', 'nav_bg_bottom', 'nav_bg_hover_top', 
+		$settings = ['background', 'main_background', 'main_shadow', 'emtop_font', 'emtop_bg', 'search', 'nav_font', 'nav_bg_top', 'nav_bg_middle', 'nav_bg_bottom', 'nav_bg_hover_top', 
 					 'nav_bg_hover_middle', 'nav_bg_hover_bottom', 'navsub_font', 'navsub_bg', 'navsub_bg_hover', 'active', 'active_hover'];
 
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_color');
 		$this->add_settings($wp_customize, ['emtop_bg_image', 'emtop_bg_image_opacity'], ['type' => 'option', 'transport' => 'postMessage', 'sanitize_callback' => 'sanitize_text_field'], 'emtheme_color');
+
+		/* BACKGROUND COLOR ON BODY TAG */
+		$wp_customize->get_setting('emtheme_color[background]')->default = '#eeeeee'; 
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[background]_c', array(
+				'label' => 'Background color on body tag.',
+				'description' => '',
+				'settings' => 'emtheme_color[background]',
+				'section' => 'emtheme_css_color'
+		)));
+
+		/* BACKGROUND COLOR ON .MAIN */
+		$wp_customize->get_setting('emtheme_color[main_background]')->default = '#ffffff'; 
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[main_background]_c', array(
+				'label' => 'Background color content element.',
+				'description' => '',
+				'settings' => 'emtheme_color[main_background]',
+				'section' => 'emtheme_css_color'
+		)));
+
+		/* BOX SHADOW ON .MAIN */
+		// $wp_customize->get_setting('emtheme_color[background]')->default = '#000000'; 
+		$wp_customize->add_control(new WP_Customize_Color_Control( 
+			$wp_customize, 'emtheme_color[main_shadow]_c', array(
+				'label' => 'Box shadow on content element.',
+				'description' => '',
+				'settings' => 'emtheme_color[main_shadow]',
+				'section' => 'emtheme_css_color'
+		)));
 
 		/* FONT COLOR TOP (LOGO, TITLE, TAGLINE )*/
 		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = Emtheme_style::$colors['top']['font']; 

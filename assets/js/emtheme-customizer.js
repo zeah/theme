@@ -50,6 +50,17 @@ $(() => {
 	// emtheme colors
 	var activeHover = $('.current_page_item > a').css('background-color') || $('.current-menu-item > a').css('background-color');
 
+	api('emtheme_color[background]', (value) => value.bind((newval) => $('body').css('background-color', newval)));
+
+	api('emtheme_color[main_background]', (value) => value.bind((newval) => $('.main').css('background-color', newval)));
+
+	api('emtheme_color[main_shadow]', (value) => value.bind((newval) => { 
+		let css = '0 0 5px '+newval;
+		if (!newval) css = 'none';
+
+		$('.main').css('box-shadow', css); 
+	}));
+
 	api('emtheme_color[emtop_bg]', (value) => value.bind((newval) => $('.emtop').css('background-color', newval)));
 
 	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-top-link').css('color', newval)));

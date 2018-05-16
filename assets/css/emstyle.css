@@ -328,8 +328,8 @@ p:empty {
 	width: 112rem;
 	max-width: 100%;
 	min-height: 100vh;
-	background-color: hsl(0, 0%, 100%);
-	box-shadow: 0 0 5px black;
+	/*background-color: hsl(0, 0%, 100%);*/
+	/*box-shadow: 0 0 5px black;*/
 }
 
 .main-bg {

@@ -21,6 +21,22 @@ final class Emtheme_CSS {
 		// COLORS
 		$colors = [];
 
+		// page background color (body tag)
+		$colors['background'] = isset($col['background']) ? sanitize_hex_color($col['background']) : '#eee'; 
+
+		// main background color 
+		$colors['main_background'] = isset($col['main_background']) ? sanitize_hex_color($col['main_background']) : '#fff';
+
+		if (isset($col['main_shadow'])) {
+			$css = '0 0 5px';
+
+			if ($col['main_shadow'] == '') $css .= ' none';
+			else $css .= ' '.sanitize_hex_color($col['main_shadow']);
+
+			$colors['main_shadow'] = $css;  
+		}
+		else $colors['main_shadow'] = '0 0 5px #000';
+
 		// header font
 		$colors['header_font'] = isset($col['emtop_font']) ? sanitize_hex_color($col['emtop_font']) : '#000';
 
@@ -198,14 +214,17 @@ final class Emtheme_CSS_Def {
 	public function get_css() {
 		$col = $this->colors;
 		$fon = $this->fonts;
-
+		// wp_die('<xmp>'.print_r($col, true).'</xmp>');
+		
 
 		$css = "<style>";
-		$css .= "\n.content, .emtheme-tagline { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\n.content, .emtheme-tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
 
 		// desktop
 		$css .= "\n@media screen and (min-width: 1024px) {";
 
+		$css .= "\nbody { background-color: $col[background]; }";
 
 		$css .= $this->gen_desktop();
 
@@ -279,7 +298,25 @@ final class Emtheme_CSS_Def {
 
 
 	private function custom_desktop() {
+		$col = $this->colors;
+		$fon = $this->fonts;
+
+		$css  = "\n.menu { position: relative; right: 2rem; width: 112rem; margin: auto !important; }";
+		$css .= "\n.menu {  display: flex; flex-wrap: wrap; }"; 
+		$css .= "\n.menu > .menu-item > a { padding: 0.5rem 2rem; }"; 
+		  
+		$css .= "\n.menu-item-has-children { position: relative; }";
+		$css .= "\n.menu-item-has-children > a:after { content: ' \\25bc'}";
+		$css .= "\n.menu-item-has-children:hover > .sub-menu { display: block; }";
+		$css .= "\n.menu-item > a { display: block; font-family: $fon[navbar_family]; font-size: $fon[navbar_size]rem; color: $col[navbar_font]; text-decoration: none; }"; 
+		$css .= "\n.menu-item > a:hover { $col[navbar_hover]; }";
 		
+		$css .= "\n.sub-menu { display: none; position: absolute; z-index: 100; background-color: $col[submenu_background]; }";
+		$css .= "\n.sub-menu > li { white-space: nowrap; }";
+		$css .= "\n.sub-menu > li > a { display: block; padding: 1rem; color: $col[submenu_font]; border-bottom: solid rgba(0, 0, 0, .5) 1px; }";
+		$css .= "\n.sub-menu > li:last-child > a { border-bottom: none; }";
+		$css .= "\n.sub-menu > li > a:hover { background-color: $col[submenu_hover]; }";
+		return $css;		
 	}
 
 	private function gen_mobile() {
@@ -433,9 +470,12 @@ final class Emtheme_CSS_One {
 		// desktop
 		$css = "<style>";
 
-		$css .= "\n.content, .tagline { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\n.content, .tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\n.main { background-color: $col[main_background]; }";
+		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
 
 		$css .= "\n@media screen and (min-width: 1024px) {";
+		$css .= "\nbody { background-color: $col[background]; }";
 
 
 		$css .= $this->gen_desktop();
@@ -462,7 +502,7 @@ final class Emtheme_CSS_One {
 
 		$css  = "\n.emtheme-header-container { bottom-margin: 4rem; $col[navbar_background];}";
 		$css .= "\n.emtheme-header { display: flex; align-items: center; width: 112rem; margin: auto; box-sizing: border-box; font-family: $fon[navbar_family]; font-size: $fon[navbar_size]rem; color: $col[navbar_font]; }";
-		$css .= "\n.emtheme-header-link { display: flex; margin-right: auto; height: 3rem; align-items: center; border: solid black 1px; text-decoration: none; color: $col[navbar_font]; }";
+		$css .= "\n.emtheme-header-link { display: flex; margin-right: auto; height: 3rem; align-items: center; text-decoration: none; color: $col[navbar_font]; }";
 		$css .= "\n.emtheme-logo { height: 100%; margin-left: 1rem; }";
 
 		$css .= "\n.menu-container { position: relative; left: 1rem; }";
