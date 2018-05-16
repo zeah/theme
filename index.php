@@ -18,20 +18,22 @@ $content = get_the_content();
 // get all after last col
 
 $first = strpos($content, '[col');
+// wp_die('<xmp>'.print_r($first, true).'</xmp>');
 
-if ($first) {
+if ($first !== false) {
 	$last = strrpos($content, '[/col]')+6;
 
 	$content_before = substr($content, 0, $first);
 	$content_col = substr($content, $first, $last - strlen($content_before));
 	$content_after = substr($content, $last);
 
+
 // wp_die(print_r($content_before.'#####'.$content_col.'######'.$content_after, true));
 
 
-	if ($content_before) $html .= '<div class="content">'.apply_filters('the_content', $content_before).'</div>';
-	if ($content_col) $html .= '<div class="content content-3">'.apply_filters('the_content', $content_col).'</div>';
-	if ($content_after) $html .= '<div class="content">'.apply_filters('the_content', $content_after).'</div>';
+	if ($content_before) $html .= '<div class="content">'.apply_filters('the_content', do_shortcode($content_before)).'</div>';
+	if ($content_col) $html .= '<div class="content content-3">'.apply_filters('the_content', do_shortcode($content_col)).'</div>';
+	if ($content_after) $html .= '<div class="content">'.apply_filters('the_content', do_shortcode($content_after)).'</div>';
 }
 else
 	$html .= '<div class="content">'.apply_filters('the_content', $content).'</div>';

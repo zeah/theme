@@ -307,7 +307,7 @@ final class Emtheme_Customizer {
 		$this->add_settings($wp_customize, ['emtop_bg_image', 'emtop_bg_image_opacity'], ['type' => 'option', 'transport' => 'postMessage', 'sanitize_callback' => 'sanitize_text_field'], 'emtheme_color');
 
 		/* BACKGROUND COLOR ON BODY TAG */
-		$wp_customize->get_setting('emtheme_color[background]')->default = '#eeeeee'; 
+		$wp_customize->get_setting('emtheme_color[background]')->default = '#ffffff'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[background]_c', array(
 				'label' => 'Background color on body tag.',
@@ -691,39 +691,60 @@ final class Emtheme_Customizer {
 			'default' => 'default'
 		];
 
-		$settings = ['emtheme_nav_layout'];
+		// $settings = ['emtheme_nav_layout', 'emtheme_main_width'];
 
-		$this->add_settings($wp_customize, $settings, $array_text);
+		$this->add_settings($wp_customize, 
+			['emtheme_nav_layout'], 
+			[
+				'type' => 'option',
+				'transport' => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default' => 'default'
+			]);
+
+		$this->add_settings($wp_customize, 
+			['emtheme_main_width'], 
+			[
+				'type' => 'option',
+				'transport' => 'postMessage',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default' => '1120'
+			]);
 
 
-		// $wp_customize->add_setting('emtheme_nav_layout_setting')
-		// $wp_customize->add_panel('emtheme_nav_layout_panel',
-		// 	array(
-		// 		'title' => 'Nav layout',
-		// 		'priority' => 23
-		// 	)
-		// );
-
-
-		$wp_customize->add_section('emtheme_nav_layout_section', [
-			'title' => 'Nav Layout',
+		$wp_customize->add_section('emtheme_site_layout_section', [
+			'title' => 'Site Layout',
 			'capability' => 'edit_theme_options',
 			'priority' => 510
 		]);
 
 		$wp_customize->add_control('emtheme_nav_layout_c', [
 			'type' => 'select',
-			'label' => 'nav layout',
-			'section' => 'emtheme_nav_layout_section',
+			'label' => 'Header Layout',
+			'description' => 'Title, tagline, search-box, navbar.',
+			'section' => 'emtheme_site_layout_section',
 			'settings' => 'emtheme_nav_layout',
 			'choices' => [
 				'default' => 'Default',
-				'one' => 'One'
+				'one' => 'Small'
 			]
 
 		]);
 
-
+		// $wp_customize->get_setting('emtheme_main_width')->default = 1120;
+		$wp_customize->add_control('emtheme_main_width_c', array(
+			'type' => 'number',
+			'label' => 'Content element width',
+			'description' => 'The width of page content element in pixels.<br>Default value: 1120',
+			'section' => 'emtheme_site_layout_section',
+			'settings' => 'emtheme_main_width',
+			// 'priority' => 103,
+			'input_attrs' => array(
+			    'min' => 420,
+			    'max' => 1920,
+				'step' => 5,
+			),
+		));
 
 	}
 }

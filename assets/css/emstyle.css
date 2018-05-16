@@ -325,7 +325,7 @@ p:empty {
 .main {
 	position: relative;
 	margin: 2rem auto;
-	width: 112rem;
+	/*width: 112rem;*/
 	max-width: 100%;
 	min-height: 100vh;
 	/*background-color: hsl(0, 0%, 100%);*/
@@ -718,6 +718,7 @@ p:empty {
 	/*height: 25rem;*/
 	/*width: 25rem;*/
 	/*margin: auto;*/
+	/*margin-left: 2rem;*/
 	background-size: cover;
 
 	cursor: pointer;

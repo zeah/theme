@@ -22,20 +22,20 @@ final class Emtheme_CSS {
 		$colors = [];
 
 		// page background color (body tag)
-		$colors['background'] = isset($col['background']) ? sanitize_hex_color($col['background']) : '#eee'; 
+		$colors['background'] = isset($col['background']) ? sanitize_hex_color($col['background']) : '#fff'; 
 
 		// main background color 
 		$colors['main_background'] = isset($col['main_background']) ? sanitize_hex_color($col['main_background']) : '#fff';
 
 		if (isset($col['main_shadow'])) {
-			$css = '0 0 5px';
+			// $css = '0 0 5px';
 
-			if ($col['main_shadow'] == '') $css .= ' none';
-			else $css .= ' '.sanitize_hex_color($col['main_shadow']);
+			if ($col['main_shadow'] == '') $css = 'none';
+			else $css = '0 0 5px '.sanitize_hex_color($col['main_shadow']);
 
 			$colors['main_shadow'] = $css;  
 		}
-		else $colors['main_shadow'] = '0 0 5px #000';
+		else $colors['main_shadow'] = 'none';
 
 		// header font
 		$colors['header_font'] = isset($col['emtop_font']) ? sanitize_hex_color($col['emtop_font']) : '#000';
@@ -219,12 +219,16 @@ final class Emtheme_CSS_Def {
 
 		$css = "<style>";
 		$css .= "\n.content, .emtheme-tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
 		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
 
 		// desktop
 		$css .= "\n@media screen and (min-width: 1024px) {";
 
 		$css .= "\nbody { background-color: $col[background]; }";
+		
+		$width = get_option('emtheme_main_width') ? intval(get_option('emtheme_main_width')) / 10 : '112';
+		$css .= "\n".'.main { width: '.$width.'rem; }';
 
 		$css .= $this->gen_desktop();
 
@@ -471,12 +475,15 @@ final class Emtheme_CSS_One {
 		$css = "<style>";
 
 		$css .= "\n.content, .tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
-		$css .= "\n.main { background-color: $col[main_background]; }";
+		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
+		// $css .= "\n.main { background-color: $col[main_background]; }";
 		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
 
-		$css .= "\n@media screen and (min-width: 1024px) {";
+		$css .= "\n@media screen and (min-width: 1120px) {";
 		$css .= "\nbody { background-color: $col[background]; }";
 
+		$width = get_option('emtheme_main_width') ? intval(get_option('emtheme_main_width')) / 10 : '112';
+		$css .= "\n".'.main { width: '.$width.'rem; }';
 
 		$css .= $this->gen_desktop();
 		if (!has_nav_menu('header-menu')) 	$css .= $this->page_desktop();
@@ -486,7 +493,7 @@ final class Emtheme_CSS_One {
 		$css .= "\n}";
 
 		// mobile
-		$css .= "\n@media screen and (max-width: 1023px) {";
+		$css .= "\n@media screen and (max-width: 1119px) {";
 		$css .= $this->gen_mobile();
 		
 		if (!has_nav_menu('header-menu')) 	$css .= $this->page_mobile();

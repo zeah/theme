@@ -129,8 +129,8 @@ final class Emtheme_Shortcode {
 		if (isset($atts['margin'])) $margin = intval($atts['margin']) / 10;
 		if (isset($atts['float'])) {
 			switch ($atts['float']) {
-				case 'left': $float = 'left'; break;
-				case 'right': $float = 'right'; break;
+				case 'left': $float = 'left; margin-right: 2rem'; break;
+				case 'right': $float = 'right; margin-left: 2rem'; break;
 			}
 		}
 

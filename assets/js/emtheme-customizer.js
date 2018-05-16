@@ -545,5 +545,8 @@ $(() => {
 	}
 
 
+	api('emtheme_main_width', (value) => value.bind((newvalue) => $('.main').css('width', newvalue+'px')));
+
+
 })(jQuery, wp.customize);
 });
