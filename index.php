@@ -5,7 +5,6 @@
 global $post;
 setup_postdata($post);
 
-get_header(); 
 
 $html = '<div class="main">';
 
@@ -18,7 +17,6 @@ $content = get_the_content();
 // get all after last col
 
 $first = strpos($content, '[col');
-// wp_die('<xmp>'.print_r($first, true).'</xmp>');
 
 if ($first !== false) {
 	$last = strrpos($content, '[/col]')+6;
@@ -28,25 +26,16 @@ if ($first !== false) {
 	$content_after = substr($content, $last);
 
 
-// wp_die(print_r($content_before.'#####'.$content_col.'######'.$content_after, true));
-
-
 	if ($content_before) $html .= '<div class="content">'.apply_filters('the_content', do_shortcode($content_before)).'</div>';
 	if ($content_col) $html .= '<div class="content content-3">'.apply_filters('the_content', do_shortcode($content_col)).'</div>';
 	if ($content_after) $html .= '<div class="content">'.apply_filters('the_content', do_shortcode($content_after)).'</div>';
 }
 else
 	$html .= '<div class="content">'.apply_filters('the_content', $content).'</div>';
-// $html .= '<div class="content';
-// if (!(strpos($content, '[col') === false)) $html .= ' content-3';
-// $html .= '">'.apply_filters('the_content', get_the_content()).'</div>';
-// $html .= '">'.apply_filters('the_content', do_shortcode(get_the_content())).'</div>';
-
-// $html .= '<div>hi</div>';
-
-// $html .= do_shortcode('lala [emkort]');
 
 $html .= '</div>';
+
+get_header(); 
 
 echo $html;
 

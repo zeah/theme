@@ -31,6 +31,7 @@ final class Emtheme_Link {
 				else 							$value[$fonts[$v]] = [$fonts[$v.'_weight']];
 			}
 
+		
 		return $value;
 	}
 }

@@ -81,6 +81,7 @@ final class Emtheme_function {
     private function wp_hooks() {
         add_action('publish_page', array($this, 'add_sitemap'));
         add_action('publish_article', array($this, 'add_sitemap'));
+        // add_action('publish', array($this, 'add_sitemap'));
 
 
         add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
@@ -105,6 +106,7 @@ final class Emtheme_function {
 
     public function register_nav_cat() {
         register_taxonomy_for_object_type('category', 'page'); 
+        // register_taxonomy_for_object_type('category', 'nyheter'); 
         register_nav_menu('header-menu',__( 'Header Menu' ));
     }
 
@@ -153,48 +155,65 @@ final class Emtheme_function {
         wp_die();
     }
 
+    /*
+        Creates sitemap.xml
+
+        * uses 'emtheme_sitemap_post_type'-filter to get the type of posts to add to sitemap
+        * will ignore category 'redirect' and 'nositemap'
+        * will ignore page template 'redirect'
+        * page category sitemap_weekly and sitemap_daily changes data for <changefreq>
+    */
     public function add_sitemap() {
-        //TODO ADD FILTER FOR POST_TYPE (emtheme-sitemap)
+
+        $type = apply_filters('emtheme_sitemap_post_type', []);
+
+        array_push($type, 'page');
+
+
         $postsForSitemap = get_posts(array(
             'numberposts' => -1,
             'orderby' => 'modified',
-            'post_type'  => array( 'page', 'nyheter' ),
+            'post_type'  => $type,
             'order'    => 'DESC'
         ));
 
         $sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
         $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-        foreach( $postsForSitemap as $post ) {
-            setup_postdata( $post );
+        $site_url = site_url('/');
+
+        foreach($postsForSitemap as $post) {
+            // setup_postdata( $post );
 
             if (strpos(get_page_template_slug($post->ID), 'redirect') !== false) continue;
 
+            $freq = 'monthly';
+            if (get_permalink($post->ID) == $site_url) $freq = 'weekly';
+            
             $continue = false;
-            foreach(get_the_category($post) as $cat) {
-                if ($cat->name == 'redirect') $continue = true;
-
-            }
+            foreach(get_the_category($post) as $cat)
+                switch ($cat->name) {
+                    case 'redirect': case 'nositemap': $continue = true; break;
+                    case 'sitemap_weekly': $freq = 'weekly'; break;
+                    case 'sitemap_daily': $freq = 'daily'; break;
+                }
+            
 
             if ($continue) continue;
 
             $postdate = explode( " ", $post->post_modified );
 
-            $sitemap .= '<url>'.
-              '<loc>' . get_permalink( $post->ID ) . '</loc>' .
-              '<lastmod>' . $postdate[0] . '</lastmod>' .
-              '<changefreq>monthly</changefreq>' .
-             '</url>';
+            $sitemap .=  '<url><loc>'.get_permalink($post->ID).'</loc><lastmod>'.$postdate[0].'</lastmod><changefreq>'.$freq.'</changefreq></url>';
             
-            wp_reset_postdata();
+            // wp_reset_postdata();
           }
 
         $sitemap .= '</urlset>';
 
-        $fp = fopen( ABSPATH . 'sitemap.xml', 'w' );
+        $fp = fopen(ABSPATH.'sitemap.xml', 'w');
 
-        fwrite( $fp, $sitemap );
-        fclose( $fp );
+        fwrite($fp, $sitemap);
+        fclose($fp);
     }
 
     public function helper_float_image($content) {

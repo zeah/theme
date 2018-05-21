@@ -65,14 +65,12 @@ final class Emtheme_Doc {
 										<li><a href="#emtheme-doc-widget-sc">[widget]</a></li>
 									</ul>
 								</li>
-								<li><a href="#emtheme-doc-maintenance">Maintenance Mode</a>
-								</li>
-								<li><a href="#emtheme-doc-alternative">Alternative Frontpage</a>
-								</li>
-								<li><a href="#emtheme-doc-emailcol">Email Collection</a>
-								</li>
-								<li><a href="#emtheme-doc-emailstats">Email Stats</a>
-								</li>
+								
+								<li><a href="#emtheme-doc-maintenance">Maintenance Mode</a> </li>
+								<li><a href="#emtheme-doc-alternative">Alternative Frontpage</a> </li>
+								<li><a href="#emtheme-doc-emailcol">Email Collection</a> </li>
+								<li><a href="#emtheme-doc-emailstats">Email Stats</a> </li>
+								
 								<li><a href="#emtheme-doc-customizer">Customizer</a>
 									<ul>
 										<li><a href="#emtheme-doc-cust-colors">Colors</a></li>
@@ -81,8 +79,9 @@ final class Emtheme_Doc {
 										<li><a href="#emtheme-doc-cust-footer">Footer Info</a></li>
 									</ul>
 								</li>
-								<li><a href="#emtheme-doc-defaultposts">Default Posts</a>
-								</li>
+								
+								<li><a href="#emtheme-doc-defaultposts">Default Posts</a> </li>
+								<li><a href="#emtheme-doc-sitemap">Sitemap</a></li>
 							</ul>
 						</li>',
 
@@ -197,6 +196,14 @@ final class Emtheme_Doc {
 
 				'<p id="emtheme-doc-defaultposts">&nbsp;</p>
 				<h2>Default Posts</h2>
+				is removed by default. (todo: add theme option to add back to admin menu and option to add to sitemap) 
+				',
+
+				'<p id="emtheme-doc-sitemap">&nbsp;</p>
+				<h2>Sitemap (XML)</h2>
+				Is updated automatically everytime a page or custom post type is created or updated.<br>
+				If the page/post has category <strong>redirect</strong> or <strong>nositemap</strong> - or have the page template <strong>redirect</strong> - then it will not be added to the sitemap.<br>
+				With page category <strong>sitemap_weekly</strong> or <strong>sitemap_daily</strong> then the sitemap will reflect that update frequency. Default value is monthly. This is to tell the search engine how often a page is updated. 
 				',
 
 

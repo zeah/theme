@@ -218,7 +218,8 @@ final class Emtheme_CSS_Def {
 		
 
 		$css = "<style>";
-		$css .= "\n.content, .emtheme-tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\nbody { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		// $css .= "\n.content, .emtheme-tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
 		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
 		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
 
@@ -474,10 +475,11 @@ final class Emtheme_CSS_One {
 		// desktop
 		$css = "<style>";
 
-		$css .= "\n.content, .tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		$css .= "\nbody { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
+		// $css .= "\n.content, .tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
 		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
 		// $css .= "\n.main { background-color: $col[main_background]; }";
-		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
+		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; line-height: $fon[content_lineheight]; }";
 
 		$css .= "\n@media screen and (min-width: 1120px) {";
 		$css .= "\nbody { background-color: $col[background]; }";

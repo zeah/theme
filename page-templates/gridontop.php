@@ -11,9 +11,13 @@
 global $post;
 setup_postdata($post);
 
+// get_header();
+
+$echo = Emtheme_fp_template::get($post); 
+
 get_header();
 
-echo Emtheme_fp_template::get($post); 
+echo $echo;
 
 final class Emtheme_fp_template {
 

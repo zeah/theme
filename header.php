@@ -1,6 +1,6 @@
 <?php 
 
-require_once 'inc/emt-style.php';
+// require_once 'inc/emt-style.php';
 require_once 'inc/emt-css.php';
 
 // IF PAGE IS MOVED
