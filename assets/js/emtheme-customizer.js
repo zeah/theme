@@ -61,9 +61,9 @@ $(() => {
 		$('.main').css('box-shadow', css); 
 	}));
 
-	api('emtheme_color[emtop_bg]', (value) => value.bind((newval) => $('.emtop').css('background-color', newval)));
+	api('emtheme_color[emtop_bg]', (value) => value.bind((newval) => $('.emtheme-header-container').css('background-color', newval)));
 
-	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-top-link').css('color', newval)));
+	api('emtheme_color[emtop_font]', (value) => value.bind((newval) => $('.emtheme-identity').css('color', newval)));
 
 
 	api('emtheme_color[search]', (value) => value.bind((newval) => {
@@ -80,7 +80,7 @@ $(() => {
 
 		// console.log('hi '+opacity);
 		$('.emtheme-bg-op').remove();
-		$('head').append('<style class="emtheme-bg-op"> .emtop-bg:after { content: ""; background: '+newval+'; opacity: '+opacity+'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 2;} </style>');
+		$('head').append('<style class="emtheme-bg-op"> .emtheme-header-container:after { content: ""; background-image: '+newval+'; opacity: '+opacity+'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: -2;} </style>');
 	}));
 
 	api('emtheme_color[emtop_bg_image_opacity]', (value) => value.bind((newval) => {
@@ -92,7 +92,7 @@ $(() => {
 
 
 		$('.emtheme-bg-op').remove();
-		$('head').append('<style class="emtheme-bg-op"> .emtop-bg:after { content: ""; background: '+url+'; opacity: '+newval+'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 2;} </style>');
+		$('head').append('<style class="emtheme-bg-op"> .emtheme-header-container:after { content: ""; background: '+url+'; opacity: '+newval+'; top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: -2;} </style>');
 	}));
 
 	// navbar colors
@@ -100,7 +100,7 @@ $(() => {
 
 	api('emtheme_color[nav_bg]', (value) => value.bind((newval) => {
 		$('.menu-container').css('background-color', newval)
-		if (screen.width < 1024) $('.emtop').css('background-color', newval);
+		if (screen.width < 1024) $('.emtheme-header-container').css('background-color', newval);
 	}));
 
 
@@ -141,6 +141,7 @@ $(() => {
 
 		let linear = null;
 		if (middle && bottom) 	linear = 'linear-gradient(to top, '+bottom+' 0%, '+middle+' 50%, '+top+' 100%)';
+		else if (middle && !bottom) linear = 'linear-gradient(to top, '+middle+' 50%, '+top+' 100%)';
 		else if (bottom)		linear = 'linear-gradient(to top, '+bottom+' 0%, '+top+' 100%)';
 
 		if (linear) c.css('background', linear);

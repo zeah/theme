@@ -31,7 +31,7 @@ final class Emtheme_Customizer {
 		$fontFile = get_stylesheet_directory() . '/assets/cache/google-web-fonts.txt';
         $content = json_decode(file_get_contents($fontFile));
 
-		wp_enqueue_script('cd_customizer', get_theme_file_uri() . '/assets/js/emtheme-customizer.js', array( 'jquery','customize-preview' ), '', true);
+		wp_enqueue_script('cd_customizer', get_theme_file_uri() . '/assets/js/emtheme-customizer.js?v=1.1.0', array( 'jquery','customize-preview' ), '', true);
 	    wp_localize_script('cd_customizer', 'gfont', $content->items);
 
 	    wp_enqueue_style( 'emtheme-customizer-css', get_theme_file_uri() . '/assets/css/emtheme-customizer.css', false );

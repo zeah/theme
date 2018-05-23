@@ -183,7 +183,7 @@ final class Emtheme_function {
         $site_url = site_url('/');
 
         foreach($postsForSitemap as $post) {
-            // setup_postdata( $post );
+            setup_postdata($post);
 
             if (strpos(get_page_template_slug($post->ID), 'redirect') !== false) continue;
 
@@ -205,7 +205,7 @@ final class Emtheme_function {
 
             $sitemap .=  '<url><loc>'.get_permalink($post->ID).'</loc><lastmod>'.$postdate[0].'</lastmod><changefreq>'.$freq.'</changefreq></url>';
             
-            // wp_reset_postdata();
+            wp_reset_postdata();
           }
 
         $sitemap .= '</urlset>';

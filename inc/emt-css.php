@@ -18,6 +18,8 @@ final class Emtheme_CSS {
 		$col = get_option('emtheme_color');
 		$fon = get_option('emtheme_font');
 		
+		// wp_die('<xmp>'.print_r($col, true).'</xmp>');
+		
 		// COLORS
 		$colors = [];
 
@@ -43,6 +45,10 @@ final class Emtheme_CSS {
 		// header background
 		$colors['header_background'] = isset($col['emtop_bg']) ? sanitize_hex_color($col['emtop_bg']) : '#fff';
 
+		// $colors['header_image'] = isset($col['emtop_bg_image']) ? esc_url($col['emtop_bg_image']) : false;
+
+		// $colors['header_image_opacity'] = isset($col['emtop_bg_image_opacity']) ? esc_html($col['emtop_bg_image_opacity']) : '0.5';
+
 		// search
 		$colors['search'] = isset($col['search']) ? sanitize_hex_color($col['search']) : '#000';
 		
@@ -50,7 +56,7 @@ final class Emtheme_CSS {
 		$colors['header_background_image'] = isset($col['emtop_bg_image']) ? esc_url($col['emtop_bg_image']) : '';
 		
 		// bg image opacity
-		$colors['header_background_image_opacity'] = isset($col['emtop_bg_image_opacity']) ? intval($col['emtop_bg_image_opacity']) : '0.5';
+		$colors['header_background_image_opacity'] = isset($col['emtop_bg_image_opacity']) ? esc_html($col['emtop_bg_image_opacity']) : '0.5';
 
 		// navbar font
 		$colors['navbar_font'] = isset($col['nav_font']) ? sanitize_hex_color($col['nav_font']) : '#fff';
@@ -256,10 +262,17 @@ final class Emtheme_CSS_Def {
 		$col = $this->colors;
 		$fon = $this->fonts;
 
-		$css  = "\n.emtheme-header-container { background-color: $col[header_background]; }";
+		$css  = "\n.emtheme-header-container { position: relative; background-color: $col[header_background]; z-index: 99; padding-top: 1rem;}";
+
+		if ($col['header_background_image'])
+			$css .= "\n.emtheme-header-container:after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-image: url('$col[header_background_image]'); background-repeat: repeat; z-index: -3; opacity: $col[header_background_image_opacity];}";
+
 		$css .= "\n.emtheme-header { width: 112rem; margin: auto; display: flex; align-items: center; }";
 		$css .= "\n.emtheme-identity { display: flex; align-items: center; margin-right: auto; color: $col[header_font]; text-decoration: none; }";
 		$css .= "\n.emtheme-logo { max-height: 20rem; }"; 
+
+		// wp_die('<xmp>'.print_r($col, true).'</xmp>');
+		
 		
 		$css .= "\n.emtheme-title-tagline { margin-left: 3rem; }"; 
 		
