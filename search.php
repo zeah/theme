@@ -2,6 +2,12 @@
 $search = Emkk_search::get_instance();
 $found_posts = false;
 
+$types = apply_filters('emtheme_add_searc_type', []);
+
+array_push($types, 'page');
+
+// $types = ['page', 'nyheter'];
+
 if (have_posts()) {
 	$found_posts = true;
 	while (have_posts()) {
@@ -47,8 +53,9 @@ if (have_posts()) {
 		// $terms = wp_get_post_terms($post->ID, 'emlantype');
 
 
-		if ($post->post_type == 'page' || $post->post_type == 'nyheter')
+		// if ($post->post_type == 'page' || $post->post_type == 'nyheter')
 		// if ($post->post_type != 'emkort' || $post->post_type != 'emlan')
+		if (in_array($post->post_type, $types))
 			echo $search->page($post);
 	}
 }
