@@ -2,11 +2,27 @@
 $search = Emkk_search::get_instance();
 $found_posts = false;
 
+if (have_posts()) {
+	$found_posts = true;
+	while (have_posts()) {
+		the_post();
+	
+		global $post;
+
+		do_action($post->post_type.'_style', $post);
+	}
+}
+
+rewind_posts();
+
+
 get_header();
 
 echo '<meta name="robots" content="noindex, follow">';
 echo '<div class="main"><div class="content">';
 echo '<ul class="emtheme-search-ul">';
+
+$func = apply_filters('emtheme_get_search_func', []);
 
 if (have_posts()) {
 	$found_posts = true;
@@ -15,12 +31,7 @@ if (have_posts()) {
 	
 		global $post;
 
-		if ($post->post_type == 'emkort') echo $search->emkort($post);
-
-		elseif ($post->post_type == 'emlan') echo $search->emlan($post);
-
-		// elseif ($post->post_type == 'article')
-		//     echo $search->article($post);
+		do_action($post->post_type.'_search', $post);
 	}
 }
 
@@ -64,13 +75,13 @@ final class Emkk_search {
 
 	}
 
-	public function emlan($post) {
-		do_action('emlan_shortcode', $post->ID);
-	}
+	// public function emlan($post) {
+	// 	do_action('emlan_shortcode', $post->ID);
+	// }
 
-	public function emkort($post) {
-		do_action('emkort_shortcode', $post->ID);
-	}
+	// public function emkort($post) {
+	// 	do_action('emkort_shortcode', $post->ID);
+	// }
 
 	public function page($post) {
 		if (strpos(get_page_template_slug($post->ID), 'redirect') !== false) return;

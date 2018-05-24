@@ -95,6 +95,8 @@ final class Emtheme_function {
 
     public function set_search($query) {
         if ($query->is_search) {
+            if ($query->get('post_type') == 'user_request') return;
+            // wp_die('<xmp>'.print_r($query->get('post_type'), true).'</xmp>');
             if (!$query->get('post_type')) $query->set('post_type', array('page'));
             else $query->set('post_type', array_merge(array('page'), $query->get('post_type')));
         }
