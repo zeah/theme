@@ -2,7 +2,7 @@
 $search = Emkk_search::get_instance();
 $found_posts = false;
 
-$types = apply_filters('emtheme_add_searc_type', []);
+$types = apply_filters('emtheme_add_search_type', []);
 
 array_push($types, 'page');
 
@@ -28,7 +28,7 @@ echo '<meta name="robots" content="noindex, follow">';
 echo '<div class="main"><div class="content">';
 echo '<ul class="emtheme-search-ul">';
 
-$func = apply_filters('emtheme_get_search_func', []);
+// $func = apply_filters('emtheme_get_search_func', []);
 
 if (have_posts()) {
 	$found_posts = true;
@@ -82,14 +82,6 @@ final class Emkk_search {
 
 	}
 
-	// public function emlan($post) {
-	// 	do_action('emlan_shortcode', $post->ID);
-	// }
-
-	// public function emkort($post) {
-	// 	do_action('emkort_shortcode', $post->ID);
-	// }
-
 	public function page($post) {
 		if (strpos(get_page_template_slug($post->ID), 'redirect') !== false) return;
 
@@ -104,6 +96,9 @@ final class Emkk_search {
 		if (isset($title[0]) && $title[0] != '')	$title = $title[0];
 		else 										$title = $post->post_title;
 
+		if (isset($meta[0]) && $meta[0] != '')	$meta = $meta[0];
+		else 									$meta = get_the_excerpt($post);
+
 		$thumbnail = get_the_post_thumbnail_url($post);
 
 		$html = '<li class="emtheme-search-li'.($thumbnail ? ' emtheme-search-li-flex' : '').'">';
@@ -111,7 +106,7 @@ final class Emkk_search {
 		$html .= '<a class="emtheme-search-link" href="'.get_permalink($post).'">';
 		$html .= '<h2 class="emtheme-search-title">'.$title.'</h2></a>';
 		$html .= '<span class="emtheme-search-url">'.get_permalink($post).'</span>';
-		if (isset($meta[0]) && $meta[0] != '') $html .= '<p class="emtheme-search-description">'.$meta[0].'</p>';
+		if ($meta != '') $html .= '<p class="emtheme-search-description">'.$meta.'</p>';
 		if ($thumbnail) $html .= '</div>';
 		$html .= '</li>';
 		return $html;

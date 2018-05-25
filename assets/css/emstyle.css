@@ -393,7 +393,7 @@ p:empty {
 	/*margin: 0 2rem;*/
 	/*width: 25rem;*/
 	position: sticky;
-	top: 8rem; /* position of where element gets stuck to */
+	top: 4rem; /* position of where element gets stuck to */
 	align-self: flex-start; /* for sticky to work in flexbox */
 }
 

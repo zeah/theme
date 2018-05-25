@@ -4,11 +4,10 @@
  Template Post Type: article, page
 */
 
-get_header();
 
 
 global $post;
-setup_postdata( $post );
+setup_postdata($post);
 
 $postid = get_the_ID(); // to be used in footer.php
 $html = '<div class="main">';
@@ -20,6 +19,8 @@ $content = get_the_content();
 $html .= '<div class="content">'.apply_filters('the_content', $content).'</div>';
 
 $html .= '</div>';
+
+get_header();
 
 echo $html;
 

@@ -138,11 +138,12 @@ final class Emtheme_CSS {
 		$fonts['navbar_size'] = isset($fon['nav_size']) ? esc_html($fon['nav_size']) : '2';
 
 		$this->fonts = $fonts;
-		// wp_die('<xmp>'.print_r(array_merge($fonts, $colors), true).'</xmp>');
 	}
 
 	public function get_css() {
 		$style = get_option('emtheme_nav_layout');
+
+		if (!$style) $style = 'default';
 
 		$version = null;
 		switch ($style) {

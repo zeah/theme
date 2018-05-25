@@ -4,7 +4,6 @@ Template Name: alternative front-page
 
 */
 
-get_header('alt');
 
 
 global $post;
@@ -25,6 +24,8 @@ if (!(strpos($content, '[col') === false))
 $html .= '">'.apply_filters('the_content', do_shortcode(get_the_content())).'</div>';
 
 $html .= '</div>';
+
+get_header('alt');
 
 echo $html;
 
