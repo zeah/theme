@@ -532,7 +532,7 @@ p:empty {
 	display: flex;
 	width: 112rem;
 	margin: 2rem 0;
-	justify-content: space-evenly;
+	justify-content: space-between;
 }
 
 /* fix for list elements */
@@ -581,7 +581,7 @@ p:empty {
 .em-socialmedia-container,
 .em-contact-container,
 .em-aboutus-container {
-	flex-basis: 33%;
+	/*flex-basis: 33%;*/
 	/*border: yellow solid 1px;*/
 }
 
@@ -592,6 +592,7 @@ p:empty {
 	text-decoration: none;
 }
 
+.em-aboutus-container > a:hover,
 .em-footer-link:hover {
 	color: hsl(22, 50%, 50%);
 }
@@ -602,6 +603,9 @@ p:empty {
 	padding-right: 0.5rem;
 }
 
+.em-aboutus-container > a {
+	color: white;
+}
 
 /*
 	4.0 SECTION

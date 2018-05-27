@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Black+Han+Sans');
 
+/*
+	1.0 ADMIN MENU
+	2.0 EM DOCUMENTATION
+	3.0 CUSTOMIZER
+*/
+
+
+
+/* 1.0 ADMIN MENU */
 a.menu-icon-nyheter > div.wp-menu-image:before,
 a.toplevel_page_em-options-page > div.wp-menu-image:before,
 a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
@@ -21,16 +30,16 @@ a.menu-icon-emcasino > div.wp-menu-image:before {
 	color: #f55 !important;
 }
 
-
 a.toplevel_page_em-options-page > div.wp-menu-image:before {
 	color: #ffa !important;
 }
-
 
 a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
 	color: #afa !important;
 }
 
+
+/* 2.0 EM Documentation Page */
 .emtheme-doc-container {
 	margin: 30px;
 	margin-bottom: 500px;
@@ -86,7 +95,37 @@ a.toplevel_page_em-documentation-page > div.wp-menu-image:before {
 }
 
 
+/* 3.0 CUSTOMIZER */
 #accordion-section-custom_css,
 #accordion-panel-emtheme_footer_panel {
 	margin-bottom: 1rem !important;
 }
+
+.customize-control {
+	box-sizing: border-box;
+	padding: 1rem;
+	margin: 0;
+	/*background-color: red;*/
+}
+
+
+#customize-control-emtheme_color-main_shadow_c {
+	margin-bottom: 2rem;
+}
+
+#customize-control-emtheme_color-background_c,
+#customize-control-emtheme_color-main_background_c,
+#customize-control-emtheme_color-main_shadow_c {
+	background-color: hsl(0, 50%, 95%);
+}
+
+
+		
+#customize-control-emtheme_color-emtop_font_c,
+#customize-control-emtheme_color-emtop_bg_c,
+#customize-control-emtheme_color-search_c,
+#customize-control-emtheme_bg_image_c,
+#customize-control-emtheme_color-emtop_bg_image_opacity_c {
+	background-color: hsl(30, 50%, 95%);
+}
+		

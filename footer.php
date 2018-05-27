@@ -61,12 +61,11 @@ class Emtheme_footer {
 				$this->html .= '</ul></div>';
 			}
 
-
 			if  ($this->check('aboutus_active') && isset($this->footer['aboutus'])) {
-				$about = esc_html($this->footer['aboutus']);
+				$about = wp_kses_post($this->footer['aboutus']);
 
-				$about = str_replace('[p]', '<p>', $about);
-				$about = str_replace('[/p]', '</p>', $about);
+				// $about = str_replace('[p]', '<p>', $about);
+				// $about = str_replace('[/p]', '</p>', $about);
 
 				$this->html .= '<div class="em-aboutus-container">'.$about.'</div>';
 			}
@@ -132,7 +131,8 @@ class Emtheme_footer_customize extends Emtheme_footer {
 
 
 		$v = isset($this->footer['aboutus']) ? $this->footer['aboutus'] : '';
-		$this->html .= '<div class="em-aboutus-container">'.str_replace('[p]', '<p>', esc_html($v)).'</div>';
+		
+		$this->html .= '<div class="em-aboutus-container">'.wp_kses_post($v).'</div>';
 	
 		$this->html .= '</div></div>';
 	}

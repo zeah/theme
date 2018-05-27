@@ -130,7 +130,7 @@ final class Emtheme_Customizer {
 		$settings = [
 			'contact_active', 'email', 'avdeling', 'selskap', 'poststed', 'postnr', 'veiadr', 'land',
 			'social_active', 'twitter', 'facebook', 'google', 'youtube',
-			'aboutus_active', 'aboutus'
+			'aboutus_active'
 		];
 
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_footer');
@@ -254,9 +254,10 @@ final class Emtheme_Customizer {
 		));
 
 		// ABOUT US TEXTAREA
+		$this->add_settings($wp_customize, ['aboutus'], ['type' => 'option', 'transport' => 'postMessage', 'sanitize' => 'wp_kses_post'], 'emtheme_footer');
 		$wp_customize->add_control('emtheme_footer[aboutus]_c', array(
 			'label' => 'Om Oss',
-			'description' => '[p] is new paragraph.',
+			'description' => 'html tags are allowed',
 			'section' => 'emtheme_footer_aboutus',
 			'settings' => 'emtheme_footer[aboutus]',
 			'type' => 'textarea'
@@ -337,7 +338,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* FONT COLOR TOP (LOGO, TITLE, TAGLINE )*/
-		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = Emtheme_style::$colors['top']['font']; 
+		$wp_customize->get_setting('emtheme_color[emtop_font]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[emtop_font]_c', array(
 				'label' => 'Header Font-color',
@@ -347,7 +348,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* BACKGROUND COLOR/IMAGE TOP (LOGO, TITLE, TAGLINE )*/
-		$wp_customize->get_setting('emtheme_color[emtop_bg]')->default = Emtheme_style::$colors['top']['bg']; 
+		$wp_customize->get_setting('emtheme_color[emtop_bg]')->default = '#ffffff'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[emtop_bg]_c', array(
 				'label' => 'Header Background-color',
@@ -356,7 +357,7 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color'
 		)));
 
-		$wp_customize->get_setting('emtheme_color[search]')->default = Emtheme_style::$colors['search']['color']; 
+		$wp_customize->get_setting('emtheme_color[search]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[search]_c', array(
 				'label' => 'Search box/text',
@@ -365,6 +366,7 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color'
 		)));
 
+		/* header repeating background image */
 		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'emtheme_bg_image_c',
 			array(
 				'label' => 'Repeating background image for header',
@@ -372,6 +374,7 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color',
 		) ) );
 
+		/* opacity for header repeating background image */
 		$wp_customize->get_setting('emtheme_color[emtop_bg_image_opacity]')->default = 1;
 		$wp_customize->add_control('emtheme_color[emtop_bg_image_opacity]_c', array(
 			'type' => 'number',
@@ -379,7 +382,6 @@ final class Emtheme_Customizer {
 			'description' => '',
 			'section' => 'emtheme_css_color',
 			'settings' => 'emtheme_color[emtop_bg_image_opacity]',
-			// 'priority' => 103,
 			'input_attrs' => array(
 			    'min' => 0,
 			    'max' => 1,
@@ -388,7 +390,7 @@ final class Emtheme_Customizer {
 		));
 
 		/* NAVBAR FONT COLOR */
-		$wp_customize->get_setting('emtheme_color[nav_font]')->default = Emtheme_style::$colors['nav']['font']; 
+		$wp_customize->get_setting('emtheme_color[nav_font]')->default = '#ffffff'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_font]_c', array(
 				'label' => 'Navbar Font-color',
@@ -397,7 +399,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* NAVBAR BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[nav_bg_top]')->default = Emtheme_style::$colors['nav']['bg']; 
+		$wp_customize->get_setting('emtheme_color[nav_bg_top]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_top]_c', array(
 				'label' => 'Navbar Background-color TOP/FULL',
@@ -405,15 +407,16 @@ final class Emtheme_Customizer {
 				'settings' => 'emtheme_color[nav_bg_top]',
 				'section' => 'emtheme_css_color'
 		)));
-		// $wp_customize->get_setting('emtheme_color[nav_bg_middle]')->default = Emtheme_style::$colors['nav']['bg']; 
+
+		/*middle part linear-image background for navbar*/
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_middle]_c', array(
 				'label' => 'Navbar Background-color MIDDLE',
-				'description' => 'A third color placed in the center.<br>Bottom color must be set before this one.',
 				'settings' => 'emtheme_color[nav_bg_middle]',
 				'section' => 'emtheme_css_color'
 		)));
-		// $wp_customize->get_setting('emtheme_color[nav_bg_bottom]')->default = Emtheme_style::$colors['nav']['bg']; 
+
+		/*bottom part linear-image background for navbar*/
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_bottom]_c', array(
 				'label' => 'Navbar Background-color BOTTOM',
@@ -422,7 +425,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* NAVBAR BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[nav_bg_hover_top]')->default = Emtheme_style::$colors['nav']['hover']; 
+		$wp_customize->get_setting('emtheme_color[nav_bg_hover_top]')->default = '#334433'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_hover_top]_c', array(
 				'label' => 'Navbar Hover Background-color TOP/FULL',
@@ -430,6 +433,7 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color'
 		)));
 
+		/* middle part for linear background on hover navbar */
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_hover_middle]_c', array(
 				'label' => 'Navbar Hover Background-color MIDDLE',
@@ -437,6 +441,7 @@ final class Emtheme_Customizer {
 				'section' => 'emtheme_css_color'
 		)));
 
+		/* bottom part for linear background on hover navbar */
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[nav_bg_hover_bottom]_c', array(
 				'label' => 'Navbar Hover Background-color BOTTOM',
@@ -445,7 +450,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* SUBMENU FONT COLOR */
-		$wp_customize->get_setting('emtheme_color[navsub_font]')->default = Emtheme_style::$colors['sub']['font']; 
+		$wp_customize->get_setting('emtheme_color[navsub_font]')->default = '#000000'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[navsub_font]_c', array(
 				'label' => 'Submenu Font-color',
@@ -454,7 +459,7 @@ final class Emtheme_Customizer {
 		)));
 
 		/* SUBMENU BACKGROUND COLOR */
-		$wp_customize->get_setting('emtheme_color[navsub_bg]')->default = Emtheme_style::$colors['sub']['bg']; 
+		$wp_customize->get_setting('emtheme_color[navsub_bg]')->default = '#cccccc'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[navsub_bg]_c', array(
 				'label' => 'Submenu Background-color',
@@ -463,7 +468,7 @@ final class Emtheme_Customizer {
 		)));
 		
 		/* SUBMENU BACKGROUND COLOR HOVER */
-		$wp_customize->get_setting('emtheme_color[navsub_bg_hover]')->default = Emtheme_style::$colors['sub']['hover']; 
+		$wp_customize->get_setting('emtheme_color[navsub_bg_hover]')->default = '#aaaaaa'; 
 		$wp_customize->add_control(new WP_Customize_Color_Control( 
 			$wp_customize, 'emtheme_color[navsub_bg_hover]_c', array(
 				'label' => 'Submenu Hover Background-color',
@@ -497,23 +502,23 @@ final class Emtheme_Customizer {
 		/* EMTHEME FONT SECTION */
 		$wp_customize->add_section('emtheme_css_font', array(
 			'title' => 'Fonts',
-			'description' => '<ul><strong>Default Font</strong>
-								<li><a class="emtheme-font-d-fam">Font Family</a></li>
-								<li><a class="emtheme-font-d-weight">Font Weight</a></li>
-								<li><a class="emtheme-font-d-size">Font Size</a></li>
-								<li><a class="emtheme-font-d-lheight">Line-height</a></li>
-							  </ul>
-							  <ul><strong>Title Font</strong>
- 							 	<li><a class="emtheme-font-t-fam">Font Family</a></li>
-								<li><a class="emtheme-font-t-weight">Font Weight</a></li>
-								<li><a class="emtheme-font-t-size">Font Size</a></li>
-							  </ul>
-							  <ul><strong>Navbar Font</strong>
- 							 	<li><a class="emtheme-font-n-fam">Font Family</a></li>
-								<li><a class="emtheme-font-n-weight">Font Weight</a></li>
-								<li><a class="emtheme-font-n-size">Font Size</a></li>
-							  </ul>
-							  ',
+			// 'description' => '<ul><strong>Default Font</strong>
+			// 					<li><a class="emtheme-font-d-fam">Font Family</a></li>
+			// 					<li><a class="emtheme-font-d-weight">Font Weight</a></li>
+			// 					<li><a class="emtheme-font-d-size">Font Size</a></li>
+			// 					<li><a class="emtheme-font-d-lheight">Line-height</a></li>
+			// 				  </ul>
+			// 				  <ul><strong>Title Font</strong>
+ 		// 					 	<li><a class="emtheme-font-t-fam">Font Family</a></li>
+			// 					<li><a class="emtheme-font-t-weight">Font Weight</a></li>
+			// 					<li><a class="emtheme-font-t-size">Font Size</a></li>
+			// 				  </ul>
+			// 				  <ul><strong>Navbar Font</strong>
+ 		// 					 	<li><a class="emtheme-font-n-fam">Font Family</a></li>
+			// 					<li><a class="emtheme-font-n-weight">Font Weight</a></li>
+			// 					<li><a class="emtheme-font-n-size">Font Size</a></li>
+			// 				  </ul>
+			// 				  ',
 			'priority' => 501
 			// 'panel' => 'emtheme_css_panel'
 		));
@@ -528,12 +533,9 @@ final class Emtheme_Customizer {
 		             'title', 'title_weight', 'title_size',
 		             'nav', 'nav_weight', 'nav_size'];
 
+		// creates customizer settings
 		$this->add_settings($wp_customize, $settings, $args, 'emtheme_font');
 
-
-		/*
-			DEFAULT FONT SETTINGS
-		*/
 
 		/*
 			text control
