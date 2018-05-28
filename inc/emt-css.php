@@ -228,7 +228,7 @@ final class Emtheme_CSS_Def {
 		$css .= "\nbody { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
 		// $css .= "\n.content, .emtheme-tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
 		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
-		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; }";
+		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; line-height: $fon[content_lineheight]; }";
 
 		// desktop
 		$css .= "\n@media screen and (min-width: 1024px) {";
@@ -268,7 +268,7 @@ final class Emtheme_CSS_Def {
 		if ($col['header_background_image'])
 			$css .= "\n.emtheme-header-container:after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-image: url('$col[header_background_image]'); background-repeat: repeat; z-index: -3; opacity: $col[header_background_image_opacity];}";
 
-		$css .= "\n.emtheme-header { width: 112rem; margin: auto; display: flex; align-items: center; }";
+		$css .= "\n.emtheme-header { width: 112rem; margin: auto; display: flex; align-items: center; margin-bottom: 1rem; }";
 		$css .= "\n.emtheme-identity { display: flex; align-items: center; margin-right: auto; color: $col[header_font]; text-decoration: none; }";
 		$css .= "\n.emtheme-logo { max-height: 20rem; }"; 
 
@@ -494,7 +494,6 @@ final class Emtheme_CSS_One {
 		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
 		// $css .= "\n.main { background-color: $col[main_background]; }";
 		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; line-height: $fon[content_lineheight]; }";
-
 		$css .= "\n@media screen and (min-width: 1120px) {";
 		$css .= "\nbody { background-color: $col[background]; }";
 

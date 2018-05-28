@@ -321,7 +321,7 @@ $(() => {
 
 	api('emtheme_font[standard_lineheight]', (value) => {
 		value.bind((newvalue) => {
-			$('.content > p').css('line-height', newvalue);
+			$('.main').css('line-height', newvalue);
 		});
 	})
 
@@ -389,7 +389,7 @@ $(() => {
 	api('emtheme_font[nav]', (value) => {
 		value.bind((newvalue) => {
 			let weight = api.instance('emtheme_font[nav_weight]').get();
-			let nav = $('.menu-container');
+			let nav = $('.menu-container a');
 
 			nav.css('font-family', newvalue);
 
@@ -417,7 +417,7 @@ $(() => {
 	api('emtheme_font[nav_weight]', (value) => {
 		value.bind((newvalue) => {
 			let font = api.instance('emtheme_font[nav]').get();
-			let nav = $('.menu-container');
+			let nav = $('.menu-container a');
 
 			// dont do anything if no font is selected
 			if (!font) {
@@ -442,7 +442,7 @@ $(() => {
 
 	api('emtheme_font[nav_size]', (value) => {
 		value.bind((newvalue) => {
-			$('.menu-container').css('font-size', newvalue+'rem');
+			$('.menu-container a').css('font-size', newvalue+'rem');
 			// $('.emtheme-logo-image-fixedheight').css('height', newvalue+'rem');
 		});
 	});
