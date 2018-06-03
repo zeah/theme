@@ -78,7 +78,9 @@ foreach($links as $link => $weights) {
 
 $out_link = rtrim($out_link, '|');
 $out_link .= '" rel="stylesheet">';
-echo $out_link;
+// wp_die('<xmp>'.print_r($out_link, true).'</xmp>');
+
+if ($links) echo $out_link;
 
 
 wp_head();

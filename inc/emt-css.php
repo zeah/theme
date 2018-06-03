@@ -108,8 +108,9 @@ final class Emtheme_CSS {
 		$fonts = [];
 
 		// content font family
-		$fonts['content_family'] = isset($fon['standard']) ? esc_html($fon['standard']) : 'arial';
-
+		$fonts['content_family'] = (isset($fon['standard']) && $fon['standard'] != '') ? esc_html($fon['standard']) : 'arial';
+		// wp_die('<xmp>'.print_r($fonts['content_family'].'..'.$fon['standard'], true).'</xmp>');
+		
 		// content weight
 		$fonts = array_merge($fonts, $this->check_weight((isset($fon['standard_weight']) ? $fon['standard_weight'] : false), 'content'));
 
@@ -120,16 +121,16 @@ final class Emtheme_CSS {
 		$fonts['content_lineheight'] = isset($fon['standard_lineheight']) ? esc_html($fon['standard_lineheight']) : 1;
 
 		// title font family
-		$fonts['title_family'] = isset($fon['title']) ? esc_html($fon['title']) : 'verdana';
+		$fonts['title_family'] = (isset($fon['title']) && $fon['title'] != '') ? esc_html($fon['title']) : 'verdana';
 
 		// title weight
 		$fonts = array_merge($fonts, $this->check_weight((isset($fon['title_weight']) ? $fon['title_weight'] : false), 'title'));
 
 		// title font size
-		$fonts['title_size'] = isset($fon['title_size']) ? esc_html($fon['title_size']) : '2.6';
+		$fonts['title_size'] = isset($fon['title_size']) ? esc_html($fon['title_size']) : '4.6';
 
 		// navbar font family
-		$fonts['navbar_family'] = isset($fon['nav']) ? esc_html($fon['nav']) : 'arial';
+		$fonts['navbar_family'] = (isset($fon['nav']) && $fon['nav'] != '') ? esc_html($fon['nav']) : 'arial';
 
 		// navbar weight
 		$fonts = array_merge($fonts, $this->check_weight((isset($fon['nav_weight']) ? $fon['nav_weight'] : false), 'navbar'));
@@ -196,8 +197,10 @@ final class Emtheme_CSS {
 
 
 
-
-
+/*
+	Large Logo, tagline, searbox 
+	Navbar
+*/
 final class Emtheme_CSS_Def {
 	/* SINGLETON */
 	private static $instance = null;
@@ -206,9 +209,6 @@ final class Emtheme_CSS_Def {
 
 	public static function get_instance($fonts, $colors) {
 		if (self::$instance === null) self::$instance = new self($fonts, $colors);
-
-		// self::$instance->fonts = $fonts;
-		// self::$instance->colors = $colors;
 
 		return self::$instance;
 	}
@@ -221,12 +221,10 @@ final class Emtheme_CSS_Def {
 	public function get_css() {
 		$col = $this->colors;
 		$fon = $this->fonts;
-		// wp_die('<xmp>'.print_r($col, true).'</xmp>');
 		
 
 		$css = "<style>";
 		$css .= "\nbody { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
-		// $css .= "\n.content, .emtheme-tagline, .em-footer { font-family: $fon[content_family]; font-size: $fon[content_size]rem; }";
 		$css .= "\n.content-title-text { font-family: $fon[title_family]; font-size: $fon[title_size]rem; }";
 		$css .= "\n.main { background-color: $col[main_background]; box-shadow: $col[main_shadow]; line-height: $fon[content_lineheight]; }";
 
